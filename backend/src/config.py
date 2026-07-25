@@ -6,7 +6,7 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
     app_env: str 
-    cors_origins: List[str] = ["http://localhost:5173", "https://mor-finance-developer-academy.onrender.com"]
+    cors_origins: List[str] = ["http://localhost:5173", "https://mor-finance-developer-academy.onrender.com" , "morfinance.ai"]
     mongodb_uri: str
     secret_key: str
     jwt_algorithm: str
