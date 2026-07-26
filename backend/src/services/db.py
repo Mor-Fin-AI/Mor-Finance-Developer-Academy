@@ -162,13 +162,32 @@ async def get_or_create_user(user_id: str, auth_type: str = "demo") -> Dict[str,
             updates["levels"] = user["levels"]
             updated = True
         
-        # Self-healing: ensure Level 7 has total_lessons=20
+        # Self-healing: ensure all levels (1-7) have accurate total_lessons, completed_lessons, and overall_pct
         levels_list = user.get("levels", [])
+        completed_ids = user.get("completed_lesson_ids", [])
+        track = user.get("active_track", "ethereum")
+        from src.services.lessons import LESSONS_DB, get_track_lessons
+        
         for lvl in levels_list:
-            if lvl["level_id"] == 7 and lvl.get("total_lessons") != 20:
-                lvl["total_lessons"] = 20
-                updates["levels"] = levels_list
-                updated = True
+            if lvl["level_id"] == 7:
+                t_lessons = get_track_lessons(track)
+                lvl["title"] = f"{track.capitalize()} Track"
+                lvl["total_lessons"] = len(t_lessons)
+                lvl["completed_lessons"] = sum(1 for l in t_lessons if l.id in completed_ids)
+            else:
+                l_lessons = [l for l in LESSONS_DB.values() if l.level_id == lvl["level_id"]]
+                lvl["total_lessons"] = len(l_lessons)
+                lvl["completed_lessons"] = sum(1 for l in l_lessons if l.id in completed_ids)
+
+        total_lessons_curriculum = sum(l["total_lessons"] for l in levels_list)
+        total_completed_lessons = sum(l["completed_lessons"] for l in levels_list)
+        overall_pct = round(total_completed_lessons / total_lessons_curriculum * 100, 1) if total_lessons_curriculum > 0 else 0.0
+        
+        user["levels"] = levels_list
+        user["overall_pct"] = overall_pct
+        updates["levels"] = levels_list
+        updates["overall_pct"] = overall_pct
+        updated = True
 
         if updated:
             await coll.update_one({"_id": user["_id"]}, {"$set": updates})
@@ -209,6 +228,8 @@ async def log_quiz_attempt(user_id: str, lesson_id: str, score: float, level_id:
             "$set": {"last_active": datetime.now(timezone.utc)}
         }
     )
+    if score >= 70.0:
+        await complete_lesson_for_user(user_id, level_id, lesson_id)
 
 async def log_exercise_submission(user_id: str, lesson_id: str, code: str, passed: bool, level_id: int):
     """Add a coding exercise submission record and award XP."""
@@ -236,6 +257,8 @@ async def log_exercise_submission(user_id: str, lesson_id: str, code: str, passe
             "$set": {"last_active": datetime.now(timezone.utc)}
         }
     )
+    if passed:
+        await complete_lesson_for_user(user_id, level_id, lesson_id)
 
 async def issue_certificate(user_id: str, level_id: int, title: str):
     """Issue a completed level certificate."""
@@ -399,9 +422,16 @@ async def complete_lesson_for_user(user_id: str, level_id: int, lesson_id: str):
     total_lessons_curriculum = 0
     total_completed_lessons = 0
     
+    active_track = user.get("active_track", "ethereum")
+    from src.services.lessons import LESSONS_DB, get_track_lessons
+    
     for lvl in levels:
-        from src.services.lessons import LESSONS_DB
-        level_lessons = [l for l in LESSONS_DB.values() if l.level_id == lvl["level_id"]]
+        if lvl["level_id"] == 7:
+            level_lessons = get_track_lessons(active_track)
+            lvl["title"] = f"{active_track.capitalize()} Track"
+        else:
+            level_lessons = [l for l in LESSONS_DB.values() if l.level_id == lvl["level_id"]]
+        
         lvl["total_lessons"] = len(level_lessons)
         
         # Count how many of these level lessons are completed

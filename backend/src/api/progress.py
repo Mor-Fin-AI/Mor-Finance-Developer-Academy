@@ -32,19 +32,36 @@ async def update_active_track(user_id: str = Query(...), track: str = Query(...)
         raise HTTPException(status_code=400, detail=f"Unsupported ecosystem track '{track}'. Supported: {sorted(list(SUPPORTED_TRACKS))}")
         
     from src.services.db import get_collection, get_or_create_user
+    from src.services.lessons import get_track_lessons, LESSONS_DB
     coll = get_collection()
     user = await get_or_create_user(user_id)
+    completed_ids = user.get("completed_lesson_ids", [])
+    
+    track_lessons = get_track_lessons(track)
+    lvl7_completed = sum(1 for l in track_lessons if l.id in completed_ids)
+    
     levels = user.get("levels", [])
     for lvl in levels:
         if lvl["level_id"] == 7:
             lvl["title"] = f"{track.capitalize()} Track"
-            lvl["completed_lessons"] = 0
-            lvl["total_lessons"] = 20
-            lvl["completed_at"] = None
+            lvl["total_lessons"] = len(track_lessons)
+            lvl["completed_lessons"] = lvl7_completed
+            if lvl7_completed >= len(track_lessons) and len(track_lessons) > 0:
+                lvl["completed_at"] = datetime.now(timezone.utc)
+            else:
+                lvl["completed_at"] = None
+        else:
+            lvl_lessons = [l for l in LESSONS_DB.values() if l.level_id == lvl["level_id"]]
+            lvl["total_lessons"] = len(lvl_lessons)
+            lvl["completed_lessons"] = sum(1 for l in lvl_lessons if l.id in completed_ids)
+
+    total_lessons = sum(l["total_lessons"] for l in levels)
+    done_lessons = sum(l["completed_lessons"] for l in levels)
+    overall_pct = round(done_lessons / total_lessons * 100, 1) if total_lessons > 0 else 0.0
             
     await coll.update_one(
         {"_id": user_id},
-        {"$set": {"active_track": track, "levels": levels}}
+        {"$set": {"active_track": track, "levels": levels, "overall_pct": overall_pct}}
     )
     return await get_or_create_user(user_id)
 
