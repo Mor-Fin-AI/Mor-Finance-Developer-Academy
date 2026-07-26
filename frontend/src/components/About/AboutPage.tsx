@@ -127,7 +127,6 @@ export const AboutPage: React.FC = () => {
 
       <div className="about-team-grid">
         {[
-          { name: 'Anjanay Raina', role: 'Lead Platform Engineer & Architect', bio: 'Specializes in EVM compiler sandboxes, full-stack Web3 architecture, and MOR protocol integration.', icon: '⚡' },
           { name: 'MOR Protocol Team', role: 'Smart Contract & Audit Leads', bio: 'Oversees MOR Vault contracts, yield mechanics, reentrancy audits, and protocol security.', icon: '⬡' },
           { name: 'AI Engineering Group', role: 'OpenClaw & Hermes AI Lead', bio: 'Designs context-aware OpenClaw & Hermes AI agents for live Solidity code reviews and automated evaluations.', icon: '🤖' },
           { name: 'Community Operations', role: 'Ecosystem & Developer Relations', bio: 'Manages developer bounties, Discord community office hours, hackathons, and grant allocations.', icon: '🌐' }
