@@ -306,7 +306,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
           <div className="activity-breakdown">
             <div className="activity-breakdown__header">
               <h4 className="activity-breakdown__title">Activity Breakdown</h4>
-              <button className="activity-breakdown__view-all" onClick={() => onNavigate?.('roadmap')}>View All →</button>
+              <button className="activity-breakdown__view-all" onClick={() => onNavigate?.('academy')}>View All →</button>
             </div>
             <div className="activity-breakdown__list">
               {activityBreakdown.map((act) => (
@@ -409,7 +409,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
                 <p style={{ fontSize: '0.8rem', color: 'var(--clr-text-muted)', margin: '0 0 16px 0', lineHeight: 1.4 }}>
                   Connect your GitHub username to automatically fetch your total commits, merged pull requests, public repos, and follower count from GitHub.
                 </p>
-                <button className="btn btn--primary" style={{ padding: '8px 16px', fontSize: '0.8rem' }} onClick={() => onNavigate?.('roadmap')}>
+                <button className="btn btn--primary" style={{ padding: '8px 16px', fontSize: '0.8rem' }} onClick={() => onNavigate?.('academy')}>
                   Connect GitHub Profile
                 </button>
               </div>
@@ -468,7 +468,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
               </div>
               <div className="recommendation-row__action">
                 <span className="recommendation-row__match">{rec.match}% Match</span>
-                <button className="recommendation-row__btn" onClick={() => onNavigate?.('roadmap')}>⚙️</button>
+                <button className="recommendation-row__btn" onClick={() => onNavigate?.('academy')}>⚙️</button>
               </div>
             </div>
           ))}

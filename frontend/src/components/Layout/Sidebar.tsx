@@ -12,7 +12,7 @@ interface SidebarProps {
 }
 
 const NAV_ITEMS: { id: NavPage; label: string; icon: string; description: string }[] = [
-  { id: 'roadmap',      label: 'Learning Roadmap', icon: '🗺️',  description: '6-level curriculum' },
+  { id: 'academy',      label: 'Developer Academy', icon: '🎓',  description: '6-level curriculum' },
   { id: 'dashboard',    label: 'My Dashboard',     icon: '📊',  description: 'Progress & XP' },
   { id: 'forum',        label: 'Community Forum',  icon: '💬',  description: 'Connect & discuss' },
   { id: 'hackathons',   label: 'Web3 Hackathons',  icon: '⚔️',  description: 'Build & innovate' },
@@ -50,7 +50,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       }
       return addr;
     }
-    return 'Demo User';
+    return 'MOR Builder';
   };
 
   const getFormattedRole = () => {
@@ -91,7 +91,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         ))}
       </nav>
 
-      {/* Discord Banner */}
+      {/* Community & Docs Banner Links */}
       <div className="sidebar__discord-container">
         <a
           href="https://discord.gg/Jjt52cQEV"
@@ -107,6 +107,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
           </div>
           <span className="sidebar__discord-arrow">↗</span>
         </a>
+
+        <div className="sidebar__sublinks">
+          <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="sidebar__sublink">
+            <span>🐙</span> GitHub
+          </a>
+          <a href="https://docs.mor.org" target="_blank" rel="noopener noreferrer" className="sidebar__sublink">
+            <span>📖</span> Docs
+          </a>
+        </div>
       </div>
 
       {/* Footer */}

@@ -1,166 +1,243 @@
-/* AboutPage CSS */
 .about-page {
-  padding: 32px;
-  border-radius: var(--radius-xl);
+  padding: 40px;
+  border-radius: 24px;
+  background: rgba(15, 23, 42, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(10, 11, 23, 0.45);
+  max-width: 1200px;
+  margin: 0 auto 60px auto;
   color: #fff;
-  max-width: 1000px;
-  margin: 0 auto;
-  box-sizing: border-box;
-  width: 100%;
-  animation: fadeIn 0.3s ease-out;
+}
+
+.about-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 48px auto;
+}
+
+.about-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  background: rgba(99, 102, 241, 0.12);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #818cf8;
+  text-transform: uppercase;
+  margin-bottom: 16px;
 }
 
 .about-page__title {
-  font-size: clamp(1.3rem, 3.5vw, 2rem);
+  font-size: 2.4rem;
   font-weight: 800;
-  color: #fff;
-  margin-bottom: 8px;
-  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
 }
 
 .about-page__desc {
-  font-size: 0.95rem;
+  font-size: 1.1rem;
   color: var(--clr-text-secondary);
   line-height: 1.6;
-  margin-bottom: 32px;
 }
 
 .about-page__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 24px;
-  margin-bottom: 32px;
+  margin-bottom: 48px;
+}
+
+.about-card {
+  padding: 32px 28px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.about-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(99, 102, 241, 0.3);
+}
+
+.about-card__icon {
+  font-size: 2.2rem;
+  margin-bottom: 16px;
 }
 
 .about-card__title {
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   font-weight: 700;
-  color: #fff;
   margin-bottom: 12px;
+  color: #fff;
 }
 
 .about-card__text {
-  font-size: 0.88rem;
+  font-size: 0.92rem;
   color: var(--clr-text-secondary);
   line-height: 1.6;
-  margin: 0;
 }
 
 .about-divider {
   height: 1px;
-  background: rgba(255, 255, 255, 0.06);
-  margin: 28px 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  margin: 48px 0;
+}
+
+.about-section-header {
+  text-align: center;
+  margin-bottom: 36px;
 }
 
 .about-section-title {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #fff;
-  margin-bottom: 16px;
-}
-
-.about-milestones {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.milestone-item {
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-}
-
-.milestone-item__step {
-  font-size: 1.4rem;
+  font-size: 1.8rem;
   font-weight: 800;
-  color: #3b82f6;
-  width: 32px;
-  flex-shrink: 0;
+  margin-bottom: 8px;
 }
 
-.milestone-item__content {
-  flex: 1;
-  min-width: 0;
-}
-
-.milestone-item__title {
+.about-section-sub {
   font-size: 0.95rem;
-  font-weight: 700;
-  color: #fff;
-  margin: 0 0 4px 0;
+  color: var(--clr-text-secondary);
 }
 
-.milestone-item__desc {
-  font-size: 0.82rem;
+/* Roadmap Grid */
+.about-roadmap-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.roadmap-phase-card {
+  padding: 24px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.roadmap-phase-card.completed {
+  border-left: 4px solid #10b981;
+}
+
+.roadmap-phase-card.in-progress {
+  border-left: 4px solid #6366f1;
+}
+
+.roadmap-phase-card.upcoming {
+  border-left: 4px solid #94a3b8;
+}
+
+.phase-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #818cf8;
+  margin-bottom: 12px;
+}
+
+.phase-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.phase-desc {
+  font-size: 0.85rem;
   color: var(--clr-text-secondary);
   line-height: 1.5;
-  margin: 0;
 }
 
-.about-discord {
+/* Core Team Grid */
+.about-team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.team-card {
+  padding: 24px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  text-align: center;
+}
+
+.team-avatar {
+  font-size: 2.4rem;
+  margin-bottom: 12px;
+}
+
+.team-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: #fff;
+}
+
+.team-role {
+  font-size: 0.78rem;
+  color: #818cf8;
+  font-weight: 600;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.team-bio {
+  font-size: 0.84rem;
+  color: var(--clr-text-secondary);
+  line-height: 1.5;
+}
+
+/* Resources Section */
+.about-resources-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.resource-card {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 20px 24px;
-  border-radius: var(--radius-lg);
-  border: 1px solid rgba(88, 101, 242, 0.3);
-  background: rgba(88, 101, 242, 0.08);
-  flex-wrap: wrap;
-  gap: 16px;
-}
-
-.about-discord__title {
-  font-size: 1.15rem;
-  font-weight: 800;
-  color: #7289da;
-  margin: 0 0 4px 0;
-}
-
-.about-discord__sub {
-  font-size: 0.82rem;
-  color: var(--clr-text-secondary);
-  margin: 0;
-}
-
-.about-discord__btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 18px;
-  border-radius: var(--radius-md);
-  background: #5865F2;
-  color: #fff;
-  font-weight: 700;
-  font-size: 0.88rem;
+  gap: 20px;
+  padding: 24px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   text-decoration: none;
+  color: #fff;
   transition: all 0.2s ease;
 }
 
-.about-discord__btn:hover {
-  background: #4752C4;
-  transform: translateY(-1px);
+.resource-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(99, 102, 241, 0.4);
+  background: rgba(99, 102, 241, 0.05);
+}
+
+.resource-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.resource-card h4 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.resource-card p {
+  font-size: 0.85rem;
+  color: var(--clr-text-secondary);
+  line-height: 1.45;
 }
 
 @media (max-width: 768px) {
   .about-page {
-    padding: 16px;
-    border-radius: var(--radius-lg);
+    padding: 24px 16px;
   }
-  .about-page__grid {
-    grid-template-columns: 1fr;
-    gap: 20px;
-  }
-  .about-discord {
-    padding: 16px;
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .about-discord__btn {
-    width: 100%;
-    justify-content: center;
-    box-sizing: border-box;
+  .about-page__title {
+    font-size: 1.8rem;
   }
 }

@@ -62,7 +62,7 @@ export interface ChatMessage {
   isStreaming?: boolean;
 }
 
-export type NavPage = 'roadmap' | 'dashboard' | 'mentor' | 'certificates' | 'forum' | 'hackathons' | 'about' | 'subscriptions';
+export type NavPage = 'academy' | 'roadmap' | 'dashboard' | 'mentor' | 'certificates' | 'forum' | 'hackathons' | 'about' | 'subscriptions';
 
 export interface ForumComment {
   comment_id: string;

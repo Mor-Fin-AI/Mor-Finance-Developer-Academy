@@ -9,7 +9,6 @@ import { RoadmapPage, DashboardPage, MentorPage } from './pages';
 import { LessonsList } from './components/Roadmap/LessonsList';
 import { LessonView } from './components/Roadmap/LessonView';
 import { CertificatesView } from './components/Certificates/CertificatesView';
-import { Login } from './components/Auth/Login';
 import { ForumView } from './components/Forum/ForumView';
 import { HackathonsView } from './components/Hackathons/HackathonsView';
 import { LandingPage } from './components/Auth/LandingPage';
@@ -23,6 +22,7 @@ export default function App() {
 
   const getActivePage = (): NavPage => {
     const path = location.pathname;
+    if (path.startsWith('/academy') || path.startsWith('/roadmap')) return 'academy';
     if (path.startsWith('/dashboard')) return 'dashboard';
     if (path.startsWith('/forum')) return 'forum';
     if (path.startsWith('/hackathons')) return 'hackathons';
@@ -30,7 +30,7 @@ export default function App() {
     if (path.startsWith('/certificates')) return 'certificates';
     if (path.startsWith('/subscriptions')) return 'subscriptions';
     if (path.startsWith('/about')) return 'about';
-    return 'roadmap';
+    return 'academy';
   };
   const activePage = getActivePage();
   
@@ -116,7 +116,7 @@ export default function App() {
             setProgress(user);
             setSelectedLevel(null);
             setSelectedLessonId(null);
-            navigate('/');
+            navigate('/academy');
           })
           .catch((err) => {
             console.error("GitHub OAuth callback error:", err);
@@ -183,7 +183,7 @@ export default function App() {
       setProgress(user);
       setSelectedLevel(null);
       setSelectedLessonId(null);
-      navigate('/');
+      navigate('/academy');
     } catch (err) {
       console.error(err);
       alert("Failed to authenticate with GitHub.");
@@ -220,7 +220,7 @@ export default function App() {
         setProgress(user);
         setSelectedLevel(null);
         setSelectedLessonId(null);
-        navigate('/');
+        navigate('/academy');
         return;
       } catch (err: any) {
         console.error("Wallet signature auth failed:", err);
@@ -251,7 +251,7 @@ export default function App() {
       setProgress(user);
       setSelectedLevel(null);
       setSelectedLessonId(null);
-      navigate('/');
+      navigate('/academy');
     } catch (err: any) {
       console.error(err);
       setLoginError(err.message || "Failed to connect wallet.");
@@ -360,20 +360,10 @@ export default function App() {
     // Reset drilldowns when navigating to top-level pages
     setSelectedLevel(null);
     setSelectedLessonId(null);
-    navigate(page === 'roadmap' ? '/' : `/${page}`);
+    navigate(page === 'academy' ? '/academy' : `/${page}`);
   };
 
   if (!authType) {
-    if (location.pathname === '/login') {
-      return (
-        <Login
-          onLoginGitHub={handleLoginGitHub}
-          onLoginWallet={handleLoginWallet}
-          error={loginError}
-          loading={loading}
-        />
-      );
-    }
     return (
       <LandingPage
         onLoginGitHub={handleLoginGitHub}
@@ -385,7 +375,7 @@ export default function App() {
   }
 
   if (location.pathname === '/login') {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/academy" replace />;
   }
 
   return (
@@ -412,7 +402,9 @@ export default function App() {
       />
       <main className="app-main" id="main-content">
         <Routes>
-          <Route path="/" element={
+          <Route path="/" element={<Navigate to="/academy" replace />} />
+          <Route path="/roadmap" element={<Navigate to="/academy" replace />} />
+          <Route path="/academy" element={
             selectedLessonId ? (
               <LessonView
                 lessonId={selectedLessonId}
