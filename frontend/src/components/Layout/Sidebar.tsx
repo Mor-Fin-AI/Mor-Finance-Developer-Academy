@@ -109,11 +109,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </a>
 
         <div className="sidebar__sublinks">
-          <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="sidebar__sublink">
+          <a href="https://github.com/Mor-Fin-AI" target="_blank" rel="noopener noreferrer" className="sidebar__sublink">
             <span>🐙</span> GitHub
-          </a>
-          <a href="https://docs.mor.org" target="_blank" rel="noopener noreferrer" className="sidebar__sublink">
-            <span>📖</span> Docs
           </a>
         </div>
       </div>
