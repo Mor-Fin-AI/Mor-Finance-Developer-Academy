@@ -1,7 +1,7 @@
 // ─── LessonView — interactive split-pane workspace ──────────────────────────
 import React, { useState, useEffect } from 'react';
 import type { Lesson, UserProgress } from '../../types';
-import { fetchLesson, postQuizSubmit, postExerciseSubmit } from '../../api/client';
+import { fetchLesson, postQuizSubmit, postExerciseSubmit, streamMentorChat } from '../../api/client';
 import './LessonView.css';
 
 interface LessonViewProps {
@@ -33,6 +33,7 @@ export const LessonView: React.FC<LessonViewProps> = ({
   // Exercise state
   const [code, setCode] = useState('');
   const [submittingExercise, setSubmittingExercise] = useState(false);
+  const [askingOpenClaw, setAskingOpenClaw] = useState(false);
   const [consoleLogs, setConsoleLogs] = useState<string[]>([]);
   
   const consoleEndRef = React.useRef<HTMLDivElement | null>(null);
@@ -145,6 +146,42 @@ export const LessonView: React.FC<LessonViewProps> = ({
       setConsoleLogs((prev) => [...prev, "🚨 Connection / sandbox environment crash error."]);
     } finally {
       setSubmittingExercise(false);
+    }
+  };
+
+  const handleAskOpenClaw = async () => {
+    if (askingOpenClaw || !lesson) return;
+    setAskingOpenClaw(true);
+    setConsoleLogs((prev) => [...prev, `🔮 [OpenClaw AI Mentor]: Analyzing Solidity code for "${lesson.title}"...`]);
+
+    try {
+      let fullResponse = "";
+      for await (const _ of streamMentorChat(
+        `Please analyze this Solidity code for lesson '${lesson.title}'. Identify syntax errors, security vulnerabilities, or logical bugs. Give concise actionable advice.`,
+        code || (lesson.exercise ? lesson.exercise.template : ""),
+        (delta) => {
+          fullResponse += delta;
+          setConsoleLogs((prev) => {
+            const updated = [...prev];
+            const lastIdx = updated.length - 1;
+            if (lastIdx >= 0 && updated[lastIdx].startsWith("💡 OpenClaw Guidance:")) {
+              updated[lastIdx] = `💡 OpenClaw Guidance: ${fullResponse}`;
+            } else {
+              updated.push(`💡 OpenClaw Guidance: ${fullResponse}`);
+            }
+            return updated;
+          });
+        },
+        userId || 'demo-user',
+        'openclaw'
+      )) {}
+    } catch (err: any) {
+      setConsoleLogs((prev) => [
+        ...prev,
+        `⚠️ OpenClaw Error: ${err.message || 'Failed to connect to AI Mentor.'}`,
+      ]);
+    } finally {
+      setAskingOpenClaw(false);
     }
   };
 
@@ -388,8 +425,22 @@ export const LessonView: React.FC<LessonViewProps> = ({
                   <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#10b981', display: 'inline-block' }} />
                   <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--clr-text-secondary)', marginLeft: '8px', fontFamily: 'monospace' }}>Vault.sol</span>
                 </div>
-                <button className="btn btn--secondary btn--xs" style={{ fontSize: '0.75rem', padding: '4px 10px', borderRadius: '4px', backgroundColor: 'rgba(37, 99, 235, 0.1)', color: '#3b82f6', border: '1px solid rgba(37, 99, 235, 0.2)' }}>
-                  ☀️ Ask OpenClaw
+                <button
+                  className="btn btn--secondary btn--xs"
+                  onClick={handleAskOpenClaw}
+                  disabled={askingOpenClaw}
+                  title="Get instant AI code analysis and guidance from OpenClaw"
+                  style={{
+                    fontSize: '0.75rem',
+                    padding: '4px 12px',
+                    borderRadius: '4px',
+                    backgroundColor: askingOpenClaw ? 'rgba(245, 158, 11, 0.15)' : 'rgba(37, 99, 235, 0.15)',
+                    color: askingOpenClaw ? '#f59e0b' : '#60a5fa',
+                    border: askingOpenClaw ? '1px solid rgba(245, 158, 11, 0.3)' : '1px solid rgba(37, 99, 235, 0.3)',
+                    cursor: askingOpenClaw ? 'wait' : 'pointer'
+                  }}
+                >
+                  {askingOpenClaw ? '⏳ OpenClaw Thinking...' : '🔮 Ask OpenClaw'}
                 </button>
               </div>
               
