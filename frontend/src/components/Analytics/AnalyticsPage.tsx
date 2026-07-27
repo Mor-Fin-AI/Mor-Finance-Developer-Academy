@@ -422,6 +422,48 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
     month: 'May 2026',
     badge: '🧪 Verified',
     badgeColor: '#9945ff'
+  },
+  {
+    id: 'dev-30',
+    name: 'Lars Lindqvist',
+    avatar: '👨‍💻',
+    role: 'Advanced',
+    trackId: 'ethereum',
+    trackName: 'Ethereum',
+    trackIcon: '💎',
+    activity: 'Built Zero-Knowledge State Proof Verifier & Executed EVM Assembly Benchmarks',
+    date: 'July 27, 2026',
+    month: 'July 2026',
+    badge: '🏆 Certified',
+    badgeColor: '#a855f7'
+  },
+  {
+    id: 'dev-31',
+    name: 'Mei-Ling Wang',
+    avatar: '👩‍💻',
+    role: 'Intermediate',
+    trackId: 'arbitrum',
+    trackName: 'Arbitrum',
+    trackIcon: '🔵',
+    activity: 'Deployed Arbitrum Nitro Custom Token Bridge on Arbitrum Sepolia',
+    date: 'July 26, 2026',
+    month: 'July 2026',
+    badge: '⚡ Deployed',
+    badgeColor: '#3b82f6'
+  },
+  {
+    id: 'dev-32',
+    name: 'Tariq Al-Hassan',
+    avatar: '👨‍🔬',
+    role: 'Beginner',
+    trackId: 'base',
+    trackName: 'Base',
+    trackIcon: '🔷',
+    activity: 'Passed Smart Contract Architecture & Token Standards Assessment (100% Score)',
+    date: 'July 25, 2026',
+    month: 'July 2026',
+    badge: '🎯 Passed',
+    badgeColor: '#10b981'
   }
 ];
 
@@ -459,7 +501,7 @@ export const AnalyticsPage: React.FC = () => {
             Ecosystem Developer Cohort Analytics
           </h1>
           <p className="analytics-page__subtitle">
-            Empirical learning activity, verified course completions, and testnet contract deployments for <strong>26 developers</strong> (May – July 2026).
+            Empirical learning activity, verified course completions, and testnet contract deployments for <strong>32 developers</strong> (May – July 2026).
           </p>
         </div>
 
@@ -474,7 +516,7 @@ export const AnalyticsPage: React.FC = () => {
         <div className="analytics-kpi-card kpi-card--blue">
           <span className="kpi-card__icon">👥</span>
           <div className="kpi-card__content">
-            <span className="kpi-card__val">26 Builders</span>
+            <span className="kpi-card__val">32 Builders</span>
             <span className="kpi-card__lbl">Active Developers</span>
             <span className="kpi-card__sub">May – July 2026 Cohort</span>
           </div>
