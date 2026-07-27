@@ -40,6 +40,15 @@ export const ForumList: React.FC<ForumListProps> = ({
 }) => {
   const totalPages = Math.ceil(totalCount / 5) || 1;
 
+  const categoriesRef = React.useRef<HTMLDivElement>(null);
+
+  const scrollCategories = (direction: 'left' | 'right') => {
+    if (categoriesRef.current) {
+      const scrollAmount = direction === 'left' ? -180 : 180;
+      categoriesRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="forum-layout">
       <div className="forum-main">
@@ -66,9 +75,19 @@ export const ForumList: React.FC<ForumListProps> = ({
           </div>
         </div>
 
-        {/* Navigation & Search Pills */}
+        {/* Navigation & Search Pills with Left / Right Scroll Arrows */}
         <div className="forum-nav-bar glass">
-          <div className="forum-categories">
+          <button
+            type="button"
+            className="forum-cat-scroll-arrow forum-cat-scroll-arrow--left"
+            onClick={() => scrollCategories('left')}
+            aria-label="Scroll categories left"
+            title="Scroll Left"
+          >
+            ‹
+          </button>
+
+          <div className="forum-categories" ref={categoriesRef}>
             {[
               { id: 'All Topics', label: 'All Discussions' },
               { id: 'Discussion', label: 'Web3 Development' },
@@ -85,6 +104,16 @@ export const ForumList: React.FC<ForumListProps> = ({
               </button>
             ))}
           </div>
+
+          <button
+            type="button"
+            className="forum-cat-scroll-arrow forum-cat-scroll-arrow--right"
+            onClick={() => scrollCategories('right')}
+            aria-label="Scroll categories right"
+            title="Scroll Right"
+          >
+            ›
+          </button>
         </div>
 
         {/* Threads List */}
