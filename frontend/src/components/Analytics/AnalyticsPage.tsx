@@ -18,9 +18,23 @@ interface DeveloperActivityItem {
 
 const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
   {
-    id: 'dev-1',
-    name: 'Alex Chen',
+    id: 'dev-kenya-1',
+    name: 'Andrew Mwangi',
     avatar: '👨‍💻',
+    role: 'Intermediate',
+    trackId: 'base',
+    trackName: 'Base',
+    trackIcon: '🔷',
+    activity: 'Deployed Coinbase Smart Wallet Paymaster & Account Abstraction Vault on Base Sepolia',
+    date: 'July 27, 2026',
+    month: 'July 2026',
+    badge: '⚡ Deployed',
+    badgeColor: '#3b82f6'
+  },
+  {
+    id: 'dev-kenya-2',
+    name: 'Godwin Otieno',
+    avatar: '🧑‍💻',
     role: 'Advanced',
     trackId: 'arbitrum',
     trackName: 'Arbitrum',
@@ -32,28 +46,14 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
     badgeColor: '#a855f7'
   },
   {
-    id: 'dev-2',
-    name: 'Elena Rostova',
-    avatar: '👩‍💻',
-    role: 'Intermediate',
-    trackId: 'base',
-    trackName: 'Base',
-    trackIcon: '🔷',
-    activity: 'Deployed Coinbase Smart Wallet Paymaster dApp on Base Sepolia',
-    date: 'July 25, 2026',
-    month: 'July 2026',
-    badge: '⚡ Deployed',
-    badgeColor: '#3b82f6'
-  },
-  {
-    id: 'dev-3',
-    name: 'Marcus Vance',
+    id: 'dev-kenya-3',
+    name: 'Alex Mutua',
     avatar: '👨‍🔬',
     role: 'Beginner',
     trackId: 'fundamentals',
     trackName: 'Fundamentals',
     trackIcon: '🌐',
-    activity: 'Passed Smart Contract Architecture Quiz (100% Score) & Unlocked Level 2',
+    activity: 'Passed Smart Contract Architecture & Solidity Syntax Assessment (100% Score)',
     date: 'July 24, 2026',
     month: 'July 2026',
     badge: '🎯 Passed',
@@ -61,7 +61,7 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
   },
   {
     id: 'dev-4',
-    name: 'Devon Wright',
+    name: 'Brian Kiprop',
     avatar: '🧑‍💻',
     role: 'Advanced',
     trackId: 'solana',
@@ -75,7 +75,7 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
   },
   {
     id: 'dev-5',
-    name: 'Sophia Patel',
+    name: 'Mercy Wanjiru',
     avatar: '👩‍🔬',
     role: 'Intermediate',
     trackId: 'optimism',
@@ -89,7 +89,7 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
   },
   {
     id: 'dev-6',
-    name: 'Mateo Silva',
+    name: 'Dennis Njuguna',
     avatar: '👨‍💼',
     role: 'Beginner',
     trackId: 'polygon',
@@ -103,8 +103,8 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
   },
   {
     id: 'dev-7',
-    name: 'Liam O\'Connor',
-    avatar: '👨‍💻',
+    name: 'Faith Chebet',
+    avatar: '👩‍💻',
     role: 'Advanced',
     trackId: 'ethereum',
     trackName: 'Ethereum',
@@ -117,8 +117,8 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
   },
   {
     id: 'dev-8',
-    name: 'Ananya Sharma',
-    avatar: '👩‍🏫',
+    name: 'Kevin Ochieng',
+    avatar: '👨‍🏫',
     role: 'Intermediate',
     trackId: 'avalanche',
     trackName: 'Avalanche',
@@ -131,8 +131,8 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
   },
   {
     id: 'dev-9',
-    name: 'Kaito Tanaka',
-    avatar: '🧑‍💻',
+    name: 'Joy Njeri',
+    avatar: '👩‍💻',
     role: 'Beginner',
     trackId: 'fundamentals',
     trackName: 'Fundamentals',
@@ -145,8 +145,8 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
   },
   {
     id: 'dev-10',
-    name: 'Zoe Martinez',
-    avatar: '👩‍💼',
+    name: 'Peter Kamau',
+    avatar: '👨‍💼',
     role: 'Intermediate',
     trackId: 'arbitrum',
     trackName: 'Arbitrum',
@@ -159,8 +159,8 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
   },
   {
     id: 'dev-11',
-    name: 'Dmitri Volkov',
-    avatar: '👨‍🎨',
+    name: 'Cynthia Achieng',
+    avatar: '👩‍🎨',
     role: 'Advanced',
     trackId: 'base',
     trackName: 'Base',
@@ -173,8 +173,8 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
   },
   {
     id: 'dev-12',
-    name: 'Hannah Kim',
-    avatar: '👩‍💻',
+    name: 'Samuel Omwenga',
+    avatar: '👨‍💻',
     role: 'Beginner',
     trackId: 'ethereum',
     trackName: 'Ethereum',
@@ -187,8 +187,8 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
   },
   {
     id: 'dev-13',
-    name: 'Carlos Mendez',
-    avatar: '👨‍💻',
+    name: 'Ruth Nduta',
+    avatar: '👩‍💻',
     role: 'Intermediate',
     trackId: 'optimism',
     trackName: 'Optimism',
@@ -201,8 +201,8 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
   },
   {
     id: 'dev-14',
-    name: 'Aisha Bello',
-    avatar: '👩‍🔬',
+    name: 'Ian Korir',
+    avatar: '👨‍🔬',
     role: 'Advanced',
     trackId: 'solana',
     trackName: 'Solana',
@@ -215,8 +215,8 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
   },
   {
     id: 'dev-15',
-    name: 'Oliver Hudson',
-    avatar: '🧑‍💻',
+    name: 'Brenda Adhiambo',
+    avatar: '👩‍💻',
     role: 'Intermediate',
     trackId: 'polygon',
     trackName: 'Polygon',
@@ -229,8 +229,8 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
   },
   {
     id: 'dev-16',
-    name: 'Nadia Becker',
-    avatar: '👩‍🎓',
+    name: 'Kelvin Maina',
+    avatar: '👨‍🎓',
     role: 'Beginner',
     trackId: 'fundamentals',
     trackName: 'Fundamentals',
@@ -243,8 +243,8 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
   },
   {
     id: 'dev-17',
-    name: 'Javier Gomez',
-    avatar: '👨‍💼',
+    name: 'Sharon Wambui',
+    avatar: '👩‍💼',
     role: 'Advanced',
     trackId: 'avalanche',
     trackName: 'Avalanche',
@@ -257,8 +257,8 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
   },
   {
     id: 'dev-18',
-    name: 'Priya Nair',
-    avatar: '👩‍💻',
+    name: 'Eric Kimani',
+    avatar: '👨‍💻',
     role: 'Intermediate',
     trackId: 'ethereum',
     trackName: 'Ethereum',
@@ -271,8 +271,8 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
   },
   {
     id: 'dev-19',
-    name: 'Gabriel Dupont',
-    avatar: '👨‍🔬',
+    name: 'Joan Nyambura',
+    avatar: '👩‍🔬',
     role: 'Beginner',
     trackId: 'base',
     trackName: 'Base',
@@ -285,8 +285,8 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
   },
   {
     id: 'dev-20',
-    name: 'Viktor Novak',
-    avatar: '🧑‍💻',
+    name: 'Victor Kipchirchir',
+    avatar: '👨‍💻',
     role: 'Advanced',
     trackId: 'arbitrum',
     trackName: 'Arbitrum',
@@ -299,8 +299,8 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
   },
   {
     id: 'dev-21',
-    name: 'Yuki Takahashi',
-    avatar: '👨‍🎨',
+    name: 'Grace Onyango',
+    avatar: '👩‍🎨',
     role: 'Intermediate',
     trackId: 'solana',
     trackName: 'Solana',
@@ -313,8 +313,8 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
   },
   {
     id: 'dev-22',
-    name: 'Camila Torres',
-    avatar: '👩‍💼',
+    name: 'Patrick Muriithi',
+    avatar: '👨‍💼',
     role: 'Beginner',
     trackId: 'optimism',
     trackName: 'Optimism',
@@ -327,8 +327,8 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
   },
   {
     id: 'dev-23',
-    name: 'Ethan Brooks',
-    avatar: '👨‍💻',
+    name: 'Esther Waithera',
+    avatar: '👩‍💻',
     role: 'Advanced',
     trackId: 'polygon',
     trackName: 'Polygon',
@@ -341,8 +341,8 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
   },
   {
     id: 'dev-24',
-    name: 'Fatima Al-Mansoor',
-    avatar: '👩‍🔬',
+    name: 'Josephat Kiptoo',
+    avatar: '👨‍🔬',
     role: 'Intermediate',
     trackId: 'fundamentals',
     trackName: 'Fundamentals',
@@ -355,8 +355,8 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
   },
   {
     id: 'dev-25',
-    name: 'Lucas Meyer',
-    avatar: '🧑‍💻',
+    name: 'Rose Moraa',
+    avatar: '👩‍💻',
     role: 'Beginner',
     trackId: 'ethereum',
     trackName: 'Ethereum',
@@ -369,8 +369,8 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
   },
   {
     id: 'dev-26',
-    name: 'Chloe Bennett',
-    avatar: '👩‍💻',
+    name: 'Collins Omondi',
+    avatar: '👨‍💻',
     role: 'Intermediate',
     trackId: 'avalanche',
     trackName: 'Avalanche',
@@ -380,6 +380,48 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
     month: 'May 2026',
     badge: '⚙️ Configured',
     badgeColor: '#e84142'
+  },
+  {
+    id: 'dev-27',
+    name: 'Naomi Wairimu',
+    avatar: '👩‍💼',
+    role: 'Beginner',
+    trackId: 'base',
+    trackName: 'Base',
+    trackIcon: '🔷',
+    activity: 'Completed Base Sepolia Faucet Setup & Deployed Counter Contract',
+    date: 'May 08, 2026',
+    month: 'May 2026',
+    badge: '⚡ Deployed',
+    badgeColor: '#0052ff'
+  },
+  {
+    id: 'dev-28',
+    name: 'Titus Mutiso',
+    avatar: '👨‍🔬',
+    role: 'Intermediate',
+    trackId: 'arbitrum',
+    trackName: 'Arbitrum',
+    trackIcon: '🔵',
+    activity: 'Passed Rollup Fraud Proofs & Nitro Sequencer Architecture Module',
+    date: 'May 05, 2026',
+    month: 'May 2026',
+    badge: '🎯 Passed',
+    badgeColor: '#28a0f0'
+  },
+  {
+    id: 'dev-29',
+    name: 'Sheila Cherono',
+    avatar: '👩‍💻',
+    role: 'Advanced',
+    trackId: 'solana',
+    trackName: 'Solana',
+    trackIcon: '🟠',
+    activity: 'Audited Solana Sealevel Parallel Runtime State Transitions',
+    date: 'May 02, 2026',
+    month: 'May 2026',
+    badge: '🧪 Verified',
+    badgeColor: '#9945ff'
   }
 ];
 
@@ -411,7 +453,7 @@ export const AnalyticsPage: React.FC = () => {
           <div className="analytics-page__tag">
             <span>📈 EXECUTIVE DASHBOARD</span>
             <span className="analytics-page__tag-divider">•</span>
-            <span>GRANT & PARTNER REVIEW</span>
+            <span>MAY – JULY 2026 COHORT</span>
           </div>
           <h1 className="analytics-page__title">
             Ecosystem Developer Cohort Analytics
