@@ -20,25 +20,36 @@
   border-bottom: 1px solid var(--clr-border);
 }
 
-.sidebar__logo-icon {
-  font-size: 2rem;
-  color: var(--clr-primary-light);
-  line-height: 1;
-  filter: drop-shadow(0 0 8px var(--clr-primary-glow));
+.sidebar__logo-img {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 12px rgba(59, 130, 246, 0.6));
 }
 
 .sidebar__logo-title {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--clr-text-secondary);
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #fff;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .sidebar__logo-subtitle {
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   font-weight: 800;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.04em;
+}
+
+.sidebar__tagline {
+  font-size: 0.6rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: #60a5fa;
+  text-align: center;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--clr-border);
+  background: rgba(59, 130, 246, 0.05);
 }
 
 /* Nav */

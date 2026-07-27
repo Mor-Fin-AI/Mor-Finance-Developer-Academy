@@ -78,7 +78,10 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
         )}
         <div className="header__title-group">
-          <h1 className="header__title">{title}</h1>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <img src="/mor-logo.png" alt="MOR Finance" style={{ width: '22px', height: '22px', objectFit: 'contain', filter: 'drop-shadow(0 0 6px rgba(59,130,246,0.6))' }} />
+            <h1 className="header__title">{title}</h1>
+          </div>
           <p className="header__subtitle">{subtitle}</p>
         </div>
       </div>

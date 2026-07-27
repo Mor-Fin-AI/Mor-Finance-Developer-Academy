@@ -75,10 +75,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {/* Logo */}
         <div className="sidebar__logo">
           <div className="sidebar__logo-brand">
-            <div className="sidebar__logo-icon">⬡</div>
+            <img src="/mor-logo.png" alt="MOR Finance Logo" className="sidebar__logo-img" />
             <div>
-              <div className="sidebar__logo-title">Developer</div>
-              <div className="sidebar__logo-subtitle gradient-text">Academy</div>
+              <div className="sidebar__logo-title">MORFINANCE</div>
+              <div className="sidebar__logo-subtitle gradient-text">DEV ACADEMY</div>
             </div>
           </div>
           {onClose && (
@@ -86,6 +86,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
               ✕
             </button>
           )}
+        </div>
+        <div className="sidebar__tagline">
+          <span>CODE • FINANCE • BUILD THE FUTURE</span>
         </div>
 
         {/* Navigation */}

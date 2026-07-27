@@ -22,10 +22,19 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       {/* Hero section */}
       <section className="landing-hero animate-fade-up">
         <div className="landing-logo">
-          <div className="landing-logo__icon">⬡</div>
+          <img src="/mor-logo.png" alt="MOR Finance Logo" className="landing-logo__img" />
           <h1 className="landing-logo__title">
             MOR <span className="gradient-text">FINANCE</span>
           </h1>
+        </div>
+
+        {/* Official Brand Title Banner */}
+        <div className="landing-brand-banner-container">
+          <img
+            src="/mor-brand-banner.png"
+            alt="MORFINANCE DEV ACADEMY - CODE. FINANCE. BUILD THE FUTURE."
+            className="landing-brand-banner"
+          />
         </div>
 
         <span className="landing-badge">OFFICIAL DEVELOPER ACADEMY</span>
