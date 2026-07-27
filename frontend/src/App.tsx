@@ -456,6 +456,10 @@ export default function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
+        
+        <footer className="app-global-footer" style={{ textAlign: 'center', padding: '32px 16px 16px 16px', borderTop: '1px solid rgba(255, 255, 255, 0.06)', fontSize: '0.75rem', color: 'var(--clr-text-muted)', marginTop: '40px' }}>
+          © 2026 MOR Finance Ltd. All rights reserved. | AI-Powered Web3 Developer Academy
+        </footer>
       </main>
     </div>
   );

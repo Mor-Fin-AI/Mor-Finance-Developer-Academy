@@ -368,10 +368,14 @@
 .quiz-score-banner {
   display: flex;
   align-items: center;
-  gap: 20px;
-  padding: 20px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px 20px;
   border-radius: var(--radius-lg);
   border: 1px solid var(--clr-border);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .quiz-score-banner--passed {
@@ -387,6 +391,7 @@
 .score-percentage {
   font-size: 2rem;
   font-weight: 800;
+  flex-shrink: 0;
 }
 
 .quiz-score-banner--passed .score-percentage { color: var(--clr-success); }
@@ -407,6 +412,8 @@
   margin-left: auto;
   font-size: 0.8rem;
   padding: 8px 16px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 /* Coding Sandbox Workspace */
