@@ -109,6 +109,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <a href="https://discord.gg/Jjt52cQEV" target="_blank" rel="noopener noreferrer" className="trust-link">
               <span>💬</span> Discord Community
             </a>
+            <a href="mailto:john@morfinance.ai" className="trust-link" style={{ color: '#60a5fa' }}>
+              <span>✉️</span> john@morfinance.ai
+            </a>
+            <a href="mailto:admin@morfinance.ai" className="trust-link" style={{ color: '#c084fc' }}>
+              <span>✉️</span> admin@morfinance.ai
+            </a>
             <a href="https://github.com/Mor-Fin-AI/Mor-Finance-Developer-Academy#readme" target="_blank" rel="noopener noreferrer" className="trust-link">
               <span>📖</span> Documentation
             </a>

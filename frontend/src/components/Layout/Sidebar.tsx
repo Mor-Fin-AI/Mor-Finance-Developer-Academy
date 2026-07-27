@@ -132,7 +132,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <span className="sidebar__discord-arrow">↗</span>
           </a>
 
-          <div className="sidebar__sublinks">
+          <div className="sidebar__support-emails" style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginTop: '8px', padding: '8px', background: 'rgba(255,255,255,0.02)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
+            <span style={{ fontSize: '0.65rem', fontWeight: 800, color: 'var(--clr-text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Email Support:</span>
+            <a href="mailto:john@morfinance.ai" className="sidebar__sublink" style={{ fontSize: '0.72rem', color: '#60a5fa' }}>
+              <span>✉️</span> john@morfinance.ai
+            </a>
+            <a href="mailto:admin@morfinance.ai" className="sidebar__sublink" style={{ fontSize: '0.72rem', color: '#c084fc' }}>
+              <span>✉️</span> admin@morfinance.ai
+            </a>
+          </div>
+
+          <div className="sidebar__sublinks" style={{ marginTop: '8px' }}>
             <a href="https://github.com/Mor-Fin-AI" target="_blank" rel="noopener noreferrer" className="sidebar__sublink">
               <span>🐙</span> GitHub
             </a>

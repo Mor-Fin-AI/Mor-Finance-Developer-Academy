@@ -250,6 +250,22 @@ export const ForumList: React.FC<ForumListProps> = ({
           </a>
         </div>
 
+        {/* Support Emails Panel */}
+        <div className="forum-panel glass" style={{ border: '1px solid rgba(59, 130, 246, 0.25)', background: 'rgba(59, 130, 246, 0.04)' }}>
+          <h3 className="forum-panel__title" style={{ color: '#60a5fa' }}>Email Support</h3>
+          <p style={{ fontSize: '0.78rem', color: 'var(--clr-text-secondary)', margin: '8px 0 10px 0', lineHeight: 1.4 }}>
+            Need direct help from the MOR Finance core team? Email us anytime:
+          </p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+            <a href="mailto:john@morfinance.ai" style={{ fontSize: '0.78rem', color: '#60a5fa', textDecoration: 'none', fontWeight: 600 }}>
+              ✉️ john@morfinance.ai
+            </a>
+            <a href="mailto:admin@morfinance.ai" style={{ fontSize: '0.78rem', color: '#c084fc', textDecoration: 'none', fontWeight: 600 }}>
+              ✉️ admin@morfinance.ai
+            </a>
+          </div>
+        </div>
+
 
 
         {/* Trending topics */}

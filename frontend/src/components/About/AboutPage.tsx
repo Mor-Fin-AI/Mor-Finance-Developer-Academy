@@ -173,6 +173,32 @@ export const AboutPage: React.FC = () => {
           </a>
         </div>
       </div>
+
+      {/* Official Support Emails Section */}
+      <div className="about-support-section glass" style={{ marginTop: '32px', padding: '24px', borderRadius: '16px', border: '1px solid rgba(59, 130, 246, 0.3)', background: 'rgba(10, 11, 23, 0.45)' }}>
+        <h3 className="about-section-title" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '1.2rem', marginBottom: '8px' }}>
+          <span>✉️</span> Contact & Developer Support
+        </h3>
+        <p className="about-section-sub" style={{ marginBottom: '16px' }}>
+          For inquiries regarding developer grants, Academy onboarding, technical support, or partnership opportunities, contact our team:
+        </p>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
+          <a
+            href="mailto:john@morfinance.ai"
+            className="btn btn--secondary"
+            style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem', padding: '10px 18px', background: 'rgba(59, 130, 246, 0.1)', border: '1px solid rgba(59, 130, 246, 0.3)', color: '#60a5fa', borderRadius: '8px', textDecoration: 'none' }}
+          >
+            <span>📧</span> john@morfinance.ai
+          </a>
+          <a
+            href="mailto:admin@morfinance.ai"
+            className="btn btn--secondary"
+            style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem', padding: '10px 18px', background: 'rgba(168, 85, 247, 0.1)', border: '1px solid rgba(168, 85, 247, 0.3)', color: '#c084fc', borderRadius: '8px', textDecoration: 'none' }}
+          >
+            <span>📧</span> admin@morfinance.ai
+          </a>
+        </div>
+      </div>
     </div>
   );
 };
