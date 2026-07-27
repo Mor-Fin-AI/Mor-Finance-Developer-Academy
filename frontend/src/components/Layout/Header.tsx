@@ -22,7 +22,8 @@ interface HeaderProps {
 const PAGE_META: Record<NavPage, { title: string; subtitle: string }> = {
   academy:      { title: 'Developer Academy',  subtitle: 'Learn and compile smart contracts' },
   roadmap:      { title: 'Developer Academy',  subtitle: 'Learn and compile smart contracts' },
-  dashboard:    { title: 'Learning Analytics', subtitle: 'Track your Web3 progress & stats' },
+  dashboard:    { title: 'My Dashboard',       subtitle: 'Track your Web3 progress & stats' },
+  analytics:    { title: 'Cohort Analytics',   subtitle: 'Executive & Partner Review (May–July 2026)' },
   forum:        { title: 'Community Forum',    subtitle: 'Ask questions, share knowledge, and help others' },
   hackathons:   { title: 'Web3 Hackathons',    subtitle: 'Build, innovate, and win.' },
   mentor:       { title: 'AI Mentor Workspace',subtitle: 'Get real-time code reviews and support' },

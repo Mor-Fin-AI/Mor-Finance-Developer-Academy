@@ -14,6 +14,7 @@ import { HackathonsView } from './components/Hackathons/HackathonsView';
 import { LandingPage } from './components/Auth/LandingPage';
 import { AboutPage } from './components/About/AboutPage';
 import { SubscriptionPlans } from './components/Subscriptions/SubscriptionPlans';
+import { AnalyticsPage } from './components/Analytics/AnalyticsPage';
 import './index.css';
 
 export default function App() {
@@ -24,6 +25,7 @@ export default function App() {
     const path = location.pathname;
     if (path.startsWith('/academy') || path.startsWith('/roadmap')) return 'academy';
     if (path.startsWith('/dashboard')) return 'dashboard';
+    if (path.startsWith('/analytics')) return 'analytics';
     if (path.startsWith('/forum')) return 'forum';
     if (path.startsWith('/hackathons')) return 'hackathons';
     if (path.startsWith('/mentor')) return 'mentor';
@@ -448,6 +450,7 @@ export default function App() {
               onNavigate={(page) => navigate(`/${page}`)}
             />
           } />
+          <Route path="/analytics" element={<AnalyticsPage />} />
           <Route path="/forum" element={<ForumView userId={userId} token={jwtToken || ''} />} />
           <Route path="/hackathons" element={<HackathonsView userId={userId} onProgressUpdate={handleProgressUpdate} token={jwtToken || ''} />} />
           <Route path="/mentor" element={<MentorPage currentLevel={progress?.current_level ?? 1} userId={userId} />} />

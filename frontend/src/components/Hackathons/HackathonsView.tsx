@@ -675,10 +675,6 @@ export const HackathonsView: React.FC<HackathonsViewProps> = ({ userId, onProgre
           </div>
         </div>
       )}
-
-      <div style={{ textAlign: 'center', marginTop: '40px', padding: '16px 0', borderTop: '1px solid rgba(255,255,255,0.06)', fontSize: '0.75rem', color: 'var(--clr-text-muted)' }}>
-        © 2026 MOR Finance Ltd. All rights reserved. | AI-Powered Web3 Developer Academy
-      </div>
     </div>
   );
 };

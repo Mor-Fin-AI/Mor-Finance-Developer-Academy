@@ -1,0 +1,428 @@
+/* Ecosystem Developer Cohort Analytics Page Styles */
+.analytics-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.analytics-page__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 28px;
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(10, 11, 23, 0.6) 100%);
+}
+
+.analytics-page__tag {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--clr-primary-light);
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+
+.analytics-page__tag-divider {
+  color: var(--clr-text-muted);
+}
+
+.analytics-page__title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 6px 0;
+}
+
+.analytics-page__subtitle {
+  font-size: 0.9rem;
+  color: var(--clr-text-secondary);
+  margin: 0;
+  max-width: 650px;
+  line-height: 1.5;
+}
+
+.analytics-page__header-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 12px 18px;
+  background: rgba(124, 58, 237, 0.15);
+  border: 1px solid rgba(124, 58, 237, 0.3);
+  border-radius: var(--radius-md);
+}
+
+.analytics-page__badge-val {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #c084fc;
+}
+
+.analytics-page__badge-lbl {
+  font-size: 0.72rem;
+  color: var(--clr-text-muted);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+/* KPI Overview Cards Grid */
+.analytics-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.analytics-kpi-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--clr-border);
+  background: var(--clr-bg-card);
+  transition: all 0.2s ease;
+}
+
+.analytics-kpi-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--clr-border-bright);
+}
+
+.kpi-card__icon {
+  font-size: 1.8rem;
+}
+
+.kpi-card__val {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #ffffff;
+  display: block;
+  line-height: 1.1;
+}
+
+.kpi-card__lbl {
+  font-size: 0.72rem;
+  color: var(--clr-text-muted);
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-top: 4px;
+  display: block;
+}
+
+.kpi-card__sub {
+  font-size: 0.7rem;
+  color: var(--clr-primary-light);
+  margin-top: 2px;
+  display: block;
+}
+
+.kpi-card--blue { border-color: rgba(59, 130, 246, 0.3); background: rgba(59, 130, 246, 0.05); }
+.kpi-card--green { border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.05); }
+.kpi-card--purple { border-color: rgba(168, 85, 247, 0.3); background: rgba(168, 85, 247, 0.05); }
+.kpi-card--amber { border-color: rgba(245, 158, 11, 0.3); background: rgba(245, 158, 11, 0.05); }
+.kpi-card--pink { border-color: rgba(236, 72, 153, 0.3); background: rgba(236, 72, 153, 0.05); }
+
+/* Visual Charts Section */
+.analytics-charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 20px;
+}
+
+.analytics-chart-panel {
+  padding: 24px;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--clr-border);
+  background: var(--clr-bg-card);
+}
+
+.analytics-chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.analytics-chart-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 4px 0;
+}
+
+.analytics-chart-subtitle {
+  font-size: 0.8rem;
+  color: var(--clr-text-secondary);
+}
+
+.analytics-chart-pill {
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--clr-primary-dim);
+  color: var(--clr-primary-light);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.chart-svg-container {
+  width: 100%;
+  height: 180px;
+}
+
+.cohort-growth-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Tier Breakdown */
+.multi-segment-bar {
+  display: flex;
+  height: 16px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.segment--beginner { background: #10b981; }
+.segment--intermediate { background: #3b82f6; }
+.segment--advanced { background: #a855f7; }
+
+.tier-legend-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tier-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.legend-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dot--beginner { background: #10b981; }
+.dot--intermediate { background: #3b82f6; }
+.dot--advanced { background: #a855f7; }
+
+.legend-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #ffffff;
+  display: block;
+}
+
+.legend-desc {
+  font-size: 0.75rem;
+  color: var(--clr-text-secondary);
+  display: block;
+}
+
+/* Ecosystem Bars */
+.ecosystem-bars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.ecosystem-bar-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ecosystem-bar-head {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  font-weight: 700;
+
+  .ecosystem-bar-name { color: #ffffff; }
+  .ecosystem-bar-count { color: var(--clr-primary-light); }
+}
+
+.ecosystem-bar-track {
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+}
+
+.ecosystem-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+/* Activity Panel & Feed Table */
+.analytics-activity-panel {
+  padding: 24px;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--clr-border);
+  background: var(--clr-bg-card);
+}
+
+.analytics-activity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.analytics-filters-bar {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 14px;
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--clr-border);
+  margin-bottom: 16px;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.filter-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--clr-text-muted);
+  text-transform: uppercase;
+}
+
+.filter-select {
+  background: #121429;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  outline: none;
+}
+
+.filter-search-input {
+  background: #121429;
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.8rem;
+  margin-left: auto;
+  min-width: 220px;
+  outline: none;
+}
+
+.activity-feed-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 480px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.activity-feed-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: var(--radius-md);
+  transition: background 0.2s;
+}
+
+.activity-feed-row:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.activity-feed-avatar {
+  font-size: 1.4rem;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.activity-feed-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.activity-feed-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 2px;
+}
+
+.activity-feed-name {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.role-badge {
+  font-size: 0.62rem;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.role-badge--beginner { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+.role-badge--intermediate { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.3); }
+.role-badge--advanced { background: rgba(168, 85, 247, 0.15); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.3); }
+
+.activity-feed-track {
+  font-size: 0.75rem;
+  color: var(--clr-text-muted);
+}
+
+.activity-feed-desc {
+  font-size: 0.8rem;
+  color: var(--clr-text-secondary);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.activity-feed-end {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.status-badge {
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1px solid;
+  display: inline-block;
+  margin-bottom: 2px;
+}
+
+.activity-feed-date {
+  font-size: 0.7rem;
+  color: var(--clr-text-muted);
+  display: block;
+}
