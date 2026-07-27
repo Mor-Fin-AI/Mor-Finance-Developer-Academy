@@ -215,7 +215,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           <a href="https://discord.gg/Jjt52cQEV" target="_blank" rel="noopener noreferrer">Community</a>
           <a href="/about">About MOR</a>
         </div>
-        <p>PROTECTED BY MOR IDENTITY SYSTEM • © 2026 MOR FINANCE DEVELOPER ACADEMY</p>
+        <p>© 2026 MOR Finance Ltd. All rights reserved. | AI-Powered Web3 Developer Academy</p>
       </footer>
     </div>
   );

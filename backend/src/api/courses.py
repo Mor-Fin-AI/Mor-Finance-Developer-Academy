@@ -4,12 +4,12 @@ Courses and Lessons API Routers — retrieves structured courses list and indivi
 from fastapi import APIRouter, HTTPException
 from src.services.lessons import get_courses_list, get_track_lessons, LESSONS_DB
 
-SUPPORTED_TRACKS = {"ethereum", "arbitrum", "optimism", "polygon", "base", "solana", "avalanche"}
+SUPPORTED_TRACKS = {"fundamentals", "ethereum", "arbitrum", "optimism", "polygon", "base", "solana", "avalanche"}
 
 def validate_track(track: str) -> str:
     track_lower = track.lower().strip()
     if track_lower not in SUPPORTED_TRACKS:
-        raise HTTPException(status_code=400, detail=f"Unsupported ecosystem track '{track}'. Supported: {sorted(list(SUPPORTED_TRACKS))}")
+        raise HTTPException(status_code=400, detail=f"Unsupported track '{track}'. Supported: {sorted(list(SUPPORTED_TRACKS))}")
     return track_lower
 
 router = APIRouter()

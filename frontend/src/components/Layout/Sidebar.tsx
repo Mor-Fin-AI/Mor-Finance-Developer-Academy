@@ -176,6 +176,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
               </button>
             )}
           </div>
+          <div style={{ fontSize: '0.62rem', color: 'var(--clr-text-muted)', textAlign: 'center', marginTop: '12px', padding: '0 4px', lineHeight: '1.4' }}>
+            © 2026 MOR Finance Ltd. All rights reserved. | AI-Powered Web3 Developer Academy
+          </div>
         </div>
       </aside>
     </>

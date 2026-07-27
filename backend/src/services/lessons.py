@@ -422,6 +422,16 @@ def get_track_lessons(track_id: str) -> List[Lesson]:
     
     # Ecosystem-specific metadata for bespoke introductory content & starter projects
     ECOSYSTEM_DETAILS = {
+        "fundamentals": {
+            "arch": "Peer-to-peer network topologies, cryptographic hashing (SHA256, Keccak256), public/private key pairs, and consensus mechanisms (PoW, PoS).",
+            "tool": "Solidity, Rust, Web3.js, Ethers.js, Hardhat, Foundry, and MOR Developer Toolkits",
+            "p1_title": "Web3 Fundamentals Starter Project 1: OpenZeppelin Core Contracts",
+            "p1_desc": "Build and compile foundational smart contracts using OpenZeppelin's official Web3 smart contract library.",
+            "p1_repo": "https://github.com/OpenZeppelin/openzeppelin-contracts",
+            "p2_title": "Web3 Fundamentals Starter Project 2: Scaffold-ETH 2 Multi-Chain DApp",
+            "p2_desc": "Deploy a multi-chain dApp with Next.js, Wagmi, RainbowKit, and AI Mentor support.",
+            "p2_repo": "https://github.com/scaffold-eth/scaffold-eth-2"
+        },
         "ethereum": {
             "arch": "Ethereum Virtual Machine (EVM), proof-of-stake consensus (Gasper), and gas execution model.",
             "tool": "Solidity (^0.8.20), Hardhat, Foundry, and Ethers.js / Viem",
@@ -725,30 +735,48 @@ Congratulations on completing the Introductory Lessons, Quizzes, Coding Exercise
     
     return lessons
 
-def get_courses_list(track: str = "ethereum") -> List[Course]:
-    """Compile courses from levels metadata and lesson details, incorporating dynamic track lessons."""
-    levels_meta = [
-        {"id": 1, "title": "Blockchain Fundamentals"},
-        {"id": 2, "title": "Wallet Development"},
-        {"id": 3, "title": "Smart Contract Development"},
-        {"id": 4, "title": "DeFi Fundamentals"},
-        {"id": 5, "title": "DAO Governance"},
-        {"id": 6, "title": "MOR Finance Protocols"},
-        {"id": 7, "title": f"{track.capitalize()} Track"},
-    ]
-    courses = []
-    for lm in levels_meta:
-        level_id = lm["id"]
-        if level_id == 7:
-            lessons = get_track_lessons(track)
-        else:
+def get_courses_list(track: str = "fundamentals") -> List[Course]:
+    """Compile courses list separating universal fundamentals track from chain-specific tracks."""
+    t_id = track.lower().strip()
+    if t_id == "fundamentals":
+        levels_meta = [
+            {"id": 1, "title": "Blockchain Fundamentals & Web3 Core"},
+            {"id": 2, "title": "Smart Contract Architecture"},
+            {"id": 3, "title": "Token Standards & ERCs"},
+            {"id": 4, "title": "Protocol Security & Auditing"},
+            {"id": 5, "title": "DeFi Fundamentals & Liquidity"},
+            {"id": 6, "title": "MOR Finance Protocols & Governance"},
+        ]
+        courses = []
+        for lm in levels_meta:
+            level_id = lm["id"]
             lessons = [l for l in LESSONS_DB.values() if l.level_id == level_id]
-        courses.append(
-            Course(
-                level_id=level_id,
-                title=lm["title"],
-                total_lessons=len(lessons),
-                lessons=lessons
+            courses.append(
+                Course(
+                    level_id=level_id,
+                    title=lm["title"],
+                    total_lessons=len(lessons),
+                    lessons=lessons
+                )
             )
-        )
-    return courses
+        return courses
+    else:
+        chain_name = t_id.capitalize()
+        t_lessons = get_track_lessons(t_id)
+        chain_meta = [
+            {"id": 1, "title": f"{chain_name} Architecture & Core Principles", "lessons": [t_lessons[0]] if len(t_lessons) > 0 else []},
+            {"id": 2, "title": f"{chain_name} Environment Setup & Tooling", "lessons": [t_lessons[1]] if len(t_lessons) > 1 else []},
+            {"id": 3, "title": f"{chain_name} Starter Project 1 (GitHub Repo)", "lessons": [t_lessons[2]] if len(t_lessons) > 2 else []},
+            {"id": 4, "title": f"{chain_name} Starter Project 2 (Full-Stack DApp)", "lessons": [t_lessons[3]] if len(t_lessons) > 3 else []},
+        ]
+        courses = []
+        for cm in chain_meta:
+            courses.append(
+                Course(
+                    level_id=cm["id"],
+                    title=cm["title"],
+                    total_lessons=len(cm["lessons"]),
+                    lessons=cm["lessons"]
+                )
+            )
+        return courses

@@ -137,15 +137,28 @@
 
 .track-switcher__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  grid-template-columns: repeat(8, 1fr);
   gap: 10px;
+  width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .track-switcher__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .track-switcher__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .track-btn {
-  padding: 12px 8px;
+  padding: 12px 6px;
   border-radius: var(--radius-md);
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  background-color: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: rgba(255, 255, 255, 0.02);
   color: var(--clr-text-secondary);
   cursor: pointer;
   text-align: center;
@@ -153,7 +166,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+  gap: 4px;
+  min-height: 80px;
 }
 
 .track-btn:hover:not(:disabled) {

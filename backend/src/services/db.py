@@ -66,28 +66,80 @@ async def close_mongo_connection():
         db_instance.client.close()
         print("🛑 Closed MongoDB connection.")
 
+def build_user_levels(active_track: str, completed_ids: List[str]):
+    t_id = (active_track or "fundamentals").lower().strip()
+    from src.services.lessons import LESSONS_DB, get_track_lessons
+    
+    computed_levels = []
+    
+    if t_id == "fundamentals":
+        gen_levels_meta = [
+            (1, "Blockchain Fundamentals & Web3 Core"),
+            (2, "Smart Contract Architecture"),
+            (3, "Token Standards & Asset Engineering"),
+            (4, "Protocol Security & Vulnerability Audits"),
+            (5, "DeFi Fundamentals & Liquidity Mechanics"),
+            (6, "MOR Finance Protocols & Governance"),
+        ]
+        for lvl_id, title in gen_levels_meta:
+            lvl_lessons = [l for l in LESSONS_DB.values() if l.level_id == lvl_id]
+            completed_cnt = sum(1 for l in lvl_lessons if l.id in completed_ids)
+            computed_levels.append({
+                "level_id": lvl_id,
+                "title": title,
+                "total_lessons": len(lvl_lessons),
+                "completed_lessons": completed_cnt,
+                "is_unlocked": False,
+                "completed_at": datetime.now(timezone.utc) if completed_cnt >= len(lvl_lessons) and len(lvl_lessons) > 0 else None
+            })
+    else:
+        chain_name = t_id.capitalize()
+        t_lessons = get_track_lessons(t_id)
+        
+        chain_levels_meta = [
+            (1, f"{chain_name} Architecture & Core Principles", [t_lessons[0]] if len(t_lessons) > 0 else []),
+            (2, f"{chain_name} Environment Setup & Tooling", [t_lessons[1]] if len(t_lessons) > 1 else []),
+            (3, f"{chain_name} Starter Project 1 (GitHub Repo)", [t_lessons[2]] if len(t_lessons) > 2 else []),
+            (4, f"{chain_name} Starter Project 2 (Full-Stack DApp)", [t_lessons[3]] if len(t_lessons) > 3 else []),
+        ]
+        for lvl_id, title, lvl_lessons in chain_levels_meta:
+            completed_cnt = sum(1 for l in lvl_lessons if l.id in completed_ids)
+            computed_levels.append({
+                "level_id": lvl_id,
+                "title": title,
+                "total_lessons": len(lvl_lessons),
+                "completed_lessons": completed_cnt,
+                "is_unlocked": False,
+                "completed_at": datetime.now(timezone.utc) if completed_cnt >= len(lvl_lessons) and len(lvl_lessons) > 0 else None
+            })
+            
+    for i in range(len(computed_levels)):
+        if i == 0:
+            computed_levels[i]["is_unlocked"] = True
+        else:
+            prev = computed_levels[i-1]
+            if prev["completed_lessons"] >= prev["total_lessons"] and prev["total_lessons"] > 0:
+                computed_levels[i]["is_unlocked"] = True
+
+    total_lessons_curriculum = sum(l["total_lessons"] for l in computed_levels)
+    total_completed_lessons = sum(l["completed_lessons"] for l in computed_levels)
+    overall_pct = round(total_completed_lessons / total_lessons_curriculum * 100, 1) if total_lessons_curriculum > 0 else 0.0
+
+    return computed_levels, overall_pct
+
 def create_default_user_dict(user_id: str, auth_type: str) -> Dict[str, Any]:
     """Generate the initial schema for a new user."""
-    levels = [
-        {
-            "level_id": m["level_id"],
-            "title": m["title"],
-            "completed_lessons": 0,
-            "total_lessons": m["total_lessons"],
-            "is_unlocked": (m["level_id"] == 1),
-            "completed_at": None,
-        }
-        for m in LEVEL_META
-    ]
+    completed_ids: List[str] = []
+    levels, overall_pct = build_user_levels("fundamentals", completed_ids)
     return {
         "_id": user_id,
         "user_id": user_id,
         "auth_type": auth_type,
         "xp": 0,
-        "streak_days": 0,
+        "streak_days": 1,
         "current_level": 1,
-        "overall_pct": 0.0,
-        "active_track": "ethereum",
+        "overall_pct": overall_pct,
+        "active_track": "fundamentals",
         "levels": levels,
         "last_active": datetime.now(timezone.utc),
         "registered_at": datetime.now(timezone.utc),
@@ -145,43 +197,14 @@ async def get_or_create_user(user_id: str, auth_type: str = "demo") -> Dict[str,
             updates["github_username"] = user_id.replace("gh-", "")
             updated = True
         if "active_track" not in user:
-            user["active_track"] = "ethereum"
-            updates["active_track"] = "ethereum"
+            user["active_track"] = "fundamentals"
+            updates["active_track"] = "fundamentals"
             updated = True
-        if not any(l["level_id"] == 7 for l in user.get("levels", [])):
-            lvl_meta_7 = next(m for m in LEVEL_META if m["level_id"] == 7)
-            new_lvl_7 = {
-                "level_id": 7,
-                "title": f"{user.get('active_track', 'ethereum').capitalize()} Track",
-                "completed_lessons": 0,
-                "total_lessons": lvl_meta_7["total_lessons"],
-                "is_unlocked": False,
-                "completed_at": None,
-            }
-            user["levels"] = user.get("levels", []) + [new_lvl_7]
-            updates["levels"] = user["levels"]
-            updated = True
-        
-        # Self-healing: ensure all levels (1-7) have accurate total_lessons, completed_lessons, and overall_pct
-        levels_list = user.get("levels", [])
-        completed_ids = user.get("completed_lesson_ids", [])
-        track = user.get("active_track", "ethereum")
-        from src.services.lessons import LESSONS_DB, get_track_lessons
-        
-        for lvl in levels_list:
-            if lvl["level_id"] == 7:
-                t_lessons = get_track_lessons(track)
-                lvl["title"] = f"{track.capitalize()} Track"
-                lvl["total_lessons"] = len(t_lessons)
-                lvl["completed_lessons"] = sum(1 for l in t_lessons if l.id in completed_ids)
-            else:
-                l_lessons = [l for l in LESSONS_DB.values() if l.level_id == lvl["level_id"]]
-                lvl["total_lessons"] = len(l_lessons)
-                lvl["completed_lessons"] = sum(1 for l in l_lessons if l.id in completed_ids)
 
-        total_lessons_curriculum = sum(l["total_lessons"] for l in levels_list)
-        total_completed_lessons = sum(l["completed_lessons"] for l in levels_list)
-        overall_pct = round(total_completed_lessons / total_lessons_curriculum * 100, 1) if total_lessons_curriculum > 0 else 0.0
+        # Build dynamic levels matching active track
+        completed_ids = user.get("completed_lesson_ids", [])
+        track = user.get("active_track", "fundamentals")
+        levels_list, overall_pct = build_user_levels(track, completed_ids)
         
         user["levels"] = levels_list
         user["overall_pct"] = overall_pct
@@ -417,46 +440,68 @@ async def complete_lesson_for_user(user_id: str, level_id: int, lesson_id: str):
     
     completed_ids.append(lesson_id)
     
-    # Recalculate level progress
-    levels = user.get("levels", [])
-    total_lessons_curriculum = 0
-    total_completed_lessons = 0
-    
-    active_track = user.get("active_track", "ethereum")
+    # Recalculate level progress dynamically based on active_track
+    active_track = user.get("active_track", "fundamentals")
     from src.services.lessons import LESSONS_DB, get_track_lessons
     
-    for lvl in levels:
-        if lvl["level_id"] == 7:
-            level_lessons = get_track_lessons(active_track)
-            lvl["title"] = f"{active_track.capitalize()} Track"
-        else:
-            level_lessons = [l for l in LESSONS_DB.values() if l.level_id == lvl["level_id"]]
+    computed_levels = []
+    
+    if active_track.lower() == "fundamentals":
+        # 6 General Core Web3 Chapters
+        gen_levels_meta = [
+            (1, "Blockchain Fundamentals & Web3 Core"),
+            (2, "Smart Contract Architecture"),
+            (3, "Token Standards & Asset Engineering"),
+            (4, "Protocol Security & Vulnerability Audits"),
+            (5, "DeFi Fundamentals & Liquidity Mechanics"),
+            (6, "MOR Finance Protocols & Governance"),
+        ]
+        for lvl_id, title in gen_levels_meta:
+            lvl_lessons = [l for l in LESSONS_DB.values() if l.level_id == lvl_id]
+            completed_cnt = sum(1 for l in lvl_lessons if l.id in completed_ids)
+            computed_levels.append({
+                "level_id": lvl_id,
+                "title": title,
+                "total_lessons": len(lvl_lessons),
+                "completed_lessons": completed_cnt,
+                "is_unlocked": False,
+                "completed_at": datetime.now(timezone.utc) if completed_cnt >= len(lvl_lessons) and len(lvl_lessons) > 0 else None
+            })
+    else:
+        # Dedicated Chain Chapters (ONLY Chain-Specific Modules!)
+        chain_name = active_track.capitalize()
+        t_lessons = get_track_lessons(active_track)
         
-        lvl["total_lessons"] = len(level_lessons)
-        
-        # Count how many of these level lessons are completed
-        lvl_completed_count = sum(1 for l in level_lessons if l.id in completed_ids)
-        lvl["completed_lessons"] = lvl_completed_count
-        
-        total_lessons_curriculum += lvl["total_lessons"]
-        total_completed_lessons += lvl["completed_lessons"]
-        
-        # Mark completed_at if all lessons completed
-        if lvl_completed_count >= lvl["total_lessons"] and lvl["total_lessons"] > 0:
-            if not lvl.get("completed_at"):
-                lvl["completed_at"] = datetime.now(timezone.utc)
-        
-    # Unlock levels: a level is unlocked if the previous level is complete
-    for i in range(len(levels)):
+        chain_levels_meta = [
+            (1, f"{chain_name} Architecture & Core Principles", [t_lessons[0]] if len(t_lessons) > 0 else []),
+            (2, f"{chain_name} Environment Setup & Tooling", [t_lessons[1]] if len(t_lessons) > 1 else []),
+            (3, f"{chain_name} Starter Project 1 (GitHub Repo)", [t_lessons[2]] if len(t_lessons) > 2 else []),
+            (4, f"{chain_name} Starter Project 2 (Full-Stack DApp)", [t_lessons[3]] if len(t_lessons) > 3 else []),
+        ]
+        for lvl_id, title, lvl_lessons in chain_levels_meta:
+            completed_cnt = sum(1 for l in lvl_lessons if l.id in completed_ids)
+            computed_levels.append({
+                "level_id": lvl_id,
+                "title": title,
+                "total_lessons": len(lvl_lessons),
+                "completed_lessons": completed_cnt,
+                "is_unlocked": False,
+                "completed_at": datetime.now(timezone.utc) if completed_cnt >= len(lvl_lessons) and len(lvl_lessons) > 0 else None
+            })
+            
+    # Calculate unlock statuses: first level unlocked, subsequent unlocked if previous completed
+    for i in range(len(computed_levels)):
         if i == 0:
-            levels[i]["is_unlocked"] = True
+            computed_levels[i]["is_unlocked"] = True
         else:
-            prev_lvl = levels[i-1]
-            if prev_lvl["completed_lessons"] >= prev_lvl["total_lessons"] and prev_lvl["total_lessons"] > 0:
-                levels[i]["is_unlocked"] = True
-                
-    # Calculate overall percent
+            prev = computed_levels[i-1]
+            if prev["completed_lessons"] >= prev["total_lessons"] and prev["total_lessons"] > 0:
+                computed_levels[i]["is_unlocked"] = True
+
+    total_lessons_curriculum = sum(l["total_lessons"] for l in computed_levels)
+    total_completed_lessons = sum(l["completed_lessons"] for l in computed_levels)
     overall_pct = round(total_completed_lessons / total_lessons_curriculum * 100, 1) if total_lessons_curriculum > 0 else 0.0
+    levels = computed_levels
     
     # Find current level: highest unlocked level
     unlocked_levels = [lvl["level_id"] for lvl in levels if lvl["is_unlocked"]]

@@ -14,61 +14,156 @@ interface RoadmapViewProps {
   onProgressUpdate: (updatedProgress: UserProgress) => void;
 }
 
+const CHAIN_LOGOS: Record<string, React.ReactNode> = {
+  fundamentals: (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+      <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+      <line x1="12" y1="22.08" x2="12" y2="12"></line>
+    </svg>
+  ),
+  ethereum: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <path d="M11.999 2L4.5 14.373L11.999 18.75L19.5 14.373L11.999 2Z" fill="#627EEA"/>
+      <path d="M11.999 2L4.5 14.373L11.999 18.75V2Z" fill="#8C9EFF"/>
+      <path d="M11.999 20.08L4.5 15.656L11.999 22L19.5 15.657L11.999 20.08Z" fill="#627EEA"/>
+      <path d="M11.999 20.08L4.5 15.656L11.999 22V20.08Z" fill="#8C9EFF"/>
+    </svg>
+  ),
+  arbitrum: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <path d="M12 2L2 19.5H22L12 2Z" fill="#28A0F0"/>
+      <path d="M12 7L6 17.5H18L12 7Z" fill="#96BEDC"/>
+    </svg>
+  ),
+  optimism: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="10" fill="#FF0420"/>
+      <path d="M7 9C7 7.89543 7.89543 7 9 7H15C16.1046 7 17 7.89543 17 9V15C17 16.1046 16.1046 17 15 17H9C7.89543 17 7 16.1046 7 15V9Z" fill="#FFFFFF"/>
+    </svg>
+  ),
+  polygon: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <path d="M16.5 4L7.5 9V15L16.5 20V14L12 11.5L16.5 9V4Z" fill="#8247E5"/>
+      <path d="M7.5 4L16.5 9V15L7.5 20V14L12 11.5L7.5 9V4Z" fill="#A855F7" opacity="0.7"/>
+    </svg>
+  ),
+  base: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="10" fill="#0052FF"/>
+      <rect x="7" y="11" width="10" height="2" rx="1" fill="#FFFFFF"/>
+    </svg>
+  ),
+  solana: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <path d="M4.5 17.5L8.5 13.5H19.5L15.5 17.5H4.5Z" fill="#9945FF"/>
+      <path d="M4.5 6.5L8.5 10.5H19.5L15.5 6.5H4.5Z" fill="#14F195"/>
+      <path d="M8.5 12L4.5 12H15.5L19.5 12H8.5Z" fill="#00C2FF"/>
+    </svg>
+  ),
+  avalanche: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="10" fill="#E84142"/>
+      <path d="M12 6L6 17H10L12 13.5L14 17H18L12 6Z" fill="#FFFFFF"/>
+    </svg>
+  )
+};
+
 const ECOSYSTEMS = [
+  {
+    id: 'fundamentals',
+    name: 'Fundamentals',
+    badge: 'Universal Web3 Foundation',
+    desc: 'Core Blockchain & Web3 Principles: P2P Network Topologies, Cryptographic Hashing, Transactions, Consensus Models, Smart Contracts & Multi-Chain Architecture.',
+    architecture: 'P2P Networks, Hashing (SHA256, Keccak256), Key Pairs, Consensus Mechanisms (PoW, PoS)',
+    tooling: 'Solidity, Rust, Web3.js, Ethers.js, Hardhat, Foundry, and MOR Developer Toolkits',
+    p1_name: 'OpenZeppelin Core Contracts Repository',
+    p1_repo: 'https://github.com/OpenZeppelin/openzeppelin-contracts',
+    p2_name: 'Scaffold-ETH 2 Multi-Chain DApp Kit',
+    p2_repo: 'https://github.com/scaffold-eth/scaffold-eth-2'
+  },
   {
     id: 'ethereum',
     name: 'Ethereum',
-    icon: '🟢',
-    desc: 'Ethereum Architecture, ERC-20, ERC-721, ERC-1155, Account Abstraction, Security, Public Goods',
+    badge: 'Layer 1 Settlement & EVM Standard',
+    desc: 'Dedicated Ethereum Developer Onboarding Path: EVM Gas Execution Model, Solidity (^0.8.20), Hardhat, Foundry, OpenZeppelin Smart Contracts, and Account Abstraction.',
+    architecture: 'Ethereum Virtual Machine (EVM), Gasper Proof-of-Stake Consensus, Execution & Consensus Client Specs',
+    tooling: 'Solidity (^0.8.20), Hardhat, Foundry, Ethers.js, Viem, and OpenZeppelin Contracts',
+    p1_name: 'OpenZeppelin Contracts Library',
     p1_repo: 'https://github.com/OpenZeppelin/openzeppelin-contracts',
+    p2_name: 'Scaffold-ETH 2 Full-Stack Kit',
     p2_repo: 'https://github.com/scaffold-eth/scaffold-eth-2'
   },
   {
     id: 'arbitrum',
     name: 'Arbitrum',
-    icon: '🔵',
-    desc: 'Arbitrum Nitro Architecture, Orbit L3s, Stylus (Rust), Arbitrum DeFi & Deployments',
+    badge: 'Layer 2 Optimistic Rollup & Stylus Rust',
+    desc: 'Dedicated Arbitrum Developer Onboarding Path: Arbitrum Nitro Execution Engine, Stylus Wasm (Rust & C++), Arbitrum Orbit L3 Chains, and Offchain Labs Developer Tooling.',
+    architecture: 'Nitro Execution Engine, Arbitrum Virtual Machine (AVM), Orbit L3 Configs, and Stylus Wasm Host I/O',
+    tooling: 'Rust (Stylus SDK), Solidity, Arbitrum Nitro Testnet RPCs, Foundry, and Offchain Labs CLI',
+    p1_name: 'Stylus Rust Hello World Repo',
     p1_repo: 'https://github.com/OffchainLabs/stylus-hello-world',
+    p2_name: 'Arbitrum Tutorials Codebase',
     p2_repo: 'https://github.com/OffchainLabs/arbitrum-tutorials'
   },
   {
     id: 'optimism',
     name: 'Optimism',
-    icon: '🔴',
-    desc: 'OP Stack, Superchain, Governance, Retro Funding, Developer Tooling & Deployments',
+    badge: 'OP Stack Superchain & Cross-Domain Rollup',
+    desc: 'Dedicated Optimism Developer Onboarding Path: OP Stack Modular Infrastructure, Bedrock Execution Layer, Superchain Inter-Rollup Messaging, and Retroactive Public Goods Funding.',
+    architecture: 'OP Stack Rollup Spec, Bedrock Sequencer Architecture, Cross-Domain Messenger (L1 <-> L2)',
+    tooling: 'Solidity, OP Stack Devnet CLI, Foundry, Wagmi, and Optimism Ecosystem SDKs',
+    p1_name: 'OP Cross-Domain Messenger Tutorial',
     p1_repo: 'https://github.com/ethereum-optimism/optimism-tutorial',
+    p2_name: 'OP Superchain Ecosystem Templates',
     p2_repo: 'https://github.com/ethereum-optimism/ecosystem-contributions'
   },
   {
     id: 'polygon',
     name: 'Polygon',
-    icon: '🟣',
-    desc: 'Polygon PoS, CDK Framework, zkEVM, Custom Smart Contracts & Consumer dApps',
+    badge: 'Polygon PoS, CDK & zkEVM Rollup',
+    desc: 'Dedicated Polygon Developer Onboarding Path: Polygon PoS Architecture, Polygon CDK (Chain Development Kit), Plonky2 zero-knowledge proofs, and zkEVM rollup integration.',
+    architecture: 'Polygon PoS Architecture, Polygon CDK Validium & ZK-Rollup Spec, Plonky2 Verifiers',
+    tooling: 'Solidity, Polygon CDK CLI, Kurtosis CDK Package, Hardhat, and Foundry',
+    p1_name: 'Polygon CDK Core Node Repository',
     p1_repo: 'https://github.com/0xPolygon/cdk',
+    p2_name: 'Polygon Kurtosis CDK Devnet Package',
     p2_repo: 'https://github.com/0xPolygon/kurtosis-cdk'
   },
   {
     id: 'base',
     name: 'Base',
-    icon: '🔷',
-    desc: 'Base Ecosystem, Coinbase Wallet Integrations, Onchain Apps, Base Deployments & Hacks',
+    badge: 'Coinbase L2 & Onchain App Standard',
+    desc: 'Dedicated Base Developer Onboarding Path: Base Layer-2 OP Stack Node, Coinbase Smart Wallet SDK, OnchainKit React Components, and Gasless Paymasters.',
+    architecture: 'Base OP Stack Layer-2 Execution Layer, Coinbase Smart Wallet ERC-4337 Account Abstraction',
+    tooling: 'Solidity (^0.8.20), Coinbase OnchainKit, Build-Onchain-Apps CLI, Foundry, and MOR Finance APIs',
+    p1_name: 'Coinbase OnchainKit React & TS SDK',
     p1_repo: 'https://github.com/coinbase/onchainkit',
+    p2_name: 'Build-Onchain-Apps Starter Kit',
     p2_repo: 'https://github.com/coinbase/build-onchain-apps'
   },
   {
     id: 'solana',
     name: 'Solana',
-    icon: '🟠',
-    desc: 'Solana High-Throughput Engine, Accounts Model, Anchor Framework (Rust) & Security',
+    badge: 'High-Throughput Parallel Rust Engine',
+    desc: 'Dedicated Solana Developer Onboarding Path: Sealevel Parallel Smart Contract Engine, Proof-of-History (PoH), Anchor Framework (Rust), and Program Derived Addresses (PDAs).',
+    architecture: 'Sealevel Parallel Execution Runtime, Proof-of-History (PoH) Consensus, Accounts & PDA Model',
+    tooling: 'Rust, Anchor Framework, Solana CLI, SPL Token Program, and @solana/web3.js',
+    p1_name: 'Coral XYZ Anchor Framework Rust Kit',
     p1_repo: 'https://github.com/coral-xyz/anchor',
+    p2_name: 'Solana Foundation Next.js DApp Scaffold',
     p2_repo: 'https://github.com/solana-developers/solana-dapp-next'
   },
   {
     id: 'avalanche',
     name: 'Avalanche',
-    icon: '🟤',
-    desc: 'Avalanche Subnet Deployments, Consensus Engine, AVM, Warp Messaging & DeFi',
+    badge: 'Multi-Subnet Architecture & Teleporter AWM',
+    desc: 'Dedicated Avalanche Developer Onboarding Path: Avalanche Snow Consensus Engine, Primary Network (C-Chain, P-Chain, X-Chain), Custom EVM Subnets, and Teleporter Warp Messaging.',
+    architecture: 'Snow Consensus Protocol, Primary Network Subnets, Avalanche Warp Messaging (AWM) Teleporter',
+    tooling: 'Solidity, Avalanche CLI, Teleporter SDK, Hardhat, and Ethers.js',
+    p1_name: 'Ava Labs Avalanche Starter Kit',
     p1_repo: 'https://github.com/ava-labs/avalanche-starter-kit',
+    p2_name: 'Avalanche Teleporter Cross-Subnet Kit',
     p2_repo: 'https://github.com/ava-labs/teleporter'
   }
 ];
@@ -139,80 +234,98 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
               Select an ecosystem track to customize your level 7 curriculum. Currently active: <strong style={{ color: 'var(--clr-primary-light)', textTransform: 'capitalize' }}>{activeTrackId}</strong>
             </p>
           </div>
-          {switching && <span className="track-switcher__status">Switching tracks...</span>}
         </div>
 
         <div className="track-switcher__grid">
           {ECOSYSTEMS.map((eco) => {
-            const isActive = activeTrackId === eco.id;
+            const isActive = eco.id === activeTrackId;
             return (
               <button
                 key={eco.id}
-                disabled={switching}
                 className={`track-btn ${isActive ? 'track-btn--active' : ''}`}
+                disabled={switching}
                 onClick={async () => {
-                  if (isActive) return;
+                  if (isActive || switching) return;
                   try {
                     setSwitching(true);
-                    const res = await postActiveTrack(userId, eco.id, token);
-                    onProgressUpdate(res);
-                  } catch (e) {
-                    console.error(e);
-                    alert("Error switching track. Check connection.");
+                    const updated = await postActiveTrack(userId, eco.id, token);
+                    onProgressUpdate(updated);
+                  } catch (err) {
+                    console.error("Error switching ecosystem track:", err);
                   } finally {
                     setSwitching(false);
                   }
                 }}
               >
-                <span className="track-btn__icon">{eco.icon}</span>
+                <span className="track-btn__icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '24px' }}>
+                  {CHAIN_LOGOS[eco.id]}
+                </span>
                 <span className="track-btn__name">{eco.name}</span>
-                {isActive && <span className="track-btn__badge">ACTIVE</span>}
+                {isActive && <span className="track-btn__badge">Active</span>}
               </button>
             );
           })}
         </div>
 
-        {/* Selected Track Details & Multichain Integration Guide */}
         {selectedEco && (
-          <div className="track-overview">
-            <div className="track-overview__header">
-              <span className="track-overview__label">{selectedEco.name} Ecosystem Learning Structure</span>
+          <div className="track-overview animate-fade-in" style={{ marginTop: '20px', borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '20px' }}>
+            <div className="track-overview__header" style={{ marginBottom: '12px' }}>
+              <div className="track-overview__title" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '1.2rem', fontWeight: 800, color: '#fff', flexWrap: 'wrap' }}>
+                <span style={{ display: 'inline-flex', alignItems: 'center' }}>{CHAIN_LOGOS[selectedEco.id]}</span>
+                <span>Dedicated {selectedEco.name} Learning Path</span>
+                <span className="badge badge--primary" style={{ fontSize: '0.65rem', padding: '3px 8px', marginLeft: 'auto' }}>{selectedEco.badge}</span>
+              </div>
             </div>
-            <p className="track-overview__desc">{selectedEco.desc}</p>
+            
+            <p className="track-overview__desc" style={{ fontSize: '0.88rem', color: 'var(--clr-text-secondary)', lineHeight: '1.5', marginBottom: '16px' }}>
+              {selectedEco.desc}
+            </p>
+
+            {/* Dedicated Chain Learning Details Block */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '12px', marginBottom: '20px' }}>
+              <div style={{ background: 'rgba(59, 130, 246, 0.05)', border: '1px solid rgba(59, 130, 246, 0.2)', padding: '12px 16px', borderRadius: '12px' }}>
+                <span style={{ fontSize: '0.7rem', fontWeight: 800, textTransform: 'uppercase', color: '#60a5fa', letterSpacing: '0.05em', display: 'block', marginBottom: '4px' }}>⚙️ Dedicated Architecture & Consensus</span>
+                <span style={{ fontSize: '0.8rem', color: '#e2e8f0', lineHeight: '1.4' }}>{selectedEco.architecture}</span>
+              </div>
+              <div style={{ background: 'rgba(168, 85, 247, 0.05)', border: '1px solid rgba(168, 85, 247, 0.2)', padding: '12px 16px', borderRadius: '12px' }}>
+                <span style={{ fontSize: '0.7rem', fontWeight: 800, textTransform: 'uppercase', color: '#c084fc', letterSpacing: '0.05em', display: 'block', marginBottom: '4px' }}>🛠️ Dedicated Developer Tooling Chain</span>
+                <span style={{ fontSize: '0.8rem', color: '#e2e8f0', lineHeight: '1.4' }}>{selectedEco.tooling}</span>
+              </div>
+            </div>
             
             <div className="multichain-grid">
               <div className="multichain-card">
                 <span className="multichain-card__icon">📖</span>
                 <div>
-                  <h5 className="multichain-card__title">2 Introductory Lessons</h5>
-                  <p className="multichain-card__sub">Architecture & Environment Setup</p>
+                  <h5 className="multichain-card__title">2 Dedicated Introductory Lessons</h5>
+                  <p className="multichain-card__sub">{selectedEco.name} Architecture, Core Principles & Environment Setup</p>
                 </div>
               </div>
               <div className="multichain-card">
                 <span className="multichain-card__icon">❓</span>
                 <div>
-                  <h5 className="multichain-card__title">2 Quizzes</h5>
-                  <p className="multichain-card__sub">Interactive Knowledge Evaluations</p>
+                  <h5 className="multichain-card__title">2 Interactive Quizzes</h5>
+                  <p className="multichain-card__sub">{selectedEco.name} Concept Checks & Architectural Evaluations</p>
                 </div>
               </div>
               <div className="multichain-card">
                 <span className="multichain-card__icon">💻</span>
                 <div>
-                  <h5 className="multichain-card__title">2 Coding Exercises</h5>
-                  <p className="multichain-card__sub">Smart Contract Execution Tasks</p>
+                  <h5 className="multichain-card__title">2 Live Coding Exercises</h5>
+                  <p className="multichain-card__sub">{selectedEco.name} Smart Contract Execution & Verification Tasks</p>
                 </div>
               </div>
               <div className="multichain-card">
                 <span className="multichain-card__icon">🛠️</span>
                 <div>
-                  <h5 className="multichain-card__title">2 Starter Projects (GitHub Repos)</h5>
-                  <p className="multichain-card__sub">Small coding starter repositories</p>
+                  <h5 className="multichain-card__title">2 Official Starter Projects (GitHub Repos)</h5>
+                  <p className="multichain-card__sub">Bespoke starter codebases for {selectedEco.name}:</p>
                   <div style={{ display: 'flex', gap: '6px', marginTop: '6px', flexWrap: 'wrap' }}>
                     <a href={selectedEco.p1_repo} target="_blank" rel="noopener noreferrer" className="multichain-repo-btn">
-                      🐱 Project 1 Repo ↗
+                      🐱 {selectedEco.p1_name} ↗
                     </a>
                     <a href={selectedEco.p2_repo} target="_blank" rel="noopener noreferrer" className="multichain-repo-btn">
-                      🐱 Project 2 Repo ↗
+                      🐱 {selectedEco.p2_name} ↗
                     </a>
                   </div>
                 </div>
@@ -220,14 +333,14 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
               <div className="multichain-card">
                 <span className="multichain-card__icon">🤖</span>
                 <div>
-                  <h5 className="multichain-card__title">AI Mentor Support</h5>
-                  <p className="multichain-card__sub">OpenClaw (Education) & Hermes (Engineering)</p>
+                  <h5 className="multichain-card__title">24/7 AI Mentor Support</h5>
+                  <p className="multichain-card__sub">OpenClaw (Education Guidance) & Hermes (Engineering Code Review)</p>
                 </div>
               </div>
               <div className="multichain-card">
                 <span className="multichain-card__icon">🗺️</span>
                 <div>
-                  <h5 className="multichain-card__title">Full Ecosystem Roadmap</h5>
+                  <h5 className="multichain-card__title">Full {selectedEco.name} Ecosystem Roadmap</h5>
                   <p className="multichain-card__sub">Intermediate, Advanced, DeFi, NFTs, Governance, Hackathons, Certifications & Capstones</p>
                 </div>
               </div>
@@ -258,18 +371,19 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
           {[
             { title: 'Smart Contracts', icon: '📝' },
             { title: 'dApps Frameworks', icon: '🌐' },
-            { title: 'DAO Toolkit', icon: '🏛️' },
-            { title: 'Wallet Integrations', icon: '💳' },
-            { title: 'AI Agents', icon: '🤖' },
-            { title: 'NFT Tooling', icon: '🎨' },
-            { title: 'DeFi Projects', icon: '💰' }
+            { title: 'Ecosystem Grants', icon: '🏆' },
           ].map((item) => (
-            <div key={item.title} className="build-mor__item">
-              <span className="build-mor__item-icon">{item.icon}</span>
-              <span className="build-mor__item-title">{item.title}</span>
+            <div key={item.title} className="build-mor__card">
+              <span className="build-mor__card-icon">{item.icon}</span>
+              <h4 className="build-mor__card-title">{item.title}</h4>
             </div>
           ))}
         </div>
+      </div>
+
+      {/* Copyright Footer */}
+      <div style={{ textAlign: 'center', margin: '32px 0 16px 0', padding: '16px 0', borderTop: '1px solid rgba(255,255,255,0.06)', fontSize: '0.75rem', color: 'var(--clr-text-muted)' }}>
+        © 2026 MOR Finance Ltd. All rights reserved. | AI-Powered Web3 Developer Academy
       </div>
     </div>
   );
