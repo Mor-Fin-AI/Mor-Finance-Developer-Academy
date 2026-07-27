@@ -173,51 +173,75 @@
 @media (max-width: 768px) {
   .header {
     grid-column: 1;
-    padding: 0 10px;
+    padding: 0 12px;
+    gap: 8px;
+  }
+  .header__left {
+    min-width: 0;
+    flex: 1 1 auto;
   }
   .header__subtitle {
     display: none !important;
   }
   .header__title {
-    font-size: 0.88rem;
-    max-width: 110px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    max-width: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+  .header__link-label {
+    display: none;
   }
   .header-link-btn {
     display: none !important;
   }
   .header__right {
-    gap: 4px;
+    gap: 6px;
+    flex-shrink: 0;
   }
   .auth-profile {
-    padding: 3px 6px;
+    padding: 4px 8px;
     gap: 4px;
   }
   .auth-profile__name {
     font-size: 0.75rem;
-    max-width: 70px;
+    max-width: 90px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-}
-
-@media (max-width: 500px) {
-  .header__title {
-    max-width: 85px;
+  .header__stat {
+    padding: 4px 8px;
+    gap: 4px;
   }
-  .auth-profile__name,
-  .header__stat-label,
-  .header__discord-btn span {
+  .header__stat-label {
     display: none !important;
   }
-  .header__discord-btn {
-    padding: 5px 6px;
+}
+
+@media (max-width: 540px) {
+  .header {
+    padding: 0 8px;
+  }
+  .header__links {
+    display: none !important;
+  }
+  .header__title {
+    font-size: 0.88rem;
+  }
+  .auth-profile__name {
+    display: none !important;
+  }
+  .auth-profile {
+    padding: 4px 6px;
   }
   .header__stat {
-    padding: 3px 6px;
+    padding: 4px 6px;
+  }
+  .header__stat-value {
+    font-size: 0.8rem;
   }
 }
 
