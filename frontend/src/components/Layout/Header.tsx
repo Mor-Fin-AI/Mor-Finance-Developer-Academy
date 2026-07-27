@@ -15,6 +15,8 @@ interface HeaderProps {
   onLogout: () => void;
   onLinkGitHub?: () => void;
   onLinkWallet?: () => void;
+  isMobileNavOpen?: boolean;
+  onToggleMobileNav?: () => void;
 }
 
 const PAGE_META: Record<NavPage, { title: string; subtitle: string }> = {
@@ -41,6 +43,8 @@ export const Header: React.FC<HeaderProps> = ({
   onLogout,
   onLinkGitHub,
   onLinkWallet,
+  isMobileNavOpen,
+  onToggleMobileNav,
 }) => {
   const { title, subtitle } = PAGE_META[activePage] || { title: 'Academy', subtitle: 'Learn Web3' };
 
@@ -61,8 +65,22 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <header className="header glass">
       <div className="header__left">
-        <h1 className="header__title">{title}</h1>
-        <p className="header__subtitle">{subtitle}</p>
+        {onToggleMobileNav && (
+          <button
+            className={`header__hamburger-btn ${isMobileNavOpen ? 'header__hamburger-btn--active' : ''}`}
+            onClick={onToggleMobileNav}
+            aria-label="Toggle mobile menu"
+            title="Menu"
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+        )}
+        <div className="header__title-group">
+          <h1 className="header__title">{title}</h1>
+          <p className="header__subtitle">{subtitle}</p>
+        </div>
       </div>
       <div className="header__right">
         {/* External Community & Resource Links */}

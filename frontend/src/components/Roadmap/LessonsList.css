@@ -174,3 +174,37 @@
   margin-bottom: 16px;
   color: var(--clr-text-primary);
 }
+
+@media (max-width: 768px) {
+  .lessons-list-container {
+    padding: 20px 12px;
+  }
+  .lessons-list-title {
+    font-size: 1.4rem;
+  }
+  .lessons-timeline {
+    padding-left: 12px;
+  }
+  .lessons-timeline::before {
+    left: 19px;
+  }
+  .lesson-row-card {
+    gap: 12px;
+  }
+  .timeline-connector-dot {
+    margin-left: 0;
+  }
+  .lesson-row-card__body {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    padding: 16px;
+  }
+  .lesson-row-card__action {
+    width: 100%;
+  }
+  .lesson-row-card__action .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

@@ -1,6 +1,6 @@
 .lesson-workspace {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 270px 1fr 290px;
   height: calc(100vh - var(--header-height));
   overflow: hidden;
   background: var(--clr-bg);
@@ -455,20 +455,55 @@
   height: 100%;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1100px) {
   .lesson-workspace {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
+    display: flex;
+    flex-direction: column;
     height: auto;
+    min-height: calc(100vh - var(--header-height));
     overflow-y: auto;
   }
-  .lesson-pane-left,
-  .lesson-pane-right {
-    height: auto;
-    overflow: visible;
+  .lesson-sidebar-left,
+  .lesson-sidebar-right {
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
   }
-  .lesson-pane-left {
-    border-right: none;
-    border-bottom: 1px solid var(--clr-border);
+  .lesson-sidebar-left {
+    border-right: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+  }
+  .lesson-sidebar-right {
+    border-left: none !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .lesson-middle-panel {
+    padding: 16px !important;
+    gap: 16px !important;
+  }
+  .workspace-tab-bar {
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+  }
+  .workspace-tab-bar::-webkit-scrollbar {
+    display: none;
+  }
+  .lesson-title-heading {
+    font-size: 1.35rem !important;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+  .code-textarea {
+    font-size: 0.8rem !important;
+    padding: 12px !important;
+    min-height: 220px !important;
+  }
+  .reading-scroll-area {
+    padding: 16px;
   }
 }

@@ -219,7 +219,7 @@ export const LessonView: React.FC<LessonViewProps> = ({
   }
 
   return (
-    <div className="lesson-workspace" style={{ display: 'grid', gridTemplateColumns: '280px 1fr 300px', height: 'calc(100vh - var(--header-height))', overflow: 'hidden' }}>
+    <div className="lesson-workspace">
       
       {/* 1. Left Sidebar: Course Navigation */}
       <div className="lesson-sidebar-left glass" style={{ borderRight: '1px solid rgba(255,255,255,0.06)', padding: '20px', display: 'flex', flexDirection: 'column', gap: '20px', overflowY: 'auto', background: 'rgba(10, 11, 23, 0.45)' }}>
@@ -269,7 +269,8 @@ export const LessonView: React.FC<LessonViewProps> = ({
                 <span style={{
                   fontSize: '0.8rem',
                   fontWeight: item.active ? 700 : 500,
-                  color: item.active ? '#2563eb' : item.locked ? 'var(--clr-text-muted)' : 'var(--clr-text-secondary)'
+                  color: item.active ? '#2563eb' : item.locked ? 'var(--clr-text-muted)' : 'var(--clr-text-secondary)',
+                  wordBreak: 'break-word'
                 }}>
                   {item.title}
                 </span>
@@ -280,14 +281,14 @@ export const LessonView: React.FC<LessonViewProps> = ({
       </div>
 
       {/* 2. Middle Panel: Interactive Lesson Content & IDE */}
-      <div style={{ display: 'flex', flexDirection: 'column', height: '100%', overflowY: 'auto', padding: '24px', gap: '20px', background: '#030307' }}>
+      <div className="lesson-middle-panel" style={{ display: 'flex', flexDirection: 'column', height: '100%', overflowY: 'auto', padding: '24px', gap: '20px', background: '#030307' }}>
         {/* Breadcrumbs */}
-        <div style={{ fontSize: '0.75rem', color: 'var(--clr-text-muted)', fontWeight: 600 }}>
+        <div style={{ fontSize: '0.75rem', color: 'var(--clr-text-muted)', fontWeight: 600, wordBreak: 'break-word' }}>
           Production Web3 Engineering &gt; Ethereum &gt; <span style={{ color: 'var(--clr-text-secondary)' }}>{lesson.title}</span>
         </div>
 
         {/* Tab Selector at the top of middle panel */}
-        <div style={{ display: 'flex', borderBottom: '1px solid rgba(255,255,255,0.06)', margin: '0 0 12px 0' }}>
+        <div className="workspace-tab-bar" style={{ display: 'flex', borderBottom: '1px solid rgba(255,255,255,0.06)', margin: '0 0 12px 0' }}>
           {(['concept', 'practice', 'assessment', 'references'] as const).map((tab) => {
             // Hide practice tab if there is no exercise
             if (tab === 'practice' && !lesson.exercise) return null;
@@ -296,7 +297,7 @@ export const LessonView: React.FC<LessonViewProps> = ({
                 key={tab}
                 onClick={() => setActiveBottomTab(tab)}
                 style={{
-                  padding: '12px 20px',
+                  padding: '10px 18px',
                   background: 'transparent',
                   border: 'none',
                   borderBottom: activeBottomTab === tab ? '2px solid #2563eb' : 'none',
@@ -304,7 +305,8 @@ export const LessonView: React.FC<LessonViewProps> = ({
                   fontSize: '0.85rem',
                   fontWeight: 600,
                   cursor: 'pointer',
-                  textTransform: 'capitalize'
+                  textTransform: 'capitalize',
+                  whiteSpace: 'nowrap'
                 }}
               >
                 {tab}
@@ -316,12 +318,12 @@ export const LessonView: React.FC<LessonViewProps> = ({
         {/* Tab contents */}
         {activeBottomTab === 'concept' && (
           <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            <div style={{ display: 'flex', gap: '8px' }}>
+            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
               <span style={{ fontSize: '0.7rem', padding: '4px 10px', borderRadius: '12px', background: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6', fontWeight: 700 }}>AI-Guided</span>
               <span style={{ fontSize: '0.7rem', padding: '4px 10px', borderRadius: '12px', background: 'rgba(124, 58, 237, 0.1)', color: '#a855f7', fontWeight: 700 }}>Ethereum Security</span>
               <span style={{ fontSize: '0.7rem', padding: '4px 10px', borderRadius: '12px', background: 'rgba(245, 158, 11, 0.1)', color: '#f59e0b', fontWeight: 700 }}>18 min • Lab + Quiz</span>
             </div>
-            <h1 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#fff', margin: '0 0 10px 0', lineHeight: '1.2' }}>{lesson.title}</h1>
+            <h1 className="lesson-title-heading" style={{ fontSize: '1.8rem', fontWeight: 800, color: '#fff', margin: '0 0 10px 0', lineHeight: '1.2' }}>{lesson.title}</h1>
             <div style={{ fontSize: '0.85rem', color: 'var(--clr-text-secondary)', lineHeight: '1.6', marginBottom: '20px' }}>
               {renderMarkdown(lesson.content)}
             </div>

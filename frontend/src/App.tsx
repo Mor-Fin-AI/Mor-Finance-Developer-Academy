@@ -77,6 +77,7 @@ export default function App() {
   // Roadmap Drilldown states
   const [selectedLevel, setSelectedLevel] = useState<number | null>(null);
   const [selectedLessonId, setSelectedLessonId] = useState<string | null>(null);
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
   // Check for GitHub OAuth callback code in URL on mount
   useEffect(() => {
@@ -386,6 +387,8 @@ export default function App() {
         userId={userId}
         authType={authType}
         onLogout={handleLogout}
+        isOpen={mobileNavOpen}
+        onClose={() => setMobileNavOpen(false)}
       />
       <Header
         activePage={activePage}
@@ -399,6 +402,8 @@ export default function App() {
         onLogout={handleLogout}
         onLinkGitHub={handleLinkGitHub}
         onLinkWallet={handleLinkWallet}
+        isMobileNavOpen={mobileNavOpen}
+        onToggleMobileNav={() => setMobileNavOpen((prev) => !prev)}
       />
       <main className="app-main" id="main-content">
         <Routes>
