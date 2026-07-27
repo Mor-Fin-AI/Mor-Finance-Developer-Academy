@@ -230,20 +230,22 @@
 @media (max-width: 768px) {
   .header {
     grid-column: 1;
-    padding: 0 12px;
-    gap: 8px;
+    padding: 0 8px;
+    gap: 4px;
+    justify-content: space-between;
   }
   .header__left {
     min-width: 0;
-    flex: 1 1 auto;
+    flex: 0 1 auto;
+    gap: 6px;
   }
   .header__subtitle {
     display: none !important;
   }
   .header__title {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     font-weight: 700;
-    max-width: 100%;
+    max-width: 110px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -255,50 +257,48 @@
     display: none !important;
   }
   .header__right {
-    gap: 6px;
+    gap: 4px;
     flex-shrink: 0;
+    align-items: center;
   }
   .auth-profile {
-    padding: 4px 8px;
-    gap: 4px;
+    padding: 3px 6px;
+    gap: 3px;
   }
   .auth-profile__name {
-    font-size: 0.75rem;
-    max-width: 90px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    display: none !important;
   }
   .header__stat {
-    padding: 4px 8px;
-    gap: 4px;
+    padding: 3px 6px;
+    gap: 3px;
+    font-size: 0.75rem;
   }
   .header__stat-label {
     display: none !important;
   }
+  .header__stat-value {
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
 }
 
-@media (max-width: 540px) {
+@media (max-width: 480px) {
   .header {
-    padding: 0 8px;
+    padding: 0 6px;
+  }
+  .header__title {
+    font-size: 0.8rem;
+    max-width: 95px;
   }
   .header__links {
     display: none !important;
   }
-  .header__title {
-    font-size: 0.88rem;
-  }
-  .auth-profile__name {
-    display: none !important;
-  }
-  .auth-profile {
-    padding: 4px 6px;
+  .header__right {
+    gap: 3px;
   }
   .header__stat {
-    padding: 4px 6px;
-  }
-  .header__stat-value {
-    font-size: 0.8rem;
+    padding: 2px 5px;
+    gap: 2px;
   }
 }
 

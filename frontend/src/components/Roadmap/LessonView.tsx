@@ -36,6 +36,7 @@ export const LessonView: React.FC<LessonViewProps> = ({
   const [consoleLogs, setConsoleLogs] = useState<string[]>([]);
   
   const consoleEndRef = React.useRef<HTMLDivElement | null>(null);
+  const lessonTabsRef = React.useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (consoleEndRef.current) {
@@ -218,6 +219,13 @@ export const LessonView: React.FC<LessonViewProps> = ({
     );
   }
 
+  const scrollLessonTabs = (direction: 'left' | 'right') => {
+    if (lessonTabsRef.current) {
+      const scrollAmount = direction === 'left' ? -150 : 150;
+      lessonTabsRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
+
   return (
     <div className="lesson-workspace">
       
@@ -287,32 +295,42 @@ export const LessonView: React.FC<LessonViewProps> = ({
           Production Web3 Engineering &gt; Ethereum &gt; <span style={{ color: 'var(--clr-text-secondary)' }}>{lesson.title}</span>
         </div>
 
-        {/* Tab Selector at the top of middle panel */}
-        <div className="workspace-tab-bar" style={{ display: 'flex', borderBottom: '1px solid rgba(255,255,255,0.06)', margin: '0 0 12px 0' }}>
-          {(['concept', 'practice', 'assessment', 'references'] as const).map((tab) => {
-            // Hide practice tab if there is no exercise
-            if (tab === 'practice' && !lesson.exercise) return null;
-            return (
-              <button
-                key={tab}
-                onClick={() => setActiveBottomTab(tab)}
-                style={{
-                  padding: '10px 18px',
-                  background: 'transparent',
-                  border: 'none',
-                  borderBottom: activeBottomTab === tab ? '2px solid #2563eb' : 'none',
-                  color: activeBottomTab === tab ? '#fff' : 'var(--clr-text-muted)',
-                  fontSize: '0.85rem',
-                  fontWeight: 600,
-                  cursor: 'pointer',
-                  textTransform: 'capitalize',
-                  whiteSpace: 'nowrap'
-                }}
-              >
-                {tab}
-              </button>
-            );
-          })}
+        {/* Tab Selector with Left & Right Floating Scroll Arrows */}
+        <div className="workspace-tab-wrapper">
+          <button
+            type="button"
+            className="workspace-tab-arrow workspace-tab-arrow--left"
+            onClick={() => scrollLessonTabs('left')}
+            aria-label="Scroll tabs left"
+            title="Scroll Left"
+          >
+            ‹
+          </button>
+
+          <div className="workspace-tab-bar" ref={lessonTabsRef}>
+            {(['concept', 'practice', 'assessment', 'references'] as const).map((tab) => {
+              if (tab === 'practice' && !lesson.exercise) return null;
+              return (
+                <button
+                  key={tab}
+                  onClick={() => setActiveBottomTab(tab)}
+                  className={`workspace-tab-btn ${activeBottomTab === tab ? 'workspace-tab-btn--active' : ''}`}
+                >
+                  {tab}
+                </button>
+              );
+            })}
+          </div>
+
+          <button
+            type="button"
+            className="workspace-tab-arrow workspace-tab-arrow--right"
+            onClick={() => scrollLessonTabs('right')}
+            aria-label="Scroll tabs right"
+            title="Scroll Right"
+          >
+            ›
+          </button>
         </div>
 
         {/* Tab contents */}
