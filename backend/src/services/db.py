@@ -843,6 +843,141 @@ async def seed_forum_threads():
                         "created_at": "2026-07-26T18:45:00Z"
                     }
                 ]
+            },
+            {
+                "_id": "thread-13",
+                "thread_id": "thread-13",
+                "title": "Arbitrum Orbit L3 Chain Node Integration with Foundry Test Suite",
+                "author": "Zoe Martinez",
+                "category": "Showcase",
+                "content": "Integrated an Arbitrum Orbit L3 chain node with our Foundry unit test suite. Gas benchmarks run in under 800ms!",
+                "tags": ["arbitrum", "orbit", "foundry", "testing"],
+                "replies_count": 2,
+                "views_count": 298,
+                "likes_count": 55,
+                "created_at": "2026-07-20T14:15:00Z",
+                "comments": [
+                    {
+                        "comment_id": "comment-13-1",
+                        "author": "Alex Chen",
+                        "content": "Awesome integration Zoe! Are you running Stylus host I/O hooks inside the test suite?",
+                        "created_at": "2026-07-20T15:30:00Z"
+                    },
+                    {
+                        "comment_id": "comment-13-2",
+                        "author": "Victor Kipchirchir",
+                        "content": "Foundry speed for Orbit L3s is game changing compared to older Hardhat setups.",
+                        "created_at": "2026-07-20T16:45:00Z"
+                    }
+                ]
+            },
+            {
+                "_id": "thread-14",
+                "thread_id": "thread-14",
+                "title": "Anchor CPI Security Reentrancy Audit Passed & Merged to Main",
+                "author": "Devon Wright",
+                "category": "Announcement",
+                "content": "Passed Anchor CPI Security Reentrancy Audit on Solana Devnet and merged our pull request for automated liquid staking pools!",
+                "tags": ["solana", "anchor", "security", "audit"],
+                "replies_count": 2,
+                "views_count": 340,
+                "likes_count": 72,
+                "created_at": "2026-07-22T10:00:00Z",
+                "comments": [
+                    {
+                        "comment_id": "comment-14-1",
+                        "author": "Brian Kiprop",
+                        "content": "Huge milestone Devon! Reentrancy protection on Solana Sealevel runtime is crucial.",
+                        "created_at": "2026-07-22T11:20:00Z"
+                    },
+                    {
+                        "comment_id": "comment-14-2",
+                        "author": "Yuki Takahashi",
+                        "content": "Super clean PR! Just reviewed the Anchor CPI constraints.",
+                        "created_at": "2026-07-22T12:30:00Z"
+                    }
+                ]
+            },
+            {
+                "_id": "thread-15",
+                "thread_id": "thread-15",
+                "title": "Passed Smart Contract Architecture & Solidity Syntax Assessment (100% Score)",
+                "author": "Alex.Mutua",
+                "category": "Discussion",
+                "content": "Just completed Level 2 Smart Contract Architecture with a 100% quiz score! Huge thanks to OpenClaw AI mentor for walking through modifier ordering.",
+                "tags": ["fundamentals", "solidity", "architecture", "education"],
+                "replies_count": 2,
+                "views_count": 420,
+                "likes_count": 88,
+                "created_at": "2026-07-25T11:30:00Z",
+                "comments": [
+                    {
+                        "comment_id": "comment-15-1",
+                        "author": "Andrew Mwangi",
+                        "content": "Congrats Alex! Level 3 Token Standards is next, see you in the Base track!",
+                        "created_at": "2026-07-25T12:45:00Z"
+                    },
+                    {
+                        "comment_id": "comment-15-2",
+                        "author": "Tariq Al-Hassan",
+                        "content": "OpenClaw mentor is super helpful for clarifying modifier execution order. Keep going!",
+                        "created_at": "2026-07-25T14:00:00Z"
+                    }
+                ]
+            },
+            {
+                "_id": "thread-16",
+                "thread_id": "thread-16",
+                "title": "Deployed Coinbase Smart Wallet Paymaster & Account Abstraction Vault on Base Sepolia",
+                "author": "Andrew Mwangi",
+                "category": "Showcase",
+                "content": "Deployed our final Base Sepolia Account Abstraction Paymaster contract. Gasless transactions are live for all cohort testers!",
+                "tags": ["base", "coinbase", "paymaster", "account-abstraction"],
+                "replies_count": 2,
+                "views_count": 465,
+                "likes_count": 104,
+                "created_at": "2026-07-27T09:00:00Z",
+                "comments": [
+                    {
+                        "comment_id": "comment-16-1",
+                        "author": "Cynthia Achieng",
+                        "content": "Tested the live Paymaster call on Base Sepolia—gasless tx confirmed in 1 block!",
+                        "created_at": "2026-07-27T10:15:00Z"
+                    },
+                    {
+                        "comment_id": "comment-16-2",
+                        "author": "Gabriel Dupont",
+                        "content": "Passkey onboarding on Base is extremely smooth. Great work Andrew!",
+                        "created_at": "2026-07-27T11:30:00Z"
+                    }
+                ]
+            },
+            {
+                "_id": "thread-17",
+                "thread_id": "thread-17",
+                "title": "Avalanche Warp Messaging (AWM) Inter-Subnet Liquidity Vault Live",
+                "author": "Ananya Sharma",
+                "category": "Discussion",
+                "content": "Deployed Teleporter cross-subnet messaging bridge for instant liquidity settlement between custom Avalanche EVM Subnets.",
+                "tags": ["avalanche", "awm", "teleporter", "subnets"],
+                "replies_count": 2,
+                "views_count": 310,
+                "likes_count": 68,
+                "created_at": "2026-07-28T08:00:00Z",
+                "comments": [
+                    {
+                        "comment_id": "comment-17-1",
+                        "author": "Kevin Ochieng",
+                        "content": "Subnet teleporter contract executed cross-subnet swap in 1.4s! Outstanding implementation.",
+                        "created_at": "2026-07-28T08:45:00Z"
+                    },
+                    {
+                        "comment_id": "comment-17-2",
+                        "author": "Collins Omondi",
+                        "content": "AWM is definitely the most efficient cross-subnet bridging protocol for Avalanche.",
+                        "created_at": "2026-07-28T09:30:00Z"
+                    }
+                ]
             }
         ]
     await coll.insert_many(threads)
