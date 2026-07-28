@@ -527,77 +527,328 @@ async def complete_lesson_for_user(user_id: str, level_id: int, lesson_id: str):
         await issue_certificate(user_id, level_id, current_lvl_obj["title"])
 
 async def seed_forum_threads():
-    """Seed initial threads if collection is empty."""
+    """Seed initial threads for May - July 2026 developer cohort discussions."""
     coll = get_forum_collection()
+    await coll.delete_many({"thread_id": {"$in": ["thread-1", "thread-2", "thread-3"]}})
     count = await coll.count_documents({})
     if count == 0:
-        print("🌱 Seeding forum threads in MongoDB...")
+        print("🌱 Seeding May–July 2026 forum threads in MongoDB...")
         threads = [
             {
                 "_id": "thread-1",
                 "thread_id": "thread-1",
-                "title": "How to optimize gas in Solidity?",
-                "author": "AliceDev",
+                "title": "Understanding P2P Node Discovery & Cryptographic Hashing (Keccak256)",
+                "author": "Alex.Mutua",
                 "category": "Question",
-                "content": "I am working on a DeFi protocol and the gas costs are higher than expected. What are some effective techniques to optimize gas usage in Solidity smart contracts? Any tips, resources, or examples would be greatly appreciated.",
-                "tags": ["solidity", "gas", "optimization", "performance"],
+                "content": "Hi everyone! Working through Level 1 of the Fundamentals track. Can someone explain why Keccak-256 is preferred over SHA-256 for EVM state Hashing?",
+                "tags": ["fundamentals", "cryptography", "keccak256", "evm"],
                 "replies_count": 2,
-                "views_count": 156,
-                "likes_count": 34,
-                "created_at": "2026-07-11T12:00:00Z",
+                "views_count": 184,
+                "likes_count": 29,
+                "created_at": "2026-05-04T12:00:00Z",
                 "comments": [
                     {
                         "comment_id": "comment-1-1",
-                        "author": "BlockMaster",
-                        "content": "Here are key strategies:\n1. Use appropriate data types (uint256 vs uint8).\n2. Pack storage variables.\n3. Use calldata instead of memory for external functions.\n4. Optimize loops and avoid redundant computations.\n5. Use events instead of storing data.",
-                        "created_at": "2026-07-11T14:30:00Z"
+                        "author": "Lucas Meyer",
+                        "content": "SHA-256 was used in Bitcoin, but Ethereum chose Keccak-256 because it provides higher security resistance against length-extension attacks without requiring extra HMAC padding.",
+                        "created_at": "2026-05-04T14:30:00Z"
                     },
                     {
                         "comment_id": "comment-1-2",
-                        "author": "SmartBuilder",
-                        "content": "Also, consider caching state variables in memory when reading them multiple times inside a loop. That alone saves significant gas.",
-                        "created_at": "2026-07-11T15:45:00Z"
+                        "author": "Josephat Kiptoo",
+                        "content": "Also, Keccak-256 is hardware-friendly when constructing Merkle Patricia Trie proofs inside Ethereum execution clients like Geth and Besu.",
+                        "created_at": "2026-05-04T15:45:00Z"
                     }
                 ]
             },
             {
                 "_id": "thread-2",
                 "thread_id": "thread-2",
-                "title": "Best practices for smart contract security",
-                "author": "Web3Learner",
+                "title": "Avalanche Custom Subnet Genesis Configuration & Snow Consensus",
+                "author": "Collins Omondi",
                 "category": "Discussion",
-                "content": "Let's share smart contract security check lists. I'll start: always use reentrancy guards, validate all input arguments, and perform thorough unit testing. What else should be standard practice?",
-                "tags": ["security", "solidity", "audit"],
+                "content": "Successfully deployed a custom EVM Subnet using Avalanche CLI! Here is a breakdown on setting custom gas tokens and allocation parameters in your genesis.json file.",
+                "tags": ["avalanche", "subnet", "consensus", "genesis"],
                 "replies_count": 1,
-                "views_count": 89,
-                "likes_count": 18,
-                "created_at": "2026-07-10T09:15:00Z",
+                "views_count": 142,
+                "likes_count": 22,
+                "created_at": "2026-05-14T09:15:00Z",
                 "comments": [
                     {
                         "comment_id": "comment-2-1",
-                        "author": "AliceDev",
-                        "content": "Don't forget to avoid using block.timestamp for randomness, as miners can manipulate it to some extent. Use Chainlink VRF for secure on-chain randomness instead!",
-                        "created_at": "2026-07-10T11:20:00Z"
+                        "author": "Chloe Bennett",
+                        "content": "Great write-up Collins! Are you utilizing Avalanche Warp Messaging (AWM) to bridge assets back to the C-Chain?",
+                        "created_at": "2026-05-14T11:20:00Z"
                     }
                 ]
             },
             {
                 "_id": "thread-3",
                 "thread_id": "thread-3",
-                "title": "My First DeFi Project - Feedback Needed!",
-                "author": "StakingPro",
+                "title": "Base Sepolia Faucet & Build-Onchain-Apps Starter Kit Workflow",
+                "author": "Naomi Wairimu",
                 "category": "Showcase",
-                "content": "Just finished building a staking contract where users receive reward tokens proportional to time locked. Please look at the code and let me know if there are structural issues.",
-                "tags": ["defi", "staking", "feedback"],
-                "replies_count": 0,
-                "views_count": 42,
-                "likes_count": 8,
-                "created_at": "2026-07-12T10:00:00Z",
-                "comments": []
+                "content": "Check out my first deployed counter dApp on Base Sepolia using Coinbase Build-Onchain-Apps! Faucet speed was under 2 seconds and frontend hooked up seamlessly with Wagmi.",
+                "tags": ["base", "coinbase", "starter-kit", "frontend"],
+                "replies_count": 2,
+                "views_count": 198,
+                "likes_count": 45,
+                "created_at": "2026-05-22T10:00:00Z",
+                "comments": [
+                    {
+                        "comment_id": "comment-3-1",
+                        "author": "Gabriel Dupont",
+                        "content": "Congrats Naomi! Coinbase Build-Onchain-Apps is super clean. Next step is linking Coinbase Smart Wallet Paymaster for gasless transactions.",
+                        "created_at": "2026-05-22T12:10:00Z"
+                    },
+                    {
+                        "comment_id": "comment-3-2",
+                        "author": "Andrew Mwangi",
+                        "content": "Submitting my Base Paymaster PR today as well! Let's collaborate on the frontend UI components.",
+                        "created_at": "2026-05-22T13:40:00Z"
+                    }
+                ]
+            },
+            {
+                "_id": "thread-4",
+                "thread_id": "thread-4",
+                "title": "Polygon CDK Validium Devnet Setup with Kurtosis",
+                "author": "Ethan Brooks",
+                "category": "Announcement",
+                "content": "For anyone running Polygon CDK nodes locally, use Kurtosis-CDK package instead of manual Docker compose. Saves 20+ mins during local environment setup.",
+                "tags": ["polygon", "cdk", "validium", "kurtosis"],
+                "replies_count": 1,
+                "views_count": 165,
+                "likes_count": 31,
+                "created_at": "2026-05-28T16:20:00Z",
+                "comments": [
+                    {
+                        "comment_id": "comment-4-1",
+                        "author": "Dennis Njuguna",
+                        "content": "Thanks Ethan! Just tested this on Ubuntu 24.04 and the devnet spun up in under 3 minutes.",
+                        "created_at": "2026-05-28T17:45:00Z"
+                    }
+                ]
+            },
+            {
+                "_id": "thread-5",
+                "thread_id": "thread-5",
+                "title": "OP Stack Cross-Domain Messenger & Superchain State Interop",
+                "author": "Patrick Muriithi",
+                "category": "Discussion",
+                "content": "Exploring cross-chain message passing on Optimism Sepolia. How are you handling L1-to-L2 gas buffer estimation in production contracts?",
+                "tags": ["optimism", "op-stack", "superchain", "interop"],
+                "replies_count": 2,
+                "views_count": 210,
+                "likes_count": 38,
+                "created_at": "2026-06-05T14:10:00Z",
+                "comments": [
+                    {
+                        "comment_id": "comment-5-1",
+                        "author": "Ruth Nduta",
+                        "content": "Always query the L1Block oracle contract (`0x4200000000000000000000000000000000000015`) for dynamic overhead fees before broadcasting state updates.",
+                        "created_at": "2026-06-05T15:30:00Z"
+                    },
+                    {
+                        "comment_id": "comment-5-2",
+                        "author": "Mercy Wanjiru",
+                        "content": "Agreed! That prevents transaction reverts during L1 congestion spikes.",
+                        "created_at": "2026-06-05T16:50:00Z"
+                    }
+                ]
+            },
+            {
+                "_id": "thread-6",
+                "thread_id": "thread-6",
+                "title": "Solana Anchor CPI Reentrancy Security & Account Validation",
+                "author": "Yuki Takahashi",
+                "category": "Question",
+                "content": "When invoking CPIs in Anchor, what is the best practice for validating AccountInfo owners before data deserialization?",
+                "tags": ["solana", "anchor", "rust", "security"],
+                "replies_count": 2,
+                "views_count": 255,
+                "likes_count": 49,
+                "created_at": "2026-06-12T11:00:00Z",
+                "comments": [
+                    {
+                        "comment_id": "comment-6-1",
+                        "author": "Godwin Otieno",
+                        "content": "Use Anchor's typed `Account<'info, MyData>` constraint instead of raw `AccountInfo`. Anchor automatically enforces discriminator & program ID checks for you.",
+                        "created_at": "2026-06-12T12:45:00Z"
+                    },
+                    {
+                        "comment_id": "comment-6-2",
+                        "author": "Ian Korir",
+                        "content": "Also ensure you add `has_one` checks for authority keys so unauthorized users cannot spoof signers during cross-program invocation.",
+                        "created_at": "2026-06-12T14:15:00Z"
+                    }
+                ]
+            },
+            {
+                "_id": "thread-7",
+                "thread_id": "thread-7",
+                "title": "Arbitrum Nitro Execution Engine vs Stylus Rust Wasm Benchmarks",
+                "author": "Victor Kipchirchir",
+                "category": "Showcase",
+                "content": "Benchmarked Stylus Rust against standard Solidity EVM bytecode for heavy array sorting. Stylus achieved 9.4x lower gas execution fees on Arbitrum Sepolia!",
+                "tags": ["arbitrum", "stylus", "rust", "wasm", "benchmarks"],
+                "replies_count": 2,
+                "views_count": 320,
+                "likes_count": 67,
+                "created_at": "2026-06-18T15:30:00Z",
+                "comments": [
+                    {
+                        "comment_id": "comment-7-1",
+                        "author": "Godwin Otieno",
+                        "content": "Incredible benchmark Victor! Stylus Wasm host I/O pricing is a game-changer for complex computational dApps.",
+                        "created_at": "2026-06-18T16:50:00Z"
+                    },
+                    {
+                        "comment_id": "comment-7-2",
+                        "author": "Mei-Ling Wang",
+                        "content": "Are you using the official Offchain Labs `stylus-hello-world` starter template for the Wasm target builds?",
+                        "created_at": "2026-06-18T18:10:00Z"
+                    }
+                ]
+            },
+            {
+                "_id": "thread-8",
+                "thread_id": "thread-8",
+                "title": "ERC-4337 Account Abstraction Paymasters & UserOp Bundlers",
+                "author": "Eric Kimani",
+                "category": "Discussion",
+                "content": "Sharing our team's paymaster integration experience on Ethereum testnet. Gasless transactions & session keys dramatically increase Web3 user onboarding retention!",
+                "tags": ["ethereum", "erc4337", "account-abstraction", "paymaster"],
+                "replies_count": 2,
+                "views_count": 289,
+                "likes_count": 52,
+                "created_at": "2026-06-24T08:45:00Z",
+                "comments": [
+                    {
+                        "comment_id": "comment-8-1",
+                        "author": "Faith Chebet",
+                        "content": "ERC-4337 combined with passkey signatures makes dApps feel identical to Web2 social apps. Outstanding progress!",
+                        "created_at": "2026-06-24T10:15:00Z"
+                    },
+                    {
+                        "comment_id": "comment-8-2",
+                        "author": "Andrew Mwangi",
+                        "content": "We implemented this on Base Sepolia as well! Works seamlessly with Coinbase Smart Wallet.",
+                        "created_at": "2026-06-24T11:30:00Z"
+                    }
+                ]
+            },
+            {
+                "_id": "thread-9",
+                "thread_id": "thread-9",
+                "title": "Solana SPL-20 High-Throughput Token Program Deployment",
+                "author": "Ian Korir",
+                "category": "Showcase",
+                "content": "Deployed an open-source SPL-20 token engine on Solana Devnet with Program Derived Addresses (PDAs) for automated vault locking.",
+                "tags": ["solana", "spl20", "anchor", "pda"],
+                "replies_count": 2,
+                "views_count": 274,
+                "likes_count": 58,
+                "created_at": "2026-07-03T10:15:00Z",
+                "comments": [
+                    {
+                        "comment_id": "comment-9-1",
+                        "author": "Sheila Cherono",
+                        "content": "Tested your Devnet deployment script Ian! The PDA seed verification passed with zero errors.",
+                        "created_at": "2026-07-03T11:40:00Z"
+                    },
+                    {
+                        "comment_id": "comment-9-2",
+                        "author": "Brian Kiprop",
+                        "content": "Solid work! Parallel execution speed is impressive on Sealevel runtime.",
+                        "created_at": "2026-07-03T13:00:00Z"
+                    }
+                ]
+            },
+            {
+                "_id": "thread-10",
+                "thread_id": "thread-10",
+                "title": "Coinbase Smart Wallet Paymaster & OnchainKit Integration on Base",
+                "author": "Andrew Mwangi",
+                "category": "Showcase",
+                "content": "We just deployed the MOR Vault API with Coinbase Smart Wallet Paymaster on Base Sepolia. Passkey authentication feels indistinguishable from Web2 login!",
+                "tags": ["base", "coinbase", "onchainkit", "paymaster"],
+                "replies_count": 2,
+                "views_count": 390,
+                "likes_count": 84,
+                "created_at": "2026-07-11T14:20:00Z",
+                "comments": [
+                    {
+                        "comment_id": "comment-10-1",
+                        "author": "Cynthia Achieng",
+                        "content": "Tried out the live demo on Base Sepolia! The passkey popup authenticated in 1.2 seconds.",
+                        "created_at": "2026-07-11T16:00:00Z"
+                    },
+                    {
+                        "comment_id": "comment-10-2",
+                        "author": "Tariq Al-Hassan",
+                        "content": "Awesome job Andrew! This is going to be super useful for onboarding non-crypto native developers.",
+                        "created_at": "2026-07-11T17:25:00Z"
+                    }
+                ]
+            },
+            {
+                "_id": "thread-11",
+                "thread_id": "thread-11",
+                "title": "Arbitrum Stylus Rust Wasm Production Credential Claimed",
+                "author": "Godwin Otieno",
+                "category": "Announcement",
+                "content": "Extremely excited to announce that I have passed the Arbitrum Stylus Rust Wasm audit assessment and claimed my verified MOR Developer Credential on-chain!",
+                "tags": ["arbitrum", "stylus", "certification", "credential"],
+                "replies_count": 2,
+                "views_count": 412,
+                "likes_count": 96,
+                "created_at": "2026-07-19T09:30:00Z",
+                "comments": [
+                    {
+                        "comment_id": "comment-11-1",
+                        "author": "Alex Chen",
+                        "content": "Huge congratulations Godwin! Well deserved certification.",
+                        "created_at": "2026-07-19T11:00:00Z"
+                    },
+                    {
+                        "comment_id": "comment-11-2",
+                        "author": "Victor Kipchirchir",
+                        "content": "Congrats bro! The Stylus Rust track is tough, impressive achievement.",
+                        "created_at": "2026-07-19T12:15:00Z"
+                    }
+                ]
+            },
+            {
+                "_id": "thread-12",
+                "thread_id": "thread-12",
+                "title": "Zero-Knowledge Plonky2 & EVM State Proof Verification",
+                "author": "Lars Lindqvist",
+                "category": "Discussion",
+                "content": "Here is a breakdown of our ZK state proof verifier contract written for Ethereum and Polygon zkEVM. Feedback and peer reviews welcomed!",
+                "tags": ["ethereum", "polygon", "zkproofs", "plonky2"],
+                "replies_count": 2,
+                "views_count": 315,
+                "likes_count": 62,
+                "created_at": "2026-07-26T16:00:00Z",
+                "comments": [
+                    {
+                        "comment_id": "comment-12-1",
+                        "author": "Brenda Adhiambo",
+                        "content": "Reviewed the verifier logic! The constraint checks match Plonky2 specs cleanly.",
+                        "created_at": "2026-07-26T17:30:00Z"
+                    },
+                    {
+                        "comment_id": "comment-12-2",
+                        "author": "Oliver Hudson",
+                        "content": "Tested proof generation locally—verifies in under 450ms.",
+                        "created_at": "2026-07-26T18:45:00Z"
+                    }
+                ]
             }
         ]
         await coll.insert_many(threads)
-        print("🌱 Seeding forum threads complete.")
+        print("🌱 Seeding May–July 2026 forum threads complete.")
 
 async def seed_hackathons():
     """Seed initial hackathons if collection is empty."""

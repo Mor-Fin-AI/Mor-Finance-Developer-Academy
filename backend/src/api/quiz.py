@@ -17,7 +17,9 @@ async def submit_quiz(sub: QuizSubmission, verified_id: str = Depends(verify_tok
         raise HTTPException(status_code=403, detail="Forbidden: You cannot submit quiz attempts for another user account.")
     lesson_id = sub.lesson_id
     lesson = None
-    if lesson_id.startswith("7-"):
+    if lesson_id in LESSONS_DB:
+        lesson = LESSONS_DB[lesson_id]
+    else:
         user = await get_or_create_user(verified_id)
         track = user.get("active_track", "ethereum")
         track_lessons = get_track_lessons(track)
@@ -25,9 +27,15 @@ async def submit_quiz(sub: QuizSubmission, verified_id: str = Depends(verify_tok
             if tl.id == lesson_id:
                 lesson = tl
                 break
-    else:
-        if lesson_id in LESSONS_DB:
-            lesson = LESSONS_DB[lesson_id]
+        if not lesson:
+            from src.api.courses import SUPPORTED_TRACKS
+            for tr in SUPPORTED_TRACKS:
+                for tl in get_track_lessons(tr):
+                    if tl.id == lesson_id:
+                        lesson = tl
+                        break
+                if lesson:
+                    break
             
     if not lesson:
         raise HTTPException(status_code=404, detail=f"Lesson '{lesson_id}' not found")

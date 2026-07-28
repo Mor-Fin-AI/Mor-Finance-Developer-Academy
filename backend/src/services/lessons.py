@@ -509,8 +509,8 @@ def get_track_lessons(track_id: str) -> List[Lesson]:
     lessons: List[Lesson] = [
         # 1. Introductory Lesson 1
         Lesson(
-            id="7-1",
-            level_id=7,
+            id=f"{t_id}-1",
+            level_id=1,
             title=f"Introductory Lesson 1: {name} Architecture & Core Principles",
             duration="12 mins",
             xp=150,
@@ -560,8 +560,8 @@ You can switch to **OpenClaw (Education Mentor)** in the chat panel above to ask
 
         # 2. Introductory Lesson 2
         Lesson(
-            id="7-2",
-            level_id=7,
+            id=f"{t_id}-2",
+            level_id=2,
             title=f"Introductory Lesson 2: {name} Environment Setup & Tooling",
             duration="15 mins",
             xp=150,
@@ -608,8 +608,8 @@ If you encounter compiler warnings or deployment errors, switch to **Hermes (Eng
 
         # 3. Starter Project 1
         Lesson(
-            id="7-3",
-            level_id=7,
+            id=f"{t_id}-3",
+            level_id=3,
             title=details['p1_title'],
             duration="20 mins",
             xp=200,
@@ -653,8 +653,8 @@ npm install
 
         # 4. Starter Project 2
         Lesson(
-            id="7-4",
-            level_id=7,
+            id=f"{t_id}-4",
+            level_id=4,
             title=details['p2_title'],
             duration="25 mins",
             xp=250,
@@ -696,8 +696,8 @@ npm install
 
         # 5. Full Ecosystem Roadmap & Capstone Projects
         Lesson(
-            id="7-5",
-            level_id=7,
+            id=f"{t_id}-5",
+            level_id=5,
             title=f"{name} Full Ecosystem Roadmap & Capstone Projects",
             duration="30 mins",
             xp=300,

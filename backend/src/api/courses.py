@@ -24,12 +24,17 @@ async def list_courses(track: str = "ethereum"):
 async def get_lesson(lesson_id: str, track: str = "ethereum"):
     """Retrieve detailed content for a single lesson (including quiz and exercise meta)."""
     track = validate_track(track)
-    if lesson_id.startswith("7-"):
-        track_lessons = get_track_lessons(track)
-        for l in track_lessons:
+    if lesson_id in LESSONS_DB:
+        return LESSONS_DB[lesson_id]
+        
+    track_lessons = get_track_lessons(track)
+    for l in track_lessons:
+        if l.id == lesson_id:
+            return l
+
+    for tr in SUPPORTED_TRACKS:
+        for l in get_track_lessons(tr):
             if l.id == lesson_id:
                 return l
-        raise HTTPException(status_code=404, detail=f"Lesson '{lesson_id}' not found for track '{track}'")
-    if lesson_id not in LESSONS_DB:
-        raise HTTPException(status_code=404, detail=f"Lesson '{lesson_id}' not found")
-    return LESSONS_DB[lesson_id]
+
+    raise HTTPException(status_code=404, detail=f"Lesson '{lesson_id}' not found")
