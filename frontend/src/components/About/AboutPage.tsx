@@ -73,40 +73,34 @@ export const AboutPage: React.FC = () => {
       <div className="about-roadmap-grid">
         {[
           {
-            phase: '2026 Q3',
+            phase: '2026 Q1 & Q2',
             status: 'COMPLETED',
-            title: 'Launch MOR Finance Developer Academy MVP',
-            desc: 'Released core platform MVP with interactive learning tracks, smart contract compiler sandboxes, and level progress tracking.'
+            title: 'Full Development of Academy & Developer Onboarding',
+            desc: 'Core platform development, interactive learning tracks, smart contract compiler sandboxes, and developer onboarding workflows.'
           },
           {
             phase: '2026 Q3',
             status: 'COMPLETED',
-            title: 'AI Mentor Integration',
-            desc: 'Integrated OpenClaw & Hermes AI Mentors for 24/7 real-time Solidity syntax guidance, code auditing, and debugging.'
+            title: 'Developer Course Certification Expansion',
+            desc: 'Expansion of verifiable developer credentials, certificates, and specialized course tracks for MOR ecosystem engineers.'
           },
           {
             phase: '2026 Q3',
             status: 'COMPLETED',
-            title: 'Community Forum & Hackathons',
-            desc: 'Deployed developer community discussion forums, peer code reviews, and competitive hackathons with on-chain bounties.'
+            title: 'Multichain Learning Tracks',
+            desc: 'Dedicated ecosystem learning tracks launched across Ethereum, Arbitrum, Base, Optimism, Polygon, Avalanche, and Solana.'
           },
           {
             phase: '2026 Q4',
             status: 'IN PROGRESS',
-            title: 'Multichain Learning Tracks',
-            desc: 'Expanding deep-dive tracks across Ethereum, Arbitrum, Base, Optimism, Polygon, Avalanche, and Solana.'
-          },
-          {
-            phase: '2026 Q4',
-            status: 'UPCOMING',
-            title: 'Ecosystem Grant Partnerships',
-            desc: 'Partnering with protocol foundations and ecosystem funds to award grants to top-performing Academy graduates.'
+            title: 'AI-Powered Protocol Services & Developer Tooling',
+            desc: 'Advanced AI code auditing, automated gas optimization, and protocol integration services for enterprise developers.'
           },
           {
             phase: '2027',
             status: 'UPCOMING',
-            title: 'Developer Certifications & Enterprise Expansion',
-            desc: 'Deploying cryptographic developer credentials, enterprise developer training, and global Web3 community expansion.'
+            title: 'Enterprise Infrastructure & Global Community Expansion',
+            desc: 'Deploying enterprise developer training, cryptographic credential verification, and global Web3 developer community expansion.'
           }
         ].map((item) => (
           <div key={item.phase + item.title} className={`roadmap-phase-card glass ${item.status.toLowerCase().replace(' ', '-')}`}>

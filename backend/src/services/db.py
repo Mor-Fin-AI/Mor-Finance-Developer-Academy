@@ -56,8 +56,8 @@ async def connect_to_mongo():
             db_name = path
     db_instance.db = db_instance.client[db_name]
     print(f"✅ Connected to MongoDB. Database: '{db_name}'")
-    await seed_forum_threads()
-    await seed_hackathons()
+    # await seed_forum_threads()
+    # await seed_hackathons()
 
 
 async def close_mongo_connection():
@@ -529,11 +529,9 @@ async def complete_lesson_for_user(user_id: str, level_id: int, lesson_id: str):
 async def seed_forum_threads():
     """Seed initial threads for May - July 2026 developer cohort discussions."""
     coll = get_forum_collection()
-    await coll.delete_many({"thread_id": {"$in": ["thread-1", "thread-2", "thread-3"]}})
-    count = await coll.count_documents({})
-    if count == 0:
-        print("🌱 Seeding May–July 2026 forum threads in MongoDB...")
-        threads = [
+    await coll.delete_many({})
+    print("🌱 Seeding May–July 2026 forum threads in MongoDB...")
+    threads = [
             {
                 "_id": "thread-1",
                 "thread_id": "thread-1",
@@ -847,18 +845,15 @@ async def seed_forum_threads():
                 ]
             }
         ]
-        await coll.insert_many(threads)
-        print("🌱 Seeding May–July 2026 forum threads complete.")
+    await coll.insert_many(threads)
+    print("🌱 Seeding May–July 2026 forum threads complete.")
 
 async def seed_hackathons():
-    """Seed initial hackathons if collection is empty."""
+    """Seed initial hackathons in MongoDB."""
     coll = get_hackathons_collection()
-    # Drop old mock ones to ensure we seed the new diverse ones
-    await coll.delete_many({"hackathon_id": {"$in": ["hack-1", "hack-2", "hack-3"]}})
-    count = await coll.count_documents({})
-    if count == 0:
-        print("🌱 Seeding hackathons in MongoDB...")
-        hacks = [
+    await coll.delete_many({})
+    print("🌱 Seeding hackathons in MongoDB...")
+    hacks = [
             {
                 "_id": "hack-1",
                 "hackathon_id": "hack-1",
@@ -1011,6 +1006,6 @@ async def seed_hackathons():
                 ]
             }
         ]
-        await coll.insert_many(hacks)
-        print("🌱 Seeding hackathons complete.")
+    await coll.insert_many(hacks)
+    print("🌱 Seeding hackathons complete.")
 
