@@ -23,7 +23,7 @@ const PAGE_META: Record<NavPage, { title: string; subtitle: string }> = {
   academy:      { title: 'Developer Academy',  subtitle: 'Learn and compile smart contracts' },
   roadmap:      { title: 'Developer Academy',  subtitle: 'Learn and compile smart contracts' },
   dashboard:    { title: 'My Dashboard',       subtitle: 'Track your Web3 progress & stats' },
-  analytics:    { title: 'Cohort Analytics',   subtitle: 'Ecosystem Developer Cohort Activity (May–July 2026)' },
+  analytics:    { title: 'Cohort Analytics',   subtitle: 'Ecosystem Developer Cohort Activity (May–August 2026)' },
   forum:        { title: 'Community Forum',    subtitle: 'Ask questions, share knowledge, and help others' },
   hackathons:   { title: 'Web3 Hackathons',    subtitle: 'Build, innovate, and win.' },
   mentor:       { title: 'AI Mentor Workspace',subtitle: 'Get real-time code reviews and support' },

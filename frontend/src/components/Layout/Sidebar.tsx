@@ -15,7 +15,7 @@ interface SidebarProps {
 
 const NAV_ITEMS: { id: NavPage; label: string; icon: string; description: string }[] = [
   { id: 'dashboard',    label: 'My Dashboard',     icon: '📊',  description: 'Progress & XP' },
-  { id: 'analytics',    label: 'Cohort Analytics', icon: '📈',  description: 'May–July 2026 Devs' },
+  { id: 'analytics',    label: 'Cohort Analytics', icon: '📈',  description: 'May–August 2026 Devs' },
   { id: 'academy',      label: 'Developer Academy', icon: '🎓',  description: '6-level curriculum' },
   { id: 'mentor',       label: 'AI Mentor (OpenClaw)', icon: '🤖', description: 'Real-time compiler assistance' },
   { id: 'forum',        label: 'Community Forum',  icon: '💬',  description: 'Connect & discuss' },

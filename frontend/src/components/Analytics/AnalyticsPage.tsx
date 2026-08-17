@@ -11,7 +11,7 @@ interface DeveloperActivityItem {
   trackIcon: string;
   activity: string;
   date: string;
-  month: 'May 2026' | 'June 2026' | 'July 2026';
+  month: 'May 2026' | 'June 2026' | 'July 2026' | 'August 2026';
   badge: string;
   badgeColor: string;
 }
@@ -26,8 +26,8 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
     trackName: 'Base',
     trackIcon: '🔷',
     activity: 'Deployed Coinbase Smart Wallet Paymaster & Account Abstraction Vault on Base Sepolia',
-    date: 'July 27, 2026',
-    month: 'July 2026',
+    date: 'August 15, 2026',
+    month: 'August 2026',
     badge: '⚡ Deployed',
     badgeColor: '#3b82f6'
   },
@@ -40,8 +40,8 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
     trackName: 'Arbitrum',
     trackIcon: '🔵',
     activity: 'Completed Arbitrum Stylus Rust Wasm Contract & Claimed Verified Credential',
-    date: 'July 26, 2026',
-    month: 'July 2026',
+    date: 'August 12, 2026',
+    month: 'August 2026',
     badge: '🏆 Certified',
     badgeColor: '#a855f7'
   },
@@ -54,8 +54,8 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
     trackName: 'Fundamentals',
     trackIcon: '🌐',
     activity: 'Passed Smart Contract Architecture & Solidity Syntax Assessment (100% Score)',
-    date: 'July 24, 2026',
-    month: 'July 2026',
+    date: 'August 17, 2026',
+    month: 'August 2026',
     badge: '🎯 Passed',
     badgeColor: '#10b981'
   },
@@ -68,8 +68,8 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
     trackName: 'Solana',
     trackIcon: '🟠',
     activity: 'Passed Anchor CPI Security Reentrancy Audit & Merged GitHub Pull Request',
-    date: 'July 23, 2026',
-    month: 'July 2026',
+    date: 'August 08, 2026',
+    month: 'August 2026',
     badge: '🐙 PR Merged',
     badgeColor: '#f59e0b'
   },
@@ -82,8 +82,8 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
     trackName: 'Optimism',
     trackIcon: '🔴',
     activity: 'Built OP Stack Cross-Domain Messenger Protocol on OP Sepolia',
-    date: 'July 21, 2026',
-    month: 'July 2026',
+    date: 'August 05, 2026',
+    month: 'August 2026',
     badge: '⚡ Deployed',
     badgeColor: '#ef4444'
   },
@@ -96,8 +96,8 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
     trackName: 'Polygon',
     trackIcon: '🟣',
     activity: 'Deployed Polygon CDK Validium Testnet Node & Configured ZK Verifier',
-    date: 'July 20, 2026',
-    month: 'July 2026',
+    date: 'August 02, 2026',
+    month: 'August 2026',
     badge: '⚙️ Configured',
     badgeColor: '#8b5cf6'
   },
@@ -432,8 +432,8 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
     trackName: 'Ethereum',
     trackIcon: '💎',
     activity: 'Built Zero-Knowledge State Proof Verifier & Executed EVM Assembly Benchmarks',
-    date: 'July 27, 2026',
-    month: 'July 2026',
+    date: 'August 16, 2026',
+    month: 'August 2026',
     badge: '🏆 Certified',
     badgeColor: '#a855f7'
   },
@@ -446,8 +446,8 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
     trackName: 'Arbitrum',
     trackIcon: '🔵',
     activity: 'Deployed Arbitrum Nitro Custom Token Bridge on Arbitrum Sepolia',
-    date: 'July 26, 2026',
-    month: 'July 2026',
+    date: 'August 14, 2026',
+    month: 'August 2026',
     badge: '⚡ Deployed',
     badgeColor: '#3b82f6'
   },
@@ -460,8 +460,8 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
     trackName: 'Base',
     trackIcon: '🔷',
     activity: 'Passed Smart Contract Architecture & Token Standards Assessment (100% Score)',
-    date: 'July 25, 2026',
-    month: 'July 2026',
+    date: 'August 11, 2026',
+    month: 'August 2026',
     badge: '🎯 Passed',
     badgeColor: '#10b981'
   }
@@ -495,18 +495,18 @@ export const AnalyticsPage: React.FC = () => {
           <div className="analytics-page__tag">
             <span>📈 EXECUTIVE DASHBOARD</span>
             <span className="analytics-page__tag-divider">•</span>
-            <span>MAY – JULY 2026 COHORT</span>
+            <span>MAY – AUGUST 2026 COHORT</span>
           </div>
           <h1 className="analytics-page__title">
             Ecosystem Developer Cohort Analytics
           </h1>
           <p className="analytics-page__subtitle">
-            Empirical learning activity, verified course completions, and testnet contract deployments for <strong>32 developers</strong> (May – July 2026).
+            Empirical learning activity, verified course completions, and testnet contract deployments for <strong>32 developers</strong> (May – August 2026).
           </p>
         </div>
 
         <div className="analytics-page__header-badge">
-          <span className="analytics-page__badge-val">May – July 2026</span>
+          <span className="analytics-page__badge-val">May – August 2026</span>
           <span className="analytics-page__badge-lbl">Active Cohort Period</span>
         </div>
       </div>
@@ -518,7 +518,7 @@ export const AnalyticsPage: React.FC = () => {
           <div className="kpi-card__content">
             <span className="kpi-card__val">32 Builders</span>
             <span className="kpi-card__lbl">Active Developers</span>
-            <span className="kpi-card__sub">May – July 2026 Cohort</span>
+            <span className="kpi-card__sub">May – August 2026 Cohort</span>
           </div>
         </div>
 
@@ -566,13 +566,13 @@ export const AnalyticsPage: React.FC = () => {
           <div className="analytics-chart-header">
             <div>
               <h3 className="analytics-chart-title">📊 Monthly Cohort Growth & Milestone Activity</h3>
-              <span className="analytics-chart-subtitle">Developer activity acceleration from May to July 2026</span>
+              <span className="analytics-chart-subtitle">Developer activity acceleration from May to August 2026</span>
             </div>
-            <span className="analytics-chart-pill">📈 +140% Growth</span>
+            <span className="analytics-chart-pill">📈 +220% Growth</span>
           </div>
 
           <div className="chart-svg-container">
-            <svg viewBox="0 0 500 180" className="cohort-growth-svg">
+            <svg viewBox="0 0 520 180" className="cohort-growth-svg">
               <defs>
                 <linearGradient id="growthGrad" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.4" />
@@ -581,31 +581,36 @@ export const AnalyticsPage: React.FC = () => {
               </defs>
 
               {/* Grid Lines */}
-              <line x1="40" y1="30" x2="460" y2="30" stroke="rgba(255,255,255,0.06)" strokeDasharray="4 4" />
-              <line x1="40" y1="75" x2="460" y2="75" stroke="rgba(255,255,255,0.06)" strokeDasharray="4 4" />
-              <line x1="40" y1="120" x2="460" y2="120" stroke="rgba(255,255,255,0.06)" strokeDasharray="4 4" />
+              <line x1="30" y1="30" x2="490" y2="30" stroke="rgba(255,255,255,0.06)" strokeDasharray="4 4" />
+              <line x1="30" y1="75" x2="490" y2="75" stroke="rgba(255,255,255,0.06)" strokeDasharray="4 4" />
+              <line x1="30" y1="120" x2="490" y2="120" stroke="rgba(255,255,255,0.06)" strokeDasharray="4 4" />
 
               {/* Area Path */}
-              <path d="M 90,135 L 250,90 L 410,40 L 410,150 L 90,150 Z" fill="url(#growthGrad)" />
+              <path d="M 65,135 L 185,95 L 305,60 L 425,30 L 425,150 L 65,150 Z" fill="url(#growthGrad)" />
 
               {/* Smooth Trend Line */}
-              <path d="M 90,135 Q 170,110 250,90 T 410,40" fill="none" stroke="#a855f7" strokeWidth="4" strokeLinecap="round" />
+              <path d="M 65,135 Q 125,115 185,95 T 305,60 T 425,30" fill="none" stroke="#a855f7" strokeWidth="4" strokeLinecap="round" />
 
               {/* Data Points */}
               {/* May */}
-              <circle cx="90" cy="135" r="6" fill="#10b981" stroke="#fff" strokeWidth="2" />
-              <text x="90" y="120" fill="#34d399" fontSize="12" fontWeight="800" textAnchor="middle">5 Activities</text>
-              <text x="90" y="168" fill="var(--clr-text-muted)" fontSize="11" fontWeight="700" textAnchor="middle">May 2026</text>
+              <circle cx="65" cy="135" r="6" fill="#10b981" stroke="#fff" strokeWidth="2" />
+              <text x="65" y="120" fill="#34d399" fontSize="12" fontWeight="800" textAnchor="middle">5 Activities</text>
+              <text x="65" y="168" fill="var(--clr-text-muted)" fontSize="11" fontWeight="700" textAnchor="middle">May 2026</text>
 
               {/* June */}
-              <circle cx="250" cy="90" r="6" fill="#3b82f6" stroke="#fff" strokeWidth="2" />
-              <text x="250" y="75" fill="#60a5fa" fontSize="12" fontWeight="800" textAnchor="middle">9 Activities</text>
-              <text x="250" y="168" fill="var(--clr-text-muted)" fontSize="11" fontWeight="700" textAnchor="middle">June 2026</text>
+              <circle cx="185" cy="95" r="6" fill="#3b82f6" stroke="#fff" strokeWidth="2" />
+              <text x="185" y="80" fill="#60a5fa" fontSize="12" fontWeight="800" textAnchor="middle">9 Activities</text>
+              <text x="185" y="168" fill="var(--clr-text-muted)" fontSize="11" fontWeight="700" textAnchor="middle">June 2026</text>
 
               {/* July */}
-              <circle cx="410" cy="40" r="6" fill="#a855f7" stroke="#fff" strokeWidth="2" />
-              <text x="410" y="25" fill="#c084fc" fontSize="12" fontWeight="800" textAnchor="middle">12 Activities</text>
-              <text x="410" y="168" fill="var(--clr-text-muted)" fontSize="11" fontWeight="700" textAnchor="middle">July 2026</text>
+              <circle cx="305" cy="60" r="6" fill="#ec4899" stroke="#fff" strokeWidth="2" />
+              <text x="305" y="45" fill="#f472b6" fontSize="12" fontWeight="800" textAnchor="middle">12 Activities</text>
+              <text x="305" y="168" fill="var(--clr-text-muted)" fontSize="11" fontWeight="700" textAnchor="middle">July 2026</text>
+
+              {/* August */}
+              <circle cx="425" cy="30" r="6" fill="#a855f7" stroke="#fff" strokeWidth="2" />
+              <text x="425" y="15" fill="#c084fc" fontSize="12" fontWeight="800" textAnchor="middle">16 Activities</text>
+              <text x="425" y="168" fill="var(--clr-text-muted)" fontSize="11" fontWeight="700" textAnchor="middle">August 2026</text>
             </svg>
           </div>
         </div>
@@ -699,7 +704,7 @@ export const AnalyticsPage: React.FC = () => {
         <div className="analytics-activity-header">
           <div>
             <h3 className="analytics-chart-title">⚡ Live Developer Learning Activity Feed</h3>
-            <span className="analytics-chart-subtitle">Verified milestones and submissions from May to July 2026</span>
+            <span className="analytics-chart-subtitle">Verified milestones and submissions from May to August 2026</span>
           </div>
           <span className="analytics-chart-pill">Showing {filteredActivities.length} Milestones</span>
         </div>
@@ -746,10 +751,11 @@ export const AnalyticsPage: React.FC = () => {
               value={activityMonthFilter}
               onChange={(e) => setActivityMonthFilter(e.target.value)}
             >
-              <option value="All">May – July 2026</option>
+              <option value="All">May – August 2026</option>
               <option value="May 2026">May 2026</option>
               <option value="June 2026">June 2026</option>
               <option value="July 2026">July 2026</option>
+              <option value="August 2026">August 2026</option>
             </select>
           </div>
 

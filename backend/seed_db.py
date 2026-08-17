@@ -14,7 +14,7 @@ from src.services.db import connect_to_mongo, seed_forum_threads, seed_hackathon
 async def run_all_seeds():
     print("🚀 Connecting to MongoDB...")
     await connect_to_mongo()
-    print("🌱 Populating May–July 2026 Developer Cohort Forum Threads...")
+    print("🌱 Populating May–August 2026 Developer Cohort Forum Threads...")
     await seed_forum_threads()
     print("🏆 Populating Web3 Ecosystem Hackathons...")
     await seed_hackathons()
