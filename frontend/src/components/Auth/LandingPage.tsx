@@ -118,9 +118,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <a href="https://github.com/Mor-Fin-AI/Mor-Finance-Developer-Academy#readme" target="_blank" rel="noopener noreferrer" className="trust-link">
               <span>📖</span> Documentation
             </a>
-            <a href="/about" className="trust-link">
-              <span>📰</span> Protocol Blog & News
-            </a>
             <a href="https://discord.gg/Jjt52cQEV" target="_blank" rel="noopener noreferrer" className="trust-link">
               <span>🌐</span> Developer Forum
             </a>
@@ -211,11 +208,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           <a href="https://github.com/Mor-Fin-AI" target="_blank" rel="noopener noreferrer">GitHub</a>
           <a href="https://discord.gg/Jjt52cQEV" target="_blank" rel="noopener noreferrer">Discord</a>
           <a href="https://github.com/Mor-Fin-AI/Mor-Finance-Developer-Academy#readme" target="_blank" rel="noopener noreferrer">Documentation</a>
-          <a href="/about">Blog</a>
           <a href="https://discord.gg/Jjt52cQEV" target="_blank" rel="noopener noreferrer">Community</a>
           <a href="/about">About MOR</a>
         </div>
-        <p>© 2026 MOR Finance Ltd. All rights reserved. | AI-Powered Web3 Developer Academy</p>
+        <p>© 2026 Morfinance AI. 66 Paul Street, London, EC2A 4NA. All rights reserved. | AI-Powered Web3 Developer Academy</p>
       </footer>
     </div>
   );

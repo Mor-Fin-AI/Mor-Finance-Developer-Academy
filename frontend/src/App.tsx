@@ -461,7 +461,7 @@ export default function App() {
         </Routes>
         
         <footer className="app-global-footer" style={{ textAlign: 'center', padding: '32px 16px 16px 16px', borderTop: '1px solid rgba(255, 255, 255, 0.06)', fontSize: '0.75rem', color: 'var(--clr-text-muted)', marginTop: '40px' }}>
-          © 2026 MOR Finance Ltd. All rights reserved. | AI-Powered Web3 Developer Academy
+          © 2026 Morfinance AI. 66 Paul Street, London, EC2A 4NA. All rights reserved. | AI-Powered Web3 Developer Academy
         </footer>
       </main>
     </div>

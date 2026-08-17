@@ -395,7 +395,7 @@ TRACK_TOPICS = {
     ],
     "base": [
         "Base Ecosystem & MOR", "Onchain Applications", "Coinbase Wallet Integrations",
-        "Base Smart Contract Deployment", "Base Hackathons & Grants"
+        "Base Smart Contract Deployment", "Base Hackathons & Developer Blueprints"
     ],
     "solana": [
         "Solana High-Throughput Architecture", "Solana Accounts Model", "Anchor Framework & Rust",
@@ -711,7 +711,7 @@ Congratulations on completing the Introductory Lessons, Quizzes, Coding Exercise
 3. **DeFi Protocols**: AMMs, liquidity pools, collateralized lending, yield vaults.
 4. **NFTs & Standards**: Dynamic NFTs, soulbound tokens, marketplace contracts.
 5. **Governance**: On-chain DAOs, voting delegation, timelocks.
-6. **Hackathons & Grants**: Ecosystem hackathons, MOR builder grants, public goods.
+6. **Hackathons & Bounties**: Ecosystem hackathons, MOR builder bounties, open-source public goods.
 7. **Certifications & Capstones**: On-chain verifiable credentials and production capstone projects.
 """,
             quiz=[

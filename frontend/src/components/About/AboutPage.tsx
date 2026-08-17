@@ -123,7 +123,7 @@ export const AboutPage: React.FC = () => {
         {[
           { name: 'MOR Protocol Team', role: 'Smart Contract & Audit Leads', bio: 'Oversees MOR Vault contracts, yield mechanics, reentrancy audits, and protocol security.', icon: '⬡' },
           { name: 'AI Engineering Group', role: 'OpenClaw & Hermes AI Lead', bio: 'Designs context-aware OpenClaw & Hermes AI agents for live Solidity code reviews and automated evaluations.', icon: '🤖' },
-          { name: 'Community Operations', role: 'Ecosystem & Developer Relations', bio: 'Manages developer bounties, Discord community office hours, hackathons, and grant allocations.', icon: '🌐' }
+          { name: 'Community Operations', role: 'Ecosystem & Developer Relations', bio: 'Manages developer bounties, Discord community office hours, hackathons, and cohort workshops.', icon: '🌐' }
         ].map((member) => (
           <div key={member.name} className="team-card glass">
             <div className="team-avatar">{member.icon}</div>
@@ -174,7 +174,7 @@ export const AboutPage: React.FC = () => {
           <span>✉️</span> Contact & Developer Support
         </h3>
         <p className="about-section-sub" style={{ marginBottom: '16px' }}>
-          For inquiries regarding developer grants, Academy onboarding, technical support, or partnership opportunities, contact our team:
+          For inquiries regarding developer certifications, Academy onboarding, technical support, or partnership opportunities, contact our team:
         </p>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}>
           <a
@@ -191,6 +191,20 @@ export const AboutPage: React.FC = () => {
           >
             <span>📧</span> admin@morfinance.ai
           </a>
+        </div>
+      </div>
+
+      {/* Company & Registered Office Details */}
+      <div className="about-company-section glass" style={{ marginTop: '24px', padding: '24px', borderRadius: '16px', border: '1px solid rgba(168, 85, 247, 0.3)', background: 'rgba(10, 11, 23, 0.45)' }}>
+        <h3 className="about-section-title" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '1.2rem', marginBottom: '12px' }}>
+          <span>🏛️</span> Company Details & Registered Office
+        </h3>
+        <div style={{ color: 'var(--clr-text-secondary)', fontSize: '0.92rem', lineHeight: '1.6' }}>
+          <strong style={{ color: '#fff', fontSize: '1.05rem', display: 'block', marginBottom: '6px' }}>Morfinance AI</strong>
+          <div>66 Paul Street</div>
+          <div>London</div>
+          <div>EC2A 4NA</div>
+          <div style={{ marginTop: '6px', fontSize: '0.82rem', color: 'var(--clr-text-muted)' }}>United Kingdom</div>
         </div>
       </div>
     </div>

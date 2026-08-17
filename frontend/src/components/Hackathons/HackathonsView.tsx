@@ -225,8 +225,8 @@ export const HackathonsView: React.FC<HackathonsViewProps> = ({ userId, onProgre
                       <div className="hack-card__header">
                         <span className="hack-card__badge-live">● LIVE</span>
                         {(() => {
-                          const amt = parseInt(hack.prize_pool.replace(/[^0-9]/g, '')) || 0;
-                          const diff = amt >= 40000 ? 'ADVANCED' : amt >= 22000 ? 'INTERMEDIATE' : 'BEGINNER';
+                          const ecos = hack.ecosystems || [];
+                          const diff = ecos.length > 2 ? 'ADVANCED' : ecos.length === 2 ? 'INTERMEDIATE' : 'BEGINNER';
                           return (
                             <span className={`hack-card__badge-diff hack-card__badge-diff--${diff.toLowerCase()}`}>
                               {diff}
@@ -239,8 +239,8 @@ export const HackathonsView: React.FC<HackathonsViewProps> = ({ userId, onProgre
                       
                       <div className="hack-card__stats">
                         <div className="hack-card__stat-item">
-                          <span className="hack-card__stat-lbl">Prize Pool</span>
-                          <span className="hack-card__stat-val hack-card__stat-val--prize">{hack.prize_pool}</span>
+                          <span className="hack-card__stat-lbl">Ecosystems</span>
+                          <span className="hack-card__stat-val hack-card__stat-val--other">{hack.ecosystems?.slice(0, 2).join(', ') || 'Multi-Chain'}</span>
                         </div>
                         <div className="hack-card__stat-item">
                           <span className="hack-card__stat-lbl">Duration</span>
@@ -402,15 +402,15 @@ export const HackathonsView: React.FC<HackathonsViewProps> = ({ userId, onProgre
             })()}
           </div>
 
-          {/* Winners & Rewards Section */}
+          {/* Winners & Recognition Section */}
           <div className="winners-section glass" style={{ padding: 24, borderRadius: 'var(--radius-lg)', border: '1px solid var(--clr-border)' }}>
             <div>
-              <h3 className="winners-section__title">Winners & Rewards</h3>
+              <h3 className="winners-section__title">Winners & Recognitions</h3>
               <div className="winners-list-mock">
                 {[
-                  { team: 'TechForge Team', place: '1st Place - DeFi Innovation', prize: '$30,000', medal: '🥇' },
-                  { team: 'Nexus Builders', place: '2nd Place - DeFi Innovation', prize: '$15,000', medal: '🥈' },
-                  { team: 'CodeWave', place: '3rd Place - DeFi Innovation', prize: '$5,000', medal: '🥉' }
+                  { team: 'TechForge Team', place: '1st Place - DeFi Innovation', award: 'Gold Credential', medal: '🥇' },
+                  { team: 'Nexus Builders', place: '2nd Place - DeFi Innovation', award: 'Silver Credential', medal: '🥈' },
+                  { team: 'CodeWave', place: '3rd Place - DeFi Innovation', award: 'Bronze Credential', medal: '🥉' }
                 ].map((w, idx) => (
                   <div key={idx} className="winner-card">
                     <div className="winner-card__left">
@@ -420,7 +420,7 @@ export const HackathonsView: React.FC<HackathonsViewProps> = ({ userId, onProgre
                         <span className="winner-card__place">{w.place}</span>
                       </div>
                     </div>
-                    <span className="winner-card__prize">{w.prize}</span>
+                    <span className="winner-card__prize" style={{ color: '#60a5fa', fontSize: '0.85rem' }}>{w.award}</span>
                   </div>
                 ))}
               </div>
@@ -454,8 +454,8 @@ export const HackathonsView: React.FC<HackathonsViewProps> = ({ userId, onProgre
               
               <div className="hack-detail-meta-box">
                 <div>
-                  <span className="hack-lbl">Prize Pool</span>
-                  <span className="hack-val hack-val--prize">{selectedHack.prize_pool}</span>
+                  <span className="hack-lbl">Ecosystems</span>
+                  <span className="hack-val">{selectedHack.ecosystems?.join(', ') || 'Multi-Chain'}</span>
                 </div>
                 <div>
                   <span className="hack-lbl">Hackathon Timeline</span>

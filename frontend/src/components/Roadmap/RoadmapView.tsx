@@ -371,7 +371,7 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
           {[
             { title: 'Smart Contracts', icon: '📝' },
             { title: 'dApps Frameworks', icon: '🌐' },
-            { title: 'Ecosystem Grants', icon: '🏆' },
+            { title: 'Developer Toolkits', icon: '🛠️' },
           ].map((item) => (
             <div key={item.title} className="build-mor__card">
               <span className="build-mor__card-icon">{item.icon}</span>

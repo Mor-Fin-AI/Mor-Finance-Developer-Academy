@@ -319,10 +319,10 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
     trackId: 'optimism',
     trackName: 'Optimism',
     trackIcon: '🔴',
-    activity: 'Submitted RetroPGF Grant Application Proposal on OP Superchain Portal',
+    activity: 'Deployed Superchain Cross-Domain Messenger Contract on OP Sepolia',
     date: 'June 04, 2026',
     month: 'June 2026',
-    badge: '📝 Proposal',
+    badge: '🚀 Deployment',
     badgeColor: '#ff0420'
   },
   {

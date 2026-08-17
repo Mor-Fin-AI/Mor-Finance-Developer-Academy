@@ -978,10 +978,145 @@ async def seed_forum_threads():
                         "created_at": "2026-07-28T09:30:00Z"
                     }
                 ]
+            },
+            {
+                "_id": "thread-18",
+                "thread_id": "thread-18",
+                "title": "Optimism Sepolia Superchain ERC-7802 Cross-L2 Mint-Burn Bridge",
+                "author": "Mercy Wanjiru",
+                "category": "Discussion",
+                "content": "Implemented ERC-7802 SuperchainERC20 cross-L2 token standards between OP Sepolia and Base Sepolia. Native cross-chain bridge finalized in under 25 seconds with zero slippage.",
+                "tags": ["optimism", "superchain", "erc7802", "interop"],
+                "replies_count": 2,
+                "views_count": 348,
+                "likes_count": 79,
+                "created_at": "2026-08-04T11:20:00Z",
+                "comments": [
+                    {
+                        "comment_id": "comment-18-1",
+                        "author": "Patrick Muriithi",
+                        "content": "Clean architecture Mercy! The Superchain token standard significantly reduces reliance on third-party liquidity pools.",
+                        "created_at": "2026-08-04T12:45:00Z"
+                    },
+                    {
+                        "comment_id": "comment-18-2",
+                        "author": "Ruth Nduta",
+                        "content": "Verified the event logs on OP Sepolia block explorer. All burn-and-mint events fired reliably.",
+                        "created_at": "2026-08-04T14:10:00Z"
+                    }
+                ]
+            },
+            {
+                "_id": "thread-19",
+                "thread_id": "thread-19",
+                "title": "Stylus Rust Wasm Gas Profiling with Nitro v3.2 Devnet",
+                "author": "Victor Kipchirchir",
+                "category": "Showcase",
+                "content": "Tested zero-copy memory buffer deserialization in Stylus Rust vs standard EVM assembly on Arbitrum Sepolia. Achieved an 82% reduction in total execution gas overhead!",
+                "tags": ["arbitrum", "stylus", "rust", "wasm", "gas"],
+                "replies_count": 2,
+                "views_count": 382,
+                "likes_count": 91,
+                "created_at": "2026-08-08T15:10:00Z",
+                "comments": [
+                    {
+                        "comment_id": "comment-19-1",
+                        "author": "Godwin Otieno",
+                        "content": "That is an extraordinary performance optimization! Zero-copy buffers are a massive advantage of the Stylus host environment.",
+                        "created_at": "2026-08-08T16:30:00Z"
+                    },
+                    {
+                        "comment_id": "comment-19-2",
+                        "author": "Lucas Meyer",
+                        "content": "Would love to see the Foundry benchmark script if you can share it on GitHub!",
+                        "created_at": "2026-08-08T17:45:00Z"
+                    }
+                ]
+            },
+            {
+                "_id": "thread-20",
+                "thread_id": "thread-20",
+                "title": "OpenClaw AI Mentor Level 6 Protocol Audit Verification Passed",
+                "author": "Godwin Otieno",
+                "category": "Discussion",
+                "content": "Completed the Level 6 MOR Finance Protocol capstone challenge. OpenClaw AI Mentor identified two subtle reentrancy risks in our yield harvester before broadcasting to testnet. Highly recommended!",
+                "tags": ["mentor", "ai", "security", "protocols", "openclaw"],
+                "replies_count": 2,
+                "views_count": 425,
+                "likes_count": 112,
+                "created_at": "2026-08-12T10:30:00Z",
+                "comments": [
+                    {
+                        "comment_id": "comment-20-1",
+                        "author": "Alex.Mutua",
+                        "content": "OpenClaw's AST analyzer caught a storage slot collision in our modifier as well. Truly remarkable developer tool.",
+                        "created_at": "2026-08-12T11:45:00Z"
+                    },
+                    {
+                        "comment_id": "comment-20-2",
+                        "author": "Andrew Mwangi",
+                        "content": "Level 6 audit verification was super rigorous. Huge congrats on passing Godwin!",
+                        "created_at": "2026-08-12T13:15:00Z"
+                    }
+                ]
+            },
+            {
+                "_id": "thread-21",
+                "thread_id": "thread-21",
+                "title": "MOR DeFi Innovation Hackathon Live & Submission Checklist",
+                "author": "Andrew Mwangi",
+                "category": "Announcement",
+                "content": "The MOR DeFi Innovation Hackathon is officially active! Ensure all smart contracts are verified on testnet explorers and GitHub repositories are public ahead of final evaluations.",
+                "tags": ["hackathons", "defi", "submissions", "checklist"],
+                "replies_count": 2,
+                "views_count": 470,
+                "likes_count": 128,
+                "created_at": "2026-08-15T09:00:00Z",
+                "comments": [
+                    {
+                        "comment_id": "comment-21-1",
+                        "author": "Naomi Wairimu",
+                        "content": "Our Base Sepolia paymaster integration PR is ready and deployed! Submitting today.",
+                        "created_at": "2026-08-15T11:20:00Z"
+                    },
+                    {
+                        "comment_id": "comment-21-2",
+                        "author": "Collins Omondi",
+                        "content": "Avalanche Subnet Teleporter contracts verified on Avascan. Best of luck to all cohort teams!",
+                        "created_at": "2026-08-15T13:40:00Z"
+                    }
+                ]
+            },
+            {
+                "_id": "thread-22",
+                "thread_id": "thread-22",
+                "title": "MOR Ecosystem Multi-Chain Developer Credential Minted On-Chain (17/08/2026)",
+                "author": "Alex.Mutua",
+                "category": "Showcase",
+                "content": "Today (17/08/2026) I minted my verified Multi-Chain Smart Contract Architect credential on Base Sepolia! Immensely grateful to the MOR Academy platform, the AI Mentors, and all peer contributors.",
+                "tags": ["certification", "credentials", "onchain", "graduation"],
+                "replies_count": 2,
+                "views_count": 512,
+                "likes_count": 145,
+                "created_at": "2026-08-17T08:30:00Z",
+                "comments": [
+                    {
+                        "comment_id": "comment-22-1",
+                        "author": "Andrew Mwangi",
+                        "content": "Massive congratulations Alex! Outstanding milestone for the cohort. Let's keep building on MOR!",
+                        "created_at": "2026-08-17T10:15:00Z"
+                    },
+                    {
+                        "comment_id": "comment-22-2",
+                        "author": "Godwin Otieno",
+                        "content": "Well deserved brother! Claiming my final Multi-Chain credential today as well.",
+                        "created_at": "2026-08-17T12:00:00Z"
+                    }
+                ]
             }
         ]
     await coll.insert_many(threads)
-    print("🌱 Seeding May–July 2026 forum threads complete.")
+    print("🌱 Seeding May–August 17 2026 forum threads complete.")
 
 async def seed_hackathons():
     """Seed initial hackathons in MongoDB."""

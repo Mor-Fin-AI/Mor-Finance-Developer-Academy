@@ -93,7 +93,7 @@ export const ForumList: React.FC<ForumListProps> = ({
               { id: 'Discussion', label: 'Web3 Development' },
               { id: 'Question', label: 'Smart Contracts' },
               { id: 'Showcase', label: 'DeFi & DAOs' },
-              { id: 'Help', label: 'Ecosystem & Grants' }
+              { id: 'Help', label: 'Technical Help & Support' }
             ].map((cat) => (
               <button
                 key={cat.id}
