@@ -426,3 +426,68 @@
   color: var(--clr-text-muted);
   display: block;
 }
+
+/* Metric Definitions & Methodology Explainer Guide */
+.analytics-metrics-guide {
+  padding: 24px;
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(10, 11, 23, 0.5) 100%);
+}
+
+.metrics-guide-header {
+  margin-bottom: 18px;
+}
+
+.metrics-guide-badge {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #60a5fa;
+  letter-spacing: 0.05em;
+  display: inline-block;
+  margin-bottom: 4px;
+}
+
+.metrics-guide-title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0;
+}
+
+.metrics-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.metrics-guide-card {
+  padding: 16px;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.metrics-guide-card__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.metrics-guide-card__icon {
+  font-size: 1.2rem;
+}
+
+.metrics-guide-card__name {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.metrics-guide-card__desc {
+  font-size: 0.78rem;
+  color: var(--clr-text-secondary);
+  line-height: 1.45;
+  margin: 0;
+}

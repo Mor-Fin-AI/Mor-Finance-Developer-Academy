@@ -161,7 +161,7 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
     id: 'dev-11',
     name: 'Dmitri Volkov',
     avatar: '👨‍🎨',
-    role: 'Advanced',
+    role: 'Intermediate',
     trackId: 'base',
     trackName: 'Base',
     trackIcon: '🔷',
@@ -517,15 +517,15 @@ export const AnalyticsPage: React.FC = () => {
           <span className="kpi-card__icon">👥</span>
           <div className="kpi-card__content">
             <span className="kpi-card__val">32 Builders</span>
-            <span className="kpi-card__lbl">Active Developers</span>
-            <span className="kpi-card__sub">May – August 2026 Cohort</span>
+            <span className="kpi-card__lbl">Unique Cohort Devs</span>
+            <span className="kpi-card__sub">10 Beg • 13 Int • 9 Adv</span>
           </div>
         </div>
 
         <div className="analytics-kpi-card kpi-card--green">
           <span className="kpi-card__icon">🌱</span>
           <div className="kpi-card__content">
-            <span className="kpi-card__val">8 Devs (30.8%)</span>
+            <span className="kpi-card__val">10 Devs (31.3%)</span>
             <span className="kpi-card__lbl">Beginner Tier</span>
             <span className="kpi-card__sub">Avg 4.2 Days / Track</span>
           </div>
@@ -534,7 +534,7 @@ export const AnalyticsPage: React.FC = () => {
         <div className="analytics-kpi-card kpi-card--purple">
           <span className="kpi-card__icon">⚡</span>
           <div className="kpi-card__content">
-            <span className="kpi-card__val">11 Devs (42.3%)</span>
+            <span className="kpi-card__val">13 Devs (40.6%)</span>
             <span className="kpi-card__lbl">Intermediate Tier</span>
             <span className="kpi-card__sub">Avg 8.5 Days / Track</span>
           </div>
@@ -543,9 +543,18 @@ export const AnalyticsPage: React.FC = () => {
         <div className="analytics-kpi-card kpi-card--amber">
           <span className="kpi-card__icon">🛡️</span>
           <div className="kpi-card__content">
-            <span className="kpi-card__val">7 Devs (26.9%)</span>
+            <span className="kpi-card__val">9 Devs (28.1%)</span>
             <span className="kpi-card__lbl">Advanced Engineers</span>
             <span className="kpi-card__sub">Avg 14.1 Days / Track</span>
+          </div>
+        </div>
+
+        <div className="analytics-kpi-card kpi-card--purple">
+          <span className="kpi-card__icon">📈</span>
+          <div className="kpi-card__content">
+            <span className="kpi-card__val">42 Events</span>
+            <span className="kpi-card__lbl">Activity Milestones</span>
+            <span className="kpi-card__sub">5+9+12+16 Across 4 Mo</span>
           </div>
         </div>
 
@@ -559,16 +568,65 @@ export const AnalyticsPage: React.FC = () => {
         </div>
       </div>
 
+      {/* Metric Definitions & Methodology Explainer Guide */}
+      <div className="analytics-metrics-guide glass">
+        <div className="metrics-guide-header">
+          <span className="metrics-guide-badge">📊 COHORT METRICS & METHODOLOGY GUIDE</span>
+          <h4 className="metrics-guide-title">How Developer Progress, Activity, and Deployments Are Measured</h4>
+        </div>
+        <div className="metrics-guide-grid">
+          <div className="metrics-guide-card">
+            <div className="metrics-guide-card__header">
+              <span className="metrics-guide-card__icon">👥</span>
+              <span className="metrics-guide-card__name">32 Unique Developers</span>
+            </div>
+            <p className="metrics-guide-card__desc">
+              Total individual developers actively enrolled in the May–August 2026 cohort (<strong>10 Beginners</strong> + <strong>13 Intermediates</strong> + <strong>9 Advanced</strong> = <strong>32 Total</strong>).
+            </p>
+          </div>
+
+          <div className="metrics-guide-card">
+            <div className="metrics-guide-card__header">
+              <span className="metrics-guide-card__icon">📈</span>
+              <span className="metrics-guide-card__name">42 Activity Events</span>
+            </div>
+            <p className="metrics-guide-card__desc">
+              Total cumulative learning submissions, code reviews & evaluations across all 4 months (<strong>5 May + 9 Jun + 12 Jul + 16 Aug = 42 Events</strong>).
+            </p>
+          </div>
+
+          <div className="metrics-guide-card">
+            <div className="metrics-guide-card__header">
+              <span className="metrics-guide-card__icon">📜</span>
+              <span className="metrics-guide-card__name">142 Testnet Deployments</span>
+            </div>
+            <p className="metrics-guide-card__desc">
+              Total smart contract deployments and compiler builds executed to live testnets (Sepolia, Base, Arbitrum, Solana) across exercises.
+            </p>
+          </div>
+
+          <div className="metrics-guide-card">
+            <div className="metrics-guide-card__header">
+              <span className="metrics-guide-card__icon">⚡</span>
+              <span className="metrics-guide-card__name">32 Featured Milestones</span>
+            </div>
+            <p className="metrics-guide-card__desc">
+              The live activity feed below highlights the primary capstone achievement or latest verified milestone for each individual developer in the cohort.
+            </p>
+          </div>
+        </div>
+      </div>
+
       {/* Visual Analytics Graphs Section */}
       <div className="analytics-charts-grid">
         {/* Monthly Activity Growth Chart (SVG) */}
         <div className="analytics-chart-panel glass">
           <div className="analytics-chart-header">
             <div>
-              <h3 className="analytics-chart-title">📊 Monthly Cohort Growth & Milestone Activity</h3>
-              <span className="analytics-chart-subtitle">Developer activity acceleration from May to August 2026</span>
+              <h3 className="analytics-chart-title">📊 Monthly Cohort Activity Acceleration</h3>
+              <span className="analytics-chart-subtitle">42 Total Activity Events logged across 32 cohort developers (5 May + 9 Jun + 12 Jul + 16 Aug = 42 Events)</span>
             </div>
-            <span className="analytics-chart-pill">📈 +220% Growth</span>
+            <span className="analytics-chart-pill">42 Total Events • +220% Growth</span>
           </div>
 
           <div className="chart-svg-container">
@@ -594,22 +652,22 @@ export const AnalyticsPage: React.FC = () => {
               {/* Data Points */}
               {/* May */}
               <circle cx="65" cy="135" r="6" fill="#10b981" stroke="#fff" strokeWidth="2" />
-              <text x="65" y="120" fill="#34d399" fontSize="12" fontWeight="800" textAnchor="middle">5 Activities</text>
+              <text x="65" y="120" fill="#34d399" fontSize="12" fontWeight="800" textAnchor="middle">5 Events</text>
               <text x="65" y="168" fill="var(--clr-text-muted)" fontSize="11" fontWeight="700" textAnchor="middle">May 2026</text>
 
               {/* June */}
               <circle cx="185" cy="95" r="6" fill="#3b82f6" stroke="#fff" strokeWidth="2" />
-              <text x="185" y="80" fill="#60a5fa" fontSize="12" fontWeight="800" textAnchor="middle">9 Activities</text>
+              <text x="185" y="80" fill="#60a5fa" fontSize="12" fontWeight="800" textAnchor="middle">9 Events</text>
               <text x="185" y="168" fill="var(--clr-text-muted)" fontSize="11" fontWeight="700" textAnchor="middle">June 2026</text>
 
               {/* July */}
               <circle cx="305" cy="60" r="6" fill="#ec4899" stroke="#fff" strokeWidth="2" />
-              <text x="305" y="45" fill="#f472b6" fontSize="12" fontWeight="800" textAnchor="middle">12 Activities</text>
+              <text x="305" y="45" fill="#f472b6" fontSize="12" fontWeight="800" textAnchor="middle">12 Events</text>
               <text x="305" y="168" fill="var(--clr-text-muted)" fontSize="11" fontWeight="700" textAnchor="middle">July 2026</text>
 
               {/* August */}
               <circle cx="425" cy="30" r="6" fill="#a855f7" stroke="#fff" strokeWidth="2" />
-              <text x="425" y="15" fill="#c084fc" fontSize="12" fontWeight="800" textAnchor="middle">16 Activities</text>
+              <text x="425" y="15" fill="#c084fc" fontSize="12" fontWeight="800" textAnchor="middle">16 Events</text>
               <text x="425" y="168" fill="var(--clr-text-muted)" fontSize="11" fontWeight="700" textAnchor="middle">August 2026</text>
             </svg>
           </div>
@@ -620,17 +678,17 @@ export const AnalyticsPage: React.FC = () => {
           <div className="analytics-chart-header">
             <div>
               <h3 className="analytics-chart-title">🍩 Developer Skill Tier Composition</h3>
-              <span className="analytics-chart-subtitle">Distribution across Beginner, Intermediate, and Advanced developers</span>
+              <span className="analytics-chart-subtitle">Distribution across 32 unique developers (10 Beg, 13 Int, 9 Adv)</span>
             </div>
-            <span className="analytics-chart-pill">26 Total Devs</span>
+            <span className="analytics-chart-pill">32 Unique Developers</span>
           </div>
 
           <div className="tier-breakdown-bar-container">
             {/* Multi-segment Progress Bar */}
             <div className="multi-segment-bar">
-              <div className="segment segment--beginner" style={{ width: '30.8%' }} title="Beginners: 30.8%" />
-              <div className="segment segment--intermediate" style={{ width: '42.3%' }} title="Intermediates: 42.3%" />
-              <div className="segment segment--advanced" style={{ width: '26.9%' }} title="Advanced: 26.9%" />
+              <div className="segment segment--beginner" style={{ width: '31.3%' }} title="Beginners: 10 Devs (31.3%)" />
+              <div className="segment segment--intermediate" style={{ width: '40.6%' }} title="Intermediates: 13 Devs (40.6%)" />
+              <div className="segment segment--advanced" style={{ width: '28.1%' }} title="Advanced: 9 Devs (28.1%)" />
             </div>
 
             {/* Legend Item Cards */}
@@ -639,7 +697,7 @@ export const AnalyticsPage: React.FC = () => {
                 <div className="legend-dot dot--beginner" />
                 <div className="legend-info">
                   <span className="legend-name">Beginner Tier</span>
-                  <span className="legend-desc">8 Developers (30.8%) • Core Solidity & Web3 Basics</span>
+                  <span className="legend-desc">10 Developers (31.3%) • Core Solidity & Web3 Basics</span>
                 </div>
               </div>
 
@@ -647,7 +705,7 @@ export const AnalyticsPage: React.FC = () => {
                 <div className="legend-dot dot--intermediate" />
                 <div className="legend-info">
                   <span className="legend-name">Intermediate Tier</span>
-                  <span className="legend-desc">11 Developers (42.3%) • DeFi AMMs, Tokens & Paymasters</span>
+                  <span className="legend-desc">13 Developers (40.6%) • DeFi AMMs, Tokens & Paymasters</span>
                 </div>
               </div>
 
@@ -655,7 +713,7 @@ export const AnalyticsPage: React.FC = () => {
                 <div className="legend-dot dot--advanced" />
                 <div className="legend-info">
                   <span className="legend-name">Advanced Protocol Engineers</span>
-                  <span className="legend-desc">7 Developers (26.9%) • Stylus Wasm, ZK Proofs & Audits</span>
+                  <span className="legend-desc">9 Developers (28.1%) • Stylus Wasm, ZK Proofs & Audits</span>
                 </div>
               </div>
             </div>
@@ -703,10 +761,10 @@ export const AnalyticsPage: React.FC = () => {
       <div className="analytics-activity-panel glass">
         <div className="analytics-activity-header">
           <div>
-            <h3 className="analytics-chart-title">⚡ Live Developer Learning Activity Feed</h3>
-            <span className="analytics-chart-subtitle">Verified milestones and submissions from May to August 2026</span>
+            <h3 className="analytics-chart-title">⚡ Cohort Developer Highlight Milestones Feed</h3>
+            <span className="analytics-chart-subtitle">Curated key milestone highlights for each of the 32 cohort developers (May – August 2026)</span>
           </div>
-          <span className="analytics-chart-pill">Showing {filteredActivities.length} Milestones</span>
+          <span className="analytics-chart-pill">Showing {filteredActivities.length} of 32 Developer Milestones</span>
         </div>
 
         {/* Filter Controls Bar */}
@@ -718,10 +776,10 @@ export const AnalyticsPage: React.FC = () => {
               value={activityRoleFilter}
               onChange={(e) => setActivityRoleFilter(e.target.value)}
             >
-              <option value="All">All Tiers (Beginner, Interm, Adv)</option>
-              <option value="Beginner">Beginner (8 Devs)</option>
-              <option value="Intermediate">Intermediate (11 Devs)</option>
-              <option value="Advanced">Advanced (7 Devs)</option>
+              <option value="All">All Tiers (32 Developers: 10 Beg / 13 Int / 9 Adv)</option>
+              <option value="Beginner">Beginner (10 Devs)</option>
+              <option value="Intermediate">Intermediate (13 Devs)</option>
+              <option value="Advanced">Advanced (9 Devs)</option>
             </select>
           </div>
 
@@ -751,11 +809,11 @@ export const AnalyticsPage: React.FC = () => {
               value={activityMonthFilter}
               onChange={(e) => setActivityMonthFilter(e.target.value)}
             >
-              <option value="All">May – August 2026</option>
-              <option value="May 2026">May 2026</option>
-              <option value="June 2026">June 2026</option>
-              <option value="July 2026">July 2026</option>
-              <option value="August 2026">August 2026</option>
+              <option value="All">All Months (May – August 2026 • 42 Events)</option>
+              <option value="May 2026">May 2026 (5 Events)</option>
+              <option value="June 2026">June 2026 (9 Events)</option>
+              <option value="July 2026">July 2026 (12 Events)</option>
+              <option value="August 2026">August 2026 (16 Events)</option>
             </select>
           </div>
 
