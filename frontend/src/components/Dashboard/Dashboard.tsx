@@ -270,8 +270,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
             <div className="circular-progress-container">
               <svg width="120" height="120" viewBox="0 0 120 120" className="circular-progress">
                 <circle cx="60" cy="60" r="50" className="circular-progress__bg" />
-                <circle cx="60" cy="60" r="50" className="circular-progress__bar" style={{ strokeDashoffset: 314 - (314 * (progress.overall_pct || 0)) / 100 }} />
-                <text x="60" y="65" className="circular-progress__text">{progress.overall_pct || 0}%</text>
+                <circle cx="60" cy="60" r="50" className="circular-progress__bar" style={{ strokeDashoffset: 314 - (314 * courseworkPct) / 100 }} />
+                <text x="60" y="65" className="circular-progress__text">{courseworkPct}%</text>
               </svg>
               <span className="circular-progress__caption">You're ahead of 82% of learners.</span>
             </div>

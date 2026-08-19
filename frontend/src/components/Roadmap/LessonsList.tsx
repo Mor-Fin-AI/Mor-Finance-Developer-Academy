@@ -34,9 +34,24 @@ export const LessonsList: React.FC<LessonsListProps> = ({
   // Determine if a lesson is completed
   const isLessonCompleted = (lessonId: string) => {
     if (!progress) return false;
-    // We can also verify by looking at progress.completed_lesson_ids
+    
+    // 1. Check completed_lesson_ids array
     const completedList = (progress as any).completed_lesson_ids || [];
-    return completedList.includes(lessonId);
+    if (completedList.includes(lessonId)) return true;
+
+    // 2. Check if there is a passed quiz attempt (score >= 70)
+    const passedQuiz = (progress.quiz_attempts || []).some(
+      (q) => q.lesson_id === lessonId && q.score >= 70
+    );
+    if (passedQuiz) return true;
+
+    // 3. Check if there is a successful exercise submission
+    const passedExercise = (progress.exercises_submitted || []).some(
+      (e) => e.lesson_id === lessonId && (e as any).passed !== false
+    );
+    if (passedExercise) return true;
+
+    return false;
   };
 
   // Determine if a lesson is unlocked

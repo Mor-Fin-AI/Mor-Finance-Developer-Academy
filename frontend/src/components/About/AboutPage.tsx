@@ -57,7 +57,7 @@ export const AboutPage: React.FC = () => {
           <div className="about-card__icon">⬡</div>
           <h3 className="about-card__title">Supported Ecosystems</h3>
           <p className="about-card__text">
-            Ethereum, Arbitrum, Optimism, Base, Polygon, Avalanche & Solana multi-chain compatibility and hands-on developer labs.
+            Ethereum, Arbitrum, Optimism, Base, Polygon, Avalanche, Solana, Starknet, Aptos & Polkadot multi-chain compatibility and hands-on developer labs.
           </p>
         </div>
       </div>
@@ -88,7 +88,7 @@ export const AboutPage: React.FC = () => {
             phase: '2026 Q3',
             status: 'COMPLETED',
             title: 'Multichain Learning Tracks',
-            desc: 'Dedicated ecosystem learning tracks launched across Ethereum, Arbitrum, Base, Optimism, Polygon, Avalanche, and Solana.'
+            desc: 'Dedicated ecosystem learning tracks launched across Ethereum, Arbitrum, Base, Optimism, Polygon, Avalanche, Solana, Starknet, Aptos, and Polkadot.'
           },
           {
             phase: '2026 Q4',

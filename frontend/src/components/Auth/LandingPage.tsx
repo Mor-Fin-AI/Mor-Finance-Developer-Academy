@@ -168,7 +168,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             { name: 'Base', desc: 'Secure, low-cost, builder-friendly Layer 2 network incubated by Coinbase.', icon: '🔵' },
             { name: 'Polygon', desc: 'EVM compatible sidechain and aggregates suite supporting custom layer 2 networks.', icon: '💜' },
             { name: 'Avalanche', desc: 'Subnet execution environment designed for custom assets and hyper-scalable dApps.', icon: '🔺' },
-            { name: 'Solana', desc: 'High-performance blockchain optimized for sub-second confirmations and Rust programs.', icon: '☀️' }
+            { name: 'Solana', desc: 'High-performance blockchain optimized for sub-second confirmations and Rust programs.', icon: '☀️' },
+            { name: 'Starknet', desc: 'Validity rollup scaling Ethereum with STARK cryptographic proofs and native CairoVM smart contracts.', icon: '⭐' },
+            { name: 'Aptos', desc: 'High-throughput Layer 1 blockchain powered by the Move programming language and Block-STM parallel engine.', icon: '🟢' },
+            { name: 'Polkadot', desc: 'Heterogeneous multi-chain framework connecting specialized Parachains with ink! Rust contracts.', icon: '🟣' }
           ].map((eco) => (
             <div key={eco.name} className="landing-ecosystem-card glass">
               <div className="landing-ecosystem-icon">{eco.icon}</div>
@@ -187,12 +190,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         </div>
         <div className="landing-stat-divider" />
         <div className="landing-stat-item">
-          <div className="landing-stat-value gradient-text">30+</div>
+          <div className="landing-stat-value gradient-text">32</div>
           <div className="landing-stat-label">Active Developers</div>
         </div>
         <div className="landing-stat-divider" />
         <div className="landing-stat-item">
-          <div className="landing-stat-value gradient-text">7</div>
+          <div className="landing-stat-value gradient-text">10</div>
           <div className="landing-stat-label">Supported Chains</div>
         </div>
         <div className="landing-stat-divider" />

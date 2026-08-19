@@ -27,7 +27,10 @@ async def reset_progress(user_id: str = Query(...)):
 async def update_active_track(user_id: str = Query(...), track: str = Query(...)):
     """Update active learning track for a user (Fundamentals, Ethereum, Arbitrum, etc.)."""
     track = track.lower().strip()
-    SUPPORTED_TRACKS = {"fundamentals", "ethereum", "arbitrum", "optimism", "polygon", "base", "solana", "avalanche"}
+    SUPPORTED_TRACKS = {
+        "fundamentals", "ethereum", "arbitrum", "optimism", "polygon", 
+        "base", "solana", "avalanche", "polkadot", "substrate", "starknet", "aptos"
+    }
     if track not in SUPPORTED_TRACKS:
         raise HTTPException(status_code=400, detail=f"Unsupported track '{track}'. Supported: {sorted(list(SUPPORTED_TRACKS))}")
         

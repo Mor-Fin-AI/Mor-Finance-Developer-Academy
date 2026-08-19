@@ -501,6 +501,46 @@ def get_track_lessons(track_id: str) -> List[Lesson]:
             "p2_title": "Solana Starter Project 2: Solana Foundation Next.js DApp Scaffold",
             "p2_desc": "Build a Solana Web3 dApp with Phantom wallet connection using the official Solana Developers Next.js DApp Scaffold.",
             "p2_repo": "https://github.com/solana-developers/solana-dapp-next"
+        },
+        "polkadot": {
+            "arch": "Polkadot heterogeneous multi-chain framework, Relay Chain shared security, Parachains, and XCM cross-consensus messaging.",
+            "tool": "Rust, Substrate FRAME framework, cargo-contract, ink! SDK, and Pop Network CLI",
+            "p1_title": "Polkadot Starter Project 1: Parity Substrate Framework Core Repository",
+            "p1_desc": "Build application-specific modular blockchains with custom FRAME runtime pallets on Substrate.",
+            "p1_repo": "https://github.com/paritytech/substrate",
+            "p2_title": "Polkadot Starter Project 2: use-ink WebAssembly ink! Smart Contracts",
+            "p2_desc": "Write, test, and deploy Rust-based WebAssembly smart contracts on Substrate Contracts parachains using ink!.",
+            "p2_repo": "https://github.com/use-ink/ink"
+        },
+        "substrate": {
+            "arch": "Substrate modular blockchain development framework, FRAME runtime pallets, and forkless WebAssembly upgrades.",
+            "tool": "Rust, Substrate CLI, FRAME pallets, cargo-contract, and Chopsticks devnet",
+            "p1_title": "Substrate Starter Project 1: Parity Substrate Framework Core Repository",
+            "p1_desc": "Build application-specific modular blockchains with custom FRAME runtime pallets on Substrate.",
+            "p1_repo": "https://github.com/paritytech/substrate",
+            "p2_title": "Substrate Starter Project 2: use-ink WebAssembly ink! Smart Contracts",
+            "p2_desc": "Write, test, and deploy Rust-based WebAssembly smart contracts on Substrate Contracts parachains using ink!.",
+            "p2_repo": "https://github.com/use-ink/ink"
+        },
+        "starknet": {
+            "arch": "Starknet STARK validity proofs, Cairo Virtual Machine (CairoVM), and native Account Abstraction.",
+            "tool": "Cairo (^2.6.0), Scarb, Starkli, Snforge, and Starknet.js",
+            "p1_title": "Starknet Starter Project 1: Starknet Cairo Core Repository",
+            "p1_desc": "Write scalable zero-knowledge smart contracts in Cairo 2.0 with native account abstraction.",
+            "p1_repo": "https://github.com/starkware-libs/cairo",
+            "p2_title": "Starknet Starter Project 2: OpenZeppelin Cairo Smart Contracts",
+            "p2_desc": "Deploy audited token standards, components, and access control contracts on Starknet Sepolia testnet.",
+            "p2_repo": "https://github.com/OpenZeppelin/cairo-contracts"
+        },
+        "aptos": {
+            "arch": "Aptos Layer-1 blockchain, MoveVM execution environment, and Block-STM parallel transaction execution engine.",
+            "tool": "Move CLI, Aptos CLI, Aptos TypeScript SDK, and Aptos Framework",
+            "p1_title": "Aptos Starter Project 1: Aptos Core Blockchain Repository",
+            "p1_desc": "Develop and deploy high-throughput Move smart contracts and resource accounts with parallel execution.",
+            "p1_repo": "https://github.com/aptos-labs/aptos-core",
+            "p2_title": "Aptos Starter Project 2: Aptos Developer Docs & Contract Examples",
+            "p2_desc": "Build production Move modules and frontends with Petra Wallet on Aptos testnet.",
+            "p2_repo": "https://github.com/aptos-labs/aptos-developer-docs"
         }
     }
     
@@ -761,13 +801,14 @@ def get_courses_list(track: str = "fundamentals") -> List[Course]:
             )
         return courses
     else:
-        chain_name = t_id.capitalize()
+        chain_name = "Polkadot / Substrate" if t_id in ("polkadot", "substrate") else t_id.capitalize()
         t_lessons = get_track_lessons(t_id)
         chain_meta = [
             {"id": 1, "title": f"{chain_name} Architecture & Core Principles", "lessons": [t_lessons[0]] if len(t_lessons) > 0 else []},
             {"id": 2, "title": f"{chain_name} Environment Setup & Tooling", "lessons": [t_lessons[1]] if len(t_lessons) > 1 else []},
             {"id": 3, "title": f"{chain_name} Starter Project 1 (GitHub Repo)", "lessons": [t_lessons[2]] if len(t_lessons) > 2 else []},
             {"id": 4, "title": f"{chain_name} Starter Project 2 (Full-Stack DApp)", "lessons": [t_lessons[3]] if len(t_lessons) > 3 else []},
+            {"id": 5, "title": f"{chain_name} Capstone & Testnet Deployment", "lessons": [t_lessons[4]] if len(t_lessons) > 4 else []},
         ]
         courses = []
         for cm in chain_meta:

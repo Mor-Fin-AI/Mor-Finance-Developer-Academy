@@ -118,7 +118,10 @@ export const SubscriptionPlans: React.FC = () => {
     { name: 'Arbitrum', icon: '🔵' },
     { name: 'Polygon', icon: '🟣' },
     { name: 'Solana', icon: '🟠' },
-    { name: 'Avalanche', icon: '🟤' }
+    { name: 'Avalanche', icon: '🔺' },
+    { name: 'Starknet', icon: '⭐' },
+    { name: 'Aptos', icon: '🟢' },
+    { name: 'Polkadot', icon: '🟣' }
   ];
 
   return (

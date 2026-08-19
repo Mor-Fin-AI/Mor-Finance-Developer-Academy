@@ -95,8 +95,9 @@ async def submit_exercise(sub: ExerciseSubmission, verified_id: str = Depends(ve
     exercise = lesson.exercise
     code = sub.code
     
-    # Run structural syntax checks
-    syntax_errors = validate_solidity_syntax(code)
+    # Run structural syntax checks (for Solidity lessons only)
+    is_non_solidity = any(k in sub.lesson_id.lower() for k in ['polkadot', 'substrate', 'starknet', 'aptos', 'solana'])
+    syntax_errors = [] if is_non_solidity else validate_solidity_syntax(code)
     
     missing_keywords = []
     for keyword in exercise.required_keywords:

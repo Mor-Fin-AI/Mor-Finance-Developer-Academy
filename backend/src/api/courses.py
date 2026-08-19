@@ -4,7 +4,10 @@ Courses and Lessons API Routers — retrieves structured courses list and indivi
 from fastapi import APIRouter, HTTPException
 from src.services.lessons import get_courses_list, get_track_lessons, LESSONS_DB
 
-SUPPORTED_TRACKS = {"fundamentals", "ethereum", "arbitrum", "optimism", "polygon", "base", "solana", "avalanche"}
+SUPPORTED_TRACKS = {
+    "fundamentals", "ethereum", "arbitrum", "optimism", "polygon", 
+    "base", "solana", "avalanche", "polkadot", "substrate", "starknet", "aptos"
+}
 
 def validate_track(track: str) -> str:
     track_lower = track.lower().strip()

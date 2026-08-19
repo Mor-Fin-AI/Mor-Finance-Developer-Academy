@@ -302,14 +302,14 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
     name: 'Yuki Takahashi',
     avatar: '👨‍🎨',
     role: 'Intermediate',
-    trackId: 'solana',
-    trackName: 'Solana',
-    trackIcon: '🟠',
-    activity: 'Built Phantom Wallet React Frontend using Solana DApp Next Scaffold',
+    trackId: 'aptos',
+    trackName: 'Aptos',
+    trackIcon: '🟢',
+    activity: 'Published Student Credential Registry Move Module to Aptos Testnet',
     date: 'June 08, 2026',
     month: 'June 2026',
     badge: '⚡ Deployed',
-    badgeColor: '#14f195'
+    badgeColor: '#00d2aa'
   },
   {
     id: 'dev-22',
@@ -372,14 +372,14 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
     name: 'Chloe Bennett',
     avatar: '👩‍💻',
     role: 'Intermediate',
-    trackId: 'avalanche',
-    trackName: 'Avalanche',
-    trackIcon: '🔺',
-    activity: 'Configured Avalanche Snow Consensus Node & Subnet Custom Genesis File',
+    trackId: 'starknet',
+    trackName: 'Starknet',
+    trackIcon: '⭐',
+    activity: 'Deployed Student Registry Cairo Contract on Starknet Sepolia',
     date: 'May 12, 2026',
     month: 'May 2026',
-    badge: '⚙️ Configured',
-    badgeColor: '#e84142'
+    badge: '⚡ Deployed',
+    badgeColor: '#8a2be2'
   },
   {
     id: 'dev-27',
@@ -414,14 +414,14 @@ const MOCK_DEVELOPER_ACTIVITIES: DeveloperActivityItem[] = [
     name: 'Ananya Sharma',
     avatar: '👩‍💻',
     role: 'Advanced',
-    trackId: 'solana',
-    trackName: 'Solana',
-    trackIcon: '🟠',
-    activity: 'Audited Solana Sealevel Parallel Runtime State Transitions',
+    trackId: 'polkadot',
+    trackName: 'Polkadot',
+    trackIcon: '🟣',
+    activity: 'Deployed Voting DApp with ink! Rust Smart Contract on Pop Network Testnet',
     date: 'May 02, 2026',
     month: 'May 2026',
-    badge: '🧪 Verified',
-    badgeColor: '#9945ff'
+    badge: '🏆 Certified',
+    badgeColor: '#e6007a'
   },
   {
     id: 'dev-30',
@@ -728,7 +728,7 @@ export const AnalyticsPage: React.FC = () => {
             <h3 className="analytics-chart-title">🌐 Ecosystem Track Completion Breakdown</h3>
             <span className="analytics-chart-subtitle">Developers actively building on supported target blockchains</span>
           </div>
-          <span className="analytics-chart-pill">7 Chains + Fundamentals</span>
+          <span className="analytics-chart-pill">10 Chains + Fundamentals</span>
         </div>
 
         <div className="ecosystem-bars-grid">
@@ -740,6 +740,9 @@ export const AnalyticsPage: React.FC = () => {
             { chain: 'Optimism', icon: '🔴', count: 3, color: '#ef4444', pct: 55 },
             { chain: 'Polygon', icon: '🟣', count: 3, color: '#8247e5', pct: 55 },
             { chain: 'Avalanche', icon: '🔺', count: 3, color: '#e84142', pct: 55 },
+            { chain: 'Aptos', icon: '🟢', count: 2, color: '#00d2aa', pct: 40 },
+            { chain: 'Starknet', icon: '⭐', count: 2, color: '#8a2be2', pct: 40 },
+            { chain: 'Polkadot', icon: '🟣', count: 2, color: '#e6007a', pct: 40 },
           ].map((item) => (
             <div key={item.chain} className="ecosystem-bar-item">
               <div className="ecosystem-bar-head">
@@ -799,6 +802,9 @@ export const AnalyticsPage: React.FC = () => {
               <option value="base">🔷 Base</option>
               <option value="solana">🟠 Solana</option>
               <option value="avalanche">🔺 Avalanche</option>
+              <option value="aptos">🟢 Aptos</option>
+              <option value="starknet">⭐ Starknet</option>
+              <option value="polkadot">🟣 Polkadot</option>
             </select>
           </div>
 

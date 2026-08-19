@@ -66,6 +66,28 @@ const CHAIN_LOGOS: Record<string, React.ReactNode> = {
       <circle cx="12" cy="12" r="10" fill="#E84142"/>
       <path d="M12 6L6 17H10L12 13.5L14 17H18L12 6Z" fill="#FFFFFF"/>
     </svg>
+  ),
+  starknet: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="10" fill="#0C0C4F"/>
+      <path d="M12 4L14.5 9.5L20 12L14.5 14.5L12 20L9.5 14.5L4 12L9.5 9.5L12 4Z" fill="#8B5CF6"/>
+      <path d="M12 8L13.2 10.8L16 12L13.2 13.2L12 16L10.8 13.2L8 12L10.8 10.8L12 8Z" fill="#FFFFFF"/>
+    </svg>
+  ),
+  aptos: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="10" fill="#00D2AA"/>
+      <path d="M7 16L12 7L17 16H14L12 11.5L10 16H7Z" fill="#0A0B17"/>
+    </svg>
+  ),
+  polkadot: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <circle cx="12" cy="12" r="10" fill="#E6007A"/>
+      <circle cx="12" cy="7.5" r="2" fill="#FFFFFF"/>
+      <circle cx="12" cy="16.5" r="2" fill="#FFFFFF"/>
+      <circle cx="7.5" cy="12" r="2" fill="#FFFFFF"/>
+      <circle cx="16.5" cy="12" r="2" fill="#FFFFFF"/>
+    </svg>
   )
 };
 
@@ -165,6 +187,42 @@ const ECOSYSTEMS = [
     p1_repo: 'https://github.com/ava-labs/avalanche-starter-kit',
     p2_name: 'Avalanche Teleporter Cross-Subnet Kit',
     p2_repo: 'https://github.com/ava-labs/teleporter'
+  },
+  {
+    id: 'starknet',
+    name: 'Starknet',
+    badge: 'ZK-Rollup & Cairo Smart Contracts',
+    desc: 'Dedicated Starknet Developer Onboarding Path: Starknet Fundamentals, Cairo Programming, Account Abstraction, Testing & Security, and Deployment to Starknet Sepolia.',
+    architecture: 'STARK Prover & Verifier, Cairo VM Architecture, Native Account Abstraction, L1-L2 Messaging',
+    tooling: 'Cairo (^2.6.0), Scarb, Starkli, Snforge, OpenZeppelin Cairo, and Starknet.js',
+    p1_name: 'Starknet Cairo Core Repo',
+    p1_repo: 'https://github.com/starkware-libs/cairo',
+    p2_name: 'OpenZeppelin Cairo Contracts',
+    p2_repo: 'https://github.com/OpenZeppelin/cairo-contracts'
+  },
+  {
+    id: 'aptos',
+    name: 'Aptos',
+    badge: 'Move VM & High-Throughput Layer 1',
+    desc: 'Dedicated Aptos Developer Onboarding Path: Aptos Fundamentals, Move Programming Language, Resource Accounts, Testing & Security, and Deployment to Aptos Testnet.',
+    architecture: 'Move Virtual Machine (MoveVM), Block-STM Parallel Execution Engine, AptosBFT Consensus',
+    tooling: 'Move CLI, Aptos CLI, Aptos TS SDK, Aptos Framework, and Petra Wallet',
+    p1_name: 'Aptos Core Repository',
+    p1_repo: 'https://github.com/aptos-labs/aptos-core',
+    p2_name: 'Aptos Developer Documentation & Examples',
+    p2_repo: 'https://github.com/aptos-labs/aptos-developer-docs'
+  },
+  {
+    id: 'polkadot',
+    name: 'Polkadot / Substrate',
+    badge: 'Heterogeneous Multi-Chain & ink! Rust',
+    desc: 'Dedicated Polkadot & Substrate Developer Onboarding Path: Relay Chain & Parachains, Substrate Framework, ink! Rust Smart Contracts, and Multi-Chain Deployment.',
+    architecture: 'Relay Chain & Parachain Shared Security, Substrate FRAME Architecture, XCM Interoperability',
+    tooling: 'Rust, Substrate Framework, cargo-contract, ink! SDK, Polkadot-JS API, and Chopsticks',
+    p1_name: 'Parity Substrate Framework',
+    p1_repo: 'https://github.com/paritytech/substrate',
+    p2_name: 'use-ink ink! Smart Contracts',
+    p2_repo: 'https://github.com/use-ink/ink'
   }
 ];
 
@@ -195,6 +253,12 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
   const activeTrackId = progress.active_track || 'ethereum';
   const selectedEco = ECOSYSTEMS.find(e => e.id === activeTrackId) || ECOSYSTEMS[0];
 
+  const totalLessonsInTrack = progress.levels.reduce((acc, l) => acc + (l.total_lessons || 0), 0);
+  const completedLessonsInTrack = progress.levels.reduce((acc, l) => acc + (l.completed_lessons || 0), 0);
+  const levelsCompleteInTrack = progress.levels.filter(l => l.completed_lessons >= l.total_lessons && l.total_lessons > 0).length;
+  const currentOverallPct = totalLessonsInTrack > 0 ? Math.round((completedLessonsInTrack / totalLessonsInTrack) * 100) : 0;
+  const trackLevelCount = progress.levels.length || 5;
+
   return (
     <div className="roadmap">
       {/* Hero */}
@@ -203,22 +267,22 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
           Your Web3 <span className="gradient-text">Learning Journey</span>
         </h2>
         <p className="roadmap__hero-desc">
-          6 progressive levels from blockchain basics to advanced DeFi protocol engineering, followed by your dynamic ecosystem track.
+          {trackLevelCount} progressive {trackLevelCount === 1 ? 'module' : 'modules'} covering {selectedEco.name} fundamentals, architecture, smart contracts, testing, and verified deployment.
         </p>
         <div className="roadmap__hero-stats">
           <div className="roadmap__hero-stat">
-            <span className="roadmap__hero-stat-val">{progress.overall_pct}%</span>
+            <span className="roadmap__hero-stat-val">{currentOverallPct}%</span>
             <span className="roadmap__hero-stat-lbl">Overall Progress</span>
           </div>
           <div className="roadmap__hero-stat">
             <span className="roadmap__hero-stat-val">
-              {progress.levels.filter(l => l.completed_lessons >= l.total_lessons).length}
+              {levelsCompleteInTrack}
             </span>
             <span className="roadmap__hero-stat-lbl">Levels Complete</span>
           </div>
           <div className="roadmap__hero-stat">
             <span className="roadmap__hero-stat-val">
-              {progress.levels.reduce((acc, l) => acc + l.completed_lessons, 0)}
+              {completedLessonsInTrack}
             </span>
             <span className="roadmap__hero-stat-lbl">Lessons Done</span>
           </div>
