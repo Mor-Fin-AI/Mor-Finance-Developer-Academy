@@ -20,6 +20,7 @@ const NAV_ITEMS: { id: NavPage; label: string; icon: string; description: string
   { id: 'mentor',       label: 'AI Mentor (OpenClaw)', icon: '🤖', description: 'Real-time compiler assistance' },
   { id: 'forum',        label: 'Community Forum',  icon: '💬',  description: 'Connect & discuss' },
   { id: 'hackathons',   label: 'Web3 Hackathons',  icon: '⚔️',  description: 'Build & innovate' },
+  { id: 'careers',      label: 'Career Dashboard', icon: '💼',  description: 'Jobs, Internships & Grants' },
   { id: 'certificates', label: 'My Certificates',  icon: '🏆',  description: 'Earned credentials' },
   { id: 'subscriptions', label: 'Subscription Plans', icon: '💎', description: 'Unlock premium features' },
   { id: 'about',        label: 'About MOR Finance', icon: 'ℹ️',  description: 'Mission & ecosystem' },

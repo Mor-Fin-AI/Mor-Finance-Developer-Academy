@@ -26,6 +26,7 @@ const PAGE_META: Record<NavPage, { title: string; subtitle: string }> = {
   analytics:    { title: 'Cohort Analytics',   subtitle: 'Ecosystem Developer Cohort Activity (May–August 2026)' },
   forum:        { title: 'Community Forum',    subtitle: 'Ask questions, share knowledge, and help others' },
   hackathons:   { title: 'Web3 Hackathons',    subtitle: 'Build, innovate, and win.' },
+  careers:      { title: 'Career Dashboard',   subtitle: 'Web3 jobs, internships, ecosystem grants & startup hub' },
   mentor:       { title: 'AI Mentor Workspace',subtitle: 'Get real-time code reviews and support' },
   certificates: { title: 'My Certificates',    subtitle: 'View and export your verified achievements' },
   subscriptions: { title: 'Subscription Plans', subtitle: 'Choose a subscription plan to unlock premium mentorship and credentials' },

@@ -3,7 +3,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
+    model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
     app_env: str 
     cors_origins: List[str] = ["http://localhost:5173", "https://mor-finance-developer-academy.onrender.com" , "https://morfinance.ai"]
@@ -21,6 +21,8 @@ class Settings(BaseSettings):
     hermes_model: str = "hermes-3-llama-3.1-8b"
     mentor_api_url: str = "https://frontend-v2-eta-red.vercel.app/api/agents/mentors/ask"
     mentor_bearer_token: str = "60d6b55053548bd64ce97ebaba3ae09b5574f744655b3a44ef254158eda41899"
+    web3_career_api_key: str = "X9q3WrJhceDrdb3oYt2xXeF8Aukh1YsZ"
+    web3_career_token: str = "X9q3WrJhceDrdb3oYt2xXeF8Aukh1YsZ"
 
 
 settings = Settings()

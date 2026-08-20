@@ -62,7 +62,31 @@ export interface ChatMessage {
   isStreaming?: boolean;
 }
 
-export type NavPage = 'academy' | 'roadmap' | 'dashboard' | 'analytics' | 'mentor' | 'certificates' | 'forum' | 'hackathons' | 'about' | 'subscriptions';
+export type NavPage = 'academy' | 'roadmap' | 'dashboard' | 'analytics' | 'mentor' | 'certificates' | 'forum' | 'hackathons' | 'careers' | 'about' | 'subscriptions';
+
+export interface JobListing {
+  id: string;
+  title: string;
+  company: string;
+  location: string;
+  remote: boolean;
+  salary: string;
+  skills: string[];
+  url: string;
+  date?: string;
+  date_epoch?: number;
+  is_internship?: boolean;
+  is_junior?: boolean;
+}
+
+export interface StartupIdea {
+  id: number;
+  name: string;
+  category: string;
+  description: string;
+  tags: string[];
+  icon: string;
+}
 
 export interface ForumComment {
   comment_id: string;

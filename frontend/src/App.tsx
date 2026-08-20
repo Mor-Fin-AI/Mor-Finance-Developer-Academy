@@ -15,6 +15,7 @@ import { LandingPage } from './components/Auth/LandingPage';
 import { AboutPage } from './components/About/AboutPage';
 import { SubscriptionPlans } from './components/Subscriptions/SubscriptionPlans';
 import { AnalyticsPage } from './components/Analytics/AnalyticsPage';
+import { CareerDashboard } from './components/Careers/CareerDashboard';
 import './index.css';
 
 export default function App() {
@@ -28,6 +29,7 @@ export default function App() {
     if (path.startsWith('/analytics')) return 'analytics';
     if (path.startsWith('/forum')) return 'forum';
     if (path.startsWith('/hackathons')) return 'hackathons';
+    if (path.startsWith('/careers')) return 'careers';
     if (path.startsWith('/mentor')) return 'mentor';
     if (path.startsWith('/certificates')) return 'certificates';
     if (path.startsWith('/subscriptions')) return 'subscriptions';
@@ -453,6 +455,7 @@ export default function App() {
           <Route path="/analytics" element={<AnalyticsPage />} />
           <Route path="/forum" element={<ForumView userId={userId} token={jwtToken || ''} />} />
           <Route path="/hackathons" element={<HackathonsView userId={userId} onProgressUpdate={handleProgressUpdate} token={jwtToken || ''} />} />
+          <Route path="/careers" element={<CareerDashboard />} />
           <Route path="/mentor" element={<MentorPage currentLevel={progress?.current_level ?? 1} userId={userId} />} />
           <Route path="/certificates" element={<CertificatesView userId={userId} />} />
           <Route path="/subscriptions" element={<SubscriptionPlans />} />

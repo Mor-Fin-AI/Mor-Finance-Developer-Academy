@@ -1,4 +1,4 @@
-import type { UserProgress, ProgressUpdate, TemplateMetadata, CodeTemplate, Course, Lesson, DashboardData, Certificate, GithubActivity } from '../types';
+import type { UserProgress, ProgressUpdate, TemplateMetadata, CodeTemplate, Course, Lesson, DashboardData, Certificate, GithubActivity, JobListing } from '../types';
 
 const BASE = (import.meta.env.VITE_API_BASE_URL as string) || '/api';
 
@@ -1297,6 +1297,44 @@ export async function deleteComment(threadId: string, commentId: string, token: 
   if (!res.ok) {
     const data = await res.json().catch(() => ({}));
     throw new Error(data.detail || `Failed to delete comment: ${res.status}`);
+  }
+  return res.json();
+}
+
+// ─── Jobs & Career API ────────────────────────────────────────────────────────
+export interface JobsResponse {
+  page: number;
+  limit: number;
+  total_jobs: number;
+  total_pages: number;
+  has_next: boolean;
+  has_prev: boolean;
+  count: number;
+  total_available: number;
+  source: string;
+  jobs: JobListing[];
+}
+
+export async function fetchJobs(params?: {
+  tag?: string;
+  remote?: boolean;
+  search?: string;
+  page?: number;
+  limit?: number;
+  type?: string;
+}): Promise<JobsResponse> {
+  const q = new URLSearchParams();
+  if (params?.tag && params.tag !== 'all') q.set('tag', params.tag);
+  if (params?.remote === true) q.set('remote', 'true');
+  if (params?.search && params.search.trim()) q.set('search', params.search.trim());
+  if (params?.page) q.set('page', String(params.page));
+  if (params?.limit) q.set('limit', String(params.limit));
+  if (params?.type && params.type !== 'all') q.set('type', params.type);
+
+  const res = await fetch(`${BASE}/jobs?${q.toString()}`);
+  if (!res.ok) {
+    const errData = await res.json().catch(() => ({}));
+    throw new Error(errData.detail || `Failed to fetch live jobs from API: ${res.status}`);
   }
   return res.json();
 }
