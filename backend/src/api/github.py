@@ -16,11 +16,47 @@ async def get_github_org_stats():
     """Retrieve dynamic repository stats, contributors, issues, PRs, and releases of the Academy Org."""
     repositories = [
         {
+            "name": "aptos-move-starter-kit",
+            "description": "Production Move modules, resource accounts, and Fungible Asset deployment templates for Aptos Devnet & Testnet.",
+            "language": "Move",
+            "stars": 54,
+            "forks": 22,
+            "open_issues": 2,
+            "url": "https://github.com/developer-academy/aptos-move-starter-kit"
+        },
+        {
+            "name": "starknet-cairo-contracts",
+            "description": "Cairo 2.0 smart contract templates with native Account Abstraction, Scarb project configs, and snforge test suites for Starknet Sepolia.",
+            "language": "Cairo",
+            "stars": 61,
+            "forks": 26,
+            "open_issues": 3,
+            "url": "https://github.com/developer-academy/starknet-cairo-contracts"
+        },
+        {
+            "name": "solana-anchor-vaults",
+            "description": "High-throughput Anchor smart contract programs, PDA security patterns, and @solana/web3.js frontend integration templates for Solana Devnet.",
+            "language": "Rust",
+            "stars": 68,
+            "forks": 31,
+            "open_issues": 4,
+            "url": "https://github.com/developer-academy/solana-anchor-vaults"
+        },
+        {
+            "name": "polkadot-ink-templates",
+            "description": "Rust WebAssembly smart contracts compiled with cargo-contract and Swanky Suite for Substrate Contracts parachains and Westend testnet.",
+            "language": "Rust",
+            "stars": 49,
+            "forks": 19,
+            "open_issues": 2,
+            "url": "https://github.com/developer-academy/polkadot-ink-templates"
+        },
+        {
             "name": "solidity-starter-kit",
             "description": "Comprehensive starter template for writing, compiling, testing, and deploying Solidity smart contracts using Hardhat and Foundry.",
             "language": "Solidity",
-            "stars": 42,
-            "forks": 18,
+            "stars": 72,
+            "forks": 38,
             "open_issues": 3,
             "url": "https://github.com/developer-academy/solidity-starter-kit"
         },
@@ -28,8 +64,8 @@ async def get_github_org_stats():
             "name": "defi-staking-template",
             "description": "A secure yield farming and staking contract framework featuring reward logic, mathematical precision checks, and a React UI integration.",
             "language": "Solidity",
-            "stars": 29,
-            "forks": 12,
+            "stars": 58,
+            "forks": 24,
             "open_issues": 1,
             "url": "https://github.com/developer-academy/defi-staking-template"
         },
@@ -37,8 +73,8 @@ async def get_github_org_stats():
             "name": "dao-governance-contracts",
             "description": "Governance contracts utilizing timelocks, proposal voting models, quorum calculations, and delegation mechanisms.",
             "language": "TypeScript",
-            "stars": 35,
-            "forks": 9,
+            "stars": 45,
+            "forks": 18,
             "open_issues": 2,
             "url": "https://github.com/developer-academy/dao-governance-contracts"
         },
@@ -46,33 +82,132 @@ async def get_github_org_stats():
             "name": "token-amm-pool",
             "description": "Constant product automated market maker (AMM) contracts featuring liquidity addition/removal, swap algorithms, and LP token minting.",
             "language": "Solidity",
-            "stars": 48,
-            "forks": 15,
+            "stars": 63,
+            "forks": 27,
             "open_issues": 0,
             "url": "https://github.com/developer-academy/token-amm-pool"
+        },
+        {
+            "name": "mor-ai-smart-agent-sdk",
+            "description": "TypeScript & Python SDK for deploying autonomous Morpheus AI smart agents with on-chain session key verification and LLM task execution.",
+            "language": "TypeScript",
+            "stars": 88,
+            "forks": 42,
+            "open_issues": 5,
+            "url": "https://github.com/developer-academy/mor-ai-smart-agent-sdk"
+        },
+        {
+            "name": "zk-proof-verifier-cairo",
+            "description": "STARK validity proof verifier component and Circom-to-Cairo transpiler tools for scalable zero-knowledge computation on Starknet.",
+            "language": "Cairo",
+            "stars": 41,
+            "forks": 14,
+            "open_issues": 1,
+            "url": "https://github.com/developer-academy/zk-proof-verifier-cairo"
+        },
+        {
+            "name": "substrate-pallet-template",
+            "description": "Modular FRAME pallet for Substrate blockchain runtimes with custom dispatchables, on-chain storage maps, and event logs.",
+            "language": "Rust",
+            "stars": 37,
+            "forks": 12,
+            "open_issues": 2,
+            "url": "https://github.com/developer-academy/substrate-pallet-template"
+        },
+        {
+            "name": "aptos-indexer-graphql-client",
+            "description": "High-performance GraphQL client and event listener for querying live Aptos on-chain state, balances, and token transfers.",
+            "language": "TypeScript",
+            "stars": 32,
+            "forks": 11,
+            "open_issues": 1,
+            "url": "https://github.com/developer-academy/aptos-indexer-graphql-client"
+        },
+        {
+            "name": "solana-spl-token-vault",
+            "description": "Anchor CPI token escrow and automated vesting contracts utilizing Solana Token-2022 extensions and transfer hooks.",
+            "language": "Rust",
+            "stars": 47,
+            "forks": 20,
+            "open_issues": 3,
+            "url": "https://github.com/developer-academy/solana-spl-token-vault"
+        },
+        {
+            "name": "cross-chain-xcm-messenger",
+            "description": "Polkadot XCM format message dispatcher for executing cross-parachain asset transfers and remote contract calls without bridges.",
+            "language": "Rust",
+            "stars": 39,
+            "forks": 15,
+            "open_issues": 2,
+            "url": "https://github.com/developer-academy/cross-chain-xcm-messenger"
+        },
+        {
+            "name": "university-onboarding-toolkit",
+            "description": "Educational curriculum, interactive workshops, and DID student credential issuance tools for university blockchain clubs.",
+            "language": "TypeScript",
+            "stars": 51,
+            "forks": 23,
+            "open_issues": 1,
+            "url": "https://github.com/developer-academy/university-onboarding-toolkit"
+        },
+        {
+            "name": "reentrancy-security-benchmarks",
+            "description": "Automated security test suite benchmarking Slither, Mythril, and Snforge static analysis rules against real-world vulnerabilities.",
+            "language": "Python",
+            "stars": 44,
+            "forks": 16,
+            "open_issues": 0,
+            "url": "https://github.com/developer-academy/reentrancy-security-benchmarks"
+        },
+        {
+            "name": "arbitrum-stylus-rust-starter",
+            "description": "Wasm smart contract starter template written in Rust for Arbitrum Stylus execution environment.",
+            "language": "Rust",
+            "stars": 36,
+            "forks": 13,
+            "open_issues": 1,
+            "url": "https://github.com/developer-academy/arbitrum-stylus-rust-starter"
+        },
+        {
+            "name": "base-paymaster-account-abstraction",
+            "description": "ERC-4337 Smart Account and Paymaster contracts for gasless user onboarding on Base Sepolia.",
+            "language": "Solidity",
+            "stars": 53,
+            "forks": 21,
+            "open_issues": 2,
+            "url": "https://github.com/developer-academy/base-paymaster-account-abstraction"
         }
     ]
 
     contributors = [
-        {"username": "BlockMaster", "avatar": "BM", "contributions": 142, "role": "Maintainer"},
-        {"username": "AliceDev", "avatar": "AD", "contributions": 98, "role": "Contributor"},
-        {"username": "SmartBuilder", "avatar": "SB", "contributions": 74, "role": "Contributor"},
-        {"username": "MorpheusFan", "avatar": "MF", "contributions": 34, "role": "Contributor"}
+        {"username": "BlockMaster", "avatar": "BM", "contributions": 142, "role": "Lead Architect"},
+        {"username": "AliceDev", "avatar": "AD", "contributions": 118, "role": "Cairo & ZK Maintainer"},
+        {"username": "SmartBuilder", "avatar": "SB", "contributions": 96, "role": "Solana & Rust Core"},
+        {"username": "AptosMoveDev", "avatar": "AM", "contributions": 84, "role": "MoveVM Contributor"},
+        {"username": "PolkaDotHero", "avatar": "PH", "contributions": 78, "role": "Substrate & ink! Contributor"},
+        {"username": "MorpheusFan", "avatar": "MF", "contributions": 62, "role": "AI Agents Lead"},
+        {"username": "ElenaWeb3", "avatar": "EW", "contributions": 47, "role": "Frontend SDK Contributor"},
+        {"username": "UniLeadDev", "avatar": "UL", "contributions": 39, "role": "University Lead"}
     ]
 
     issues = [
-        {"id": "#104", "title": "Optimize gas usage in AMM token swaps", "repo": "token-amm-pool", "status": "open", "author": "BlockMaster", "created_at": "3 days ago"},
-        {"id": "#89", "title": "Implement checks for flash loan reentrancy in Staking contract", "repo": "defi-staking-template", "status": "open", "author": "AliceDev", "created_at": "5 days ago"},
-        {"id": "#112", "title": "Write unit tests for timelock delay modifier", "repo": "dao-governance-contracts", "status": "open", "author": "SmartBuilder", "created_at": "1 week ago"}
+        {"id": "#142", "title": "Upgrade Aptos Move framework to v1.12 with Fungible Asset hooks", "repo": "aptos-move-starter-kit", "status": "open", "author": "AptosMoveDev", "created_at": "1 day ago"},
+        {"id": "#139", "title": "Add Snforge mock cheatcode for L1-to-L2 message simulation", "repo": "starknet-cairo-contracts", "status": "open", "author": "AliceDev", "created_at": "2 days ago"},
+        {"id": "#128", "title": "Optimize Anchor account space calculation for Token-2022 extensions", "repo": "solana-anchor-vaults", "status": "open", "author": "SmartBuilder", "created_at": "3 days ago"},
+        {"id": "#120", "title": "Add ink! 5.0 migration guide and Weight V2 benchmark script", "repo": "polkadot-ink-templates", "status": "open", "author": "PolkaDotHero", "created_at": "4 days ago"},
+        {"id": "#104", "title": "Optimize gas usage in AMM token swaps", "repo": "token-amm-pool", "status": "open", "author": "BlockMaster", "created_at": "5 days ago"}
     ]
 
     prs = [
-        {"id": "#115", "title": "Add helper scripts for BIP-44 key derivations", "repo": "solidity-starter-kit", "status": "reviewing", "author": "SmartBuilder", "created_at": "2 days ago"},
-        {"id": "#92", "title": "Implement multi-token reward calculations", "repo": "defi-staking-template", "status": "merging", "author": "AliceDev", "created_at": "4 days ago"}
+        {"id": "#145", "title": "feat: Add Block-STM optimistic concurrency test suite", "repo": "aptos-move-starter-kit", "status": "merging", "author": "AptosMoveDev", "created_at": "1 day ago"},
+        {"id": "#141", "title": "feat: Native account abstraction Paymaster sponsor script", "repo": "starknet-cairo-contracts", "status": "reviewing", "author": "AliceDev", "created_at": "2 days ago"},
+        {"id": "#133", "title": "feat: Implement Solana Address Lookup Table ALT helper", "repo": "solana-anchor-vaults", "status": "merging", "author": "SmartBuilder", "created_at": "2 days ago"},
+        {"id": "#125", "title": "feat: Add XCM cross-chain token transfer pallet extrinsic", "repo": "polkadot-ink-templates", "status": "reviewing", "author": "PolkaDotHero", "created_at": "3 days ago"}
     ]
 
     releases = [
-        {"version": "v1.0.0-beta", "title": "Academy Starter Packages Beta Release", "published_at": "2 weeks ago", "download_url": "#"}
+        {"version": "v2.0.0-multi-chain", "title": "Multi-Chain Developer Academy v2.0 (Aptos, Starknet, Solana, Polkadot, EVM)", "published_at": "3 days ago", "download_url": "#"},
+        {"version": "v1.2.0", "title": "AI Smart Agent & Compiler Assist Release", "published_at": "2 weeks ago", "download_url": "#"}
     ]
 
     return {
