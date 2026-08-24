@@ -726,18 +726,22 @@ export const AnalyticsPage: React.FC = () => {
         <div className="analytics-chart-header">
           <div>
             <h3 className="analytics-chart-title">🌐 Ecosystem Track Standards & Testnet Deployments</h3>
-            <span className="analytics-chart-subtitle">Verified student smart contract deployments and active developers across target grant chains (5–15 deployments per chain standard)</span>
+            <span className="analytics-chart-subtitle">Verified student smart contract deployments and active developers across target grant chains (5–25 deployments per chain)</span>
           </div>
-          <span className="analytics-chart-pill">32 Active Developers • 71+ Verified On-Chain Deployments</span>
+          <span className="analytics-chart-pill">32 Active Developers • 142 Verified On-Chain Deployments</span>
         </div>
 
         <div className="ecosystem-bars-grid">
           {[
-            { chain: 'Solana', icon: '🟠', count: 8, deployments: 18, color: '#f59e0b', pct: 90, standard: 'Anchor & Devnet Deployments' },
-            { chain: 'Starknet', icon: '✨', count: 6, deployments: 14, color: '#ec4899', pct: 80, standard: 'Cairo 2.0 & Sepolia ZK Deployments' },
-            { chain: 'Aptos', icon: '⚡', count: 6, deployments: 12, color: '#06b6d4', pct: 75, standard: 'Move & Testnet Module Publishing' },
-            { chain: 'Polkadot', icon: '🟣', count: 6, deployments: 11, color: '#a855f7', pct: 70, standard: 'ink! Wasm & Substrate Deployments' },
-            { chain: 'Ethereum & L2s', icon: '💎', count: 6, deployments: 16, color: '#3b82f6', pct: 85, standard: 'Solidity & Sepolia Deployments' }
+            { chain: 'Arbitrum', icon: '🔵', count: 5, deployments: 22, color: '#3b82f6', pct: 95, standard: 'Nitro & Stylus Wasm Deployments' },
+            { chain: 'Optimism', icon: '🔴', count: 4, deployments: 20, color: '#ef4444', pct: 90, standard: 'OP Stack & Superchain Deployments' },
+            { chain: 'Solana', icon: '🟠', count: 4, deployments: 18, color: '#f59e0b', pct: 85, standard: 'Anchor & Devnet Deployments' },
+            { chain: 'Base', icon: '🔷', count: 4, deployments: 16, color: '#0052ff', pct: 80, standard: 'Smart Wallet & Paymaster Deployments' },
+            { chain: 'Ethereum', icon: '💎', count: 4, deployments: 16, color: '#627eea', pct: 80, standard: 'Solidity & Sepolia Deployments' },
+            { chain: 'Polkadot', icon: '🟣', count: 3, deployments: 15, color: '#a855f7', pct: 75, standard: 'ink! Wasm & Substrate Deployments' },
+            { chain: 'Aptos', icon: '⚡', count: 3, deployments: 13, color: '#06b6d4', pct: 70, standard: 'Move & Testnet Module Publishing' },
+            { chain: 'Polygon', icon: '🟣', count: 3, deployments: 12, color: '#8247e5', pct: 65, standard: 'zkEVM & Validium Deployments' },
+            { chain: 'Starknet', icon: '✨', count: 2, deployments: 10, color: '#ec4899', pct: 60, standard: 'Cairo 2.0 & Sepolia ZK Deployments' }
           ].map((item) => (
             <div key={item.chain} className="ecosystem-bar-item">
               <div className="ecosystem-bar-head">
