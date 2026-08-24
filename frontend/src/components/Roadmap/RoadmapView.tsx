@@ -361,28 +361,35 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
               <div className="multichain-card">
                 <span className="multichain-card__icon">📖</span>
                 <div>
-                  <h5 className="multichain-card__title">2 Dedicated Introductory Lessons</h5>
-                  <p className="multichain-card__sub">{selectedEco.name} Architecture, Core Principles & Environment Setup</p>
+                  <h5 className="multichain-card__title">5 Dedicated Learning Modules</h5>
+                  <p className="multichain-card__sub">{selectedEco.name} Architecture, Tooling, Smart Contracts, Full-Stack SDK & Testnet Deployment</p>
                 </div>
               </div>
               <div className="multichain-card">
                 <span className="multichain-card__icon">❓</span>
                 <div>
-                  <h5 className="multichain-card__title">2 Interactive Quizzes</h5>
-                  <p className="multichain-card__sub">{selectedEco.name} Concept Checks & Architectural Evaluations</p>
+                  <h5 className="multichain-card__title">30 Interactive Quiz Questions</h5>
+                  <p className="multichain-card__sub">6 Rigorous Concept Checks & Architectural Evaluations per Module (30 Total)</p>
                 </div>
               </div>
               <div className="multichain-card">
                 <span className="multichain-card__icon">💻</span>
                 <div>
-                  <h5 className="multichain-card__title">2 Live Coding Exercises</h5>
-                  <p className="multichain-card__sub">{selectedEco.name} Smart Contract Execution & Verification Tasks</p>
+                  <h5 className="multichain-card__title">5 Live Coding & Deployment Challenges</h5>
+                  <p className="multichain-card__sub">{selectedEco.name} Smart Contract Execution, Verification & Live Testnet Deployment</p>
+                </div>
+              </div>
+              <div className="multichain-card">
+                <span className="multichain-card__icon">🏆</span>
+                <div>
+                  <h5 className="multichain-card__title">1 Verified Ecosystem Certificate</h5>
+                  <p className="multichain-card__sub">Verifiable Credential matching official {selectedEco.name} Grant Benchmark Standards</p>
                 </div>
               </div>
               <div className="multichain-card">
                 <span className="multichain-card__icon">🛠️</span>
                 <div>
-                  <h5 className="multichain-card__title">2 Official Starter Projects (GitHub Repos)</h5>
+                  <h5 className="multichain-card__title">Official Starter Projects & GitHub Repos</h5>
                   <p className="multichain-card__sub">Bespoke starter codebases for {selectedEco.name}:</p>
                   <div style={{ display: 'flex', gap: '6px', marginTop: '6px', flexWrap: 'wrap' }}>
                     <a href={selectedEco.p1_repo} target="_blank" rel="noopener noreferrer" className="multichain-repo-btn">
@@ -399,13 +406,6 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
                 <div>
                   <h5 className="multichain-card__title">24/7 AI Mentor Support</h5>
                   <p className="multichain-card__sub">OpenClaw (Education Guidance) & Hermes (Engineering Code Review)</p>
-                </div>
-              </div>
-              <div className="multichain-card">
-                <span className="multichain-card__icon">🗺️</span>
-                <div>
-                  <h5 className="multichain-card__title">Full {selectedEco.name} Ecosystem Roadmap</h5>
-                  <p className="multichain-card__sub">Intermediate, Advanced, DeFi, NFTs, Governance, Hackathons, Certifications & Capstones</p>
                 </div>
               </div>
             </div>
