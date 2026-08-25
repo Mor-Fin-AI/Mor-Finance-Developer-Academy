@@ -774,22 +774,9 @@ export const AnalyticsPage: React.FC = () => {
               Bridging academic computer science talent directly into Web3 ecosystems, testnet deployments, open-source repositories, and career placements.
             </span>
           </div>
-          <span className="analytics-chart-pill" style={{ background: 'rgba(16, 185, 129, 0.15)', color: '#6ee7b7', borderColor: '#10b981' }}>
-            8+ Campus Chapters • 150+ Students
-          </span>
         </div>
 
         <div className="metrics-guide-grid" style={{ marginTop: '16px' }}>
-          <div className="metrics-guide-card">
-            <div className="metrics-guide-card__header">
-              <span className="metrics-guide-card__icon">🏛️</span>
-              <span className="metrics-guide-card__name">Academic Partner Hubs</span>
-            </div>
-            <p className="metrics-guide-card__desc">
-              Active onboarding programs across University Blockchain Societies (Oxford, Cambridge, Imperial, MIT, Stanford, Nairobi Web3, Makerere).
-            </p>
-          </div>
-
           <div className="metrics-guide-card">
             <div className="metrics-guide-card__header">
               <span className="metrics-guide-card__icon">📜</span>
