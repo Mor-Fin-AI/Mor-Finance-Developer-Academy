@@ -491,3 +491,165 @@
   line-height: 1.45;
   margin: 0;
 }
+
+/* ─── Arbitrum Foundation Telemetry & Stylus Velocity ───────────────────────── */
+.arbitrum-telemetry-panel {
+  padding: 24px;
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  background: linear-gradient(135deg, rgba(30, 58, 138, 0.18) 0%, rgba(10, 11, 23, 0.7) 100%);
+  margin-bottom: 24px;
+}
+
+.arbitrum-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.arbitrum-kpi-card {
+  padding: 20px;
+  border-radius: var(--radius-lg);
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.arbitrum-kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: #3b82f6;
+}
+
+.arbitrum-kpi-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.arbitrum-kpi-metric {
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #60a5fa;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.arbitrum-kpi-status {
+  font-size: 0.65rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.arbitrum-kpi-value {
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.arbitrum-kpi-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #e2e8f0;
+}
+
+.arbitrum-kpi-desc {
+  font-size: 0.76rem;
+  color: var(--clr-text-secondary);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.arbitrum-tabs-nav {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.arbitrum-tab-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--clr-text-secondary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.arbitrum-tab-btn:hover {
+  background: rgba(59, 130, 246, 0.15);
+  color: #ffffff;
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.arbitrum-tab-btn.active {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #3b82f6;
+  box-shadow: 0 0 12px rgba(37, 99, 235, 0.4);
+}
+
+.arbitrum-code-block {
+  background: #090d16;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 12px;
+  padding: 16px;
+  font-family: 'Fira Code', 'Cascadia Code', monospace;
+  font-size: 0.78rem;
+  color: #93c5fd;
+  max-height: 340px;
+  overflow-y: auto;
+  line-height: 1.5;
+  white-space: pre;
+}
+
+.arbitrum-milestone-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.arbitrum-milestone-card {
+  padding: 16px;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.arbitrum-milestone-card h5 {
+  font-size: 0.88rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 6px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.arbitrum-milestone-card p {
+  font-size: 0.76rem;
+  color: var(--clr-text-secondary);
+  line-height: 1.45;
+  margin: 0;
+}
+
