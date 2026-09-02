@@ -52,58 +52,9 @@ class ArbitrumTelemetryResponse(BaseModel):
     stylus_rust_template: str
 
 
-# ─── In-Memory / Seeded Grant Telemetry State ─────────────────────────────────
-
-SEEDED_DEPLOYMENTS: List[Dict[str, Any]] = [
-    {
-        "deployment_id": "dep_arb_001",
-        "developer_github_id": "john-egbonwon",
-        "cohort_id": "ARB_COHORT_004",
-        "network": "arbitrum_sepolia",
-        "execution_environment": "wasm_stylus",
-        "contract_address": "0x3f92b719acbf3928a2b0907a1b32d8471e16f",
-        "programming_language": "rust",
-        "gas_used_computation": 42000,
-        "verified_on_chain": True,
-        "timestamp": "2026-08-28T14:22:10Z"
-    },
-    {
-        "deployment_id": "dep_arb_002",
-        "developer_github_id": "sarah-cairo",
-        "cohort_id": "ARB_COHORT_004",
-        "network": "arbitrum_sepolia",
-        "execution_environment": "wasm_stylus",
-        "contract_address": "0x8a721c0b89f31a293847a92c30491823ab4912cd",
-        "programming_language": "rust",
-        "gas_used_computation": 38500,
-        "verified_on_chain": True,
-        "timestamp": "2026-08-29T09:15:30Z"
-    },
-    {
-        "deployment_id": "dep_arb_003",
-        "developer_github_id": "alex-move",
-        "cohort_id": "ARB_COHORT_003",
-        "network": "arbitrum_sepolia",
-        "execution_environment": "evm_nitro",
-        "contract_address": "0x51c4e20918ab3c9481230498a12bc90384712039",
-        "programming_language": "solidity",
-        "gas_used_computation": 384000,
-        "verified_on_chain": True,
-        "timestamp": "2026-08-30T18:40:15Z"
-    },
-    {
-        "deployment_id": "dep_arb_004",
-        "developer_github_id": "elena-sol",
-        "cohort_id": "ARB_COHORT_004",
-        "network": "arbitrum_sepolia",
-        "execution_environment": "wasm_stylus",
-        "contract_address": "0x7291a03948bf129481c039481b293847a192834b",
-        "programming_language": "rust",
-        "gas_used_computation": 45000,
-        "verified_on_chain": True,
-        "timestamp": "2026-09-01T11:05:00Z"
-    }
-]
+# ─── Live Telemetry State ───────────────────────────────────────────────────
+# Real student deployments recorded live via trackStudentDeployment telemetry
+SEEDED_DEPLOYMENTS: List[Dict[str, Any]] = []
 
 SOLIDITY_REGISTRY_CODE = """// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
@@ -230,6 +181,7 @@ async def register_cohort_developer(req: CohortRegisterRequest):
 
 @router.post("/analytics/deployment", response_model=DeploymentLogResponse)
 @router.post("/api/v1/analytics/deployment", response_model=DeploymentLogResponse)
+@router.post("/v1/analytics/deployment", response_model=DeploymentLogResponse)
 async def log_arbitrum_deployment(req: DeploymentLogRequest):
     """
     Triggered via event listener or webhook upon contract deployment to Arbitrum Sepolia/Mainnet.

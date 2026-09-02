@@ -16,6 +16,7 @@ import { AboutPage } from './components/About/AboutPage';
 import { SubscriptionPlans } from './components/Subscriptions/SubscriptionPlans';
 import { AnalyticsPage } from './components/Analytics/AnalyticsPage';
 import { CareerDashboard } from './components/Careers/CareerDashboard';
+import { PlaygroundView } from './components/Sandbox/PlaygroundView';
 import './index.css';
 
 export default function App() {
@@ -27,6 +28,7 @@ export default function App() {
     if (path.startsWith('/academy') || path.startsWith('/roadmap')) return 'academy';
     if (path.startsWith('/dashboard')) return 'dashboard';
     if (path.startsWith('/analytics')) return 'analytics';
+    if (path.startsWith('/sandbox') || path.startsWith('/playground')) return 'sandbox';
     if (path.startsWith('/forum')) return 'forum';
     if (path.startsWith('/hackathons')) return 'hackathons';
     if (path.startsWith('/careers')) return 'careers';
@@ -453,6 +455,8 @@ export default function App() {
             />
           } />
           <Route path="/analytics" element={<AnalyticsPage />} />
+          <Route path="/sandbox" element={<PlaygroundView />} />
+          <Route path="/playground" element={<PlaygroundView />} />
           <Route path="/forum" element={<ForumView userId={userId} token={jwtToken || ''} />} />
           <Route path="/hackathons" element={<HackathonsView userId={userId} onProgressUpdate={handleProgressUpdate} token={jwtToken || ''} />} />
           <Route path="/careers" element={<CareerDashboard />} />

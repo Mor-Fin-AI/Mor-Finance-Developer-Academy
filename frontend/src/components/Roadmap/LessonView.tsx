@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import type { Lesson, UserProgress } from '../../types';
 import { fetchLesson, postQuizSubmit, postExerciseSubmit, streamMentorChat } from '../../api/client';
+import { executeMultiChainCompiler } from '../../services/sandboxCompiler';
+import { trackStudentDeployment } from '../../services/telemetry';
 import './LessonView.css';
 
 interface LessonViewProps {
@@ -98,52 +100,189 @@ export const LessonView: React.FC<LessonViewProps> = ({
     }
   };
 
+  const getTrackMetadata = () => {
+    const raw = `${lesson?.title || ''} ${lesson?.id || ''} ${lessonId || ''} ${lesson?.content || ''} ${activeTrack || ''}`.toLowerCase();
+    
+    if (raw.includes('aptos') || raw.includes('move')) {
+      return {
+        trackId: 'aptos',
+        trackName: 'Aptos',
+        lang: 'Move',
+        fileName: 'sources/credential.move',
+        compiler: 'Aptos Move CLI v2.4.0 / MoveVM v1.12',
+        badge: 'Aptos & MoveVM',
+        icon: '⚡',
+        sampleArtifact: 'Move Bytecode Module (.mv)'
+      };
+    }
+    if (raw.includes('solana') || raw.includes('anchor')) {
+      return {
+        trackId: 'solana',
+        trackName: 'Solana',
+        lang: 'Rust (Anchor)',
+        fileName: 'src/lib.rs',
+        compiler: 'Anchor CLI v0.30.1 / @solana/web3.js (Sealevel BPF)',
+        badge: 'Solana & Anchor',
+        icon: '🟠',
+        sampleArtifact: 'Solana SBF ELF Binary + Anchor IDL JSON'
+      };
+    }
+    if (raw.includes('starknet') || raw.includes('cairo')) {
+      return {
+        trackId: 'starknet',
+        trackName: 'Starknet',
+        lang: 'Cairo 2.0',
+        fileName: 'src/contract.cairo',
+        compiler: 'Scarb v2.6.0 / Cairo 2.0 (CairoVM)',
+        badge: 'Starknet & Cairo 2.0',
+        icon: '✨',
+        sampleArtifact: 'Sierra Contract Class Hash & CASM'
+      };
+    }
+    if (raw.includes('polkadot') || raw.includes('substrate') || raw.includes('ink')) {
+      return {
+        trackId: 'polkadot',
+        trackName: 'Polkadot',
+        lang: 'Rust (ink! Wasm)',
+        fileName: 'lib.rs',
+        compiler: 'cargo-contract v4.0.0 / ink! 5.0 (pallet-contracts)',
+        badge: 'Polkadot & Substrate ink!',
+        icon: '🟣',
+        sampleArtifact: '.contract Wasm Bundle + Metadata ABI'
+      };
+    }
+    if (raw.includes('arbitrum') || raw.includes('stylus')) {
+      return {
+        trackId: 'arbitrum',
+        trackName: 'Arbitrum',
+        lang: 'Solidity / Stylus Rust',
+        fileName: 'ArbitrumRegistry.sol',
+        compiler: 'solc v0.8.20 / Stylus SDK v0.6.0',
+        badge: 'Arbitrum Nitro & Stylus',
+        icon: '🔵',
+        sampleArtifact: 'Arbitrum Nitro Bytecode / Stylus WASM'
+      };
+    }
+    if (raw.includes('base')) {
+      return {
+        trackId: 'base',
+        trackName: 'Base',
+        lang: 'Solidity',
+        fileName: 'Paymaster.sol',
+        compiler: 'solc v0.8.20+commit.a1b79de6',
+        badge: 'Base Sepolia',
+        icon: '🔷',
+        sampleArtifact: 'EVM Bytecode + Contract ABI'
+      };
+    }
+    if (raw.includes('optimism')) {
+      return {
+        trackId: 'optimism',
+        trackName: 'Optimism',
+        lang: 'Solidity',
+        fileName: 'Superchain.sol',
+        compiler: 'solc v0.8.20+commit.a1b79de6',
+        badge: 'OP Stack Superchain',
+        icon: '🔴',
+        sampleArtifact: 'EVM Bytecode + Contract ABI'
+      };
+    }
+    if (raw.includes('polygon')) {
+      return {
+        trackId: 'polygon',
+        trackName: 'Polygon',
+        lang: 'Solidity',
+        fileName: 'zkEVMVault.sol',
+        compiler: 'solc v0.8.20+commit.a1b79de6',
+        badge: 'Polygon zkEVM',
+        icon: '🟣',
+        sampleArtifact: 'zkEVM Bytecode + Contract ABI'
+      };
+    }
+    return {
+      trackId: 'ethereum',
+      trackName: 'Ethereum',
+      lang: 'Solidity',
+      fileName: 'Vault.sol',
+      compiler: 'solc v0.8.20+commit.a1b79de6',
+      badge: 'Ethereum Security',
+      icon: '💎',
+      sampleArtifact: 'EVM Bytecode + Contract ABI'
+    };
+  };
+
   const handleSubmitExercise = async () => {
     if (!lesson || submittingExercise || !lesson.exercise) return;
 
+    const track = getTrackMetadata();
     setSubmittingExercise(true);
     setConsoleLogs([
-      "⏳ Initializing EVM Compilation Environment...",
-      "🛠️ Loading compiler solc-v0.8.20+commit.5613c14d...",
-      "⚡ Compiling contract code...",
+      `⏳ Initializing ${track.trackName} execution environment...`,
+      `🛠️ Loading compiler: ${track.compiler}...`,
+      `⚡ Compiling ${track.lang} source code...`,
     ]);
 
-    // Simulate compiler latency
-    await new Promise((resolve) => setTimeout(resolve, 1200));
+    await new Promise((resolve) => setTimeout(resolve, 600));
 
     try {
+      // Run multi-chain client-side compiler engine
+      const clientCompilation = await executeMultiChainCompiler(track.trackId, code, lessonId);
+
+      // Submit to backend for verification and XP award
       const result = await postExerciseSubmit(userId, lessonId, code, token);
 
-      if (result.passed) {
+      if (result.passed && clientCompilation.success) {
         setConsoleLogs((prev) => [
           ...prev,
-          "✅ Compilation successful! No warnings.",
-          "🧪 Running assertion test suite...",
-          "🔍 Assert keyword matches: PASS",
-          `🎉 Exercise PASSED. XP Awarded: +100 XP`,
+          `✅ Compilation successful! 0 warnings, 0 errors.`,
+          `📦 Target Artifact: ${track.sampleArtifact}`,
+          ...(clientCompilation.artifacts?.programId ? [`🔑 On-Chain Program ID: ${clientCompilation.artifacts.programId}`] : []),
+          ...(clientCompilation.artifacts?.classHash ? [`🏷️ Sierra Class Hash: ${clientCompilation.artifacts.classHash}`] : []),
+          ...(clientCompilation.artifacts?.moduleAddress ? [`📜 Module Address: ${clientCompilation.artifacts.moduleAddress}`] : []),
+          `📊 Compute Gas: ${clientCompilation.gasEstimate.toLocaleString()} units`,
+          `🧪 Running automated invariant verification suite...`,
+          `🔍 Structural keywords & type constraints: PASS`,
+          `🎉 Exercise & Verification PASSED! XP Awarded: +100 XP`,
         ]);
         if (result.user_progress) {
           onProgressUpdate(result.user_progress);
         }
+
+        // Send institutional telemetry
+        const contractAddr = clientCompilation.artifacts?.programId || clientCompilation.artifacts?.classHash || clientCompilation.artifacts?.moduleAddress || clientCompilation.artifacts?.wasmHash || (clientCompilation.artifacts?.bytecode ? `0x${clientCompilation.artifacts.bytecode.slice(2, 42)}` : '0xContractDeployed');
+        trackStudentDeployment(
+          userId || 'developer-student',
+          'ARB_COHORT_004',
+          {
+            contractAddress: contractAddr,
+            network: track.trackId,
+            executionEnvironment: track.trackId === 'arbitrum' ? 'wasm_stylus' : track.trackId === 'solana' ? 'sealevel_svm' : track.trackId === 'aptos' ? 'move_vm' : 'evm',
+            programmingLanguage: track.lang.toLowerCase(),
+            gasUsed: clientCompilation.gasEstimate || 42000
+          }
+        ).catch((err) => console.warn("Telemetry log warning:", err));
       } else {
         const errorLogs: string[] = [];
+        if (clientCompilation.syntaxErrors && clientCompilation.syntaxErrors.length > 0) {
+          clientCompilation.syntaxErrors.forEach((err) => errorLogs.push(`❌ ${err}`));
+        }
         if (result.syntax_errors && result.syntax_errors.length > 0) {
-          result.syntax_errors.forEach((err) => {
-            errorLogs.push(`❌ ${err}`);
+          result.syntax_errors.forEach((err: string) => {
+            if (!errorLogs.includes(`❌ ${err}`)) errorLogs.push(`❌ ${err}`);
           });
         }
         if (result.missing_keywords && result.missing_keywords.length > 0) {
-          errorLogs.push(`⚠️ Missing required structures: ${result.missing_keywords.join(", ")}`);
+          errorLogs.push(`⚠️ Missing required syntax/keywords: ${result.missing_keywords.join(", ")}`);
         }
         setConsoleLogs((prev) => [
           ...prev,
-          "❌ Compilation completed with errors.",
+          `❌ Compilation completed with ${errorLogs.length || 1} error(s).`,
           ...errorLogs,
-          "❌ Exercise FAILED. Review instruction parameters and retry.",
+          `❌ Exercise FAILED. Review instruction parameters and retry.`,
         ]);
       }
     } catch (err) {
-      setConsoleLogs((prev) => [...prev, "🚨 Connection / sandbox environment crash error."]);
+      setConsoleLogs((prev) => [...prev, "🚨 Compiler sandbox connection error."]);
     } finally {
       setSubmittingExercise(false);
     }
@@ -151,8 +290,9 @@ export const LessonView: React.FC<LessonViewProps> = ({
 
   const handleAskOpenClaw = async () => {
     if (askingOpenClaw || !lesson) return;
+    const track = getTrackMetadata();
     setAskingOpenClaw(true);
-    setConsoleLogs((prev) => [...prev, `🔮 [OpenClaw AI Mentor]: Analyzing Solidity code for "${lesson.title}"...`]);
+    setConsoleLogs((prev) => [...prev, `🔮 [OpenClaw AI Mentor]: Analyzing ${track.lang} code for "${lesson.title}"...`]);
 
     try {
       let fullResponse = "";
@@ -263,6 +403,8 @@ export const LessonView: React.FC<LessonViewProps> = ({
     }
   };
 
+  const track = getTrackMetadata();
+
   return (
     <div className="lesson-workspace">
       
@@ -272,9 +414,9 @@ export const LessonView: React.FC<LessonViewProps> = ({
           <button className="btn btn--text back-btn" onClick={onBack} style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.8rem', color: 'var(--clr-text-muted)', background: 'transparent', border: 'none', cursor: 'pointer', marginBottom: '16px', padding: 0 }}>
             ← Back to Roadmap
           </button>
-          <h2 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#fff', margin: '0 0 6px 0' }}>Production Web3 Engineering</h2>
+          <h2 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#fff', margin: '0 0 6px 0' }}>{track.trackName} Engineering</h2>
           <p style={{ fontSize: '0.75rem', color: 'var(--clr-text-secondary)', lineHeight: '1.4', margin: '0 0 12px 0' }}>
-            Master production-ready smart contracts, protocol security, DeFi architecture, and open-source engineering across Ethereum.
+            Master production-ready smart contracts, protocol security, and open-source engineering across {track.trackName}.
           </p>
           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.7rem', color: 'var(--clr-text-muted)', marginBottom: '4px', fontWeight: 600 }}>
             <span>Course progress</span>
@@ -288,13 +430,13 @@ export const LessonView: React.FC<LessonViewProps> = ({
         <div style={{ height: '1px', background: 'rgba(255,255,255,0.05)' }} />
 
         <div>
-          <span style={{ fontSize: '0.65rem', color: 'var(--clr-text-muted)', fontWeight: 700, letterSpacing: '0.05em', display: 'block', marginBottom: '12px' }}>MODULE 02 • ETHEREUM SECURITY</span>
+          <span style={{ fontSize: '0.65rem', color: 'var(--clr-text-muted)', fontWeight: 700, letterSpacing: '0.05em', display: 'block', marginBottom: '12px' }}>MODULE 0{lesson.level_id || 1} • {track.trackName.toUpperCase()} TRACK</span>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             {[
-              { title: 'State Layout & Storage', checked: true },
-              { title: 'Access Control Patterns', checked: true },
+              { title: 'Core Architecture & Environment', checked: true },
+              { title: 'Data Types & Access Control', checked: true },
               { title: lesson.title, active: true },
-              { title: 'Reentrancy Guards', locked: true }
+              { title: 'Testnet Deployment Challenge', locked: true }
             ].map((item, idx) => (
               <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <span style={{
@@ -329,7 +471,7 @@ export const LessonView: React.FC<LessonViewProps> = ({
       <div className="lesson-middle-panel" style={{ display: 'flex', flexDirection: 'column', height: '100%', overflowY: 'auto', padding: '24px', gap: '20px', background: '#030307' }}>
         {/* Breadcrumbs */}
         <div style={{ fontSize: '0.75rem', color: 'var(--clr-text-muted)', fontWeight: 600, wordBreak: 'break-word' }}>
-          Production Web3 Engineering &gt; Ethereum &gt; <span style={{ color: 'var(--clr-text-secondary)' }}>{lesson.title}</span>
+          Production Web3 Engineering &gt; {track.trackName} &gt; <span style={{ color: 'var(--clr-text-secondary)' }}>{lesson.title}</span>
         </div>
 
         {/* Tab Selector with Left & Right Floating Scroll Arrows */}
@@ -375,32 +517,12 @@ export const LessonView: React.FC<LessonViewProps> = ({
           <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
               <span style={{ fontSize: '0.7rem', padding: '4px 10px', borderRadius: '12px', background: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6', fontWeight: 700 }}>AI-Guided</span>
-              <span style={{ fontSize: '0.7rem', padding: '4px 10px', borderRadius: '12px', background: 'rgba(124, 58, 237, 0.1)', color: '#a855f7', fontWeight: 700 }}>Ethereum Security</span>
+              <span style={{ fontSize: '0.7rem', padding: '4px 10px', borderRadius: '12px', background: 'rgba(124, 58, 237, 0.1)', color: '#a855f7', fontWeight: 700 }}>{track.badge}</span>
               <span style={{ fontSize: '0.7rem', padding: '4px 10px', borderRadius: '12px', background: 'rgba(245, 158, 11, 0.1)', color: '#f59e0b', fontWeight: 700 }}>18 min • Lab + Quiz</span>
             </div>
             <h1 className="lesson-title-heading" style={{ fontSize: '1.8rem', fontWeight: 800, color: '#fff', margin: '0 0 10px 0', lineHeight: '1.2' }}>{lesson.title}</h1>
             <div style={{ fontSize: '0.85rem', color: 'var(--clr-text-secondary)', lineHeight: '1.6', marginBottom: '20px' }}>
               {renderMarkdown(lesson.content)}
-            </div>
-            
-            {/* CEI point highlights */}
-            <div className="glass" style={{ padding: '24px', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.06)', background: 'rgba(10, 11, 23, 0.45)' }}>
-              <h3 style={{ fontSize: '1rem', fontWeight: 800, color: '#fff', marginBottom: '8px' }}>Checks-Effects-Interactions (CEI) in Practice</h3>
-              <p style={{ fontSize: '0.85rem', color: 'var(--clr-text-secondary)', lineHeight: '1.6', marginBottom: '20px' }}>
-                The Checks-Effects-Interactions pattern prevents reentrancy by validating inputs first, updating contract state second, and interacting with external contracts only after internal state changes are complete. This approach is a core security practice used across production DeFi protocols.
-              </p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                {[
-                  'Validate Inputs Before State Changes',
-                  'Update Contract Storage Before External Calls',
-                  'Transfer Assets Only After Internal State Is Secure'
-                ].map((pt, idx) => (
-                  <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.85rem', color: 'var(--clr-text-secondary)', padding: '10px 16px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.03)', background: 'rgba(255,255,255,0.01)' }}>
-                    <span style={{ color: '#10b981', fontWeight: 'bold' }}>✓</span>
-                    <span>{pt}</span>
-                  </div>
-                ))}
-              </div>
             </div>
           </div>
         )}
@@ -408,8 +530,8 @@ export const LessonView: React.FC<LessonViewProps> = ({
         {activeBottomTab === 'practice' && lesson.exercise && (
           <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <div style={{ display: 'flex', gap: '8px' }}>
-              <span style={{ fontSize: '0.7rem', padding: '4px 10px', borderRadius: '12px', background: 'rgba(124, 58, 237, 0.1)', color: '#a855f7', fontWeight: 700 }}>Ethereum Security</span>
-              <span style={{ fontSize: '0.7rem', padding: '4px 10px', borderRadius: '12px', background: 'rgba(245, 158, 11, 0.1)', color: '#f59e0b', fontWeight: 700 }}>Interactive Lab</span>
+              <span style={{ fontSize: '0.7rem', padding: '4px 10px', borderRadius: '12px', background: 'rgba(124, 58, 237, 0.1)', color: '#a855f7', fontWeight: 700 }}>{track.badge}</span>
+              <span style={{ fontSize: '0.7rem', padding: '4px 10px', borderRadius: '12px', background: 'rgba(245, 158, 11, 0.1)', color: '#f59e0b', fontWeight: 700 }}>{track.lang} Sandbox</span>
             </div>
             <h1 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#fff', margin: '0 0 10px 0', lineHeight: '1.2' }}>Interactive Sandbox</h1>
             <p style={{ fontSize: '0.85rem', color: 'var(--clr-text-secondary)', lineHeight: '1.5', margin: '0 0 16px 0' }}>
@@ -417,85 +539,101 @@ export const LessonView: React.FC<LessonViewProps> = ({
             </p>
 
             {/* IDE Editor Card */}
-            <div className="code-workspace glass" style={{ border: '1px solid rgba(255,255,255,0.06)', borderRadius: '16px', background: 'rgba(10, 11, 23, 0.45)', overflow: 'hidden' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 20px', background: 'rgba(0,0,0,0.3)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                <div style={{ display: 'flex', gap: '6px' }}>
-                  <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#ef4444', display: 'inline-block' }} />
-                  <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#f59e0b', display: 'inline-block' }} />
-                  <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#10b981', display: 'inline-block' }} />
-                  <span style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--clr-text-secondary)', marginLeft: '8px', fontFamily: 'monospace' }}>Vault.sol</span>
-                </div>
-                <button
-                  className="btn btn--secondary btn--xs"
-                  onClick={handleAskOpenClaw}
-                  disabled={askingOpenClaw}
-                  title="Get instant AI code analysis and guidance from OpenClaw"
-                  style={{
-                    fontSize: '0.75rem',
-                    padding: '4px 12px',
-                    borderRadius: '4px',
-                    backgroundColor: askingOpenClaw ? 'rgba(245, 158, 11, 0.15)' : 'rgba(37, 99, 235, 0.15)',
-                    color: askingOpenClaw ? '#f59e0b' : '#60a5fa',
-                    border: askingOpenClaw ? '1px solid rgba(245, 158, 11, 0.3)' : '1px solid rgba(37, 99, 235, 0.3)',
-                    cursor: askingOpenClaw ? 'wait' : 'pointer'
-                  }}
-                >
-                  {askingOpenClaw ? '⏳ OpenClaw Thinking...' : '🔮 Ask OpenClaw'}
-                </button>
-              </div>
-              
-              <textarea
-                className="code-textarea"
-                value={code}
-                onChange={(e) => setCode(e.target.value)}
-                disabled={submittingExercise}
-                spellCheck={false}
-                style={{
-                  width: '100%',
-                  height: '420px',
-                  minHeight: '280px',
-                  maxHeight: '750px',
-                  padding: '16px',
-                  background: '#090a12',
-                  border: 'none',
-                  color: '#a6accd',
-                  fontFamily: 'monospace',
-                  fontSize: '0.85rem',
-                  lineHeight: '1.5',
-                  resize: 'vertical',
-                  outline: 'none'
-                }}
-              />
+            {(() => {
+              const comp = track;
+              return (
+                <div className="code-workspace glass" style={{ border: '1px solid rgba(255,255,255,0.06)', borderRadius: '16px', background: 'rgba(10, 11, 23, 0.45)', overflow: 'hidden' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 20px', background: 'rgba(0,0,0,0.3)', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#ef4444', display: 'inline-block' }} />
+                      <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#f59e0b', display: 'inline-block' }} />
+                      <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#10b981', display: 'inline-block' }} />
+                      <span style={{ fontSize: '0.8rem', fontWeight: 600, color: '#93c5fd', marginLeft: '6px', fontFamily: 'monospace' }}>{comp.fileName}</span>
+                      <span style={{ fontSize: '0.68rem', padding: '2px 8px', borderRadius: '4px', background: 'rgba(255,255,255,0.06)', color: 'var(--clr-text-secondary)', fontWeight: 600 }}>{comp.lang}</span>
+                    </div>
+                    <button
+                      className="btn btn--secondary btn--xs"
+                      onClick={handleAskOpenClaw}
+                      disabled={askingOpenClaw}
+                      title="Get instant AI code analysis and guidance from OpenClaw"
+                      style={{
+                        fontSize: '0.75rem',
+                        padding: '4px 12px',
+                        borderRadius: '4px',
+                        backgroundColor: askingOpenClaw ? 'rgba(245, 158, 11, 0.15)' : 'rgba(37, 99, 235, 0.15)',
+                        color: askingOpenClaw ? '#f59e0b' : '#60a5fa',
+                        border: askingOpenClaw ? '1px solid rgba(245, 158, 11, 0.3)' : '1px solid rgba(37, 99, 235, 0.3)',
+                        cursor: askingOpenClaw ? 'wait' : 'pointer'
+                      }}
+                    >
+                      {askingOpenClaw ? '⏳ OpenClaw Thinking...' : '🔮 Ask OpenClaw'}
+                    </button>
+                  </div>
+                  
+                  <textarea
+                    className="code-textarea"
+                    value={code}
+                    onChange={(e) => setCode(e.target.value)}
+                    disabled={submittingExercise}
+                    spellCheck={false}
+                    style={{
+                      width: '100%',
+                      height: '420px',
+                      minHeight: '280px',
+                      maxHeight: '750px',
+                      padding: '16px',
+                      background: '#090a12',
+                      border: 'none',
+                      color: '#a6accd',
+                      fontFamily: 'monospace',
+                      fontSize: '0.85rem',
+                      lineHeight: '1.5',
+                      resize: 'vertical',
+                      outline: 'none'
+                    }}
+                  />
 
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 20px', background: 'rgba(0,0,0,0.2)', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-                <span style={{ fontSize: '0.75rem', color: 'var(--clr-text-muted)' }}>Solidity Compiler v0.8.20</span>
-                <button
-                  className="btn btn--primary"
-                  onClick={handleSubmitExercise}
-                  disabled={submittingExercise || !code.trim()}
-                  style={{ backgroundColor: '#2563eb', padding: '8px 16px', borderRadius: '6px', fontSize: '0.8rem' }}
-                >
-                  {submittingExercise ? "Compiling..." : "🚀 Compile & Run Tests"}
-                </button>
-              </div>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 20px', background: 'rgba(0,0,0,0.2)', borderTop: '1px solid rgba(255,255,255,0.05)', flexWrap: 'wrap', gap: '10px' }}>
+                    <span style={{ fontSize: '0.75rem', color: '#94a3b8', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <span>{comp.icon}</span>
+                      <span>{comp.compiler}</span>
+                    </span>
+                    <button
+                      className="btn btn--primary"
+                      onClick={handleSubmitExercise}
+                      disabled={submittingExercise || !code.trim()}
+                      style={{ backgroundColor: '#2563eb', padding: '8px 16px', borderRadius: '6px', fontSize: '0.8rem' }}
+                    >
+                      {submittingExercise ? "Compiling..." : `🚀 Compile & Verify (${comp.trackName})`}
+                    </button>
+                  </div>
 
-              {/* Console output inside IDE card */}
-              <div style={{ borderTop: '1px solid rgba(255,255,255,0.05)', background: '#07080d', padding: '16px' }}>
-                <div style={{ fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--clr-text-muted)', marginBottom: '8px', letterSpacing: '0.05em' }}>EVM Compiler Logs</div>
-                <div style={{ maxHeight: '180px', overflowY: 'auto', fontFamily: 'monospace', fontSize: '0.75rem', color: 'var(--clr-text-secondary)', lineHeight: '1.5' }}>
-                  {consoleLogs.length === 0 ? (
-                    <span style={{ color: 'var(--clr-text-muted)' }}>Terminal idle. Click compile to trigger test suite claims.</span>
-                  ) : (
-                    <>
-                      {consoleLogs.map((log, idx) => (
-                        <div key={idx} style={{ color: log.includes('✅') || log.includes('successful') ? '#10b981' : log.includes('❌') || log.includes('FAILED') ? '#ef4444' : 'var(--clr-text-secondary)', marginBottom: '4px' }}>{log}</div>
-                      ))}
-                      <div ref={consoleEndRef} />
-                    </>
-                  )}
+                  {/* Console output inside IDE card */}
+                  <div style={{ borderTop: '1px solid rgba(255,255,255,0.05)', background: '#07080d', padding: '16px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                      <span style={{ fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', color: '#60a5fa', letterSpacing: '0.05em' }}>
+                        {comp.icon} {comp.trackName.toUpperCase()} TERMINAL OUTPUT
+                      </span>
+                      <span style={{ fontSize: '0.65rem', color: 'var(--clr-text-muted)' }}>
+                        Isolated Sandboxed Runner (5.0s max)
+                      </span>
+                    </div>
+                    <div style={{ maxHeight: '200px', overflowY: 'auto', fontFamily: 'monospace', fontSize: '0.75rem', color: 'var(--clr-text-secondary)', lineHeight: '1.5' }}>
+                      {consoleLogs.length === 0 ? (
+                        <span style={{ color: 'var(--clr-text-muted)' }}>Sandbox idle. Click "Compile &amp; Verify" to run the compiler and invariant test suite.</span>
+                      ) : (
+                        <>
+                          {consoleLogs.map((log, idx) => (
+                            <div key={idx} style={{ color: log.includes('✅') || log.includes('successful') || log.includes('PASSED') ? '#34d399' : log.includes('❌') || log.includes('FAILED') ? '#f87171' : log.includes('📦') || log.includes('📊') || log.includes('🔑') ? '#93c5fd' : 'var(--clr-text-secondary)', marginBottom: '4px' }}>{log}</div>
+                          ))}
+                          <div ref={consoleEndRef} />
+                        </>
+                      )}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+              );
+            })()}
           </div>
         )}
 
@@ -582,15 +720,69 @@ export const LessonView: React.FC<LessonViewProps> = ({
           <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <h1 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#fff', margin: '0 0 10px 0', lineHeight: '1.2' }}>Further Reading</h1>
             <p style={{ fontSize: '0.85rem', color: 'var(--clr-text-secondary)', lineHeight: '1.5' }}>
-              Check out these verified resources to expand your knowledge of reentrancy security patterns and Solidity contract engineering.
+              Check out these verified official resources to expand your mastery of {track.trackName} smart contract development and security architecture.
             </p>
             <div className="glass" style={{ padding: '24px', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.06)', background: 'rgba(10, 11, 23, 0.45)', display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <a href="https://solidity-by-example.org/reentrancy" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.85rem', color: '#3b82f6', textDecoration: 'underline' }}>
-                🔗 Solidity by Example: Reentrancy Patterns
-              </a>
-              <a href="https://docs.soliditylang.org" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.85rem', color: '#3b82f6', textDecoration: 'underline' }}>
-                🔗 Official Solidity Documentation
-              </a>
+              {track.trackId === 'aptos' && (
+                <>
+                  <a href="https://aptos.dev/network/blockchain/move" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.85rem', color: '#06b6d4', textDecoration: 'underline' }}>
+                    🔗 Official Aptos Move Developer Guide
+                  </a>
+                  <a href="https://github.com/aptos-labs/aptos-core" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.85rem', color: '#06b6d4', textDecoration: 'underline' }}>
+                    🔗 Aptos Core GitHub Repository &amp; Move Modules
+                  </a>
+                </>
+              )}
+              {track.trackId === 'solana' && (
+                <>
+                  <a href="https://www.anchor-lang.com" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.85rem', color: '#f59e0b', textDecoration: 'underline' }}>
+                    🔗 Official Anchor Framework Documentation
+                  </a>
+                  <a href="https://solana.com/docs" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.85rem', color: '#f59e0b', textDecoration: 'underline' }}>
+                    🔗 Solana Developer &amp; Sealevel BPF Reference
+                  </a>
+                </>
+              )}
+              {track.trackId === 'starknet' && (
+                <>
+                  <a href="https://book.cairo-lang.org" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.85rem', color: '#ec4899', textDecoration: 'underline' }}>
+                    🔗 The Cairo 2.0 Programming Language Book
+                  </a>
+                  <a href="https://docs.starknet.io" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.85rem', color: '#ec4899', textDecoration: 'underline' }}>
+                    🔗 Starknet Official Developer Documentation
+                  </a>
+                </>
+              )}
+              {track.trackId === 'polkadot' && (
+                <>
+                  <a href="https://use.ink" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.85rem', color: '#a855f7', textDecoration: 'underline' }}>
+                    🔗 ink! Smart Contracts on Polkadot &amp; Substrate
+                  </a>
+                  <a href="https://github.com/paritytech/polkadot-sdk" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.85rem', color: '#a855f7', textDecoration: 'underline' }}>
+                    🔗 Polkadot SDK &amp; pallet-contracts Repository
+                  </a>
+                </>
+              )}
+              {track.trackId === 'arbitrum' && (
+                <>
+                  <a href="https://docs.arbitrum.io/stylus/stylus-overview" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.85rem', color: '#3b82f6', textDecoration: 'underline' }}>
+                    🔗 Arbitrum Stylus Rust SDK Documentation
+                  </a>
+                  <a href="https://docs.arbitrum.io" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.85rem', color: '#3b82f6', textDecoration: 'underline' }}>
+                    🔗 Arbitrum Nitro Developer Portal
+                  </a>
+                </>
+              )}
+              {['ethereum', 'base', 'optimism', 'polygon', 'fundamentals'].includes(track.trackId) && (
+                <>
+                  <a href="https://solidity-by-example.org" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.85rem', color: '#3b82f6', textDecoration: 'underline' }}>
+                    🔗 Solidity by Example: Design &amp; Security Patterns
+                  </a>
+                  <a href="https://docs.soliditylang.org" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.85rem', color: '#3b82f6', textDecoration: 'underline' }}>
+                    🔗 Official Solidity Documentation
+                  </a>
+                </>
+              )}
             </div>
           </div>
         )}

@@ -24,6 +24,7 @@ const PAGE_META: Record<NavPage, { title: string; subtitle: string }> = {
   roadmap:      { title: 'Developer Academy',  subtitle: 'Learn and compile smart contracts' },
   dashboard:    { title: 'My Dashboard',       subtitle: 'Track your Web3 progress & stats' },
   analytics:    { title: 'Cohort Analytics',   subtitle: 'Ecosystem Developer Cohort Activity (May–August 2026)' },
+  sandbox:      { title: 'Multi-Chain Code Sandbox', subtitle: 'Universal IDE: Write, compile, and debug Solidity, Move, Cairo, Rust & ink!' },
   forum:        { title: 'Community Forum',    subtitle: 'Ask questions, share knowledge, and help others' },
   hackathons:   { title: 'Web3 Hackathons',    subtitle: 'Build, innovate, and win.' },
   careers:      { title: 'Career Dashboard',   subtitle: 'Web3 jobs, internships, ecosystem grants & startup hub' },

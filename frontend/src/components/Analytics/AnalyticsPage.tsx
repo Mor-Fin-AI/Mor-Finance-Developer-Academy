@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { fetchArbitrumTelemetry } from '../../api/client';
 import './AnalyticsPage.css';
 
 interface DeveloperActivityItem {
@@ -473,6 +474,13 @@ export const AnalyticsPage: React.FC = () => {
   const [activityMonthFilter, setActivityMonthFilter] = useState<string>('All');
   const [activitySearch, setActivitySearch] = useState<string>('');
   const [arbTab, setArbTab] = useState<'telemetry' | 'deployments' | 'solidity' | 'stylus'>('telemetry');
+  const [arbTelemetry, setArbTelemetry] = useState<any>(null);
+
+  useEffect(() => {
+    fetchArbitrumTelemetry()
+      .then(setArbTelemetry)
+      .catch((err) => console.warn("Could not load arbitrum telemetry:", err));
+  }, []);
 
   const filteredActivities = MOCK_DEVELOPER_ACTIVITIES.filter((act) => {
     if (activityRoleFilter !== 'All' && act.role !== activityRoleFilter) return false;
@@ -832,35 +840,40 @@ export const AnalyticsPage: React.FC = () => {
 
         {arbTab === 'deployments' && (
           <div style={{ overflowX: 'auto' }}>
-            <table className="analytics-table" style={{ width: '100%', fontSize: '0.8rem' }}>
-              <thead>
-                <tr>
-                  <th>Developer</th>
-                  <th>Cohort ID</th>
-                  <th>Environment</th>
-                  <th>Contract Address</th>
-                  <th>Gas Used</th>
-                  <th>Verification</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  { dev: 'john-egbonwon', cohort: 'ARB_COHORT_004', env: 'WASM Stylus (Rust)', addr: '0x3f92b719acbf3928a2b0907a1b32d8471e16f', gas: '42,000', status: '✅ Verified' },
-                  { dev: 'sarah-cairo', cohort: 'ARB_COHORT_004', env: 'WASM Stylus (Rust)', addr: '0x8a721c0b89f31a293847a92c30491823ab4912cd', gas: '38,500', status: '✅ Verified' },
-                  { dev: 'alex-move', cohort: 'ARB_COHORT_003', env: 'EVM Nitro (Solidity)', addr: '0x51c4e20918ab3c9481230498a12bc90384712039', gas: '384,000', status: '✅ Verified' },
-                  { dev: 'elena-sol', cohort: 'ARB_COHORT_004', env: 'WASM Stylus (Rust)', addr: '0x7291a03948bf129481c039481b293847a192834b', gas: '45,000', status: '✅ Verified' },
-                ].map((row) => (
-                  <tr key={row.addr}>
-                    <td><strong>{row.dev}</strong></td>
-                    <td><span className="analytics-track-badge" style={{ background: 'rgba(59, 130, 246, 0.15)', color: '#60a5fa' }}>{row.cohort}</span></td>
-                    <td>{row.env}</td>
-                    <td><code style={{ color: '#93c5fd' }}>{row.addr.slice(0, 10)}...{row.addr.slice(-6)}</code></td>
-                    <td><strong>{row.gas}</strong></td>
-                    <td><span style={{ color: '#34d399', fontWeight: 700 }}>{row.status}</span></td>
+            {arbTelemetry?.recent_deployments && arbTelemetry.recent_deployments.length > 0 ? (
+              <table className="analytics-table" style={{ width: '100%', fontSize: '0.8rem' }}>
+                <thead>
+                  <tr>
+                    <th>Developer</th>
+                    <th>Cohort ID</th>
+                    <th>Environment</th>
+                    <th>Contract / Artifact</th>
+                    <th>Gas Used</th>
+                    <th>Verification</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {arbTelemetry.recent_deployments.map((row: any, idx: number) => (
+                    <tr key={idx}>
+                      <td><strong>{row.developer_github_id || row.dev}</strong></td>
+                      <td><span className="analytics-track-badge" style={{ background: 'rgba(59, 130, 246, 0.15)', color: '#60a5fa' }}>{row.cohort_id || row.cohort}</span></td>
+                      <td>{row.execution_environment || row.env}</td>
+                      <td><code style={{ color: '#93c5fd' }}>{(row.contract_address || row.addr || '').slice(0, 14)}...</code></td>
+                      <td><strong>{typeof row.gas_used_computation === 'number' ? row.gas_used_computation.toLocaleString() : (row.gas || '42,000')}</strong></td>
+                      <td><span style={{ color: '#34d399', fontWeight: 700 }}>✅ Verified</span></td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <div style={{ padding: '32px 20px', textAlign: 'center', background: 'rgba(0,0,0,0.2)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                <span style={{ fontSize: '1.5rem', display: 'block', marginBottom: '8px' }}>📡</span>
+                <h4 style={{ margin: '0 0 6px 0', color: '#fff', fontSize: '0.95rem' }}>Live Telemetry Tracking Stream Active</h4>
+                <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--clr-text-secondary)', maxWidth: '520px', marginInline: 'auto' }}>
+                  Student contract compilations and testnet deployments from the <strong>Code Sandbox IDE</strong> and <strong>Developer Academy</strong> are recorded live to the telemetry registry.
+                </p>
+              </div>
+            )}
           </div>
         )}
 

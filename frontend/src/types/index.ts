@@ -62,7 +62,28 @@ export interface ChatMessage {
   isStreaming?: boolean;
 }
 
-export type NavPage = 'academy' | 'roadmap' | 'dashboard' | 'analytics' | 'mentor' | 'certificates' | 'forum' | 'hackathons' | 'careers' | 'about' | 'subscriptions';
+export type NavPage = 'academy' | 'roadmap' | 'dashboard' | 'analytics' | 'sandbox' | 'mentor' | 'certificates' | 'forum' | 'hackathons' | 'careers' | 'about' | 'subscriptions';
+
+export interface CompilationResult {
+  success: boolean;
+  chain: string;
+  language: string;
+  compiler: string;
+  stdout: string;
+  stderr?: string;
+  syntaxErrors: string[];
+  warnings: string[];
+  gasEstimate: number;
+  artifacts?: {
+    abi?: any[];
+    bytecode?: string;
+    idl?: any;
+    programId?: string;
+    classHash?: string;
+    moduleAddress?: string;
+    wasmHash?: string;
+  };
+}
 
 export interface JobListing {
   id: string;

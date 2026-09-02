@@ -4038,6 +4038,10 @@ export interface ExerciseResult {
   feedback: string;
   missing_keywords: string[];
   syntax_errors?: string[];
+  compiler?: string;
+  gas_estimate?: number;
+  stdout?: string;
+  artifacts?: any;
   user_progress: UserProgress;
 }
 
