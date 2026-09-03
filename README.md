@@ -13,12 +13,12 @@
 
 **MOR Finance Developer Academy** (`morfinance.ai`) is an open-source, interactive developer education platform bridging talent from fundamental blockchain concepts to production smart contract deployments and market employment across **Arbitrum (Nitro & Stylus), Solana, Polkadot, Aptos, Starknet, Ethereum, and Base**.
 
-### Platform-Wide Benchmarks & Factual Traction:
-* **32 Active Developers** in May – August 2026 Cohort (`ARB_COHORT_004`).
-* **142 Verified Testnet Deployments** across all supported chains.
-* **18 Public Academy Repositories** with 660+ total commits and 400+ monthly commits.
-* **8 Active Open-Source Contributors** maintaining SDKs, templates, and security suites.
-* **Live Career & Internship Engine** connecting certified builders directly to Web3 hiring teams.
+### Platform Architecture & Programmatic Capabilities:
+* **Frictionless Student Onboarding**: GitHub OAuth SSO integration for instant university student cohort enrollment.
+* **Live Sandbox Compilers**: Multi-chain compilation engines with heuristic AST diagnostic parsing for Solidity (solc), Solana (Anchor), Move, Cairo 2.0, ink! 5.0, and Arbitrum Stylus.
+* **Real-Time Telemetry Tracking**: RESTful grant milestone telemetry measuring compiler execution, gas efficiency, and verified on-chain deployments.
+* **AI Code Mentorship**: Interactive AI mentors (OpenClaw & Hermes) providing real-time AST feedback, security evaluations, and interactive lessons.
+* **Career & Placement Engine**: Web3 jobs, bounties, and verified cryptographic developer credentials.
 
 ---
 

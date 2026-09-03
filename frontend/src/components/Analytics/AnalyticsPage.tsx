@@ -53,17 +53,6 @@ export const AnalyticsPage: React.FC = () => {
     ]);
   }, []);
 
-  const totalDevs = cohortData.total_developers;
-  const begCount = cohortData.beginners_count;
-  const intCount = cohortData.intermediates_count;
-  const advCount = cohortData.advanced_count;
-  const totalEvents = cohortData.total_activity_events;
-  const totalDeployments = cohortData.testnet_deployments;
-
-  const begPct = totalDevs > 0 ? ((begCount / totalDevs) * 100).toFixed(1) : '0.0';
-  const intPct = totalDevs > 0 ? ((intCount / totalDevs) * 100).toFixed(1) : '0.0';
-  const advPct = totalDevs > 0 ? ((advCount / totalDevs) * 100).toFixed(1) : '0.0';
-
   const rawActivities = cohortData.recent_activities || [];
   const filteredActivities = rawActivities.filter((act) => {
     if (activityRoleFilter !== 'All' && act.role !== activityRoleFilter) return false;
@@ -77,11 +66,6 @@ export const AnalyticsPage: React.FC = () => {
     }
     return true;
   });
-
-  const mayEv = cohortData.monthly_events['May 2026'] || 0;
-  const junEv = cohortData.monthly_events['June 2026'] || 0;
-  const julEv = cohortData.monthly_events['July 2026'] || 0;
-  const augEv = cohortData.monthly_events['August 2026'] || totalEvents;
 
   return (
     <div className="analytics-page animate-fade-in">
@@ -97,13 +81,13 @@ export const AnalyticsPage: React.FC = () => {
             Ecosystem Developer Cohort Analytics
           </h1>
           <p className="analytics-page__subtitle">
-            Live empirical learning activity, verified course completions, and testnet contract deployments across <strong>{totalDevs} builders</strong>.
+            Live empirical learning activity, verified course completions, and testnet contract deployments.
           </p>
         </div>
 
         <div className="analytics-page__header-badge">
-          <span className="analytics-page__badge-val">{totalDevs} Active Builders</span>
-          <span className="analytics-page__badge-lbl">Cohort ARB_COHORT_004</span>
+          <span className="analytics-page__badge-val">Active Stream</span>
+          <span className="analytics-page__badge-lbl">Cohort KU_COHORT_2026_01</span>
         </div>
       </div>
 
@@ -112,54 +96,54 @@ export const AnalyticsPage: React.FC = () => {
         <div className="analytics-kpi-card kpi-card--blue">
           <span className="kpi-card__icon">👥</span>
           <div className="kpi-card__content">
-            <span className="kpi-card__val">{totalDevs} Builders</span>
-            <span className="kpi-card__lbl">Enrolled Developers</span>
-            <span className="kpi-card__sub">{begCount} Beg • {intCount} Int • {advCount} Adv</span>
+            <span className="kpi-card__val">Developer Tracks</span>
+            <span className="kpi-card__lbl">Curriculum Pathways</span>
+            <span className="kpi-card__sub">Beginner • Intermediate • Advanced</span>
           </div>
         </div>
 
         <div className="analytics-kpi-card kpi-card--green">
           <span className="kpi-card__icon">🌱</span>
           <div className="kpi-card__content">
-            <span className="kpi-card__val">{begCount} Devs ({begPct}%)</span>
-            <span className="kpi-card__lbl">Beginner Tier</span>
-            <span className="kpi-card__sub">Core Fundamentals</span>
+            <span className="kpi-card__val">Core Fundamentals</span>
+            <span className="kpi-card__lbl">Solidity &amp; EVM Nitro</span>
+            <span className="kpi-card__sub">Interactive Sandbox Labs</span>
           </div>
         </div>
 
         <div className="analytics-kpi-card kpi-card--purple">
           <span className="kpi-card__icon">⚡</span>
           <div className="kpi-card__content">
-            <span className="kpi-card__val">{intCount} Devs ({intPct}%)</span>
-            <span className="kpi-card__lbl">Intermediate Tier</span>
-            <span className="kpi-card__sub">DApps &amp; Protocols</span>
+            <span className="kpi-card__val">DApps &amp; Protocols</span>
+            <span className="kpi-card__lbl">Smart Contract Architecture</span>
+            <span className="kpi-card__sub">Security &amp; Best Practices</span>
           </div>
         </div>
 
         <div className="analytics-kpi-card kpi-card--amber">
           <span className="kpi-card__icon">🛡️</span>
           <div className="kpi-card__content">
-            <span className="kpi-card__val">{advCount} Devs ({advPct}%)</span>
-            <span className="kpi-card__lbl">Advanced Engineers</span>
-            <span className="kpi-card__sub">WASM &amp; ZK Protocols</span>
+            <span className="kpi-card__val">WASM &amp; ZK Protocols</span>
+            <span className="kpi-card__lbl">Next-Gen Runtimes</span>
+            <span className="kpi-card__sub">Stylus Rust • Cairo • Move</span>
           </div>
         </div>
 
         <div className="analytics-kpi-card kpi-card--purple">
           <span className="kpi-card__icon">📈</span>
           <div className="kpi-card__content">
-            <span className="kpi-card__val">{totalEvents} Events</span>
-            <span className="kpi-card__lbl">Activity Milestones</span>
-            <span className="kpi-card__sub">Verified Code Submissions</span>
+            <span className="kpi-card__val">Activity Telemetry</span>
+            <span className="kpi-card__lbl">Telemetry Engine</span>
+            <span className="kpi-card__sub">Empirical Code Evaluations</span>
           </div>
         </div>
 
         <div className="analytics-kpi-card kpi-card--pink">
           <span className="kpi-card__icon">📜</span>
           <div className="kpi-card__content">
-            <span className="kpi-card__val">{totalDeployments} Contracts</span>
-            <span className="kpi-card__lbl">Testnet Deployments</span>
-            <span className="kpi-card__sub">Verified On-Chain</span>
+            <span className="kpi-card__val">On-Chain Deployments</span>
+            <span className="kpi-card__lbl">Testnet Verification</span>
+            <span className="kpi-card__sub">Multi-Chain Compilers</span>
           </div>
         </div>
       </div>
@@ -174,40 +158,40 @@ export const AnalyticsPage: React.FC = () => {
           <div className="metrics-guide-card">
             <div className="metrics-guide-card__header">
               <span className="metrics-guide-card__icon">👥</span>
-              <span className="metrics-guide-card__name">{totalDevs} Active Developers</span>
+              <span className="metrics-guide-card__name">Active Developer Enrollment</span>
             </div>
             <p className="metrics-guide-card__desc">
-              Total individual developers actively enrolled across curriculum tracks (<strong>{begCount} Beginners</strong> + <strong>{intCount} Intermediates</strong> + <strong>{advCount} Advanced</strong> = <strong>{totalDevs} Total</strong>).
+              Developers enrolled across multi-chain tracks spanning Beginner, Intermediate, and Advanced skill tiers.
             </p>
           </div>
 
           <div className="metrics-guide-card">
             <div className="metrics-guide-card__header">
               <span className="metrics-guide-card__icon">📈</span>
-              <span className="metrics-guide-card__name">{totalEvents} Activity Events</span>
+              <span className="metrics-guide-card__name">Learning Milestones</span>
             </div>
             <p className="metrics-guide-card__desc">
-              Total cumulative learning submissions, code reviews &amp; evaluations across all active ecosystem tracks.
+              Cumulative learning submissions, automated code reviews &amp; evaluations across active ecosystem tracks.
             </p>
           </div>
 
           <div className="metrics-guide-card">
             <div className="metrics-guide-card__header">
               <span className="metrics-guide-card__icon">📜</span>
-              <span className="metrics-guide-card__name">{totalDeployments} Testnet Deployments</span>
+              <span className="metrics-guide-card__name">Testnet Deployments</span>
             </div>
             <p className="metrics-guide-card__desc">
-              Total smart contract deployments and compiler builds executed to live testnets (Arbitrum, Solana, Polygon, Base, Aptos, Starknet) across exercises.
+              Smart contract deployments and compiler builds executed to live testnets (Arbitrum, Solana, Polygon, Base, Aptos, Starknet).
             </p>
           </div>
 
           <div className="metrics-guide-card">
             <div className="metrics-guide-card__header">
               <span className="metrics-guide-card__icon">⚡</span>
-              <span className="metrics-guide-card__name">{rawActivities.length} Verified Milestones</span>
+              <span className="metrics-guide-card__name">Verified Telemetry Feed</span>
             </div>
             <p className="metrics-guide-card__desc">
-              The live activity feed below highlights the primary verified milestones and deployments logged dynamically from active student sessions.
+              The live activity feed below highlights verified milestones and deployments logged dynamically from active student sessions.
             </p>
           </div>
         </div>
@@ -220,9 +204,9 @@ export const AnalyticsPage: React.FC = () => {
           <div className="analytics-chart-header">
             <div>
               <h3 className="analytics-chart-title">📊 Cohort Activity Acceleration</h3>
-              <span className="analytics-chart-subtitle">{totalEvents} Total Activity Events logged across active developers</span>
+              <span className="analytics-chart-subtitle">Empirical learning milestones and testnet compiler verifications</span>
             </div>
-            <span className="analytics-chart-pill">{totalEvents} Total Events Logged</span>
+            <span className="analytics-chart-pill">Telemetry Tracking Active</span>
           </div>
 
           <div className="chart-svg-container">
@@ -245,22 +229,22 @@ export const AnalyticsPage: React.FC = () => {
               {/* Smooth Trend Line */}
               <path d="M 65,135 Q 125,115 185,95 T 305,60 T 425,30" fill="none" stroke="#a855f7" strokeWidth="4" strokeLinecap="round" />
 
-              {/* Data Points */}
+              {/* Milestones */}
               <circle cx="65" cy="135" r="6" fill="#10b981" stroke="#fff" strokeWidth="2" />
-              <text x="65" y="120" fill="#34d399" fontSize="12" fontWeight="800" textAnchor="middle">{mayEv} Events</text>
-              <text x="65" y="168" fill="var(--clr-text-muted)" fontSize="11" fontWeight="700" textAnchor="middle">May</text>
+              <text x="65" y="120" fill="#34d399" fontSize="12" fontWeight="800" textAnchor="middle">Foundations</text>
+              <text x="65" y="168" fill="var(--clr-text-muted)" fontSize="11" fontWeight="700" textAnchor="middle">Phase 1</text>
 
               <circle cx="185" cy="95" r="6" fill="#3b82f6" stroke="#fff" strokeWidth="2" />
-              <text x="185" y="80" fill="#60a5fa" fontSize="12" fontWeight="800" textAnchor="middle">{junEv} Events</text>
-              <text x="185" y="168" fill="var(--clr-text-muted)" fontSize="11" fontWeight="700" textAnchor="middle">June</text>
+              <text x="185" y="80" fill="#60a5fa" fontSize="12" fontWeight="800" textAnchor="middle">Smart Contracts</text>
+              <text x="185" y="168" fill="var(--clr-text-muted)" fontSize="11" fontWeight="700" textAnchor="middle">Phase 2</text>
 
               <circle cx="305" cy="60" r="6" fill="#ec4899" stroke="#fff" strokeWidth="2" />
-              <text x="305" y="45" fill="#f472b6" fontSize="12" fontWeight="800" textAnchor="middle">{julEv} Events</text>
-              <text x="305" y="168" fill="var(--clr-text-muted)" fontSize="11" fontWeight="700" textAnchor="middle">July</text>
+              <text x="305" y="45" fill="#f472b6" fontSize="12" fontWeight="800" textAnchor="middle">WASM &amp; ZK</text>
+              <text x="305" y="168" fill="var(--clr-text-muted)" fontSize="11" fontWeight="700" textAnchor="middle">Phase 3</text>
 
               <circle cx="425" cy="30" r="6" fill="#a855f7" stroke="#fff" strokeWidth="2" />
-              <text x="425" y="15" fill="#c084fc" fontSize="12" fontWeight="800" textAnchor="middle">{augEv} Events</text>
-              <text x="425" y="168" fill="var(--clr-text-muted)" fontSize="11" fontWeight="700" textAnchor="middle">August</text>
+              <text x="425" y="15" fill="#c084fc" fontSize="12" fontWeight="800" textAnchor="middle">Testnet Deploy</text>
+              <text x="425" y="168" fill="var(--clr-text-muted)" fontSize="11" fontWeight="700" textAnchor="middle">Phase 4</text>
             </svg>
           </div>
         </div>
@@ -270,17 +254,17 @@ export const AnalyticsPage: React.FC = () => {
           <div className="analytics-chart-header">
             <div>
               <h3 className="analytics-chart-title">🍩 Developer Skill Tier Composition</h3>
-              <span className="analytics-chart-subtitle">Distribution across {totalDevs} unique developers</span>
+              <span className="analytics-chart-subtitle">Progressive curriculum pathways across skill levels</span>
             </div>
-            <span className="analytics-chart-pill">{totalDevs} Builders</span>
+            <span className="analytics-chart-pill">Curriculum Tiers</span>
           </div>
 
           <div className="tier-breakdown-bar-container">
             {/* Multi-segment Progress Bar */}
             <div className="multi-segment-bar">
-              <div className="segment segment--beginner" style={{ width: `${Math.max(Number(begPct), 5)}%` }} title={`Beginners: ${begCount} Devs (${begPct}%)`} />
-              <div className="segment segment--intermediate" style={{ width: `${Math.max(Number(intPct), 5)}%` }} title={`Intermediates: ${intCount} Devs (${intPct}%)`} />
-              <div className="segment segment--advanced" style={{ width: `${Math.max(Number(advPct), 5)}%` }} title={`Advanced: ${advCount} Devs (${advPct}%)`} />
+              <div className="segment segment--beginner" style={{ width: '33.3%' }} title="Beginners: Core Solidity & Web3 Basics" />
+              <div className="segment segment--intermediate" style={{ width: '33.3%' }} title="Intermediates: DeFi AMMs, Tokens & Paymasters" />
+              <div className="segment segment--advanced" style={{ width: '33.4%' }} title="Advanced: Stylus Wasm, ZK Proofs & Audits" />
             </div>
 
             {/* Legend Item Cards */}
@@ -289,7 +273,7 @@ export const AnalyticsPage: React.FC = () => {
                 <div className="legend-dot dot--beginner" />
                 <div className="legend-info">
                   <span className="legend-name">Beginner Tier</span>
-                  <span className="legend-desc">{begCount} Developers ({begPct}%) • Core Solidity &amp; Web3 Basics</span>
+                  <span className="legend-desc">Core Solidity, EVM Nitro &amp; Web3 Basics</span>
                 </div>
               </div>
 
@@ -297,7 +281,7 @@ export const AnalyticsPage: React.FC = () => {
                 <div className="legend-dot dot--intermediate" />
                 <div className="legend-info">
                   <span className="legend-name">Intermediate Tier</span>
-                  <span className="legend-desc">{intCount} Developers ({intPct}%) • DeFi AMMs, Tokens &amp; Paymasters</span>
+                  <span className="legend-desc">DeFi AMMs, ERC Standards &amp; Paymasters</span>
                 </div>
               </div>
 
@@ -305,7 +289,7 @@ export const AnalyticsPage: React.FC = () => {
                 <div className="legend-dot dot--advanced" />
                 <div className="legend-info">
                   <span className="legend-name">Advanced Protocol Engineers</span>
-                  <span className="legend-desc">{advCount} Developers ({advPct}%) • Stylus Wasm, ZK Proofs &amp; Audits</span>
+                  <span className="legend-desc">Arbitrum Stylus WASM, Cairo 2.0 &amp; Move</span>
                 </div>
               </div>
             </div>
@@ -322,11 +306,11 @@ export const AnalyticsPage: React.FC = () => {
             </div>
             <h3 className="analytics-chart-title">Arbitrum Stylus Migration &amp; Grant Validation KPIs</h3>
             <span className="analytics-chart-subtitle">
-              Programmatic grant verification tracking Stylus Migration Velocity (SMV), Gas Efficiency Index (GEI), and Cohort Code Vitality (CCV) across Cohort ARB_COHORT_004.
+              Programmatic grant verification tracking Stylus Migration Velocity (SMV), Gas Efficiency Index (GEI), and Cohort Code Vitality (CCV) across Cohort KU_COHORT_2026_01.
             </span>
           </div>
           <span className="analytics-chart-pill" style={{ background: 'rgba(59, 130, 246, 0.15)', color: '#93c5fd', borderColor: '#3b82f6' }}>
-            {arbTelemetry?.recent_deployments?.length || 0} Verified Telemetry Deployments
+            Arbitrum Telemetry Stream Active
           </span>
         </div>
 
@@ -338,7 +322,7 @@ export const AnalyticsPage: React.FC = () => {
               <span className="arbitrum-kpi-status">Target &gt; 40%</span>
             </div>
             <div className="arbitrum-kpi-main">
-              <span className="arbitrum-kpi-val">{arbTelemetry?.kpis?.smv?.value || '75.0%'}</span>
+              <span className="arbitrum-kpi-val">{arbTelemetry?.kpis?.smv?.value || 'Active Benchmark'}</span>
               <span className="arbitrum-kpi-lbl">Stylus Migration Velocity (SMV)</span>
             </div>
             <p className="arbitrum-kpi-desc">
@@ -352,7 +336,7 @@ export const AnalyticsPage: React.FC = () => {
               <span className="arbitrum-kpi-status">Target 10x–100x</span>
             </div>
             <div className="arbitrum-kpi-main">
-              <span className="arbitrum-kpi-val">{arbTelemetry?.kpis?.gei?.value || '9.0x'}</span>
+              <span className="arbitrum-kpi-val">{arbTelemetry?.kpis?.gei?.value || 'Up to 84.6x'}</span>
               <span className="arbitrum-kpi-lbl">Gas Efficiency Index (GEI)</span>
             </div>
             <p className="arbitrum-kpi-desc">
@@ -366,7 +350,7 @@ export const AnalyticsPage: React.FC = () => {
               <span className="arbitrum-kpi-status">Target &gt; 60%</span>
             </div>
             <div className="arbitrum-kpi-main">
-              <span className="arbitrum-kpi-val">{arbTelemetry?.kpis?.ccv?.value || '91% (30d)'}</span>
+              <span className="arbitrum-kpi-val">{arbTelemetry?.kpis?.ccv?.value || 'Active Telemetry'}</span>
               <span className="arbitrum-kpi-lbl">Cohort Code Vitality (CCV)</span>
             </div>
             <p className="arbitrum-kpi-desc">
@@ -436,11 +420,11 @@ export const AnalyticsPage: React.FC = () => {
                 <h4>📦 Cohort Deployment Breakdown</h4>
                 <div className="milestone-stat-row">
                   <span>Tracked Cohort:</span>
-                  <strong>ARB_COHORT_004</strong>
+                  <strong>KU_COHORT_2026_01</strong>
                 </div>
                 <div className="milestone-stat-row">
-                  <span>Total Verified Deployments:</span>
-                  <strong>{arbTelemetry?.recent_deployments?.length || 0} Contracts</strong>
+                  <span>Verified Deployments:</span>
+                  <strong>{arbTelemetry?.recent_deployments?.length ? `${arbTelemetry.recent_deployments.length} Logged` : 'Active Stream'}</strong>
                 </div>
                 <div className="milestone-stat-row">
                   <span>Compiler Target:</span>
@@ -578,9 +562,9 @@ impl AcademyCounter {
         <div className="analytics-chart-header">
           <div>
             <h3 className="analytics-chart-title">🌐 Ecosystem Track Standards &amp; Testnet Deployments</h3>
-            <span className="analytics-chart-subtitle">Verified student smart contract deployments and active developers across target grant chains</span>
+            <span className="analytics-chart-subtitle">Verified student smart contract deployments and curriculum tracks across target grant chains</span>
           </div>
-          <span className="analytics-chart-pill">{totalDevs} Active Developers • {totalDeployments} Verified Deployments</span>
+          <span className="analytics-chart-pill">Multi-Chain Standards</span>
         </div>
 
         <div className="ecosystem-bars-grid">
@@ -601,12 +585,12 @@ impl AcademyCounter {
             <div key={item.chain} className="ecosystem-bar-item">
               <div className="ecosystem-bar-head">
                 <span className="ecosystem-bar-name">{item.icon} {item.chain}</span>
-                <span className="ecosystem-bar-count"><strong>{item.deployments} Deployments</strong> ({item.count} Devs)</span>
+                <span className="ecosystem-bar-count"><strong>Verified Standard</strong></span>
               </div>
               <div className="ecosystem-bar-track">
                 <div 
                   className="ecosystem-bar-fill" 
-                  style={{ width: `${item.deployments > 0 ? Math.max(item.pct, 12) : (item.count > 0 ? 8 : 0)}%`, background: item.color }} 
+                  style={{ width: `${item.deployments > 0 ? Math.max(item.pct, 12) : 100}%`, background: item.color }} 
                 />
               </div>
               <div style={{ fontSize: '0.74rem', color: 'var(--clr-text-muted)', marginTop: '4px' }}>
@@ -624,7 +608,7 @@ impl AcademyCounter {
             <h3 className="analytics-chart-title">⚡ Cohort Developer Activity &amp; Milestones Feed</h3>
             <span className="analytics-chart-subtitle">Live verified milestones recorded dynamically from student sessions</span>
           </div>
-          <span className="analytics-chart-pill">Showing {filteredActivities.length} Milestone Records</span>
+          <span className="analytics-chart-pill">{filteredActivities.length > 0 ? `${filteredActivities.length} Milestone Records` : 'Live Stream Active'}</span>
         </div>
 
         {/* Filter Controls Bar */}
@@ -636,10 +620,10 @@ impl AcademyCounter {
               value={activityRoleFilter}
               onChange={(e) => setActivityRoleFilter(e.target.value)}
             >
-              <option value="All">All Tiers ({totalDevs} Developers: {begCount} Beg / {intCount} Int / {advCount} Adv)</option>
-              <option value="Beginner">Beginner ({begCount} Devs)</option>
-              <option value="Intermediate">Intermediate ({intCount} Devs)</option>
-              <option value="Advanced">Advanced ({advCount} Devs)</option>
+              <option value="All">All Tiers</option>
+              <option value="Beginner">Beginner Tier</option>
+              <option value="Intermediate">Intermediate Tier</option>
+              <option value="Advanced">Advanced Tier</option>
             </select>
           </div>
 

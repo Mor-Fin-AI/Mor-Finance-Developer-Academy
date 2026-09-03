@@ -204,7 +204,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         </div>
       </section>
 
-      {/* Platform Statistics */}
+      {/* Platform Architecture */}
       <section className="landing-stats animate-fade-up glass">
         <div className="landing-stat-item">
           <div className="landing-stat-value gradient-text">2026</div>
@@ -212,18 +212,18 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         </div>
         <div className="landing-stat-divider" />
         <div className="landing-stat-item">
-          <div className="landing-stat-value gradient-text">32</div>
-          <div className="landing-stat-label">Active Developers</div>
+          <div className="landing-stat-value gradient-text">Multichain</div>
+          <div className="landing-stat-label">Ecosystem Learning Tracks</div>
         </div>
         <div className="landing-stat-divider" />
         <div className="landing-stat-item">
-          <div className="landing-stat-value gradient-text">10</div>
-          <div className="landing-stat-label">Supported Chains</div>
+          <div className="landing-stat-value gradient-text">WASM &amp; EVM</div>
+          <div className="landing-stat-label">Multi-Runtime Compilers</div>
         </div>
         <div className="landing-stat-divider" />
         <div className="landing-stat-item">
           <div className="landing-stat-value gradient-text">Live</div>
-          <div className="landing-stat-label">OpenClaw & Hermes Mentors</div>
+          <div className="landing-stat-label">OpenClaw &amp; Hermes Mentors</div>
         </div>
       </section>
 

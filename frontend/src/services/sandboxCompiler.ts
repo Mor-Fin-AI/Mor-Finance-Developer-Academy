@@ -237,27 +237,74 @@ function compileSolidityInstant(code: string, chain: string): CompilationResult 
   };
 }
 
+function formatDiagnostic(code: string, lineNum: number, colNum: number, errorType: string, message: string): string {
+  const lines = code.split('\n');
+  if (lineNum >= 1 && lineNum <= lines.length) {
+    const lineStr = lines[lineNum - 1];
+    const pad = ' '.repeat(Math.max(0, colNum - 1));
+    return `${errorType}\n --> line ${lineNum}:${colNum}\n  |\n${lineNum.toString().padStart(3, ' ')}| ${lineStr}\n  | ${pad}^ ${message}`;
+  }
+  return `${errorType} at line ${lineNum}:${colNum}: ${message}`;
+}
+
 // ─── 2. Solana Rust & Anchor Engine ─────────────────────────────────────────
 
 function compileSolanaInstant(code: string): CompilationResult {
   const errors: string[] = analyzeBrackets(code);
   const warnings: string[] = [];
-
   const lines = code.split('\n');
+
+  const hasProgram = code.includes('#[program]');
+  const hasDeclareId = code.includes('declare_id!');
+  const hasAccounts = code.includes('#[derive(Accounts)]') || code.includes('#[account]');
+
+  if (!hasProgram && !hasDeclareId && !hasAccounts && !code.includes('solana_program')) {
+    errors.push("error[E0433]: cannot find macro `declare_id!` or attribute `#[program]` in scope. Solana Anchor contracts must declare a program module or account struct.");
+  }
+
   lines.forEach((raw, idx) => {
+    const lineNum = idx + 1;
     const clean = raw.trim();
-    if (!clean || clean.startsWith('//') || clean.startsWith('/*')) return;
-    if ((clean.startsWith('let ') || clean.startsWith('msg!') || clean.startsWith('counter.') || clean.startsWith('require!')) && !clean.endsWith(';') && !clean.endsWith('{') && !clean.endsWith(',')) {
-      errors.push(`SyntaxError [line ${idx + 1}]: Missing semicolon ';' at end of statement: '${clean}'`);
+    if (!clean || clean.startsWith('//') || clean.startsWith('/*') || clean.startsWith('*')) return;
+
+    if (clean.startsWith('use ') && !clean.endsWith(';')) {
+      errors.push(formatDiagnostic(code, lineNum, raw.length, "error[E0658]: syntax error", "expected ';' at end of `use` statement"));
+    }
+
+    if (clean.startsWith('declare_id!') || clean.startsWith('msg!') || clean.startsWith('require!') || clean.startsWith('emit!')) {
+      if (!clean.endsWith(';') && !clean.endsWith('{') && !clean.endsWith('}')) {
+        errors.push(formatDiagnostic(code, lineNum, raw.length, "error[E0658]: syntax error", "missing ';' after macro invocation"));
+      }
+    }
+
+    if ((clean.startsWith('let ') || clean.startsWith('let mut ')) && !clean.endsWith(';') && !clean.endsWith('{') && !clean.endsWith(',')) {
+      errors.push(formatDiagnostic(code, lineNum, raw.length, "error[E0658]: syntax error", "missing ';' at end of `let` statement"));
+    }
+
+    if (hasProgram && (clean.includes('pub fn ') || clean.includes('fn '))) {
+      const match = clean.match(/fn\s+([a-zA-Z0-9_]+)\s*\((.*?)\)(\s*->\s*([a-zA-Z0-9_<>()\s]+))?/);
+      if (match) {
+        const fnName = match[1];
+        const args = match[2].trim();
+        const ret = match[4] ? match[4].trim() : '';
+
+        if (args && !args.includes('ctx') && !args.includes('Context<')) {
+          errors.push(formatDiagnostic(code, lineNum, raw.indexOf(fnName) + 1, "error[E0061]: invalid instruction parameters", `Instruction handler '${fnName}' must accept 'ctx: Context<...>' as its first argument`));
+        }
+        if (ret && !ret.includes('Result<') && !ret.includes('ProgramResult')) {
+          errors.push(formatDiagnostic(code, lineNum, raw.indexOf('->') + 1, "error[E0308]: mismatched types", `Instruction '${fnName}' must return 'Result<()>', found '${ret}'`));
+        }
+      }
+    }
+
+    // EVM types used in Solana
+    const evmTypes: [string, string][] = [['uint256', 'u64 / u128'], ['uint64', 'u64'], ['uint', 'u64'], ['address', 'Pubkey']];
+    for (const [evmT, solT] of evmTypes) {
+      if (clean.includes(`: ${evmT}`) || clean.includes(`:${evmT}`)) {
+        errors.push(formatDiagnostic(code, lineNum, raw.indexOf(evmT) + 1, "error[E0412]: cannot find type in this scope", `'${evmT}' is an EVM type. In Solana Rust, use '${solT}'`));
+      }
     }
   });
-
-  if (!code.includes('#[program]') && !code.includes('pub mod ') && !code.includes('declare_id!')) {
-    errors.push("AnchorError: Missing '#[program]' module declaration or 'declare_id!(...)' attribute macro.");
-  }
-  if (!code.includes('#[derive(Accounts)]') && !code.includes('Accounts') && !code.includes('Context<')) {
-    warnings.push("AnchorWarning: No #[derive(Accounts)] validation struct detected.");
-  }
 
   const success = errors.length === 0;
   const mockProgId = 'Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS';
@@ -308,21 +355,61 @@ function compileSolanaInstant(code: string): CompilationResult {
 function compileMoveInstant(code: string): CompilationResult {
   const errors: string[] = analyzeBrackets(code);
   const warnings: string[] = [];
-
   const lines = code.split('\n');
+
+  let hasModule = false;
+
   lines.forEach((raw, idx) => {
+    const lineNum = idx + 1;
     const clean = raw.trim();
-    if (!clean || clean.startsWith('//')) return;
-    if ((clean.startsWith('let ') || clean.startsWith('assert!')) && !clean.endsWith(';') && !clean.endsWith('{')) {
-      errors.push(`MoveSyntaxError [line ${idx + 1}]: Missing semicolon ';' at end of statement: '${clean}'`);
+    if (!clean || clean.startsWith('//') || clean.startsWith('/*')) return;
+
+    if (clean.startsWith('module ') || clean.includes('module ')) {
+      hasModule = true;
+      if (!clean.match(/module\s+([0-9a-zA-Zx_]+::)?([a-zA-Z0-9_]+)/)) {
+        errors.push(formatDiagnostic(code, lineNum, 1, "error[Move001]: malformed module declaration", "expected 'module <address>::<name> { ... }'"));
+      }
+    }
+
+    if (clean.startsWith('use ') && !clean.endsWith(';')) {
+      errors.push(formatDiagnostic(code, lineNum, raw.length, "error[Move002]: missing semicolon", "expected ';' at end of `use` directive"));
+    }
+
+    if (clean.startsWith('struct ') && clean.includes('has ')) {
+      const match = clean.match(/has\s+([a-zA-Z0-9_,\s]+)\s*\{?/);
+      if (match) {
+        const abilities = match[1].split(',').map(a => a.trim()).filter(Boolean);
+        const valid = new Set(['key', 'store', 'copy', 'drop']);
+        for (const ab of abilities) {
+          if (!valid.has(ab)) {
+            errors.push(formatDiagnostic(code, lineNum, raw.indexOf(ab) + 1, "error[Move003]: invalid ability", `unknown ability '${ab}'. Valid Move abilities are 'key', 'store', 'copy', 'drop'`));
+          }
+        }
+      }
+    }
+
+    if ((clean.startsWith('let ') || clean.startsWith('assert!') || clean.includes('borrow_global') || clean.includes('move_to')) &&
+        !clean.endsWith(';') && !clean.endsWith('{') && !clean.endsWith('}')) {
+      errors.push(formatDiagnostic(code, lineNum, raw.length, "error[Move004]: missing semicolon", "expected ';' at end of Move statement"));
+    }
+
+    if (clean.startsWith('assert!(')) {
+      const inner = clean.replace(/^assert!\(/, '').replace(/;$/, '').replace(/\)$/, '');
+      if (!inner.includes(',')) {
+        errors.push(formatDiagnostic(code, lineNum, 9, "error[Move005]: invalid assert! invocation", "'assert!' requires 2 arguments: assert!(condition, error_code);"));
+      }
+    }
+
+    const badTypes: [string, string][] = [['uint256', 'u256'], ['uint64', 'u64'], ['uint8', 'u8'], ['bytes32', 'vector<u8>'], ['string', 'std::string::String']];
+    for (const [badT, suggest] of badTypes) {
+      if (clean.includes(`: ${badT}`) || clean.includes(`:${badT}`) || clean.includes(`<${badT}>`)) {
+        errors.push(formatDiagnostic(code, lineNum, raw.indexOf(badT) + 1, "error[Move006]: unbound type", `unbound type '${badT}'. In Move, use '${suggest}'`));
+      }
     }
   });
 
-  if (!code.includes('module ') && !code.includes('module')) {
-    errors.push("MoveError: Aptos Move source must declare 'module <address>::<name>'.");
-  }
-  if (!code.includes('fun ') && !code.includes('public entry fun')) {
-    errors.push("MoveError: Module contains no function declarations.");
+  if (!hasModule) {
+    errors.push("error[Move001]: Aptos Move source code must declare a module: 'module <address>::<module_name> { ... }'");
   }
 
   const success = errors.length === 0;
@@ -370,13 +457,52 @@ function compileMoveInstant(code: string): CompilationResult {
 function compileCairoInstant(code: string): CompilationResult {
   const errors: string[] = analyzeBrackets(code);
   const warnings: string[] = [];
+  const lines = code.split('\n');
 
-  if (!code.includes('#[starknet::contract]') && !code.includes('#[starknet::interface]')) {
-    errors.push("CairoError: Missing '#[starknet::contract]' attribute macro or interface definition.");
+  const hasContractMacro = code.includes('#[starknet::contract]') || code.includes('#[starknet::interface]');
+  const hasStorageStruct = code.includes('#[storage]');
+
+  if (!hasContractMacro) {
+    errors.push("error[Cairo001]: Starknet contract requires '#[starknet::contract]' attribute macro on module.");
   }
-  if (code.includes('#[starknet::contract]') && !code.includes('#[storage]')) {
-    errors.push("CairoError: Contract missing mandatory '#[storage]' struct declaration.");
+  if (code.includes('#[starknet::contract]') && !hasStorageStruct) {
+    errors.push("error[Cairo002]: Contract missing mandatory '#[storage]' struct declaration for persistent state.");
   }
+
+  lines.forEach((raw, idx) => {
+    const lineNum = idx + 1;
+    const clean = raw.trim();
+    if (!clean || clean.startsWith('//') || clean.startsWith('/*')) return;
+
+    if (clean.startsWith('use ') && !clean.endsWith(';')) {
+      errors.push(formatDiagnostic(code, lineNum, raw.length, "error[Cairo003]: missing semicolon", "expected ';' at end of `use` statement"));
+    }
+
+    if (clean.startsWith('fn ') || clean.includes(' fn ')) {
+      const match = clean.match(/fn\s+([a-zA-Z0-9_]+)\s*\((.*?)\)/);
+      if (match) {
+        const fnName = match[1];
+        const args = match[2].trim();
+        if (fnName !== 'constructor' && fnName !== 'new' && code.includes('impl ')) {
+          if (args && !args.includes('self')) {
+            errors.push(formatDiagnostic(code, lineNum, raw.indexOf(fnName) + 1, "error[Cairo004]: missing self parameter", `Public function '${fnName}' must take 'ref self: ContractState' (for write) or 'self: @ContractState' (for view) as its first argument`));
+          }
+        }
+      }
+    }
+
+    if ((clean.startsWith('let ') || clean.startsWith('let mut ') || (clean.includes('self.') && (clean.includes('.write(') || clean.includes('.read()'))) || clean.startsWith('assert!')) &&
+        !clean.endsWith(';') && !clean.endsWith('{') && !clean.endsWith('}')) {
+      errors.push(formatDiagnostic(code, lineNum, raw.length, "error[Cairo005]: missing semicolon", "expected ';' at end of Cairo statement"));
+    }
+
+    if (clean.includes(': address') || clean.includes(':address')) {
+      errors.push(formatDiagnostic(code, lineNum, raw.indexOf('address') + 1, "error[Cairo006]: type error", "In Cairo 2.0, use 'ContractAddress' instead of 'address'"));
+    }
+    if (clean.includes(': uint256') || clean.includes(':uint256')) {
+      errors.push(formatDiagnostic(code, lineNum, raw.indexOf('uint256') + 1, "error[Cairo007]: type error", "In Cairo 2.0, use 'u256' or 'felt252' instead of 'uint256'"));
+    }
+  });
 
   const success = errors.length === 0;
   const classHash = '0x07a1b32d8471e16f92c30491823ab4912cd';
@@ -420,13 +546,36 @@ function compileCairoInstant(code: string): CompilationResult {
 function compilePolkadotInstant(code: string): CompilationResult {
   const errors: string[] = analyzeBrackets(code);
   const warnings: string[] = [];
+  const lines = code.split('\n');
 
-  if (!code.includes('#[ink::contract]') && !code.includes('#[ink(')) {
-    errors.push("ink! Error: Missing '#[ink::contract]' attribute macro.");
+  const hasContract = code.includes('#[ink::contract]') || code.includes('#[ink(');
+  const hasStorage = code.includes('#[ink(storage)]');
+  const hasConstructor = code.includes('#[ink(constructor)]');
+
+  if (!hasContract) {
+    errors.push("error[ink001]: Polkadot smart contract missing '#[ink::contract]' attribute macro on module.");
   }
-  if (!code.includes('#[ink(storage)]')) {
-    warnings.push("ink! Warning: No '#[ink(storage)]' struct found for persistent state.");
+  if (hasContract && !hasStorage) {
+    errors.push("error[ink002]: Missing '#[ink(storage)]' struct declaration for persistent contract storage.");
   }
+  if (hasContract && !hasConstructor) {
+    errors.push("error[ink003]: Missing '#[ink(constructor)]' method (e.g. 'pub fn new(...) -> Self').");
+  }
+
+  lines.forEach((raw, idx) => {
+    const lineNum = idx + 1;
+    const clean = raw.trim();
+    if (!clean || clean.startsWith('//') || clean.startsWith('/*')) return;
+
+    if (clean.startsWith('use ') && !clean.endsWith(';')) {
+      errors.push(formatDiagnostic(code, lineNum, raw.length, "error[ink004]: missing semicolon", "expected ';' at end of `use` statement"));
+    }
+
+    if ((clean.startsWith('let ') || clean.startsWith('let mut ') || clean.startsWith('self.')) &&
+        !clean.endsWith(';') && !clean.endsWith('{') && !clean.endsWith('}')) {
+      errors.push(formatDiagnostic(code, lineNum, raw.length, "error[ink005]: missing semicolon", "expected ';' at end of statement"));
+    }
+  });
 
   const success = errors.length === 0;
   const wasmHash = '0x9b4c1a2f9012a9c3847b203948123049';
@@ -470,10 +619,32 @@ function compilePolkadotInstant(code: string): CompilationResult {
 function compileStylusInstant(code: string): CompilationResult {
   const errors: string[] = analyzeBrackets(code);
   const warnings: string[] = [];
+  const lines = code.split('\n');
 
-  if (!code.includes('#[entrypoint]') && !code.includes('#[public]')) {
-    errors.push("StylusError: Missing '#[entrypoint]' or '#[public]' macro attributes.");
+  const hasEntrypoint = code.includes('#[entrypoint]') || code.includes('#[public]') || code.includes('#[external]');
+  const hasStorage = code.includes('sol_storage!') || code.includes('#[storage]');
+
+  if (!hasEntrypoint) {
+    errors.push("error[Stylus001]: Arbitrum Stylus contract missing '#[entrypoint]' or '#[public]' macro attribute.");
   }
+  if (!hasStorage) {
+    errors.push("error[Stylus002]: Arbitrum Stylus contracts require state declaration via 'sol_storage! { pub struct ... }' macro.");
+  }
+
+  lines.forEach((raw, idx) => {
+    const lineNum = idx + 1;
+    const clean = raw.trim();
+    if (!clean || clean.startsWith('//') || clean.startsWith('/*')) return;
+
+    if (clean.startsWith('use ') && !clean.endsWith(';')) {
+      errors.push(formatDiagnostic(code, lineNum, raw.length, "error[Stylus003]: missing semicolon", "expected ';' at end of `use` statement"));
+    }
+
+    if ((clean.startsWith('let ') || clean.startsWith('let mut ')) &&
+        !clean.endsWith(';') && !clean.endsWith('{') && !clean.endsWith('}')) {
+      errors.push(formatDiagnostic(code, lineNum, raw.length, "error[Stylus004]: missing semicolon", "expected ';' at end of statement"));
+    }
+  });
 
   const success = errors.length === 0;
   const wasmHash = '0x8f2d91a83b27c193847a192837482910';

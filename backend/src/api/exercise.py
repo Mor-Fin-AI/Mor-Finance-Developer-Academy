@@ -32,24 +32,105 @@ router = APIRouter()
 
 # ─── Multi-Chain Syntax & AST Validators ─────────────────────────────────────
 
+def format_diagnostic(code: str, line_num: int, col_num: int, error_type: str, message: str) -> str:
+    """Formats a compiler error with realistic source snippet, line number, and ASCII pointer."""
+    lines = code.split('\n')
+    if 1 <= line_num <= len(lines):
+        line_str = lines[line_num - 1]
+        pad = " " * max(0, col_num - 1)
+        return (
+            f"{error_type}\n"
+            f" --> line {line_num}:{col_num}\n"
+            f"  |\n"
+            f"{line_num:3d}| {line_str}\n"
+            f"  | {pad}^ {message}"
+        )
+    return f"{error_type} at line {line_num}:{col_num}: {message}"
+
+
 def validate_brackets(code: str) -> List[str]:
-    """Check balanced parentheses, curly braces, and square brackets."""
+    """Check balanced parentheses, curly braces, and square brackets with line & col tracking."""
     errors = []
     stack = []
     brackets = {'(': ')', '{': '}', '[': ']'}
-    for char_idx, char in enumerate(code):
-        if char in brackets.keys():
-            stack.append((char, char_idx))
-        elif char in brackets.values():
+    closing = {')': '(', '}': '{', ']': '['}
+
+    in_string = False
+    in_line_comment = False
+    in_block_comment = False
+    line = 1
+    col = 1
+
+    i = 0
+    while i < len(code):
+        c = code[i]
+        next_c = code[i + 1] if i + 1 < len(code) else ''
+
+        if c == '\n':
+            line += 1
+            col = 1
+            in_line_comment = False
+            in_string = False
+            i += 1
+            continue
+
+        if in_line_comment:
+            col += 1
+            i += 1
+            continue
+
+        if in_block_comment:
+            if c == '*' and next_c == '/':
+                in_block_comment = False
+                i += 2
+                col += 2
+                continue
+            col += 1
+            i += 1
+            continue
+
+        if c == '/' and next_c == '/':
+            in_line_comment = True
+            i += 2
+            col += 2
+            continue
+
+        if c == '/' and next_c == '*':
+            in_block_comment = True
+            i += 2
+            col += 2
+            continue
+
+        if c == '"':
+            if not in_string:
+                in_string = True
+            elif i > 0 and code[i - 1] != '\\':
+                in_string = False
+            col += 1
+            i += 1
+            continue
+
+        if in_string:
+            col += 1
+            i += 1
+            continue
+
+        if c in brackets:
+            stack.append((c, line, col))
+        elif c in closing:
             if not stack:
-                errors.append(f"Syntax error: Unbalanced bracket '{char}' at character index {char_idx}")
+                errors.append(format_diagnostic(code, line, col, "error: syntax error", f"unexpected closing '{c}' without matching opening bracket"))
             else:
-                top, top_idx = stack.pop()
-                if brackets[top] != char:
-                    errors.append(f"Syntax error: Mismatched brackets. Opened '{top}' at position {top_idx} but closed with '{char}' at position {char_idx}")
-    if stack:
-        for top, top_idx in stack:
-            errors.append(f"Syntax error: Unclosed bracket '{top}' opened at position {top_idx}")
+                top, top_line, top_col = stack.pop()
+                if brackets[top] != c:
+                    errors.append(format_diagnostic(code, line, col, "error: mismatched brackets", f"expected '{brackets[top]}' to close '{top}' opened at line {top_line}:{top_col}, found '{c}'"))
+
+        col += 1
+        i += 1
+
+    for open_char, open_line, open_col in stack:
+        errors.append(format_diagnostic(code, open_line, open_col, "error: unclosed bracket", f"unclosed opening bracket '{open_char}'"))
+
     return errors
 
 
@@ -79,46 +160,245 @@ def validate_solidity_syntax(code: str) -> List[str]:
             stripped.endswith('*/')):
             continue
         if any(kw in stripped for kw in ['require', 'requir', '_', '=', 'return', 'emit']) and not stripped.endswith(';'):
-            errors.append(f"Solidity Error [line {line_idx+1}]: Missing semicolon ';' at end of statement: '{stripped}'")
+            errors.append(format_diagnostic(code, line_idx + 1, len(line), "ParserError: missing semicolon", f"expected ';' at end of Solidity statement: '{stripped}'"))
     return errors
 
 
 def validate_solana_anchor_syntax(code: str) -> List[str]:
-    """Rust & Solana Anchor syntax validation."""
+    """Heuristic AST & syntax validator for Solana Rust / Anchor programs."""
     errors = validate_brackets(code)
-    if 'use anchor_lang' not in code and 'use ' not in code and 'anchor' not in code.lower() and 'solana' not in code.lower():
-        errors.append("Anchor Warning: Missing standard Rust / Anchor imports ('use anchor_lang::prelude::*;')")
+    lines = code.split('\n')
+
+    has_program = '#[program]' in code
+    has_declare_id = 'declare_id!' in code
+    has_accounts = '#[derive(Accounts)]' in code or '#[account]' in code
+
+    if not has_program and not has_declare_id and not has_accounts and not 'solana_program' in code:
+        errors.append("error[E0433]: cannot find macro `declare_id!` or attribute `#[program]` in scope. Solana Anchor contracts must declare a program module or account struct.")
+
+    for idx, raw_line in enumerate(lines):
+        line_num = idx + 1
+        clean = raw_line.strip()
+        if not clean or clean.startswith('//') or clean.startswith('/*') or clean.startswith('*'):
+            continue
+
+        # Import check
+        if clean.startswith('use ') and not clean.endswith(';'):
+            errors.append(format_diagnostic(code, line_num, len(raw_line), "error[E0658]: syntax error", "expected ';' at end of `use` statement"))
+
+        # Missing semicolon on macro invocations
+        if any(clean.startswith(m) for m in ['declare_id!', 'msg!', 'require!', 'emit!']):
+            if not clean.endswith(';') and not clean.endswith('{') and not clean.endswith('}'):
+                errors.append(format_diagnostic(code, line_num, len(raw_line), "error[E0658]: syntax error", "missing ';' after macro invocation"))
+
+        # Variable declarations
+        if (clean.startswith('let ') or clean.startswith('let mut ')) and not clean.endswith(';') and not clean.endswith('{') and not clean.endswith(','):
+            errors.append(format_diagnostic(code, line_num, len(raw_line), "error[E0658]: syntax error", "missing ';' at end of `let` statement"))
+
+        # Function signatures in Anchor instruction handlers
+        if has_program and ('pub fn ' in clean or 'fn ' in clean):
+            match = re.search(r'fn\s+([a-zA-Z0-9_]+)\s*\((.*?)\)(\s*->\s*([a-zA-Z0-9_<>()\s]+))?', clean)
+            if match:
+                fn_name = match.group(1)
+                args = match.group(2).strip()
+                ret = match.group(4).strip() if match.group(4) else ""
+                
+                # Instruction handler must take ctx: Context<...>
+                if args and 'ctx' not in args and 'Context<' not in args:
+                    errors.append(format_diagnostic(code, line_num, raw_line.find(fn_name) + 1, "error[E0061]: invalid instruction parameters", f"Instruction handler '{fn_name}' must accept 'ctx: Context<...>' as its first argument"))
+                
+                # Handler must return Result<()>
+                if ret and 'Result<' not in ret and 'ProgramResult' not in ret:
+                    errors.append(format_diagnostic(code, line_num, raw_line.find('->') + 1 if '->' in raw_line else len(raw_line), "error[E0308]: mismatched types", f"Instruction '{fn_name}' must return 'Result<()>', found '{ret}'"))
+
+        # EVM types mistakenly used in Solana
+        for evm_t, sol_t in [('uint256', 'u64 / u128'), ('uint64', 'u64'), ('uint', 'u64'), ('address', 'Pubkey')]:
+            if f": {evm_t}" in clean or f":{evm_t}" in clean:
+                errors.append(format_diagnostic(code, line_num, raw_line.find(evm_t) + 1, "error[E0412]: cannot find type in this scope", f"'{evm_t}' is an EVM type. In Solana Rust, use '{sol_t}'"))
+
     return errors
 
 
 def validate_aptos_move_syntax(code: str) -> List[str]:
-    """Aptos Move syntax validation."""
+    """Heuristic AST & syntax validator for Aptos Move modules."""
     errors = validate_brackets(code)
-    if 'module ' not in code and 'module' not in code:
-        errors.append("Move Error: Aptos Move source code must declare a 'module <address>::<name>' definition.")
+    lines = code.split('\n')
+
+    has_module = False
+    has_fun = False
+
+    for idx, raw_line in enumerate(lines):
+        line_num = idx + 1
+        clean = raw_line.strip()
+        if not clean or clean.startswith('//') or clean.startswith('/*'):
+            continue
+
+        # Module check
+        if clean.startswith('module ') or 'module ' in clean:
+            has_module = True
+            if not re.search(r'module\s+([0-9a-zA-Zx_]+::)?([a-zA-Z0-9_]+)', clean):
+                errors.append(format_diagnostic(code, line_num, 1, "error[Move001]: malformed module declaration", "expected 'module <address>::<name> { ... }'"))
+
+        # Import check
+        if clean.startswith('use ') and not clean.endswith(';'):
+            errors.append(format_diagnostic(code, line_num, len(raw_line), "error[Move002]: missing semicolon", "expected ';' at end of `use` directive"))
+
+        if 'fun ' in clean:
+            has_fun = True
+
+        # Struct abilities check
+        if clean.startswith('struct ') and 'has ' in clean:
+            match = re.search(r'has\s+([a-zA-Z0-9_,\s]+)\s*\{?', clean)
+            if match:
+                abilities = [a.strip() for a in match.group(1).split(',') if a.strip()]
+                valid_abilities = {'key', 'store', 'copy', 'drop'}
+                for ab in abilities:
+                    if ab not in valid_abilities:
+                        errors.append(format_diagnostic(code, line_num, raw_line.find(ab) + 1, "error[Move003]: invalid ability", f"unknown ability '{ab}'. Valid Move abilities are 'key', 'store', 'copy', 'drop'"))
+
+        # Semicolons on Move statements
+        if (clean.startswith('let ') or clean.startswith('assert!') or 'borrow_global' in clean or 'move_to' in clean):
+            if not clean.endswith(';') and not clean.endswith('{') and not clean.endswith('}'):
+                errors.append(format_diagnostic(code, line_num, len(raw_line), "error[Move004]: missing semicolon", "expected ';' at end of statement"))
+
+        # Assert condition check
+        if clean.startswith('assert!('):
+            inner = clean[8:]
+            if inner.endswith(';'):
+                inner = inner[:-1].strip()
+            if inner.endswith(')'):
+                inner = inner[:-1].strip()
+            if ',' not in inner:
+                errors.append(format_diagnostic(code, line_num, 9, "error[Move005]: invalid assert! invocation", "'assert!' requires 2 arguments: assert!(condition, error_code);"))
+
+        # EVM type bleed
+        for bad_t, suggest in [('uint256', 'u256'), ('uint64', 'u64'), ('uint8', 'u8'), ('bytes32', 'vector<u8>'), ('string', 'std::string::String')]:
+            if f": {bad_t}" in clean or f":{bad_t}" in clean or f"<{bad_t}>" in clean:
+                errors.append(format_diagnostic(code, line_num, raw_line.find(bad_t) + 1, "error[Move006]: unbound type", f"unbound type '{bad_t}'. In Move, use '{suggest}'"))
+
+    if not has_module:
+        errors.append("error[Move001]: Aptos Move source code must declare a module: 'module <address>::<module_name> { ... }'")
+
     return errors
 
 
 def validate_starknet_cairo_syntax(code: str) -> List[str]:
-    """Starknet Cairo 2.0 syntax validation."""
+    """Heuristic AST & syntax validator for Starknet Cairo 2.0 contracts."""
     errors = validate_brackets(code)
-    if '#[starknet::contract]' not in code and 'mod ' not in code and 'fn ' not in code:
-        errors.append("Cairo Error: Missing '#[starknet::contract]' module declaration or function definitions.")
+    lines = code.split('\n')
+
+    has_contract_macro = '#[starknet::contract]' in code or '#[starknet::interface]' in code
+    has_storage_struct = '#[storage]' in code
+
+    if not has_contract_macro:
+        errors.append("error[Cairo001]: Starknet contract requires '#[starknet::contract]' attribute macro on module.")
+
+    if '#[starknet::contract]' in code and not has_storage_struct:
+        errors.append("error[Cairo002]: Contract missing mandatory '#[storage]' struct declaration for persistent state.")
+
+    for idx, raw_line in enumerate(lines):
+        line_num = idx + 1
+        clean = raw_line.strip()
+        if not clean or clean.startswith('//') or clean.startswith('/*'):
+            continue
+
+        if clean.startswith('use ') and not clean.endswith(';'):
+            errors.append(format_diagnostic(code, line_num, len(raw_line), "error[Cairo003]: missing semicolon", "expected ';' at end of `use` statement"))
+
+        # Function self parameter checks
+        if clean.startswith('fn ') or ' fn ' in clean:
+            match = re.search(r'fn\s+([a-zA-Z0-9_]+)\s*\((.*?)\)', clean)
+            if match:
+                fn_name = match.group(1)
+                args = match.group(2).strip()
+                if fn_name not in ['constructor', 'new'] and 'impl ' in code:
+                    if args and 'self' not in args:
+                        errors.append(format_diagnostic(code, line_num, raw_line.find(fn_name) + 1, "error[Cairo004]: missing self parameter", f"Public function '{fn_name}' must take 'ref self: ContractState' (for write) or 'self: @ContractState' (for view) as its first argument"))
+
+        # Semicolons
+        if (clean.startswith('let ') or clean.startswith('let mut ') or 
+            ('self.' in clean and ('.write(' in clean or '.read()' in clean)) or
+            clean.startswith('assert!')):
+            if not clean.endswith(';') and not clean.endswith('{') and not clean.endswith('}'):
+                errors.append(format_diagnostic(code, line_num, len(raw_line), "error[Cairo005]: missing semicolon", "expected ';' at end of Cairo statement"))
+
+        # EVM types
+        if ': address' in clean or ':address' in clean:
+            errors.append(format_diagnostic(code, line_num, raw_line.find('address') + 1, "error[Cairo006]: type error", "In Cairo 2.0, use 'ContractAddress' instead of 'address'"))
+        if ': uint256' in clean or ':uint256' in clean:
+            errors.append(format_diagnostic(code, line_num, raw_line.find('uint256') + 1, "error[Cairo007]: type error", "In Cairo 2.0, use 'u256' or 'felt252' instead of 'uint256'"))
+
     return errors
 
 
 def validate_polkadot_ink_syntax(code: str) -> List[str]:
-    """Polkadot / Substrate ink! Wasm syntax validation."""
+    """Heuristic AST & syntax validator for Polkadot / Substrate ink! 5.0 contracts."""
     errors = validate_brackets(code)
-    if '#[ink::contract]' not in code and '#[ink(' not in code and 'fn ' not in code:
-        errors.append("ink! Error: Missing '#[ink::contract]' attribute macro or ink message definitions.")
+    lines = code.split('\n')
+
+    has_contract = '#[ink::contract]' in code or '#[ink(' in code
+    has_storage = '#[ink(storage)]' in code
+    has_constructor = '#[ink(constructor)]' in code
+
+    if not has_contract:
+        errors.append("error[ink001]: Polkadot smart contract missing '#[ink::contract]' attribute macro on module.")
+
+    if has_contract and not has_storage:
+        errors.append("error[ink002]: Missing '#[ink(storage)]' struct declaration for persistent contract storage.")
+
+    if has_contract and not has_constructor:
+        errors.append("error[ink003]: Missing '#[ink(constructor)]' method (e.g. 'pub fn new(...) -> Self').")
+
+    for idx, raw_line in enumerate(lines):
+        line_num = idx + 1
+        clean = raw_line.strip()
+        if not clean or clean.startswith('//') or clean.startswith('/*'):
+            continue
+
+        if clean.startswith('use ') and not clean.endswith(';'):
+            errors.append(format_diagnostic(code, line_num, len(raw_line), "error[ink004]: missing semicolon", "expected ';' at end of `use` statement"))
+
+        if (clean.startswith('let ') or clean.startswith('let mut ') or clean.startswith('self.')):
+            if not clean.endswith(';') and not clean.endswith('{') and not clean.endswith('}'):
+                errors.append(format_diagnostic(code, line_num, len(raw_line), "error[ink005]: missing semicolon", "expected ';' at end of statement"))
+
+    return errors
+
+
+def validate_arbitrum_stylus_syntax(code: str) -> List[str]:
+    """Heuristic AST & syntax validator for Arbitrum Stylus (Rust WASM) contracts."""
+    errors = validate_brackets(code)
+    lines = code.split('\n')
+
+    has_entrypoint = '#[entrypoint]' in code or '#[public]' in code or '#[external]' in code
+    has_storage = 'sol_storage!' in code or '#[storage]' in code
+
+    if not has_entrypoint:
+        errors.append("error[Stylus001]: Arbitrum Stylus contract missing '#[entrypoint]' or '#[public]' macro attribute.")
+
+    if not has_storage:
+        errors.append("error[Stylus002]: Arbitrum Stylus contracts require state declaration via 'sol_storage! { pub struct ... }' macro.")
+
+    for idx, raw_line in enumerate(lines):
+        line_num = idx + 1
+        clean = raw_line.strip()
+        if not clean or clean.startswith('//') or clean.startswith('/*'):
+            continue
+
+        if clean.startswith('use ') and not clean.endswith(';'):
+            errors.append(format_diagnostic(code, line_num, len(raw_line), "error[Stylus003]: missing semicolon", "expected ';' at end of `use` statement"))
+
+        if clean.startswith('let ') or clean.startswith('let mut '):
+            if not clean.endswith(';') and not clean.endswith('{') and not clean.endswith('}'):
+                errors.append(format_diagnostic(code, line_num, len(raw_line), "error[Stylus004]: missing semicolon", "expected ';' at end of statement"))
+
     return errors
 
 
 # ─── Compiler Sandbox Schemas ────────────────────────────────────────────────
 
 class SandboxCompileRequest(BaseModel):
-    chain: str = Field("ethereum", description="ethereum, arbitrum, solana, aptos, starknet, polkadot, base, optimism, polygon")
+    chain: str = Field("ethereum", description="ethereum, arbitrum, solana, aptos, starknet, polkadot, base, optimism, polygon, stylus")
     language: str = Field("solidity", description="solidity, rust, move, cairo, ink")
     code: str = Field(..., description="Smart contract source code")
     lesson_id: Optional[str] = Field(None, description="Optional lesson identifier")
@@ -189,6 +469,16 @@ def compile_code_sandbox(chain: str, language: str, code: str, lesson_id: Option
             "contract_bundle": f"target/ink/{code_hash}.contract",
             "wasm_code_hash": f"0x{code_hash}",
             "metadata_version": "5.0.0"
+        }
+    elif any(c in chain_lower for c in ['stylus']):
+        compiler_name = "Stylus SDK v0.6.0 / cargo stylus (Arbitrum Nitro WASM)"
+        errors = validate_arbitrum_stylus_syntax(code)
+        lang_detected = "Rust (Stylus WASM)"
+        gas_est = 1500
+        artifacts = {
+            "wasm_hash": f"0x8f2d{code_hash}c193",
+            "binary_format": "Arbitrum Stylus WASM",
+            "gas_efficiency": "84.6x compared to standard EVM"
         }
     else:
         # Default to EVM / Solidity (Arbitrum, Ethereum, Base, Optimism, Polygon)

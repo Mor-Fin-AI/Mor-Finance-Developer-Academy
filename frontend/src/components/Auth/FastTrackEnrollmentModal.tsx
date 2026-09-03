@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import QRCode from 'qrcode';
 import { enrollUniversityStudent, initiateFrictionlessEnrollment } from '../../api/client';
 import './FastTrackEnrollmentModal.css';
 
@@ -20,6 +21,27 @@ export const FastTrackEnrollmentModal: React.FC<FastTrackEnrollmentModalProps> =
   const [demoHandle, setDemoHandle] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [qrDataUrl, setQrDataUrl] = useState<string>('');
+  const [copied, setCopied] = useState(false);
+
+  const enrollUrl = typeof window !== 'undefined'
+    ? `${window.location.origin}/enroll?cohort=${cohortId}&university=${encodeURIComponent(university)}`
+    : '';
+
+  useEffect(() => {
+    if (enrollUrl) {
+      QRCode.toDataURL(enrollUrl, {
+        width: 140,
+        margin: 1,
+        color: {
+          dark: '#0f172a',
+          light: '#ffffff'
+        }
+      })
+        .then(setQrDataUrl)
+        .catch((err) => console.warn('Could not generate QR code:', err));
+    }
+  }, [enrollUrl]);
 
   if (!isOpen) return null;
 
@@ -124,15 +146,15 @@ export const FastTrackEnrollmentModal: React.FC<FastTrackEnrollmentModalProps> =
               <div className="metric-badge-item">
                 <span className="metric-badge-icon">👥</span>
                 <div className="metric-badge-text">
-                  <strong>500–600</strong>
-                  <span>Student Cohorts</span>
+                  <strong>University</strong>
+                  <span>Cohort Routing</span>
                 </div>
               </div>
               <div className="metric-badge-item">
                 <span className="metric-badge-icon">⚡</span>
                 <div className="metric-badge-text">
-                  <strong>&lt; 60 Sec</strong>
-                  <span>Activation</span>
+                  <strong>Instant</strong>
+                  <span>Fast-Track Access</span>
                 </div>
               </div>
               <div className="metric-badge-item">
@@ -148,9 +170,29 @@ export const FastTrackEnrollmentModal: React.FC<FastTrackEnrollmentModalProps> =
 
         {/* Right Flow Infographic Panel */}
         <div className="fast-track-right">
-          <div className="flow-step-card">
-            <div className="flow-step-icon-wrap">📱</div>
+          <div className="flow-step-card flow-step-card--qr">
+            <div className="qr-code-box">
+              {qrDataUrl ? (
+                <img src={qrDataUrl} alt="Scan QR Code to Enroll" className="qr-code-img" />
+              ) : (
+                <div className="flow-step-icon-wrap">📱</div>
+              )}
+            </div>
             <h4 className="flow-step-title">1. Scan QR Code</h4>
+            <span className="flow-step-hint">Point phone camera to join cohort</span>
+            <button
+              type="button"
+              className="copy-enroll-url-btn"
+              onClick={() => {
+                if (navigator.clipboard && enrollUrl) {
+                  navigator.clipboard.writeText(enrollUrl);
+                  setCopied(true);
+                  setTimeout(() => setCopied(false), 2500);
+                }
+              }}
+            >
+              {copied ? '✅ Link Copied!' : '🔗 Copy Direct Link'}
+            </button>
           </div>
 
           <div className="flow-step-arrow">↓</div>

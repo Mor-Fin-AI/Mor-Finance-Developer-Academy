@@ -24,8 +24,8 @@ export const AboutPage: React.FC = () => {
           <div className="about-stat-label">Academy Launched</div>
         </div>
         <div className="about-stat-card glass">
-          <div className="about-stat-number gradient-text">30+</div>
-          <div className="about-stat-label">Developers Onboarded</div>
+          <div className="about-stat-number gradient-text">Multichain</div>
+          <div className="about-stat-label">Ecosystem Learning Tracks</div>
         </div>
         <div className="about-stat-card glass">
           <div className="about-stat-number gradient-text">Live</div>

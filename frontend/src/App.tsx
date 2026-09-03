@@ -86,6 +86,22 @@ export default function App() {
   const [selectedLessonId, setSelectedLessonId] = useState<string | null>(null);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [showFastTrackModal, setShowFastTrackModal] = useState(false);
+  const [enrollCohort, setEnrollCohort] = useState('KU_COHORT_2026_01');
+  const [enrollUniversity, setEnrollUniversity] = useState('Kenyatta University');
+
+  // Check for direct enrollment link (e.g. /enroll, ?cohort=..., or ?enroll=true)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const cohort = params.get('cohort');
+    const univ = params.get('university');
+    const isEnrollPath = window.location.pathname.startsWith('/enroll');
+
+    if (cohort || isEnrollPath || params.get('enroll') === 'true') {
+      if (cohort) setEnrollCohort(cohort);
+      if (univ) setEnrollUniversity(univ);
+      setShowFastTrackModal(true);
+    }
+  }, [location.pathname]);
 
   // Check for GitHub OAuth callback code in URL on mount
   useEffect(() => {
@@ -423,6 +439,8 @@ export default function App() {
         <FastTrackEnrollmentModal
           isOpen={showFastTrackModal}
           onClose={() => setShowFastTrackModal(false)}
+          university={enrollUniversity}
+          cohortId={enrollCohort}
           onSuccess={(user) => {
             const uid = user.user_id || user._id;
             setUserId(uid);
@@ -469,6 +487,8 @@ export default function App() {
       <FastTrackEnrollmentModal
         isOpen={showFastTrackModal}
         onClose={() => setShowFastTrackModal(false)}
+        university={enrollUniversity}
+        cohortId={enrollCohort}
         onSuccess={(user) => {
           const uid = user.user_id || user._id;
           setUserId(uid);
@@ -481,6 +501,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Navigate to="/academy" replace />} />
           <Route path="/roadmap" element={<Navigate to="/academy" replace />} />
+          <Route path="/enroll" element={<Navigate to="/academy" replace />} />
           <Route path="/academy" element={
             selectedLessonId ? (
               <LessonView

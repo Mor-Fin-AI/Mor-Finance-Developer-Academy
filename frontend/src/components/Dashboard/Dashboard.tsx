@@ -97,12 +97,11 @@ export const Dashboard: React.FC<DashboardProps> = ({
       m.xp = eventsInOrBefore.reduce((sum, ev) => sum + ev.xp, 0);
     });
 
-    const baseline = [10, 40, 25, 75, 45, 85, 70];
     const points = months.map((m, idx) => {
       const x = 20 + idx * 60;
-      const xpVal = m.xp || (progress.xp * (baseline[idx] / 100)) || (120 * (baseline[idx] / 100));
-      const maxXp = Math.max(...months.map(mo => mo.xp), progress.xp, 150);
-      const ratio = xpVal / maxXp;
+      const xpVal = m.xp || (idx === months.length - 1 ? progress.xp : 0);
+      const maxXp = Math.max(...months.map(mo => mo.xp), progress.xp, 100);
+      const ratio = maxXp > 0 ? xpVal / maxXp : 0;
       const y = 140 - ratio * 100;
       return { x, y, name: m.name };
     });
@@ -126,15 +125,15 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
   // 2. Activity Breakdown Pct
   const totalLessonsCount = progress.levels.reduce((acc, l) => acc + l.total_lessons, 0) || 1;
-  const courseworkPct = Math.round((completedLessons / totalLessonsCount) * 100) || 12;
-  const quizzesPct = avgQuizScore || 15;
-  const projectsPct = Math.min(100, Math.round((challengesCount / 20) * 100)) || 8;
-  const aiMentorPct = Math.min(100, Math.round((progress.xp / 1200) * 100)) || 10;
-  const communityPct = Math.min(100, Math.round(((progress.hackathons_registered?.length || 0) * 35 + (progress.streak_days * 8)))) || 5;
+  const courseworkPct = Math.round((completedLessons / totalLessonsCount) * 100);
+  const quizzesPct = avgQuizScore;
+  const projectsPct = Math.min(100, Math.round((challengesCount / 20) * 100));
+  const aiMentorPct = Math.min(100, Math.round((progress.xp / 1200) * 100));
+  const communityPct = Math.min(100, Math.round(((progress.hackathons_registered?.length || 0) * 35 + (progress.streak_days * 8))));
   
   const level5Completed = progress.levels.find(l => l.level_id === 5)?.completed_lessons || 0;
   const level6Completed = progress.levels.find(l => l.level_id === 6)?.completed_lessons || 0;
-  const hardhatPct = Math.min(100, Math.round(((level5Completed + level6Completed) / 16) * 100)) || 4;
+  const hardhatPct = Math.min(100, Math.round(((level5Completed + level6Completed) / 16) * 100));
 
   const activityBreakdown = [
     { name: 'Coursework', pct: courseworkPct },
@@ -174,11 +173,10 @@ export const Dashboard: React.FC<DashboardProps> = ({
     });
 
     const maxHrs = Math.max(...weeklyDays.map(wd => wd.hrs), 1);
-    const baselineHrs = [1.2, 0.8, 1.5, 2.5, 1.0, 1.8, 1.4];
 
-    return weeklyDays.map((wd, idx) => {
-      const hours = wd.hrs || (progress.xp > 0 ? baselineHrs[idx] * 1.5 : baselineHrs[idx]);
-      const pct = Math.min(100, Math.max(10, Math.round((hours / Math.max(maxHrs, 3)) * 80)));
+    return weeklyDays.map((wd) => {
+      const hours = wd.hrs;
+      const pct = maxHrs > 0 && hours > 0 ? Math.min(100, Math.round((hours / maxHrs) * 80)) : 0;
       return {
         day: wd.name,
         hrs: pct,
