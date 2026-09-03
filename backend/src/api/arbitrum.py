@@ -50,6 +50,10 @@ class ArbitrumTelemetryResponse(BaseModel):
     recent_deployments: List[Dict[str, Any]]
     solidity_registry_code: str
     stylus_rust_template: str
+    base_paymaster_template: Optional[str] = ""
+    optimism_superchain_template: Optional[str] = ""
+    base_deployments: Optional[int] = 0
+    optimism_deployments: Optional[int] = 0
 
 
 # ─── Live Telemetry State ───────────────────────────────────────────────────
@@ -142,6 +146,105 @@ impl AcademyCounter {
 }
 """
 
+BASE_PAYMASTER_TEMPLATE = """// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+/**
+ * @title BaseGaslessPaymaster
+ * @notice ERC-4337 compliant gas sponsorship paymaster optimized for Base Sepolia & Coinbase Smart Wallet.
+ */
+contract BaseGaslessPaymaster {
+    address public immutable owner;
+    mapping(address => bool) public sponsoredContracts;
+    uint256 public totalGasSponsored;
+
+    event UserOperationSponsored(address indexed sender, uint256 actualGasCost);
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only paymaster owner");
+        _;
+    }
+
+    constructor() {
+        owner = msg.sender;
+    }
+
+    function setSponsorship(address target, bool allowed) external onlyOwner {
+        sponsoredContracts[target] = allowed;
+    }
+
+    function validatePaymasterUserOp(
+        bytes calldata /* userOp */,
+        bytes32 /* userOpHash */,
+        uint256 maxCost
+    ) external returns (bytes memory context, uint256 validationData) {
+        return (abi.encode(msg.sender, maxCost), 0);
+    }
+
+    function postOp(
+        uint8 /* mode */,
+        bytes calldata context,
+        uint256 actualGasCost
+    ) external {
+        totalGasSponsored += actualGasCost;
+        (address sender, ) = abi.decode(context, (address, uint256));
+        emit UserOperationSponsored(sender, actualGasCost);
+    }
+
+    receive() external payable {}
+}
+"""
+
+OPTIMISM_SUPERCHAIN_TEMPLATE = """// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+/**
+ * @title OptimismCrossDomainBridge
+ * @notice Cross-L2 message transmitter communicating via the Optimism Superchain Messenger.
+ */
+interface ICrossDomainMessenger {
+    function sendMessage(address _target, bytes calldata _message, uint32 _gasLimit) external payable;
+    function xDomainMessageSender() external view returns (address);
+}
+
+contract OptimismCrossDomainBridge {
+    address public constant OP_MESSENGER = 0x4200000000000000000000000000000000000007;
+    address public owner;
+    uint256 public crossChainTransfersCount;
+
+    event MessageDispatched(address indexed to, bytes payload, uint32 gasLimit);
+    event MessageReceived(address indexed from, bytes payload);
+
+    modifier onlyMessenger() {
+        require(msg.sender == OP_MESSENGER, "Caller must be OP CrossDomainMessenger");
+        _;
+    }
+
+    constructor() {
+        owner = msg.sender;
+    }
+
+    function sendCrossChainMessage(
+        address targetContract,
+        bytes calldata payload,
+        uint32 gasLimit
+    ) external payable {
+        crossChainTransfersCount++;
+        ICrossDomainMessenger(OP_MESSENGER).sendMessage{value: msg.value}(
+            targetContract,
+            payload,
+            gasLimit
+        );
+        emit MessageDispatched(targetContract, payload, gasLimit);
+    }
+
+    function receiveCrossChainMessage(bytes calldata payload) external onlyMessenger {
+        address originSender = ICrossDomainMessenger(OP_MESSENGER).xDomainMessageSender();
+        emit MessageReceived(originSender, payload);
+    }
+}
+"""
+
 
 # ─── REST Endpoints ──────────────────────────────────────────────────────────
 
@@ -184,13 +287,28 @@ async def register_cohort_developer(req: CohortRegisterRequest):
 @router.post("/v1/analytics/deployment", response_model=DeploymentLogResponse)
 async def log_arbitrum_deployment(req: DeploymentLogRequest):
     """
-    Triggered via event listener or webhook upon contract deployment to Arbitrum Sepolia/Mainnet.
-    Logs execution environment (WASM Stylus vs EVM Nitro) and gas metrics.
+    Triggered via event listener or webhook upon contract deployment to Arbitrum, Base, Optimism, or supported networks.
+    Logs execution environment (WASM Stylus vs EVM OP Stack/Nitro) and gas metrics.
     """
     now_iso = datetime.now(timezone.utc).isoformat()
-    dep_id = f"dep_arb_{int(datetime.now().timestamp())}"
+    dep_id = f"dep_{req.network[:4]}_{int(datetime.now().timestamp())}"
     
-    explorer_base = "https://sepolia.arbiscan.io/address" if "sepolia" in req.network.lower() else "https://arbiscan.io/address"
+    net = req.network.lower()
+    if "base" in net:
+        explorer_base = "https://sepolia.basescan.org/address" if "sepolia" in net else "https://basescan.org/address"
+    elif "optimism" in net or "op" in net:
+        explorer_base = "https://sepolia-optimism.etherscan.io/address" if "sepolia" in net else "https://optimistic.etherscan.io/address"
+    elif "solana" in net:
+        explorer_base = "https://explorer.solana.com/address"
+    elif "aptos" in net:
+        explorer_base = "https://explorer.aptoslabs.com/account"
+    elif "starknet" in net:
+        explorer_base = "https://sepolia.starkscan.co/contract"
+    elif "polygon" in net:
+        explorer_base = "https://amoy.polygonscan.com/address"
+    else:
+        explorer_base = "https://sepolia.arbiscan.io/address" if "sepolia" in net else "https://arbiscan.io/address"
+    
     explorer_url = f"{explorer_base}/{req.contract_address}"
 
     deployment_entry = {
@@ -282,7 +400,11 @@ async def get_arbitrum_telemetry():
         },
         "recent_deployments": SEEDED_DEPLOYMENTS[:10],
         "solidity_registry_code": SOLIDITY_REGISTRY_CODE,
-        "stylus_rust_template": STYLUS_RUST_TEMPLATE
+        "stylus_rust_template": STYLUS_RUST_TEMPLATE,
+        "base_paymaster_template": BASE_PAYMASTER_TEMPLATE,
+        "optimism_superchain_template": OPTIMISM_SUPERCHAIN_TEMPLATE,
+        "base_deployments": sum(1 for d in SEEDED_DEPLOYMENTS if "base" in (d.get("network", "") or "").lower()),
+        "optimism_deployments": sum(1 for d in SEEDED_DEPLOYMENTS if any(op in (d.get("network", "") or "").lower() for op in ["optimism", "op"]))
     }
 
     return telemetry_data

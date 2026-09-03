@@ -14,7 +14,6 @@ import { HackathonsView } from './components/Hackathons/HackathonsView';
 import { LandingPage } from './components/Auth/LandingPage';
 import { AboutPage } from './components/About/AboutPage';
 import { SubscriptionPlans } from './components/Subscriptions/SubscriptionPlans';
-import { AnalyticsPage } from './components/Analytics/AnalyticsPage';
 import { CareerDashboard } from './components/Careers/CareerDashboard';
 import { PlaygroundView } from './components/Sandbox/PlaygroundView';
 import { FastTrackEnrollmentModal } from './components/Auth/FastTrackEnrollmentModal';
@@ -146,13 +145,19 @@ export default function App() {
           }
         }
 
-        // Fast-Track University Enrollment Callback Flow
+        // Fast-Track University Enrollment Callback Flow with timeout safeguard
+        const oauthCallbackTimer = setTimeout(() => {
+          setLoading(false);
+          alert("GitHub authentication verification timed out (12s). Please retry logging in.");
+        }, 12000);
+
         enrollUniversityStudent({
           oauth_code: code,
           university_affiliate: university,
           cohort_id: cohort
         })
           .then(({ token, user, unlocked_sandbox }) => {
+            clearTimeout(oauthCallbackTimer);
             const uid = user.user_id || user._id;
             setUserId(uid);
             setAuthType('github');
@@ -171,6 +176,7 @@ export default function App() {
             console.warn("Fast-track callback fallback to standard auth:", err);
             authGithub(undefined, code)
               .then(({ token, user }) => {
+                clearTimeout(oauthCallbackTimer);
                 setUserId(user.user_id);
                 setAuthType('github');
                 setJwtToken(token);
@@ -181,8 +187,9 @@ export default function App() {
                 navigate('/academy');
               })
               .catch((stdErr) => {
+                clearTimeout(oauthCallbackTimer);
                 console.error("GitHub OAuth callback error:", stdErr);
-                alert("GitHub OAuth authentication failed. Please configure GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET.");
+                alert("GitHub OAuth authentication failed. Please verify network connectivity and GitHub OAuth credentials.");
               });
           })
           .finally(() => setLoading(false));
@@ -219,15 +226,36 @@ export default function App() {
     try {
       setLoginError(null);
       setLoading(true);
-      const config = await fetchAuthConfig();
-      if (config.github_client_id && config.github_client_id.trim()) {
-        // Redirect to GitHub OAuth Authorization Page
-        const redirectUrl = `https://github.com/login/oauth/authorize?client_id=${config.github_client_id}&redirect_uri=${encodeURIComponent(config.github_redirect_uri)}&scope=user`;
-        window.location.href = redirectUrl;
-        return;
+
+      const timeoutTimer = setTimeout(() => {
+        setLoading(false);
+        setLoginError('GitHub authorization initialization timed out (8s). Please try again.');
+      }, 8000);
+
+      let clientId = (import.meta as any).env?.VITE_GITHUB_CLIENT_ID;
+      let redirectUri = (import.meta as any).env?.VITE_GITHUB_REDIRECT_URI || window.location.origin;
+
+      try {
+        const config = await fetchAuthConfig(4000);
+        if (config.github_client_id && config.github_client_id.trim() && config.github_client_id !== 'YOUR_GITHUB_CLIENT_ID_CONFIG') {
+          clientId = config.github_client_id.trim();
+          redirectUri = config.github_redirect_uri || redirectUri;
+        }
+      } catch (err) {
+        console.warn("Could not retrieve backend auth config within timeout, using fallback client ID:", err);
       }
-    } catch (err) {
-      console.warn("Could not retrieve public auth config, falling back to mock input:", err);
+
+      if (!clientId || clientId === 'YOUR_GITHUB_CLIENT_ID_CONFIG') {
+        clientId = 'Ov23liJ2hxzWckVzJpxM';
+      }
+
+      clearTimeout(timeoutTimer);
+      const redirectUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=user:email`;
+      window.location.href = redirectUrl;
+      return;
+    } catch (err: any) {
+      console.warn("GitHub OAuth initialization error:", err);
+      setLoginError(err.message || "Failed to initialize GitHub OAuth.");
     } finally {
       setLoading(false);
     }
@@ -326,15 +354,35 @@ export default function App() {
   const handleLinkGitHub = async () => {
     try {
       setLoading(true);
-      const config = await fetchAuthConfig();
-      if (config.github_client_id && config.github_client_id.trim()) {
-        // Redirect to GitHub OAuth Authorization Page for linking
-        const redirectUrl = `https://github.com/login/oauth/authorize?client_id=${config.github_client_id}&redirect_uri=${encodeURIComponent(config.github_redirect_uri)}&scope=user`;
-        window.location.href = redirectUrl;
-        return;
+
+      const timeoutTimer = setTimeout(() => {
+        setLoading(false);
+        alert("GitHub linking request timed out (8s).");
+      }, 8000);
+
+      let clientId = (import.meta as any).env?.VITE_GITHUB_CLIENT_ID;
+      let redirectUri = (import.meta as any).env?.VITE_GITHUB_REDIRECT_URI || window.location.origin;
+
+      try {
+        const config = await fetchAuthConfig(4000);
+        if (config.github_client_id && config.github_client_id.trim() && config.github_client_id !== 'YOUR_GITHUB_CLIENT_ID_CONFIG') {
+          clientId = config.github_client_id.trim();
+          redirectUri = config.github_redirect_uri || redirectUri;
+        }
+      } catch (err) {
+        console.warn("Could not retrieve public auth config, using fallback ID:", err);
       }
+
+      if (!clientId || clientId === 'YOUR_GITHUB_CLIENT_ID_CONFIG') {
+        clientId = 'Ov23liJ2hxzWckVzJpxM';
+      }
+
+      clearTimeout(timeoutTimer);
+      const redirectUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=user`;
+      window.location.href = redirectUrl;
+      return;
     } catch (err) {
-      console.warn("Could not retrieve public auth config, falling back to mock link:", err);
+      console.warn("Could not retrieve auth config for linking:", err);
     } finally {
       setLoading(false);
     }
@@ -541,7 +589,7 @@ export default function App() {
               onNavigate={(page) => navigate(`/${page}`)}
             />
           } />
-          <Route path="/analytics" element={<AnalyticsPage />} />
+          <Route path="/analytics" element={<Navigate to="/academy" replace />} />
           <Route path="/sandbox" element={<PlaygroundView />} />
           <Route path="/playground" element={<PlaygroundView />} />
           <Route path="/forum" element={<ForumView userId={userId} token={jwtToken || ''} />} />

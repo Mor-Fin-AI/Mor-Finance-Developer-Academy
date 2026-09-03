@@ -89,10 +89,21 @@ export interface AuthConfig {
   github_redirect_uri: string;
 }
 
-export async function fetchAuthConfig(): Promise<AuthConfig> {
-  const res = await fetch(`${BASE}/auth/config`);
-  if (!res.ok) throw new Error(`Failed to fetch auth config: ${res.status}`);
-  return res.json();
+export async function fetchAuthConfig(timeoutMs = 6000): Promise<AuthConfig> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const res = await fetch(`${BASE}/auth/config`, { signal: controller.signal });
+    clearTimeout(timer);
+    if (!res.ok) throw new Error(`Failed to fetch auth config: ${res.status}`);
+    return res.json();
+  } catch (err: any) {
+    clearTimeout(timer);
+    if (err.name === 'AbortError') {
+      throw new Error(`Authentication configuration request timed out (${timeoutMs}ms)`);
+    }
+    throw err;
+  }
 }
 
 export interface AuthResponse {
@@ -100,14 +111,26 @@ export interface AuthResponse {
   user: UserProgress;
 }
 
-export async function authGithub(username?: string, code?: string): Promise<AuthResponse> {
-  const res = await fetch(`${BASE}/auth/github`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username, code }),
-  });
-  if (!res.ok) throw new Error(`GitHub auth failed: ${res.status}`);
-  return res.json();
+export async function authGithub(username?: string, code?: string, timeoutMs = 10000): Promise<AuthResponse> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const res = await fetch(`${BASE}/auth/github`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, code }),
+      signal: controller.signal,
+    });
+    clearTimeout(timer);
+    if (!res.ok) throw new Error(`GitHub auth failed: ${res.status}`);
+    return res.json();
+  } catch (err: any) {
+    clearTimeout(timer);
+    if (err.name === 'AbortError') {
+      throw new Error(`GitHub authentication request timed out (${timeoutMs}ms)`);
+    }
+    throw err;
+  }
 }
 
 export async function authWallet(
@@ -4677,13 +4700,16 @@ export async function logArbitrumDeployment(data: {
     body: JSON.stringify(data)
   });
   return res.json();
-}export async function enrollUniversityStudent(data: {
-  oauth_code?: string;
-  code?: string;
-  university_affiliate?: string;
-  cohort_id?: string;
-  github_username?: string;
-}): Promise<{
+}export async function enrollUniversityStudent(
+  data: {
+    oauth_code?: string;
+    code?: string;
+    university_affiliate?: string;
+    cohort_id?: string;
+    github_username?: string;
+  },
+  timeoutMs = 10000
+): Promise<{
   status: string;
   student_id: string;
   github_username: string;
@@ -4691,44 +4717,95 @@ export async function logArbitrumDeployment(data: {
   user: any;
   unlocked_sandbox: boolean;
 }> {
-  const res = await fetch(`${BASE}/v1/auth/github/callback`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      oauth_code: data.oauth_code || data.code,
-      university_affiliate: data.university_affiliate || 'Kenyatta University',
-      cohort_id: data.cohort_id || 'KU_COHORT_2026_01',
-      github_username: data.github_username
-    })
-  });
-  if (!res.ok) {
-    // Fallback to /api/auth/github/callback
-    const fallback = await fetch(`${BASE}/auth/github/callback`, {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    const res = await fetch(`${BASE}/v1/auth/github/callback`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
+      body: JSON.stringify({
+        oauth_code: data.oauth_code || data.code,
+        university_affiliate: data.university_affiliate || 'Kenyatta University',
+        cohort_id: data.cohort_id || 'KU_COHORT_2026_01',
+        github_username: data.github_username
+      }),
+      signal: controller.signal
     });
-    if (!fallback.ok) throw new Error('University fast-track enrollment failed');
-    return fallback.json();
+
+    if (!res.ok) {
+      // Fallback to /api/auth/github/callback
+      const fallback = await fetch(`${BASE}/auth/github/callback`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+        signal: controller.signal
+      });
+      clearTimeout(timer);
+      if (!fallback.ok) throw new Error('University fast-track enrollment failed');
+      return fallback.json();
+    }
+    clearTimeout(timer);
+    return res.json();
+  } catch (err: any) {
+    clearTimeout(timer);
+    if (err.name === 'AbortError') {
+      throw new Error(`Enrollment verification request timed out (${timeoutMs}ms). Please retry.`);
+    }
+    throw err;
   }
-  return res.json();
 }
 
 /**
- * Initiates the frictionless GitHub OAuth redirection with university routing parameters.
+ * Initiates frictionless GitHub OAuth redirection with university routing parameters.
+ * Automatically resolves the live GitHub Client ID with multi-level fallback and timeout safeguards.
  */
-export function initiateFrictionlessEnrollment(
-  clientId = 'YOUR_GITHUB_CLIENT_ID_CONFIG',
-  redirectUri = window.location.origin,
-  university = 'Kenyatta University',
-  cohort = 'KU_COHORT_2026_01'
+export async function initiateFrictionlessEnrollment(
+  clientId?: string,
+  redirectUri?: string,
+  university?: string,
+  cohort?: string,
+  timeoutMs = 5000
 ) {
-  console.log('[MOR_AUTH]: Launching rapid OAuth enrollment for', university, cohort);
+  const envAppUrl = (import.meta as any).env?.VITE_APP_URL;
+  const envRedirectUri = (import.meta as any).env?.VITE_GITHUB_REDIRECT_URI;
+  const effectiveRedirectUri = redirectUri || envRedirectUri || (envAppUrl ? envAppUrl.replace(/\/$/, '') : (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:5173'));
+  const effectiveUniversity = university || (import.meta as any).env?.VITE_UNIVERSITY_NAME || 'Kenyatta University';
+  const effectiveCohort = cohort || (import.meta as any).env?.VITE_COHORT_ID || 'KU_COHORT_2026_01';
+
+  let resolvedClientId = clientId;
+
+  // 1. Check Vite env if not validly provided
+  if (!resolvedClientId || resolvedClientId === 'YOUR_GITHUB_CLIENT_ID_CONFIG') {
+    const viteEnvId = (import.meta as any).env?.VITE_GITHUB_CLIENT_ID;
+    if (viteEnvId && viteEnvId !== 'YOUR_GITHUB_CLIENT_ID_CONFIG') {
+      resolvedClientId = viteEnvId;
+    }
+  }
+
+  // 2. Fetch from backend /api/auth/config with timeout
+  if (!resolvedClientId || resolvedClientId === 'YOUR_GITHUB_CLIENT_ID_CONFIG') {
+    try {
+      const config = await fetchAuthConfig(timeoutMs);
+      if (config.github_client_id && config.github_client_id !== 'YOUR_GITHUB_CLIENT_ID_CONFIG') {
+        resolvedClientId = config.github_client_id.trim();
+      }
+    } catch (e) {
+      console.warn('[MOR_AUTH]: Backend auth config lookup timed out or failed; using verified fallback client ID.');
+    }
+  }
+
+  // 3. Verified fallback from backend config (GITHUB_CLIENT_ID)
+  if (!resolvedClientId || resolvedClientId === 'YOUR_GITHUB_CLIENT_ID_CONFIG') {
+    resolvedClientId = 'Ov23liJ2hxzWckVzJpxM';
+  }
+
+  console.log('[MOR_AUTH]: Launching rapid OAuth enrollment with client ID:', resolvedClientId, effectiveUniversity, effectiveCohort);
   const stateParameters = btoa(JSON.stringify({
-    university,
-    cohort
+    university: effectiveUniversity,
+    cohort: effectiveCohort
   }));
-  const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=user:email&state=${stateParameters}`;
+  const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${resolvedClientId}&redirect_uri=${encodeURIComponent(effectiveRedirectUri)}&scope=user:email&state=${stateParameters}`;
   window.location.href = githubAuthUrl;
 }
 

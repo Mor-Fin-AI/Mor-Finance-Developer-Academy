@@ -5,9 +5,13 @@
 
 // Dynamically determine the analytics deployment endpoint
 const getAnalyticsUrl = () => {
-  const envUrl = import.meta.env.VITE_API_URL;
+  const envUrl = (import.meta.env.VITE_API_BASE_URL as string) || (import.meta.env.VITE_API_URL as string);
   if (envUrl && envUrl.trim()) {
-    return `${envUrl.replace(/\/$/, '')}/api/v1/analytics/deployment`;
+    const clean = envUrl.trim().replace(/\/$/, '');
+    if (clean.endsWith('/api')) {
+      return `${clean}/v1/analytics/deployment`;
+    }
+    return `${clean}/api/v1/analytics/deployment`;
   }
   return '/api/v1/analytics/deployment';
 };
@@ -16,15 +20,15 @@ export const ANALYTICS_API_URL = getAnalyticsUrl();
 
 export interface DeploymentPayload {
   contractAddress: string;
-  network: string; // 'arbitrum_sepolia', 'solana_devnet', 'polygon_amoy', 'aptos_testnet', etc.
-  executionEnvironment: string; // 'wasm_stylus', 'evm', 'move_vm', 'cairo_vm', etc.
+  network: string; // 'arbitrum_sepolia', 'base_sepolia', 'optimism_sepolia', 'solana_devnet', 'polygon_amoy', 'aptos_testnet', etc.
+  executionEnvironment: string; // 'wasm_stylus', 'evm_op_stack', 'evm_nitro', 'sealevel_svm', 'move_vm', 'cairo_vm', etc.
   programmingLanguage: string; // 'solidity', 'rust', 'move', 'cairo', 'go'
   gasUsed: number | string;
 }
 
 export async function trackStudentDeployment(
   developerGithubId: string,
-  cohortId: string = "ARB_COHORT_004",
+  cohortId: string = "KU_COHORT_2026_01",
   deploymentPayload: DeploymentPayload
 ) {
   try {
@@ -33,7 +37,7 @@ export async function trackStudentDeployment(
 
     const telemetryBundle = {
       developer_github_id: developerGithubId,
-      cohort_id: cohortId || "ARB_COHORT_004",
+      cohort_id: cohortId || "KU_COHORT_2026_01",
       network: network, // 'arbitrum_sepolia', 'solana_devnet', etc.
       execution_environment: executionEnvironment, // 'wasm_stylus', 'evm', etc.
       contract_address: contractAddress,

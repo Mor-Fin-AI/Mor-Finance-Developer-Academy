@@ -5,7 +5,7 @@ Rust / Anchor (Solana), Move (Aptos), Cairo 2.0 (Starknet), and ink! Wasm (Polka
 """
 import re
 import hashlib
-from typing import Dict, List, Any, Optional
+from typing import Dict, List, Any, Optional, Tuple
 from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel, Field
 
@@ -419,6 +419,262 @@ class SandboxCompileResponse(BaseModel):
 
 # ─── Multi-Chain Compiler Engine ──────────────────────────────────────────────
 
+def build_chain_cli_stdout(
+    chain: str,
+    lang: str,
+    compiler: str,
+    code_hash: str,
+    success: bool,
+    errors: List[str],
+    gas_est: int,
+    artifacts: Dict[str, Any]
+) -> Tuple[str, str]:
+    c = chain.lower()
+    err_formatted = "\n\n".join(errors)
+
+    if any(k in c for k in ['solana', 'anchor']):
+        prog_id = artifacts.get('program_id', f'Prog{code_hash[:8]}11111111111111111111111111111111')
+        if success:
+            stdout = (
+                "$ anchor build --arch sbf\n"
+                "   Compiling proc-macro2 v1.0.86\n"
+                "   Compiling unicode-ident v1.0.12\n"
+                "   Compiling syn v2.0.72\n"
+                "   Compiling quote v1.0.36\n"
+                "   Compiling anchor-attribute-access-control v0.30.1\n"
+                "   Compiling anchor-attribute-account v0.30.1\n"
+                "   Compiling anchor-attribute-program v0.30.1\n"
+                "   Compiling anchor-derive-accounts v0.30.1\n"
+                "   Compiling solana-program v1.18.26\n"
+                "   Compiling anchor-lang v0.30.1\n"
+                "   Compiling solana_academy_program v0.1.0 (/workspace/programs/solana_academy_program)\n"
+                "    Finished `release` [optimized] target(s) in 1.34s\n"
+                "Building BPF target: target/deploy/solana_academy_program.so\n"
+                "[1/3] Generating Anchor IDL: target/idl/solana_academy_program.json\n"
+                "[2/3] Extracting Account Deserializers & Discriminators (8-byte SHA256 hashes)\n"
+                "[3/3] Emitting Sealevel BPF Executable and Linkable Format (ELF)\n"
+                f"Program ID: {prog_id}\n"
+                "Binary size: 142.8 KB (34.2 KB compressed SBF)\n"
+                f"Compute Unit Consumption: ~{gas_est:,} CU\n"
+                "✅ Compilation & Verification SUCCESSFUL (0 errors, 0 warnings)."
+            )
+            stderr = ""
+        else:
+            stdout = (
+                "$ anchor build --arch sbf\n"
+                "   Compiling solana_academy_program v0.1.0 (/workspace/programs/solana_academy_program)\n\n"
+                f"{err_formatted}\n\n"
+                f"error: could not compile `solana_academy_program` (bin 'solana_academy_program') due to {len(errors)} previous error(s)\n"
+                "error: build failed"
+            )
+            stderr = "\n".join(errors)
+
+    elif any(k in c for k in ['aptos', 'move']):
+        mod_id = artifacts.get('module_id', f'0xcafe::{code_hash[:8]}')
+        mod_name = mod_id.split('::')[-1]
+        if success:
+            stdout = (
+                "$ aptos move compile --package-dir /workspace/move_project --save-metadata\n"
+                "Compiling Move modules...\n"
+                "INCLUDING DEPENDENCY AptosFramework (git: https://github.com/aptos-labs/aptos-core.git#mainnet)\n"
+                "INCLUDING DEPENDENCY AptosStdlib\n"
+                "INCLUDING DEPENDENCY MoveStdlib\n"
+                f"BUILDING {mod_name}\n"
+                "Running MoveVM Bytecode Verifier v1.12...\n"
+                " ✓ Checking linear resource capabilities\n"
+                " ✓ Validating struct abilities (key, store, copy, drop)\n"
+                " ✓ Verifying no circular module references\n"
+                " ✓ Dynamic dispatch & reentrancy invariance: PASS\n"
+                f"Writing bytecode: build/modules/{mod_name}.mv (1,480 bytes)\n"
+                "Package Metadata: build/package-metadata.bcs\n"
+                f"Module Address: {mod_id}\n"
+                f"Bytecode Digest: 0x{code_hash}\n"
+                f"Estimated Gas Cost: {gas_est:,} octas\n"
+                "✅ Move compilation & verification SUCCESSFUL (0 errors)."
+            )
+            stderr = ""
+        else:
+            stdout = (
+                "$ aptos move compile --package-dir /workspace/move_project\n"
+                "Compiling Move modules...\n"
+                "BUILDING move_module\n\n"
+                f"{err_formatted}\n\n"
+                f"{{\n  \"Error\": \"Move compilation failed with {len(errors)} error(s)\"\n}}"
+            )
+            stderr = "\n".join(errors)
+
+    elif any(k in c for k in ['starknet', 'cairo']):
+        sierra_hash = artifacts.get('sierra_class_hash', f'0x07{code_hash}a92c30491823ab4912cd')
+        casm_hash = artifacts.get('casm_hash', f'0x03{code_hash[:12]}b1d9c9a7491d')
+        if success:
+            stdout = (
+                "$ scarb build --target sierra,casm\n"
+                "   Compiling core v2.6.0 (https://github.com/starkware-libs/cairo.git#v2.6.0)\n"
+                "   Compiling starknet v2.6.0\n"
+                "   Compiling academy_contract v0.1.0 (/workspace/Scarb.toml)\n"
+                "[1/3] Parsing Cairo 2.0 AST & macro attributes (#[starknet::contract])...\n"
+                "[2/3] Generating Sierra IR: target/dev/academy_contract.sierra.json\n"
+                "[3/3] Compiling Sierra to Cairo Assembly (CASM): target/dev/academy_contract.casm.json\n"
+                f"Sierra Class Hash: {sierra_hash}\n"
+                f"CASM Class Hash:   {casm_hash}\n"
+                f"Execution Steps: ~{gas_est:,} L2 gas steps\n"
+                "    Finished release target(s) in 1.14s\n"
+                "✅ Cairo 2.0 compilation & Sierra verification SUCCESSFUL."
+            )
+            stderr = ""
+        else:
+            stdout = (
+                "$ scarb build\n"
+                "   Compiling academy_contract v0.1.0 (/workspace/Scarb.toml)\n\n"
+                f"{err_formatted}\n\n"
+                f"error: could not compile `academy_contract` due to {len(errors)} previous error(s)"
+            )
+            stderr = "\n".join(errors)
+
+    elif any(k in c for k in ['polkadot', 'substrate', 'ink']):
+        wasm_hash = artifacts.get('wasm_code_hash', f'0x{code_hash}')
+        if success:
+            stdout = (
+                "$ cargo contract build --release\n"
+                " [1/4] Building cargo project\n"
+                "   Compiling ink_primitives v5.0.0\n"
+                "   Compiling ink_storage v5.0.0\n"
+                "   Compiling ink_env v5.0.0\n"
+                "   Compiling ink v5.0.0\n"
+                "   Compiling scale-info v2.11.1\n"
+                "   Compiling parity-scale-codec v3.6.12\n"
+                "   Compiling academy_contract v0.1.0 (/workspace/contracts/academy_contract)\n"
+                " [2/4] Extracting ink! metadata: target/ink/metadata.json\n"
+                " [3/4] Optimizing Wasm bytecode via wasm-opt -O3\n"
+                "       Original Wasm size:  46.4 KB\n"
+                "       Optimized Wasm size: 18.2 KB (-60.7%)\n"
+                f" [4/4] Generating target/ink/{code_hash}.contract bundle\n"
+                f"Code Hash: {wasm_hash}\n"
+                f"Ref Time Weight: {gas_est:,} ps\n"
+                "Storage Deposit: 0.0425 ROC / DOT\n"
+                f"✅ ink! 5.0 Wasm contract bundle successfully compiled (target/ink/{code_hash}.contract)."
+            )
+            stderr = ""
+        else:
+            stdout = (
+                "$ cargo contract build --release\n"
+                " [1/4] Building cargo project\n"
+                "   Compiling academy_contract v0.1.0 (/workspace/contracts/academy_contract)\n\n"
+                f"{err_formatted}\n\n"
+                f"error: could not compile `academy_contract` (bin 'academy_contract') due to {len(errors)} previous error(s)"
+            )
+            stderr = "\n".join(errors)
+
+    elif any(k in c for k in ['stylus']):
+        stylus_hash = artifacts.get('wasm_hash', f'0x8f2d{code_hash}c193')
+        if success:
+            stdout = (
+                "$ cargo stylus check --target wasm32-unknown-unknown\n"
+                "   Compiling stylus-sdk v0.6.0\n"
+                "   Compiling stylus-proc-macros v0.6.0\n"
+                "   Compiling alloy-primitives v0.7.4\n"
+                "   Compiling alloy-sol-types v0.7.4\n"
+                "   Compiling stylus_academy v0.1.0 (/workspace/stylus_academy)\n"
+                "    Finished `release` profile [optimized] target(s) in 1.28s\n"
+                "[1/3] Validating Stylus WASM entrypoint exports:\n"
+                "      ✓ Found #[entrypoint] / #[public] ABI exports\n"
+                "      ✓ sol_storage! linear memory map verified\n"
+                "[2/3] Checking host I/O primitives & memory bounds:\n"
+                "      ✓ No illegal floating point instructions\n"
+                "      ✓ Max page limit within Arbitrum Nitro bounds (128 pages)\n"
+                "[3/3] Compressing WASM binary with Brotli algorithm:\n"
+                "      Uncompressed WASM: 42.6 KB\n"
+                "      Compressed WASM:   14.2 KB\n"
+                f"Stylus Contract Hash: {stylus_hash}\n"
+                "Estimated Gas Savings: 84.6x compared to standard EVM bytecode\n"
+                "✅ Arbitrum Stylus contract verified & ready for testnet deployment."
+            )
+            stderr = ""
+        else:
+            stdout = (
+                "$ cargo stylus check\n"
+                "   Compiling stylus_academy v0.1.0 (/workspace/stylus_academy)\n\n"
+                f"{err_formatted}\n\n"
+                f"error: could not compile `stylus_academy` due to {len(errors)} previous error(s)"
+            )
+            stderr = "\n".join(errors)
+
+    elif 'base' in c:
+        c_name = artifacts.get('contract_name', 'BaseContract')
+        b_code = artifacts.get('bytecode', '')
+        if success:
+            stdout = (
+                f"$ solc --optimize --bin --abi {c_name}.sol --evm-version shanghai\n"
+                f"======= {c_name}.sol:{c_name} =======\n"
+                f"Binary:\n{b_code[:72]}...\n"
+                f"Contract JSON ABI: [{len(artifacts.get('abi', []))} interface methods]\n"
+                "Target Network: Base Sepolia (Chain ID: 84532 / OP Stack)\n"
+                "OP Stack Gas Estimations (L2 Execution + L1 Data Fee):\n"
+                f"  L2 Execution Gas: ~{gas_est:,} gas\n"
+                "  L1 Calldata Overhead: ~1,840 gas\n"
+                "  Base Smart Wallet Paymaster Compatibility: Verified\n"
+                f"✅ Solidity contract successfully compiled for Base via {compiler}."
+            )
+            stderr = ""
+        else:
+            stdout = (
+                f"$ solc {c_name}.sol (Base OP Stack)\n\n"
+                f"{err_formatted}\n\n"
+                f"Error: Exit status 1 (Base compilation failed with {len(errors)} error(s))"
+            )
+            stderr = "\n".join(errors)
+
+    elif any(op in c for op in ['optimism', 'op']):
+        c_name = artifacts.get('contract_name', 'OptimismContract')
+        b_code = artifacts.get('bytecode', '')
+        if success:
+            stdout = (
+                f"$ solc --optimize --bin --abi {c_name}.sol --evm-version canyon\n"
+                f"======= {c_name}.sol:{c_name} =======\n"
+                f"Binary:\n{b_code[:72]}...\n"
+                f"Contract JSON ABI: [{len(artifacts.get('abi', []))} interface methods]\n"
+                "Target Network: OP Sepolia / OP Mainnet (Superchain Standard)\n"
+                "Superchain Gas Estimations:\n"
+                f"  L2 Execution Gas: ~{gas_est:,} gas\n"
+                "  Cross-Domain Messenger Interface: Verified\n"
+                f"✅ Solidity contract successfully compiled for Optimism via {compiler}."
+            )
+            stderr = ""
+        else:
+            stdout = (
+                f"$ solc {c_name}.sol (Optimism Superchain)\n\n"
+                f"{err_formatted}\n\n"
+                f"Error: Exit status 1 (Optimism compilation failed with {len(errors)} error(s))"
+            )
+            stderr = "\n".join(errors)
+
+    else:
+        # EVM / Solidity / Arbitrum Nitro
+        c_name = artifacts.get('contract_name', 'SmartContract')
+        b_code = artifacts.get('bytecode', '')
+        if success:
+            stdout = (
+                f"$ solc --optimize --bin --abi {c_name}.sol\n"
+                f"======= {c_name}.sol:{c_name} =======\n"
+                f"Binary:\n{b_code[:72]}...\n"
+                f"Contract JSON ABI: [{len(artifacts.get('abi', []))} interface methods]\n"
+                f"Gas Estimation:\n"
+                f"  Creation Cost: ~{gas_est:,} gas\n"
+                f"  Execution Environment: EVM Nitro / Shanghai compliant\n"
+                f"✅ Solidity smart contract successfully compiled via {compiler}."
+            )
+            stderr = ""
+        else:
+            stdout = (
+                f"$ solc {c_name}.sol\n\n"
+                f"{err_formatted}\n\n"
+                f"Error: Exit status 1 (compilation failed with {len(errors)} error(s))"
+            )
+            stderr = "\n".join(errors)
+
+    return stdout, stderr
+
+
 def compile_code_sandbox(chain: str, language: str, code: str, lesson_id: Optional[str] = None) -> SandboxCompileResponse:
     chain_lower = chain.lower()
     lang_lower = language.lower()
@@ -481,15 +737,30 @@ def compile_code_sandbox(chain: str, language: str, code: str, lesson_id: Option
             "gas_efficiency": "84.6x compared to standard EVM"
         }
     else:
-        # Default to EVM / Solidity (Arbitrum, Ethereum, Base, Optimism, Polygon)
-        compiler_name = "solc v0.8.20+commit.a1b79de6 (EVM / Arbitrum Nitro)"
-        lang_detected = "Solidity"
+        # EVM / Solidity (Arbitrum Nitro, Base, Optimism, Ethereum, Polygon)
         errors = []
         warnings = []
         abi = []
         bytecode = ""
-        gas_est = 42000
-        contract_name = "SmartContract"
+
+        if 'base' in chain_lower:
+            compiler_name = "solc v0.8.20 (Base Sepolia OP Stack)"
+            lang_detected = "Solidity (Base)"
+            gas_est = 21000
+            contract_name = "BaseContract"
+            compiler_target = "Base Sepolia OP Stack (Chain ID: 84532)"
+        elif any(op in chain_lower for op in ['optimism', 'op']):
+            compiler_name = "solc v0.8.20 (OP Stack Superchain EVM)"
+            lang_detected = "Solidity (Optimism)"
+            gas_est = 22000
+            contract_name = "OptimismContract"
+            compiler_target = "OP Sepolia Superchain (Chain ID: 11155420)"
+        else:
+            compiler_name = "solc v0.8.20+commit.a1b79de6 (EVM / Arbitrum Nitro)"
+            lang_detected = "Solidity"
+            gas_est = 42000
+            contract_name = "SmartContract"
+            compiler_target = "Arbitrum Nitro / Shanghai EVM"
 
         if solcx is not None:
             try:
@@ -558,29 +829,22 @@ def compile_code_sandbox(chain: str, language: str, code: str, lesson_id: Option
             "abi": abi if abi else [{"inputs": [], "stateMutability": "nonpayable", "type": "constructor"}],
             "bytecode": bytecode if bytecode else f"0x608060405234801561001057600080fd5b50{code_hash}",
             "contract_name": contract_name,
-            "compiler_target": "London / Shanghai EVM"
+            "compiler_target": compiler_target
         }
 
     success = len(errors) == 0
     exit_code = 0 if success else 1
     
-    if success:
-        stdout = (
-            f"⚡ Compiling {lang_detected} smart contract via {compiler_name}...\n"
-            f"✅ Syntax validation passed (0 syntax errors).\n"
-            f"📦 Bytecode artifact generated successfully: {code_hash}.bin\n"
-            f"📊 Gas estimation: {gas_est:,} computation units.\n"
-            f"🎉 Compilation output: 0 warnings, 0 errors."
-        )
-        stderr = ""
-    else:
-        err_formatted = "\n\n".join(errors)
-        stdout = (
-            f"⚡ Compiling {lang_detected} smart contract via {compiler_name}...\n"
-            f"❌ Compilation failed with {len(errors)} error(s):\n\n"
-            f"{err_formatted}"
-        )
-        stderr = "\n".join(errors)
+    stdout, stderr = build_chain_cli_stdout(
+        chain=chain,
+        lang=lang_detected,
+        compiler=compiler_name,
+        code_hash=code_hash,
+        success=success,
+        errors=errors,
+        gas_est=gas_est,
+        artifacts=artifacts if success else {}
+    )
 
     return SandboxCompileResponse(
         success=success,

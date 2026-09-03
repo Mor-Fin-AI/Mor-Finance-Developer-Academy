@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import QRCode from 'qrcode';
-import { enrollUniversityStudent, initiateFrictionlessEnrollment } from '../../api/client';
+import { initiateFrictionlessEnrollment } from '../../api/client';
 import './FastTrackEnrollmentModal.css';
 
 interface FastTrackEnrollmentModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSuccess: (user: any) => void;
+  onSuccess?: (user: any) => void;
   university?: string;
   cohortId?: string;
 }
@@ -14,19 +14,27 @@ interface FastTrackEnrollmentModalProps {
 export const FastTrackEnrollmentModal: React.FC<FastTrackEnrollmentModalProps> = ({
   isOpen,
   onClose,
-  onSuccess,
-  university = 'Kenyatta University',
-  cohortId = 'KU_COHORT_2026_01',
+  university,
+  cohortId,
 }) => {
-  const [demoHandle, setDemoHandle] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [qrDataUrl, setQrDataUrl] = useState<string>('');
   const [copied, setCopied] = useState(false);
 
-  const enrollUrl = typeof window !== 'undefined'
-    ? `${window.location.origin}/enroll?cohort=${cohortId}&university=${encodeURIComponent(university)}`
-    : '';
+  // Dynamic environment variables with production fallback
+  const envEnrollUrl = (import.meta as any).env?.VITE_ENROLL_URL;
+  const envAppUrl = (import.meta as any).env?.VITE_APP_URL;
+  const defaultCohort = (import.meta as any).env?.VITE_COHORT_ID || 'KU_COHORT_2026_01';
+  const defaultUniversity = (import.meta as any).env?.VITE_UNIVERSITY_NAME || 'Kenyatta University';
+
+  const activeCohort = cohortId || defaultCohort;
+  const activeUniversity = university || defaultUniversity;
+
+  const baseOrigin = envAppUrl?.trim() || (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:5173');
+  const enrollUrl = envEnrollUrl?.trim()
+    ? envEnrollUrl.trim()
+    : `${baseOrigin.replace(/\/$/, '')}/enroll?cohort=${activeCohort}&university=${encodeURIComponent(activeUniversity)}`;
 
   useEffect(() => {
     if (enrollUrl) {
@@ -45,43 +53,27 @@ export const FastTrackEnrollmentModal: React.FC<FastTrackEnrollmentModalProps> =
 
   if (!isOpen) return null;
 
-  const handleConnectGitHub = () => {
+  const handleConnectGitHub = async () => {
     setLoading(true);
     setError(null);
-    try {
-      initiateFrictionlessEnrollment(
-        'YOUR_GITHUB_CLIENT_ID_CONFIG',
-        window.location.origin,
-        university,
-        cohortId
-      );
-    } catch (err: any) {
-      setError(err.message || 'Could not initiate GitHub OAuth');
+
+    const timeoutTimer = setTimeout(() => {
       setLoading(false);
-    }
-  };
+      setError('GitHub connection timed out after 8s. Please check your network and try again.');
+    }, 8000);
 
-  const handleInstantDemoEnrollment = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError(null);
     try {
-      const handle = demoHandle.trim() || `ku_builder_${Math.floor(1000 + Math.random() * 9000)}`;
-      const res = await enrollUniversityStudent({
-        github_username: handle,
-        oauth_code: `demo_oauth_${Date.now()}`,
-        university_affiliate: university,
-        cohort_id: cohortId,
-      });
-
-      if (res.token) {
-        localStorage.setItem('auth_token', res.token);
-      }
-      onSuccess(res.user);
-      onClose();
+      await initiateFrictionlessEnrollment(
+        undefined,
+        baseOrigin,
+        activeUniversity,
+        activeCohort,
+        5000
+      );
+      clearTimeout(timeoutTimer);
     } catch (err: any) {
-      setError(err.message || 'Instant enrollment failed. Please retry.');
-    } finally {
+      clearTimeout(timeoutTimer);
+      setError(err.message || 'Could not initiate GitHub OAuth');
       setLoading(false);
     }
   };
@@ -121,20 +113,6 @@ export const FastTrackEnrollmentModal: React.FC<FastTrackEnrollmentModalProps> =
               </svg>
               <span>{loading ? 'Authenticating...' : 'Connect with GitHub'}</span>
             </button>
-
-            {/* Quick Demo Simulator for instant testing without leaving window */}
-            <form className="fast-track-demo-trigger" onSubmit={handleInstantDemoEnrollment}>
-              <input
-                type="text"
-                className="fast-track-demo-input"
-                placeholder="Or test with username (e.g. ku_student_99)"
-                value={demoHandle}
-                onChange={(e) => setDemoHandle(e.target.value)}
-              />
-              <button type="submit" className="fast-track-demo-btn" disabled={loading}>
-                ⚡ 1-Click Fast Enroll
-              </button>
-            </form>
 
             {error && <div style={{ color: '#ef4444', fontSize: '0.8rem' }}>⚠️ {error}</div>}
           </div>
@@ -210,7 +188,7 @@ export const FastTrackEnrollmentModal: React.FC<FastTrackEnrollmentModalProps> =
           </div>
 
           <div className="fast-track-university-pill">
-            🏛️ {university} • Cohort {cohortId}
+            🏛️ {activeUniversity} • Cohort {activeCohort}
           </div>
         </div>
       </div>

@@ -388,6 +388,202 @@ impl AcademyCounter {
 }`
       }
     ]
+  },
+  {
+    id: 'base',
+    chain: 'Base',
+    lang: 'Solidity (Base)',
+    fileName: 'BaseGaslessPaymaster.sol',
+    icon: '🔷',
+    compiler: 'solc v0.8.20 (Base Sepolia OP Stack)',
+    targetEnv: 'Base Sepolia (Chain ID: 84532)',
+    templates: [
+      {
+        name: 'Base Gasless Paymaster (ERC-4337)',
+        description: 'Account abstraction paymaster sponsoring user transactions on Base Sepolia',
+        code: `// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+/**
+ * @title BaseGaslessPaymaster
+ * @notice ERC-4337 compliant gas sponsorship paymaster optimized for Base Sepolia & Coinbase Smart Wallet.
+ */
+contract BaseGaslessPaymaster {
+    address public immutable owner;
+    mapping(address => bool) public sponsoredContracts;
+    uint256 public totalGasSponsored;
+
+    event UserOperationSponsored(address indexed sender, uint256 actualGasCost);
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only paymaster owner");
+        _;
+    }
+
+    constructor() {
+        owner = msg.sender;
+    }
+
+    function setSponsorship(address target, bool allowed) external onlyOwner {
+        sponsoredContracts[target] = allowed;
+    }
+
+    function validatePaymasterUserOp(
+        bytes calldata /* userOp */,
+        bytes32 /* userOpHash */,
+        uint256 maxCost
+    ) external returns (bytes memory context, uint256 validationData) {
+        return (abi.encode(msg.sender, maxCost), 0);
+    }
+
+    function postOp(
+        uint8 /* mode */,
+        bytes calldata context,
+        uint256 actualGasCost
+    ) external {
+        totalGasSponsored += actualGasCost;
+        (address sender, ) = abi.decode(context, (address, uint256));
+        emit UserOperationSponsored(sender, actualGasCost);
+    }
+
+    receive() external payable {}
+}`
+      },
+      {
+        name: 'Base Onchain Attendance Badge',
+        description: 'Coinbase Smart Wallet compatible soulbound attendance proof',
+        code: `// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+/**
+ * @title BaseAttendanceProof
+ * @notice Non-transferable onchain attendance proof on Base Sepolia.
+ */
+contract BaseAttendanceProof {
+    string public name = "Base Academy Attendance";
+    string public symbol = "BASE-ATTEND";
+    address public admin;
+
+    mapping(address => bool) public hasAttended;
+    uint256 public totalCertificates;
+
+    event AttendanceMinted(address indexed student, uint256 indexed certificateId);
+
+    constructor() {
+        admin = msg.sender;
+    }
+
+    function mintProof(address student) external {
+        require(msg.sender == admin, "Only admin can attest attendance");
+        require(!hasAttended[student], "Student already claimed proof");
+
+        hasAttended[student] = true;
+        totalCertificates++;
+        emit AttendanceMinted(student, totalCertificates);
+    }
+}`
+      }
+    ]
+  },
+  {
+    id: 'optimism',
+    chain: 'Optimism',
+    lang: 'Solidity (Optimism)',
+    fileName: 'OptimismCrossDomainBridge.sol',
+    icon: '🔴',
+    compiler: 'solc v0.8.20 (OP Stack Superchain)',
+    targetEnv: 'OP Sepolia / OP Mainnet (Superchain)',
+    templates: [
+      {
+        name: 'OP Superchain Cross-Domain Bridge',
+        description: 'Cross-L2 message transmitter communicating via the Optimism Superchain Messenger',
+        code: `// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+/**
+ * @title OptimismCrossDomainBridge
+ * @notice Cross-L2 message transmitter communicating via the Optimism Superchain Messenger.
+ */
+interface ICrossDomainMessenger {
+    function sendMessage(address _target, bytes calldata _message, uint32 _gasLimit) external payable;
+    function xDomainMessageSender() external view returns (address);
+}
+
+contract OptimismCrossDomainBridge {
+    address public constant OP_MESSENGER = 0x4200000000000000000000000000000000000007;
+    address public owner;
+    uint256 public crossChainTransfersCount;
+
+    event MessageDispatched(address indexed to, bytes payload, uint32 gasLimit);
+    event MessageReceived(address indexed from, bytes payload);
+
+    modifier onlyMessenger() {
+        require(msg.sender == OP_MESSENGER, "Caller must be OP CrossDomainMessenger");
+        _;
+    }
+
+    constructor() {
+        owner = msg.sender;
+    }
+
+    function sendCrossChainMessage(
+        address targetContract,
+        bytes calldata payload,
+        uint32 gasLimit
+    ) external payable {
+        crossChainTransfersCount++;
+        ICrossDomainMessenger(OP_MESSENGER).sendMessage{value: msg.value}(
+            targetContract,
+            payload,
+            gasLimit
+        );
+        emit MessageDispatched(targetContract, payload, gasLimit);
+    }
+
+    function receiveCrossChainMessage(bytes calldata payload) external onlyMessenger {
+        address originSender = ICrossDomainMessenger(OP_MESSENGER).xDomainMessageSender();
+        emit MessageReceived(originSender, payload);
+    }
+}`
+      },
+      {
+        name: 'Optimism Superchain Mintable ERC-20',
+        description: 'Standard Superchain-compatible token bridge template',
+        code: `// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
+
+contract OptimismSuperchainToken {
+    string public name = "OP Superchain Token";
+    string public symbol = "OPT";
+    uint8 public decimals = 18;
+    uint256 public totalSupply;
+
+    address public bridge;
+    mapping(address => uint256) public balanceOf;
+
+    event Mint(address indexed account, uint256 amount);
+    event Burn(address indexed account, uint256 amount);
+
+    constructor(address _bridge) {
+        bridge = _bridge;
+    }
+
+    function mint(address to, uint256 amount) external {
+        require(msg.sender == bridge, "Only bridge can mint");
+        totalSupply += amount;
+        balanceOf[to] += amount;
+        emit Mint(to, amount);
+    }
+
+    function burn(address from, uint256 amount) external {
+        require(msg.sender == bridge, "Only bridge can burn");
+        balanceOf[from] -= amount;
+        totalSupply -= amount;
+        emit Burn(from, amount);
+    }
+}`
+      }
+    ]
   }
 ];
 
@@ -427,15 +623,19 @@ export const PlaygroundView: React.FC = () => {
 
       if (res.success) {
         const contractAddr = res.artifacts?.programId || res.artifacts?.classHash || res.artifacts?.moduleAddress || res.artifacts?.wasmHash || (res.artifacts?.bytecode ? `0x${res.artifacts.bytecode.slice(2, 42)}` : '0xContractCompiled');
+        const networkId = activePreset.id === 'base' ? 'base_sepolia' : activePreset.id === 'optimism' ? 'optimism_sepolia' : activePreset.chain.toLowerCase().replace(/[^a-z0-9]/g, '_');
+        const execEnv = activePreset.id === 'arbitrum_stylus' ? 'wasm_stylus' : activePreset.id === 'solana' ? 'sealevel_svm' : activePreset.id === 'aptos' ? 'move_vm' : (activePreset.id === 'base' || activePreset.id === 'optimism') ? 'evm_op_stack' : 'evm_nitro';
+        const progLang = activePreset.lang.toLowerCase().includes('rust') ? 'rust' : activePreset.lang.toLowerCase().includes('move') ? 'move' : activePreset.lang.toLowerCase().includes('cairo') ? 'cairo' : 'solidity';
+
         trackStudentDeployment(
           'student-builder',
-          'ARB_COHORT_004',
+          'KU_COHORT_2026_01',
           {
             contractAddress: contractAddr,
-            network: activePreset.chain.toLowerCase().replace(/[^a-z0-9]/g, '_'),
-            executionEnvironment: activePreset.id === 'arbitrum_stylus' ? 'wasm_stylus' : activePreset.id === 'solana' ? 'sealevel_svm' : activePreset.id === 'aptos' ? 'move_vm' : 'evm',
-            programmingLanguage: activePreset.lang.toLowerCase(),
-            gasUsed: res.gasEstimate || 42000
+            network: networkId,
+            executionEnvironment: execEnv,
+            programmingLanguage: progLang,
+            gasUsed: res.gasEstimate || 21000
           }
         ).catch((err) => console.warn("Telemetry log warning:", err));
       }

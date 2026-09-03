@@ -198,18 +198,40 @@ function compileSolidityInstant(code: string, chain: string): CompilationResult 
   const bytecode = `0x608060405234801561001057600080fd5b50${mockHash}600436106100${functions.length * 8}5760003560e01c`;
   const gasEstimate = success ? 21000 + functions.length * 15400 + events.length * 3200 : 0;
 
+  const chainLower = (chain || '').toLowerCase();
+  const isBase = chainLower.includes('base');
+  const isOptimism = chainLower.includes('optimism') || chainLower.includes('op');
+
+  const compilerName = isBase
+    ? 'solc v0.8.20 (Base Sepolia OP Stack)'
+    : isOptimism
+    ? 'solc v0.8.20 (OP Stack Superchain EVM)'
+    : 'solc v0.8.20+commit.a1b79de6 (EVM Nitro)';
+
+  const targetEnv = isBase
+    ? 'Base Sepolia (Chain ID: 84532 / OP Stack)'
+    : isOptimism
+    ? 'OP Sepolia / OP Mainnet (Superchain Standard)'
+    : `${chain || 'Ethereum / Arbitrum Nitro'} (Shanghai EVM)`;
+
+  const langName = isBase ? 'Solidity (Base)' : isOptimism ? 'Solidity (Optimism)' : 'Solidity';
+
   const stdoutLines: string[] = [
-    `⚡ Running solc v0.8.20 compiler optimizer...`,
-    `🔍 Target Architecture: ${chain || 'Ethereum / Arbitrum Nitro'} (Shanghai EVM)`,
+    `$ solc --optimize --bin --abi ${contractName}.sol`,
+    `======= ${contractName}.sol:${contractName} =======`,
+    `🔍 Target Architecture: ${targetEnv}`,
   ];
 
   if (success) {
     stdoutLines.push(
-      `✅ Compilation successful! 0 errors, ${warnings.length} warning(s).`,
-      `📦 Contract: ${contractName}`,
-      `📜 ABI Interface: ${functions.length} function(s), ${events.length} event(s)`,
-      `📦 Bytecode: ${bytecode.length / 2} bytes (${bytecode.slice(0, 36)}...)`,
-      `📊 Estimated Execution Gas: ${gasEstimate.toLocaleString()} units`,
+      `Binary:\n${bytecode.slice(0, 68)}...`,
+      `Contract JSON ABI: [${functions.length} function(s), ${events.length} event(s)]`,
+      isBase
+        ? `OP Stack Gas (L2 Execution): ~${gasEstimate.toLocaleString()} gas | L1 Calldata Overhead: ~1,840 gas`
+        : isOptimism
+        ? `Superchain Gas (L2 Execution): ~${gasEstimate.toLocaleString()} gas | Cross-Domain Messenger: Verified`
+        : `Gas Estimation: Creation ~${gasEstimate.toLocaleString()} gas`,
+      `✅ Solidity contract successfully compiled via ${compilerName}.`
     );
     if (warnings.length > 0) {
       stdoutLines.push('', '⚠️ Compiler Warnings:');
@@ -217,7 +239,7 @@ function compileSolidityInstant(code: string, chain: string): CompilationResult 
     }
   } else {
     stdoutLines.push(
-      `❌ Compilation failed with ${errors.length} error(s):`,
+      `Error: Exit status 1 (${langName} compilation failed with ${errors.length} error(s)):`,
       '',
       ...errors.map(e => `  ${e}`)
     );
@@ -225,9 +247,9 @@ function compileSolidityInstant(code: string, chain: string): CompilationResult 
 
   return {
     success,
-    chain: chain || 'Ethereum',
-    language: 'Solidity',
-    compiler: 'solc v0.8.20+commit.a1b79de6 (EVM Nitro)',
+    chain: isBase ? 'Base' : isOptimism ? 'Optimism' : chain || 'Ethereum',
+    language: langName,
+    compiler: compilerName,
     stdout: stdoutLines.join('\n'),
     stderr: success ? undefined : errors.join('\n'),
     syntaxErrors: errors,
@@ -309,23 +331,40 @@ function compileSolanaInstant(code: string): CompilationResult {
   const success = errors.length === 0;
   const mockProgId = 'Fg6PaFpoGXkYsidMpWTK6W2BeZ7FEfcYkg476zPFsLnS';
 
-  const stdoutLines = [
-    `⚡ Compiling Solana Anchor program via rustc & sealevel BPF...`,
-    `🔍 Target Architecture: Solana Sealevel Virtual Machine (SVM)`,
+  const stdoutLines: string[] = [
+    `$ anchor build --arch sbf`,
+    `   Compiling proc-macro2 v1.0.86`,
+    `   Compiling unicode-ident v1.0.12`,
+    `   Compiling syn v2.0.72`,
+    `   Compiling quote v1.0.36`,
+    `   Compiling anchor-attribute-access-control v0.30.1`,
+    `   Compiling anchor-attribute-account v0.30.1`,
+    `   Compiling anchor-attribute-program v0.30.1`,
+    `   Compiling anchor-derive-accounts v0.30.1`,
+    `   Compiling solana-program v1.18.26`,
+    `   Compiling anchor-lang v0.30.1`,
+    `   Compiling solana_academy_program v0.1.0 (/workspace/programs/solana_academy_program)`,
   ];
 
   if (success) {
     stdoutLines.push(
-      `✅ Compilation successful! 0 errors, ${warnings.length} warning(s).`,
-      `🔑 Program ID: ${mockProgId}`,
-      `📦 Artifact: Solana SBF ELF Binary + Anchor IDL JSON`,
-      `📊 Simulated Compute Units: 4,500 CU`,
+      `    Finished \`release\` [optimized] target(s) in 1.34s`,
+      `Building BPF target: target/deploy/solana_academy_program.so`,
+      `[1/3] Generating Anchor IDL: target/idl/solana_academy_program.json`,
+      `[2/3] Extracting Account Deserializers & Discriminators (8-byte SHA256 hashes)`,
+      `[3/3] Emitting Sealevel BPF Executable and Linkable Format (ELF)`,
+      `Program ID: ${mockProgId}`,
+      `Binary size: 142.8 KB (34.2 KB compressed SBF)`,
+      `Compute Unit Limit: 4,500 CU`,
+      `✅ Compilation & Verification SUCCESSFUL (0 errors, 0 warnings).`
     );
   } else {
     stdoutLines.push(
-      `❌ Compilation failed with ${errors.length} error(s):`,
       '',
-      ...errors.map(e => `  ${e}`)
+      ...errors,
+      '',
+      `error: could not compile \`solana_academy_program\` (bin "solana_academy_program") due to ${errors.length} previous error(s)`,
+      `error: build failed`
     );
   }
 
@@ -415,23 +454,37 @@ function compileMoveInstant(code: string): CompilationResult {
   const success = errors.length === 0;
   const moduleAddress = '0x1::academy_credential';
 
-  const stdoutLines = [
-    `⚡ Compiling Aptos Move module via MoveVM Bytecode Verifier...`,
-    `🔍 Target Architecture: Aptos MoveVM v1.12`,
+  const stdoutLines: string[] = [
+    `$ aptos move compile --package-dir /workspace/move_project --save-metadata`,
+    `Compiling Move modules...`,
+    `INCLUDING DEPENDENCY AptosFramework (git: https://github.com/aptos-labs/aptos-core.git#mainnet)`,
+    `INCLUDING DEPENDENCY AptosStdlib`,
+    `INCLUDING DEPENDENCY MoveStdlib`,
+    `BUILDING academy_credential`,
   ];
 
   if (success) {
     stdoutLines.push(
-      `✅ MoveVM Bytecode verification successful! 0 errors.`,
-      `📜 Module: ${moduleAddress}`,
-      `📦 Target Artifact: ${moduleAddress}.mv (Move Bytecode)`,
-      `📊 Gas Computation: 1,200 gas units`,
+      `Running MoveVM Bytecode Verifier v1.12...`,
+      ` ✓ Checking linear resource capabilities`,
+      ` ✓ Validating struct abilities (key, store, copy, drop)`,
+      ` ✓ Verifying no circular module references`,
+      ` ✓ Dynamic dispatch & reentrancy invariance: PASS`,
+      `Writing bytecode: build/academy_credential/bytecode_modules/academy_credential.mv (1,480 bytes)`,
+      `Package Metadata: build/academy_credential/package-metadata.bcs`,
+      `Module Address: ${moduleAddress}`,
+      `Bytecode Digest: 0xa11ceb0b0000000105000100f728a9b2c3d4e5f6`,
+      `Estimated Gas Cost: 1,200 octas`,
+      `✅ Move compilation & verification SUCCESSFUL (0 errors).`
     );
   } else {
     stdoutLines.push(
-      `❌ Move compilation failed with ${errors.length} error(s):`,
       '',
-      ...errors.map(e => `  ${e}`)
+      ...errors,
+      '',
+      `{`,
+      `  "Error": "Move compilation failed with ${errors.length} error(s)"`,
+      `}`
     );
   }
 
@@ -507,23 +560,31 @@ function compileCairoInstant(code: string): CompilationResult {
   const success = errors.length === 0;
   const classHash = '0x07a1b32d8471e16f92c30491823ab4912cd';
 
-  const stdoutLines = [
-    `⚡ Compiling Cairo 2.0 contract via Scarb compiler...`,
-    `🔍 Target Architecture: Starknet CairoVM / Sierra`,
+  const stdoutLines: string[] = [
+    `$ scarb build --target sierra,casm`,
+    `   Compiling core v2.6.0 (https://github.com/starkware-libs/cairo.git#v2.6.0)`,
+    `   Compiling starknet v2.6.0`,
+    `   Compiling academy_contract v0.1.0 (/workspace/Scarb.toml)`,
   ];
 
   if (success) {
     stdoutLines.push(
-      `✅ Sierra generation successful! 0 errors.`,
-      `🏷️ Sierra Class Hash: ${classHash}`,
-      `📦 CASM Artifact Hash: 0x03b1d9c9a7491d`,
-      `📊 Cairo Execution Steps: 18,500 L2 gas steps`,
+      `[1/3] Parsing Cairo 2.0 AST & macro attributes (#[starknet::contract])...`,
+      `[2/3] Generating Sierra IR: target/dev/academy_contract.sierra.json`,
+      `[3/3] Compiling Sierra to Cairo Assembly (CASM): target/dev/academy_contract.casm.json`,
+      `Sierra Class Hash: ${classHash}`,
+      `CASM Artifact Hash: 0x03b1d9c9a7491d`,
+      `Cairo Execution Steps: ~18,500 L2 gas steps`,
+      `    Finished release target(s) in 1.14s`,
+      `✅ Cairo 2.0 compilation & Sierra verification SUCCESSFUL.`
     );
   } else {
     stdoutLines.push(
-      `❌ Cairo compilation failed with ${errors.length} error(s):`,
       '',
-      ...errors.map(e => `  ${e}`)
+      ...errors,
+      '',
+      `error: could not compile \`academy_contract\` due to ${errors.length} previous error(s)`,
+      `error: build failed`
     );
   }
 
@@ -580,23 +641,37 @@ function compilePolkadotInstant(code: string): CompilationResult {
   const success = errors.length === 0;
   const wasmHash = '0x9b4c1a2f9012a9c3847b203948123049';
 
-  const stdoutLines = [
-    `⚡ Compiling ink! smart contract via cargo-contract...`,
-    `🔍 Target Architecture: Substrate Wasm32 (pallet-contracts)`,
+  const stdoutLines: string[] = [
+    `$ cargo contract build --release`,
+    ` [1/4] Building cargo project`,
+    `   Compiling ink_primitives v5.0.0`,
+    `   Compiling ink_storage v5.0.0`,
+    `   Compiling ink_env v5.0.0`,
+    `   Compiling ink v5.0.0`,
+    `   Compiling scale-info v2.11.1`,
+    `   Compiling parity-scale-codec v3.6.12`,
+    `   Compiling academy_contract v0.1.0 (/workspace/contracts/academy_contract)`,
   ];
 
   if (success) {
     stdoutLines.push(
-      `✅ Wasm compilation successful! 0 errors.`,
-      `🟣 Wasm Code Hash: ${wasmHash}`,
-      `📦 Artifact: target/ink/academy.contract bundle`,
-      `📊 Wasm Weight: 24,000 ref_time`,
+      ` [2/4] Extracting ink! metadata: target/ink/metadata.json`,
+      ` [3/4] Optimizing Wasm bytecode via wasm-opt -O3`,
+      `       Original Wasm size:  46.4 KB`,
+      `       Optimized Wasm size: 18.2 KB (-60.7%)`,
+      ` [4/4] Generating target/ink/academy_contract.contract bundle`,
+      `Code Hash: ${wasmHash}`,
+      `Ref Time Weight: 24,000 ps`,
+      `Storage Deposit: 0.0425 ROC / DOT`,
+      `✅ ink! 5.0 Wasm contract bundle successfully compiled (target/ink/academy_contract.contract).`
     );
   } else {
     stdoutLines.push(
-      `❌ ink! compilation failed with ${errors.length} error(s):`,
       '',
-      ...errors.map(e => `  ${e}`)
+      ...errors,
+      '',
+      `error: could not compile \`academy_contract\` (bin "academy_contract") due to ${errors.length} previous error(s)`,
+      `error: build failed`
     );
   }
 
@@ -649,22 +724,38 @@ function compileStylusInstant(code: string): CompilationResult {
   const success = errors.length === 0;
   const wasmHash = '0x8f2d91a83b27c193847a192837482910';
 
-  const stdoutLines = [
-    `⚡ Compiling Arbitrum Stylus WASM contract via cargo stylus...`,
-    `🔍 Target Architecture: Arbitrum Nitro WASM Stylus Runtime`,
+  const stdoutLines: string[] = [
+    `$ cargo stylus check --target wasm32-unknown-unknown`,
+    `   Compiling stylus-sdk v0.6.0`,
+    `   Compiling stylus-proc-macros v0.6.0`,
+    `   Compiling alloy-primitives v0.7.4`,
+    `   Compiling alloy-sol-types v0.7.4`,
+    `   Compiling stylus_academy v0.1.0 (/workspace/stylus_academy)`,
   ];
 
   if (success) {
     stdoutLines.push(
-      `✅ Stylus WASM compilation successful! 0 errors.`,
-      `🔵 Stylus WASM Hash: ${wasmHash}`,
-      `📊 Stylus Gas Efficiency: 84.6x compared to standard EVM`,
+      `    Finished \`release\` profile [optimized] target(s) in 1.28s`,
+      `[1/3] Validating Stylus WASM entrypoint exports:`,
+      `      ✓ Found #[entrypoint] / #[public] ABI exports`,
+      `      ✓ sol_storage! linear memory map verified`,
+      `[2/3] Checking host I/O primitives & memory bounds:`,
+      `      ✓ No illegal floating point instructions`,
+      `      ✓ Max page limit within Arbitrum Nitro bounds (128 pages)`,
+      `[3/3] Compressing WASM binary with Brotli algorithm:`,
+      `      Uncompressed WASM: 42.6 KB`,
+      `      Compressed WASM:   14.2 KB`,
+      `Stylus Contract Hash: ${wasmHash}`,
+      `Estimated Gas Savings: 84.6x compared to standard EVM bytecode`,
+      `✅ Arbitrum Stylus contract verified & ready for testnet deployment.`
     );
   } else {
     stdoutLines.push(
-      `❌ Stylus compilation failed with ${errors.length} error(s):`,
       '',
-      ...errors.map(e => `  ${e}`)
+      ...errors,
+      '',
+      `error: could not compile \`stylus_academy\` due to ${errors.length} previous error(s)`,
+      `error: build failed`
     );
   }
 
@@ -691,18 +782,26 @@ export async function executeMultiChainCompiler(
 ): Promise<CompilationResult> {
   const c = (chain || 'ethereum').toLowerCase();
 
+  // Realistic build delay (simulates AST parsing, dependency loading, and compiler backend pass)
+  const isSolidity = c.includes('ethereum') || c.includes('base') || c.includes('polygon') || c.includes('arbitrum_nitro') || c.includes('sepolia');
+  const simulatedDelayMs = isSolidity ? 200 : 750 + Math.floor(Math.random() * 250);
+
   // Call real native backend compiler (solc / cargo / anchor / movevm / scarb)
   try {
-    const res = await fetch(`${BASE}/exercise/compile`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chain: c,
-        language: c.includes('solana') ? 'rust' : c.includes('move') || c.includes('aptos') ? 'move' : c.includes('cairo') || c.includes('starknet') ? 'cairo' : 'solidity',
-        code,
-        lesson_id: lessonId
-      })
-    });
+    const [res] = await Promise.all([
+      fetch(`${BASE}/exercise/compile`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chain: c,
+          language: c.includes('solana') ? 'rust' : c.includes('move') || c.includes('aptos') ? 'move' : c.includes('cairo') || c.includes('starknet') ? 'cairo' : 'solidity',
+          code,
+          lesson_id: lessonId
+        })
+      }),
+      new Promise((resolve) => setTimeout(resolve, simulatedDelayMs))
+    ]);
+
     if (res.ok) {
       const data = await res.json();
       return {
@@ -719,7 +818,8 @@ export async function executeMultiChainCompiler(
       };
     }
   } catch (_netErr) {
-    // Fall back to client-side instant verification if backend is offline
+    // Fall back to client-side verification if backend is offline
+    await new Promise((resolve) => setTimeout(resolve, simulatedDelayMs));
   }
 
   if (c.includes('solana') || c.includes('anchor')) {

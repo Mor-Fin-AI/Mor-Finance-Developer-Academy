@@ -252,13 +252,13 @@ export const LessonView: React.FC<LessonViewProps> = ({
         const contractAddr = clientCompilation.artifacts?.programId || clientCompilation.artifacts?.classHash || clientCompilation.artifacts?.moduleAddress || clientCompilation.artifacts?.wasmHash || (clientCompilation.artifacts?.bytecode ? `0x${clientCompilation.artifacts.bytecode.slice(2, 42)}` : '0xContractDeployed');
         trackStudentDeployment(
           userId || 'developer-student',
-          'ARB_COHORT_004',
+          'KU_COHORT_2026_01',
           {
             contractAddress: contractAddr,
             network: track.trackId,
-            executionEnvironment: track.trackId === 'arbitrum' ? 'wasm_stylus' : track.trackId === 'solana' ? 'sealevel_svm' : track.trackId === 'aptos' ? 'move_vm' : 'evm',
+            executionEnvironment: track.trackId === 'arbitrum' ? 'wasm_stylus' : track.trackId === 'solana' ? 'sealevel_svm' : track.trackId === 'aptos' ? 'move_vm' : (track.trackId === 'base' || track.trackId === 'optimism') ? 'evm_op_stack' : 'evm_nitro',
             programmingLanguage: track.lang.toLowerCase(),
-            gasUsed: clientCompilation.gasEstimate || 42000
+            gasUsed: clientCompilation.gasEstimate || 21000
           }
         ).catch((err) => console.warn("Telemetry log warning:", err));
       } else {
