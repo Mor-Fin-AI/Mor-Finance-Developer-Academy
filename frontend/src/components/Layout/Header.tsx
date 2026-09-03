@@ -15,6 +15,7 @@ interface HeaderProps {
   onLogout: () => void;
   onLinkGitHub?: () => void;
   onLinkWallet?: () => void;
+  onOpenFastTrack?: () => void;
   isMobileNavOpen?: boolean;
   onToggleMobileNav?: () => void;
 }
@@ -46,6 +47,7 @@ export const Header: React.FC<HeaderProps> = ({
   onLogout,
   onLinkGitHub,
   onLinkWallet,
+  onOpenFastTrack,
   isMobileNavOpen,
   onToggleMobileNav,
 }) => {
@@ -114,6 +116,27 @@ export const Header: React.FC<HeaderProps> = ({
             <span className="header__link-label">Discord</span>
           </a>
         </div>
+
+        {/* Fast Track Institutional Enrollment Button */}
+        {onOpenFastTrack && (
+          <button
+            className="btn btn--accent btn--xs"
+            onClick={onOpenFastTrack}
+            style={{
+              background: 'linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%)',
+              color: '#ffffff',
+              border: '1px solid rgba(59, 130, 246, 0.5)',
+              fontWeight: 800,
+              fontSize: '0.74rem',
+              padding: '5px 10px',
+              borderRadius: '8px',
+              boxShadow: '0 0 12px rgba(37, 99, 235, 0.35)'
+            }}
+            title="Kenyatta University Fast Track Enrollment"
+          >
+            🎓 Fast Track (KU)
+          </button>
+        )}
 
         {/* Auth section */}
         <div className="header__auth">

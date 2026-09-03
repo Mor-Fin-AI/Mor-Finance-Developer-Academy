@@ -1,10 +1,12 @@
 /**
- * High-Performance Sandbox Compiler & Verification Service for Multi-Chain Smart Contracts.
- * Provides instant (<100ms) multi-phase AST validation, syntax parsing, type verification,
- * and compiler artifact generation across Solidity, Solana Rust, Aptos Move, Starknet Cairo,
- * Polkadot ink!, and Arbitrum Stylus.
+ * High-Performance Multi-Chain Smart Contract Sandbox Compiler & AST Verifier.
+ * Supports Solidity (EVM / Arbitrum Nitro / Base / Polygon / Optimism),
+ * Solana (Rust & Anchor), Aptos (Move), Starknet (Cairo 2.0),
+ * Polkadot (ink! Wasm), and Arbitrum Stylus (Rust).
  */
 import type { CompilationResult } from '../types';
+
+const BASE = (import.meta.env.VITE_API_BASE_URL as string) || '/api';
 
 // ─── Bracket & Token Matcher ────────────────────────────────────────────────
 
@@ -13,9 +15,8 @@ function analyzeBrackets(code: string): string[] {
   const stack: Array<{ char: string; line: number; col: number }> = [];
   const map: Record<string, string> = { '(': ')', '{': '}', '[': ']' };
   const closing: Record<string, string> = { ')': '(', '}': '{', ']': '[' };
-  
+
   let inString = false;
-  let stringChar = '';
   let inLineComment = false;
   let inBlockComment = false;
   let line = 1;
@@ -29,6 +30,7 @@ function analyzeBrackets(code: string): string[] {
       line++;
       col = 1;
       inLineComment = false;
+      inString = false; // reset single-line string at newline
       continue;
     }
 
@@ -40,19 +42,19 @@ function analyzeBrackets(code: string): string[] {
     if (c === '/' && next === '/') { inLineComment = true; i++; col += 2; continue; }
     if (c === '/' && next === '*') { inBlockComment = true; i++; col += 2; continue; }
 
-    if (!inString && (c === '"' || c === "'")) {
-      inString = true;
-      stringChar = c;
-      col++;
-      continue;
-    }
-    if (inString && c === stringChar && code[i - 1] !== '\\') {
-      inString = false;
+    // Double-quote strings
+    if (c === '"') {
+      if (!inString) {
+        inString = true;
+      } else if (code[i - 1] !== '\\') {
+        inString = false;
+      }
       col++;
       continue;
     }
     if (inString) { col++; continue; }
 
+    // Bracket tracking
     if (map[c]) {
       stack.push({ char: c, line, col });
     } else if (closing[c]) {
@@ -122,7 +124,7 @@ function compileSolidityInstant(code: string, chain: string): CompilationResult 
   const hasContract = codeLines.some(l => 
     /\b(contract|interface|library|abstract\s+contract)\s+([A-Za-z0-9_]+)/.test(l.clean)
   );
-  if (!hasContract) {
+  if (!hasContract && !code.includes('contract ') && !code.includes('interface ') && !code.includes('library ')) {
     errors.push("DeclarationError: Source file does not declare any contract, interface, or library.");
   }
 
@@ -134,31 +136,26 @@ function compileSolidityInstant(code: string, chain: string): CompilationResult 
       return;
     }
     if (clean.startsWith('contract ') || clean.startsWith('interface ') || clean.startsWith('library ') || clean.startsWith('abstract contract ')) {
-      if (!clean.endsWith('{') && !clean.endsWith('}')) {
-        // contract header on line
-      }
       return;
     }
-    if (clean.startsWith('function ') || clean.startsWith('constructor') || clean.startsWith('modifier ') || clean.startsWith('event ') || clean.startsWith('struct ') || clean.startsWith('enum ')) {
-      if (clean.startsWith('event ') && !clean.endsWith(';')) {
-        errors.push(`ParserError [line ${lineNum}]: Missing ';' after event declaration: '${clean}'`);
-      }
+    if (clean.startsWith('event ') && !clean.endsWith(';')) {
+      errors.push(`ParserError [line ${lineNum}]: Missing ';' after event declaration: '${clean}'`);
       return;
     }
+    if (clean.startsWith('struct ') || clean.startsWith('enum ')) return;
     if (clean === '{' || clean === '}' || clean.endsWith('{') || clean.endsWith('}')) return;
 
     // Check statements requiring semicolons
     const statementKeywords = ['require', 'revert', 'assert', 'emit', 'return', 'delete', 'break', 'continue'];
-    const isStatement = statementKeywords.some(kw => clean.startsWith(kw) || clean.includes(` ${kw}(`)) || clean.includes('=') || clean.includes('+=') || clean.includes('-=');
-    if (isStatement && !clean.endsWith(';') && !clean.endsWith(',')) {
-      errors.push(`ParserError [line ${lineNum}]: Expected ';' but got '${clean.slice(-1)}' in statement: '${clean}'`);
+    const isStatement = statementKeywords.some(kw => clean.startsWith(kw) || clean.includes(` ${kw}(`)) || (clean.includes('=') && !clean.includes('=>') && !clean.includes('==') && !clean.includes('!=') && !clean.includes('<=') && !clean.includes('>='));
+    if (isStatement && !clean.endsWith(';') && !clean.endsWith(',') && !clean.endsWith('{') && !clean.endsWith('}')) {
+      errors.push(`ParserError [line ${lineNum}]: Expected ';' at end of statement: '${clean}'`);
     }
 
-    // Common typo checks
+    // Typo checks
     if (/\brequir\b/.test(clean)) errors.push(`DeclarationError [line ${lineNum}]: Undeclared identifier 'requir'. Did you mean 'require'?`);
     if (/\brever\b/.test(clean)) errors.push(`DeclarationError [line ${lineNum}]: Undeclared identifier 'rever'. Did you mean 'revert'?`);
     if (/\bfuncton\b/.test(clean)) errors.push(`ParserError [line ${lineNum}]: Expected 'function' but got 'functon'.`);
-    if (/\bmsg\.sand\b/.test(clean) || /\bmsg\.sen\b/.test(clean)) errors.push(`DeclarationError [line ${lineNum}]: Member 'send/sender' not found on msg.`);
   });
 
   // Extract functions and contract name
@@ -175,16 +172,6 @@ function compileSolidityInstant(code: string, chain: string): CompilationResult 
 
     const eMatch = clean.match(/\bevent\s+([A-Za-z0-9_]+)\s*\(/);
     if (eMatch) events.push(eMatch[1]);
-  });
-
-  // Validate function visibility
-  codeLines.forEach(({ clean, lineNum }) => {
-    if (clean.startsWith('function ') && clean.includes('(')) {
-      const isInterface = code.includes('interface ');
-      if (!isInterface && !clean.includes('public') && !clean.includes('external') && !clean.includes('internal') && !clean.includes('private')) {
-        errors.push(`SyntaxError [line ${lineNum}]: No visibility specified for function. Must be 'public', 'external', 'internal', or 'private'.`);
-      }
-    }
   });
 
   const success = errors.length === 0;
@@ -529,12 +516,40 @@ function compileStylusInstant(code: string): CompilationResult {
 export async function executeMultiChainCompiler(
   chain: string,
   code: string,
-  _lessonId?: string
+  lessonId?: string
 ): Promise<CompilationResult> {
-  const c = (chain || '').toLowerCase();
+  const c = (chain || 'ethereum').toLowerCase();
 
-  // Small delay for UI animation feel (100ms)
-  await new Promise(resolve => setTimeout(resolve, 80));
+  // Call real native backend compiler (solc / cargo / anchor / movevm / scarb)
+  try {
+    const res = await fetch(`${BASE}/exercise/compile`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        chain: c,
+        language: c.includes('solana') ? 'rust' : c.includes('move') || c.includes('aptos') ? 'move' : c.includes('cairo') || c.includes('starknet') ? 'cairo' : 'solidity',
+        code,
+        lesson_id: lessonId
+      })
+    });
+    if (res.ok) {
+      const data = await res.json();
+      return {
+        success: data.success,
+        chain: data.chain,
+        language: data.language,
+        compiler: data.compiler,
+        stdout: data.stdout,
+        stderr: data.stderr,
+        syntaxErrors: data.syntax_errors || [],
+        warnings: data.warnings || [],
+        gasEstimate: data.gas_estimate || 0,
+        artifacts: data.artifacts || {}
+      };
+    }
+  } catch (_netErr) {
+    // Fall back to client-side instant verification if backend is offline
+  }
 
   if (c.includes('solana') || c.includes('anchor')) {
     return compileSolanaInstant(code);
@@ -552,6 +567,5 @@ export async function executeMultiChainCompiler(
     return compileStylusInstant(code);
   }
 
-  // Default to EVM / Solidity
   return compileSolidityInstant(code, chain);
 }

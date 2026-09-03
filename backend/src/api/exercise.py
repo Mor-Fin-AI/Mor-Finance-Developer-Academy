@@ -9,6 +9,19 @@ from typing import Dict, List, Any, Optional
 from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel, Field
 
+try:
+    import solcx
+    try:
+        solcx.set_solc_version("0.8.20")
+    except Exception:
+        try:
+            solcx.install_solc("0.8.20")
+            solcx.set_solc_version("0.8.20")
+        except Exception as _solc_init_err:
+            print(f"Notice: Solc 0.8.20 initialisation note: {_solc_init_err}")
+except ImportError:
+    solcx = None
+
 from src.services.lessons import LESSONS_DB, get_track_lessons
 from src.services.db import log_exercise_submission, get_or_create_user
 from src.models.progress import ExerciseSubmission
@@ -180,15 +193,81 @@ def compile_code_sandbox(chain: str, language: str, code: str, lesson_id: Option
     else:
         # Default to EVM / Solidity (Arbitrum, Ethereum, Base, Optimism, Polygon)
         compiler_name = "solc v0.8.20+commit.a1b79de6 (EVM / Arbitrum Nitro)"
-        errors = validate_solidity_syntax(code)
         lang_detected = "Solidity"
+        errors = []
+        warnings = []
+        abi = []
+        bytecode = ""
         gas_est = 42000
+        contract_name = "SmartContract"
+
+        if solcx is not None:
+            try:
+                input_json = {
+                    "language": "Solidity",
+                    "sources": {
+                        "Contract.sol": {"content": code}
+                    },
+                    "settings": {
+                        "outputSelection": {
+                            "*": {
+                                "*": ["abi", "evm.bytecode.object", "evm.gasEstimates"]
+                            }
+                        },
+                        "optimizer": {"enabled": True, "runs": 200}
+                    }
+                }
+                output = solcx.compile_standard(input_json, solc_version="0.8.20")
+                
+                # Check solc errors and warnings
+                solc_messages = output.get("errors", [])
+                for msg in solc_messages:
+                    severity = msg.get("severity", "")
+                    formatted = msg.get("formattedMessage") or msg.get("message", "")
+                    if severity == "error":
+                        errors.append(formatted.strip())
+                    elif severity == "warning":
+                        warnings.append(formatted.strip())
+
+                if not errors and output.get("contracts", {}).get("Contract.sol"):
+                    contracts = output["contracts"]["Contract.sol"]
+                    first_name = list(contracts.keys())[0]
+                    contract_name = first_name
+                    c_data = contracts[first_name]
+                    abi = c_data.get("abi", [])
+                    bytecode = "0x" + c_data.get("evm", {}).get("bytecode", {}).get("object", "")
+                    gas_est_data = c_data.get("evm", {}).get("gasEstimates", {}).get("creation", {})
+                    exec_cost = gas_est_data.get("totalCost") or gas_est_data.get("executionCost")
+                    if exec_cost and str(exec_cost).isdigit():
+                        gas_est = int(exec_cost)
+            except solcx.exceptions.SolcError as se:
+                err_str = str(se)
+                lines = err_str.split("\n")
+                clean_errs = []
+                for l in lines:
+                    if l.startswith("> command:") or l.startswith("> return code:") or l.startswith("> stdout:") or l.startswith("> stderr:"):
+                        break
+                    if l.strip():
+                        clean_errs.append(l)
+                if clean_errs:
+                    errors.append("\n".join(clean_errs))
+                else:
+                    errors.append(err_str)
+            except Exception as e:
+                fallback_errs = validate_solidity_syntax(code)
+                if fallback_errs:
+                    errors.extend(fallback_errs)
+                else:
+                    errors.append(f"Compiler Exception: {str(e)}")
+        else:
+            fallback_errs = validate_solidity_syntax(code)
+            if fallback_errs:
+                errors.extend(fallback_errs)
+
         artifacts = {
-            "abi": [
-                {"inputs": [], "stateMutability": "nonpayable", "type": "constructor"},
-                {"anonymous": False, "inputs": [{"indexed": True, "name": "user", "type": "address"}], "name": "Executed", "type": "event"}
-            ],
-            "bytecode": f"0x608060405234801561001057600080fd5b50{code_hash}5b600080fdfea2646970667358221220",
+            "abi": abi if abi else [{"inputs": [], "stateMutability": "nonpayable", "type": "constructor"}],
+            "bytecode": bytecode if bytecode else f"0x608060405234801561001057600080fd5b50{code_hash}",
+            "contract_name": contract_name,
             "compiler_target": "London / Shanghai EVM"
         }
 
@@ -205,7 +284,12 @@ def compile_code_sandbox(chain: str, language: str, code: str, lesson_id: Option
         )
         stderr = ""
     else:
-        stdout = f"⚡ Compiling {lang_detected} smart contract via {compiler_name}...\n❌ Compilation failed with {len(errors)} error(s)."
+        err_formatted = "\n\n".join(errors)
+        stdout = (
+            f"⚡ Compiling {lang_detected} smart contract via {compiler_name}...\n"
+            f"❌ Compilation failed with {len(errors)} error(s):\n\n"
+            f"{err_formatted}"
+        )
         stderr = "\n".join(errors)
 
     return SandboxCompileResponse(

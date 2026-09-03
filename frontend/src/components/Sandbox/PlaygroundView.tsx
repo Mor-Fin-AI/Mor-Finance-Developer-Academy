@@ -673,9 +673,9 @@ export const PlaygroundView: React.FC = () => {
 
               <pre className="terminal-logs">
                 {compiling ? (
-                  `⏳ Loading ${activePreset.lang} compiler...\n   This may take a few seconds on first run (downloading Wasm binary)...`
+                  `⏳ Loading ${activePreset.lang} compiler...\n   Running compiler diagnostics...`
                 ) : compilationResult ? (
-                  compilationResult.stdout
+                  compilationResult.stdout || (compilationResult.syntaxErrors && compilationResult.syntaxErrors.length > 0 ? `❌ Compilation failed:\n\n${compilationResult.syntaxErrors.join('\n\n')}` : 'Compilation finished.')
                 ) : (
                   <span style={{ color: 'var(--clr-text-muted)' }}>
                     Sandbox terminal is idle. Click "Compile &amp; Verify" to run the compiler and view real-time diagnostics.

@@ -4,6 +4,7 @@ import './LandingPage.css';
 interface LandingPageProps {
   onLoginGitHub: () => void;
   onLoginWallet: () => void;
+  onOpenFastTrack?: () => void;
   loading: boolean;
   error: string | null;
 }
@@ -11,6 +12,7 @@ interface LandingPageProps {
 export const LandingPage: React.FC<LandingPageProps> = ({
   onLoginGitHub,
   onLoginWallet,
+  onOpenFastTrack,
   loading,
   error,
 }) => {
@@ -53,9 +55,29 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           </div>
         ) : (
           <div className="landing-cta-container">
+            {/* Fast Track Institutional Enrollment Banner CTA */}
+            {onOpenFastTrack && (
+              <button
+                className="btn btn--primary"
+                onClick={onOpenFastTrack}
+                style={{
+                  background: 'linear-gradient(135deg, #1e40af 0%, #3b82f6 100%)',
+                  boxShadow: '0 8px 25px rgba(37, 99, 235, 0.5)',
+                  border: '1px solid rgba(59, 130, 246, 0.6)',
+                  fontWeight: 800,
+                  fontSize: '1.05rem',
+                  padding: '14px 28px',
+                  borderRadius: '12px',
+                  marginBottom: '10px'
+                }}
+              >
+                🎓 Fast Track Student Enrollment (Kenyatta Univ)
+              </button>
+            )}
+
             {/* Primary Call To Action - Enter Developer Academy */}
             <div className="landing-primary-cta">
-              <button className="btn btn--primary landing-main-cta-btn" onClick={onLoginGitHub}>
+              <button className="btn btn--secondary landing-main-cta-btn" onClick={onLoginGitHub}>
                 🚀 Launch MOR Developer Academy
               </button>
             </div>

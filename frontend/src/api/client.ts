@@ -4593,58 +4593,55 @@ export async function fetchArbitrumTelemetry(): Promise<ArbitrumTelemetryData> {
       }
     },
     cohorts_summary: {
-      total_arbitrum_deployments: 22,
+      total_arbitrum_deployments: 0,
       active_cohort_code: "ARB_COHORT_004",
-      total_tracked_developers: 32,
-      stylus_rust_deployments: 16,
-      nitro_solidity_deployments: 6,
+      total_tracked_developers: 0,
+      stylus_rust_deployments: 0,
+      nitro_solidity_deployments: 0,
       milestone_1_progress: "100% (Infrastructure Integration & Tracking)",
       milestone_2_progress: "100% (On-Chain Execution & Stylus WASM)",
       milestone_3_progress: "100% (Workforce Retention & Job Placement)"
     },
-    recent_deployments: [
-      {
-        deployment_id: "dep_arb_001",
-        developer_github_id: "john-egbonwon",
-        cohort_id: "ARB_COHORT_004",
-        network: "arbitrum_sepolia",
-        execution_environment: "wasm_stylus",
-        contract_address: "0x3f92b719acbf3928a2b0907a1b32d8471e16f",
-        programming_language: "rust",
-        gas_used_computation: 42000,
-        verified_on_chain: true,
-        explorer_url: "https://sepolia.arbiscan.io/address/0x3f92b719acbf3928a2b0907a1b32d8471e16f",
-        timestamp: "2026-08-28T14:22:10Z"
-      },
-      {
-        deployment_id: "dep_arb_002",
-        developer_github_id: "sarah-cairo",
-        cohort_id: "ARB_COHORT_004",
-        network: "arbitrum_sepolia",
-        execution_environment: "wasm_stylus",
-        contract_address: "0x8a721c0b89f31a293847a92c30491823ab4912cd",
-        programming_language: "rust",
-        gas_used_computation: 38500,
-        verified_on_chain: true,
-        explorer_url: "https://sepolia.arbiscan.io/address/0x8a721c0b89f31a293847a92c30491823ab4912cd",
-        timestamp: "2026-08-29T09:15:30Z"
-      },
-      {
-        deployment_id: "dep_arb_003",
-        developer_github_id: "alex-move",
-        cohort_id: "ARB_COHORT_003",
-        network: "arbitrum_sepolia",
-        execution_environment: "evm_nitro",
-        contract_address: "0x51c4e20918ab3c9481230498a12bc90384712039",
-        programming_language: "solidity",
-        gas_used_computation: 384000,
-        verified_on_chain: true,
-        explorer_url: "https://sepolia.arbiscan.io/address/0x51c4e20918ab3c9481230498a12bc90384712039",
-        timestamp: "2026-08-30T18:40:15Z"
-      }
-    ],
+    recent_deployments: [],
     solidity_registry_code: `// SPDX-License-Identifier: MIT\npragma solidity ^0.8.20;\n\ncontract ArbitrumAcademyRegistry {\n    address public academyAdmin;\n    struct DeveloperProfile {\n        string githubId;\n        string trackingCohort;\n        bool hasDeployedSolidity;\n        bool hasDeployedStylus;\n        bool isJobPlaced;\n    }\n    mapping(address => DeveloperProfile) public developers;\n    modifier onlyAdmin() { require(msg.sender == academyAdmin, "Unauthorized"); _; }\n    constructor() { academyAdmin = msg.sender; }\n    function onboardDeveloper(address _wallet, string memory _gId, string memory _c) external onlyAdmin {\n        developers[_wallet] = DeveloperProfile(_gId, _c, false, false, false);\n    }\n    function verifyMilestone(address _wallet, string memory _mType, bool _status) external onlyAdmin {\n        DeveloperProfile storage dev = developers[_wallet];\n        if (keccak256(bytes(_mType)) == keccak256(bytes("solidity"))) dev.hasDeployedSolidity = _status;\n        else if (keccak256(bytes(_mType)) == keccak256(bytes("stylus"))) dev.hasDeployedStylus = _status;\n        else if (keccak256(bytes(_mType)) == keccak256(bytes("careers"))) dev.isJobPlaced = _status;\n    }\n}`,
     stylus_rust_template: `#![cfg_attr(not(feature = "export-abi"), no_main)]\nextern crate alloc;\nuse stylus_sdk::{prelude::*, storage::StorageU256};\n\n#[storage]\n#[entrypoint]\npub struct AcademyCounter { number_of_graduates: StorageU256; }\n\n#[public]\nimpl AcademyCounter {\n    pub fn get_graduates(&self) -> Result<u64, Vec<u8>> { Ok(self.number_of_graduates.get().as_u64()) }\n    pub fn increment_graduates(&mut self) -> Result<(), Vec<u8>> {\n        let current = self.number_of_graduates.get();\n        self.number_of_graduates.set(current + 1);\n        Ok(())\n    }\n}`
+  };
+}
+
+export async function fetchCohortAnalytics(): Promise<{
+  total_developers: number;
+  beginners_count: number;
+  intermediates_count: number;
+  advanced_count: number;
+  total_activity_events: number;
+  testnet_deployments: number;
+  recent_activities: any[];
+  chain_breakdown?: any[];
+  monthly_events: Record<string, number>;
+}> {
+  try {
+    const res = await fetch(`${BASE}/analytics/cohort`);
+    if (res.ok) {
+      return await res.json();
+    }
+  } catch (err) {
+    console.warn("Could not fetch cohort analytics from backend, falling back to dynamic live defaults:", err);
+  }
+  return {
+    total_developers: 0,
+    beginners_count: 0,
+    intermediates_count: 0,
+    advanced_count: 0,
+    total_activity_events: 0,
+    testnet_deployments: 0,
+    recent_activities: [],
+    chain_breakdown: [],
+    monthly_events: {
+      "May 2026": 0,
+      "June 2026": 0,
+      "July 2026": 0,
+      "August 2026": 0
+    }
   };
 }
 
@@ -4680,8 +4677,59 @@ export async function logArbitrumDeployment(data: {
     body: JSON.stringify(data)
   });
   return res.json();
+}export async function enrollUniversityStudent(data: {
+  oauth_code?: string;
+  code?: string;
+  university_affiliate?: string;
+  cohort_id?: string;
+  github_username?: string;
+}): Promise<{
+  status: string;
+  student_id: string;
+  github_username: string;
+  token: string;
+  user: any;
+  unlocked_sandbox: boolean;
+}> {
+  const res = await fetch(`${BASE}/v1/auth/github/callback`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      oauth_code: data.oauth_code || data.code,
+      university_affiliate: data.university_affiliate || 'Kenyatta University',
+      cohort_id: data.cohort_id || 'KU_COHORT_2026_01',
+      github_username: data.github_username
+    })
+  });
+  if (!res.ok) {
+    // Fallback to /api/auth/github/callback
+    const fallback = await fetch(`${BASE}/auth/github/callback`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    if (!fallback.ok) throw new Error('University fast-track enrollment failed');
+    return fallback.json();
+  }
+  return res.json();
 }
 
-
+/**
+ * Initiates the frictionless GitHub OAuth redirection with university routing parameters.
+ */
+export function initiateFrictionlessEnrollment(
+  clientId = 'YOUR_GITHUB_CLIENT_ID_CONFIG',
+  redirectUri = window.location.origin,
+  university = 'Kenyatta University',
+  cohort = 'KU_COHORT_2026_01'
+) {
+  console.log('[MOR_AUTH]: Launching rapid OAuth enrollment for', university, cohort);
+  const stateParameters = btoa(JSON.stringify({
+    university,
+    cohort
+  }));
+  const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=user:email&state=${stateParameters}`;
+  window.location.href = githubAuthUrl;
+}
 
 

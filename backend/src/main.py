@@ -41,6 +41,8 @@ app.add_middleware(
 
 # ─── Routers ──────────────────────────────────────────────────────────────────
 app.include_router(auth.router, prefix="/api/auth", tags=["Auth"])
+app.include_router(auth.router, prefix="/api/v1/auth", tags=["Auth V1"])
+app.include_router(auth.router, prefix="/v1/auth", tags=["Auth V1 Root"])
 app.include_router(courses.router, prefix="/api/courses", tags=["Courses"])
 app.include_router(quiz.router, prefix="/api/quiz", tags=["Quiz"])
 app.include_router(exercise.router, prefix="/api/exercise", tags=["Exercise"])

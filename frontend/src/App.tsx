@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import type { NavPage, UserProgress, Course } from './types';
-import { fetchProgress, fetchCourses, authGithub, authWallet, fetchAuthConfig } from './api/client';
+import { fetchProgress, fetchCourses, authGithub, authWallet, fetchAuthConfig, enrollUniversityStudent } from './api/client';
 import { Sidebar } from './components/Layout/Sidebar';
 import { Header }  from './components/Layout/Header';
 import { RoadmapPage, DashboardPage, MentorPage } from './pages';
@@ -17,6 +17,7 @@ import { SubscriptionPlans } from './components/Subscriptions/SubscriptionPlans'
 import { AnalyticsPage } from './components/Analytics/AnalyticsPage';
 import { CareerDashboard } from './components/Careers/CareerDashboard';
 import { PlaygroundView } from './components/Sandbox/PlaygroundView';
+import { FastTrackEnrollmentModal } from './components/Auth/FastTrackEnrollmentModal';
 import './index.css';
 
 export default function App() {
@@ -84,11 +85,14 @@ export default function App() {
   const [selectedLevel, setSelectedLevel] = useState<number | null>(null);
   const [selectedLessonId, setSelectedLessonId] = useState<string | null>(null);
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const [showFastTrackModal, setShowFastTrackModal] = useState(false);
 
   // Check for GitHub OAuth callback code in URL on mount
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const code = params.get('code');
+    const stateParam = params.get('state');
+
     if (code) {
       // Clear URL params immediately to avoid re-triggering exchange
       window.history.replaceState({}, document.title, window.location.pathname);
@@ -113,21 +117,57 @@ export default function App() {
             .finally(() => setLoading(false));
         });
       } else {
-        // Standard GitHub Auth
-        authGithub(undefined, code)
-          .then(({ token, user }) => {
-            setUserId(user.user_id);
+        // Parse university / cohort metadata from state if present
+        let university = 'Kenyatta University';
+        let cohort = 'KU_COHORT_2026_01';
+        if (stateParam) {
+          try {
+            const parsed = JSON.parse(atob(stateParam));
+            if (parsed.university) university = parsed.university;
+            if (parsed.cohort) cohort = parsed.cohort;
+          } catch (e) {
+            console.warn("Could not decode OAuth state param:", e);
+          }
+        }
+
+        // Fast-Track University Enrollment Callback Flow
+        enrollUniversityStudent({
+          oauth_code: code,
+          university_affiliate: university,
+          cohort_id: cohort
+        })
+          .then(({ token, user, unlocked_sandbox }) => {
+            const uid = user.user_id || user._id;
+            setUserId(uid);
             setAuthType('github');
             setJwtToken(token);
-            setSessionCookie(user.user_id, 'github', token);
+            setSessionCookie(uid, 'github', token);
             setProgress(user);
             setSelectedLevel(null);
             setSelectedLessonId(null);
-            navigate('/academy');
+            if (unlocked_sandbox) {
+              navigate('/sandbox');
+            } else {
+              navigate('/academy');
+            }
           })
           .catch((err) => {
-            console.error("GitHub OAuth callback error:", err);
-            alert("GitHub OAuth authentication failed. Please configure GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET.");
+            console.warn("Fast-track callback fallback to standard auth:", err);
+            authGithub(undefined, code)
+              .then(({ token, user }) => {
+                setUserId(user.user_id);
+                setAuthType('github');
+                setJwtToken(token);
+                setSessionCookie(user.user_id, 'github', token);
+                setProgress(user);
+                setSelectedLevel(null);
+                setSelectedLessonId(null);
+                navigate('/academy');
+              })
+              .catch((stdErr) => {
+                console.error("GitHub OAuth callback error:", stdErr);
+                alert("GitHub OAuth authentication failed. Please configure GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET.");
+              });
           })
           .finally(() => setLoading(false));
       }
@@ -372,12 +412,26 @@ export default function App() {
 
   if (!authType) {
     return (
-      <LandingPage
-        onLoginGitHub={handleLoginGitHub}
-        onLoginWallet={handleLoginWallet}
-        loading={loading}
-        error={loginError}
-      />
+      <>
+        <LandingPage
+          onLoginGitHub={handleLoginGitHub}
+          onLoginWallet={handleLoginWallet}
+          onOpenFastTrack={() => setShowFastTrackModal(true)}
+          loading={loading}
+          error={loginError}
+        />
+        <FastTrackEnrollmentModal
+          isOpen={showFastTrackModal}
+          onClose={() => setShowFastTrackModal(false)}
+          onSuccess={(user) => {
+            const uid = user.user_id || user._id;
+            setUserId(uid);
+            setAuthType('github');
+            setProgress(user);
+            navigate('/sandbox');
+          }}
+        />
+      </>
     );
   }
 
@@ -408,8 +462,20 @@ export default function App() {
         onLogout={handleLogout}
         onLinkGitHub={handleLinkGitHub}
         onLinkWallet={handleLinkWallet}
+        onOpenFastTrack={() => setShowFastTrackModal(true)}
         isMobileNavOpen={mobileNavOpen}
         onToggleMobileNav={() => setMobileNavOpen((prev) => !prev)}
+      />
+      <FastTrackEnrollmentModal
+        isOpen={showFastTrackModal}
+        onClose={() => setShowFastTrackModal(false)}
+        onSuccess={(user) => {
+          const uid = user.user_id || user._id;
+          setUserId(uid);
+          setAuthType('github');
+          setProgress(user);
+          navigate('/sandbox');
+        }}
       />
       <main className="app-main" id="main-content">
         <Routes>

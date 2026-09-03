@@ -494,30 +494,45 @@
 
 /* ─── Arbitrum Foundation Telemetry & Stylus Velocity ───────────────────────── */
 .arbitrum-telemetry-panel {
-  padding: 24px;
+  padding: 28px;
   border-radius: var(--radius-xl);
   border: 1px solid rgba(59, 130, 246, 0.35);
-  background: linear-gradient(135deg, rgba(30, 58, 138, 0.18) 0%, rgba(10, 11, 23, 0.7) 100%);
-  margin-bottom: 24px;
+  background: linear-gradient(135deg, rgba(30, 58, 138, 0.22) 0%, rgba(10, 15, 30, 0.85) 100%);
+  margin-bottom: 28px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
+.arbitrum-kpis-grid,
 .arbitrum-kpi-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 16px;
-  margin: 20px 0;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin: 22px 0;
+}
+
+@media (max-width: 900px) {
+  .arbitrum-kpis-grid,
+  .arbitrum-kpi-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .arbitrum-kpi-card {
-  padding: 20px;
-  border-radius: var(--radius-lg);
-  background: rgba(15, 23, 42, 0.65);
+  padding: 22px;
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.75);
   border: 1px solid rgba(59, 130, 246, 0.25);
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
   position: relative;
   overflow: hidden;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.arbitrum-kpi-card:hover {
+  border-color: rgba(59, 130, 246, 0.5);
+  transform: translateY(-2px);
 }
 
 .arbitrum-kpi-card::before {
@@ -536,6 +551,7 @@
   align-items: center;
 }
 
+.arbitrum-kpi-tag,
 .arbitrum-kpi-metric {
   font-size: 0.75rem;
   font-weight: 800;
@@ -545,80 +561,185 @@
 }
 
 .arbitrum-kpi-status {
-  font-size: 0.65rem;
+  font-size: 0.7rem;
   font-weight: 800;
-  padding: 3px 8px;
+  padding: 4px 10px;
   border-radius: 999px;
   background: rgba(16, 185, 129, 0.15);
   color: #34d399;
-  border: 1px solid rgba(16, 185, 129, 0.3);
+  border: 1px solid rgba(16, 185, 129, 0.35);
 }
 
+.arbitrum-kpi-main {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.arbitrum-kpi-val,
 .arbitrum-kpi-value {
-  font-size: 1.8rem;
+  font-size: 2rem;
   font-weight: 900;
   color: #ffffff;
   letter-spacing: -0.02em;
+  line-height: 1.1;
 }
 
+.arbitrum-kpi-lbl,
 .arbitrum-kpi-title {
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   font-weight: 700;
-  color: #e2e8f0;
+  color: #93c5fd;
+  display: block;
+  margin-top: 2px;
 }
 
 .arbitrum-kpi-desc {
-  font-size: 0.76rem;
-  color: var(--clr-text-secondary);
-  line-height: 1.45;
+  font-size: 0.78rem;
+  color: #94a3b8;
+  line-height: 1.5;
   margin: 0;
 }
 
+.arbitrum-nav-tabs,
 .arbitrum-tabs-nav {
   display: flex;
-  gap: 8px;
+  gap: 10px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding-bottom: 12px;
-  margin-bottom: 16px;
+  padding-bottom: 14px;
+  margin-bottom: 20px;
   flex-wrap: wrap;
 }
 
 .arbitrum-tab-btn {
-  padding: 8px 16px;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 10px 18px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
   background: rgba(255, 255, 255, 0.04);
   color: var(--clr-text-secondary);
-  font-size: 0.8rem;
+  font-size: 0.84rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .arbitrum-tab-btn:hover {
   background: rgba(59, 130, 246, 0.15);
   color: #ffffff;
-  border-color: rgba(59, 130, 246, 0.3);
+  border-color: rgba(59, 130, 246, 0.35);
 }
 
 .arbitrum-tab-btn.active {
   background: #2563eb;
   color: #ffffff;
   border-color: #3b82f6;
-  box-shadow: 0 0 12px rgba(37, 99, 235, 0.4);
+  box-shadow: 0 0 16px rgba(37, 99, 235, 0.45);
+}
+
+.arbitrum-grid-two {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 860px) {
+  .arbitrum-grid-two {
+    grid-template-columns: 1fr;
+  }
+}
+
+.arbitrum-milestone-box {
+  padding: 22px;
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.arbitrum-milestone-box h4 {
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 16px 0;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.milestone-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: 10px;
+}
+
+.milestone-step.done {
+  border-color: rgba(16, 185, 129, 0.2);
+  background: rgba(16, 185, 129, 0.04);
+}
+
+.milestone-step .step-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.milestone-step strong {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 3px;
+}
+
+.milestone-step p {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.milestone-stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: 10px;
+}
+
+.milestone-stat-row span {
+  font-size: 0.84rem;
+  color: #94a3b8;
+}
+
+.milestone-stat-row strong {
+  font-size: 0.9rem;
+  color: #ffffff;
+  font-weight: 700;
 }
 
 .arbitrum-code-block {
   background: #090d16;
   border: 1px solid rgba(59, 130, 246, 0.2);
   border-radius: 12px;
-  padding: 16px;
+  padding: 18px;
   font-family: 'Fira Code', 'Cascadia Code', monospace;
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   color: #93c5fd;
-  max-height: 340px;
+  max-height: 360px;
   overflow-y: auto;
-  line-height: 1.5;
+  line-height: 1.55;
   white-space: pre;
 }
 
@@ -652,4 +773,5 @@
   line-height: 1.45;
   margin: 0;
 }
+
 
