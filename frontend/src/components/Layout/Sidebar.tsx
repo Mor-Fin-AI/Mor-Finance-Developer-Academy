@@ -14,8 +14,9 @@ interface SidebarProps {
 }
 
 const NAV_ITEMS: { id: NavPage; label: string; icon: string; description: string }[] = [
-  { id: 'dashboard',    label: 'My Dashboard',     icon: '📊',  description: 'Progress & XP' },
+  { id: 'about',        label: 'About Us',          icon: '🏛️',  description: 'Mission & University Web3' },
   { id: 'academy',      label: 'Developer Academy', icon: '🎓',  description: 'Multi-chain curriculum' },
+  { id: 'dashboard',    label: 'My Dashboard',     icon: '📊',  description: 'Progress & XP' },
   { id: 'sandbox',      label: 'Code Sandbox IDE', icon: '💻',  description: 'Write & compile 6 languages' },
   { id: 'mentor',       label: 'AI Mentor (OpenClaw)', icon: '🤖', description: 'Real-time compiler assistance' },
   { id: 'forum',        label: 'Community Forum',  icon: '💬',  description: 'Connect & discuss' },
@@ -23,7 +24,6 @@ const NAV_ITEMS: { id: NavPage; label: string; icon: string; description: string
   { id: 'careers',      label: 'Career Dashboard', icon: '💼',  description: 'Jobs, Internships & Grants' },
   { id: 'certificates', label: 'My Certificates',  icon: '🏆',  description: 'Earned credentials' },
   { id: 'subscriptions', label: 'Subscription Plans', icon: '💎', description: 'Unlock premium features' },
-  { id: 'about',        label: 'About MOR Finance', icon: 'ℹ️',  description: 'Mission & ecosystem' },
 ];
 
 export const Sidebar: React.FC<SidebarProps> = ({

@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
+import FastTrackEnrollmentModal from '../Auth/FastTrackEnrollmentModal';
 import './AboutPage.css';
 
 export const AboutPage: React.FC = () => {
+  const [isEnrollModalOpen, setIsEnrollModalOpen] = useState(false);
+
   return (
     <div className="about-page glass animate-fade-in">
       {/* Header */}
@@ -32,6 +35,78 @@ export const AboutPage: React.FC = () => {
           <div className="about-stat-label">OpenClaw & Hermes AI Mentors</div>
         </div>
       </div>
+
+      {/* ─── University Web3 Onboarding Placeholder & Gateway ─────────────────── */}
+      <div className="about-university-section glass">
+        <div className="about-university-badge">
+          <span>🏛️ INSTITUTIONAL ACADEMIC INITIATIVE</span>
+        </div>
+        <div className="about-university-content">
+          <div className="about-university-text">
+            <h3 className="about-university-title">
+              University Web3 Onboarding Program
+            </h3>
+            <p className="about-university-desc">
+              Turnkey academic infrastructure empowering university computer science departments, student developer clubs, and blockchain research groups. Featuring frictionless 1-click GitHub SSO cohort routing, multi-chain compiler sandboxes, and automated grant telemetry.
+            </p>
+          </div>
+          <div className="about-university-actions">
+            <button
+              className="about-enroll-btn"
+              onClick={() => setIsEnrollModalOpen(true)}
+            >
+              <span>⚡ Fast-Track Student Onboarding</span>
+            </button>
+            <a
+              href="mailto:admin@morfinance.ai?subject=University%20Cohort%20Partnership%20Application"
+              className="about-partner-btn"
+            >
+              <span>🏛️ Partner Your University</span>
+            </a>
+          </div>
+        </div>
+
+        {/* Institutional Highlight Cards */}
+        <div className="about-university-grid">
+          <div className="about-uni-feature-card">
+            <div className="about-uni-feature-icon">⚡</div>
+            <h4>Frictionless GitHub SSO</h4>
+            <p>1-click onboarding automatically maps students into designated institutional cohorts with 0 manual forms.</p>
+          </div>
+          <div className="about-uni-feature-card">
+            <div className="about-uni-feature-icon">💻</div>
+            <h4>8 Multi-Chain Sandboxes</h4>
+            <p>Hands-on compilation in Arbitrum Stylus (Rust), Base, Optimism, Solana, Aptos Move, Starknet, and ink!.</p>
+          </div>
+          <div className="about-uni-feature-card">
+            <div className="about-uni-feature-icon">📊</div>
+            <h4>Programmatic Grant Telemetry</h4>
+            <p>Real-time tracking of code completion, gas efficiency, and verified on-chain deployments for grant milestones.</p>
+          </div>
+          <div className="about-uni-feature-card">
+            <div className="about-uni-feature-icon">🏆</div>
+            <h4>On-Chain Credentials</h4>
+            <p>Verifiable, non-transferable digital developer certificates issued directly upon smart contract deployment.</p>
+          </div>
+        </div>
+
+        <div className="about-university-footer">
+          <div className="about-university-pill">
+            🏛️ Active Pilot Cohort: <strong>Kenyatta University</strong> (<code>KU_COHORT_2026_01</code>)
+          </div>
+          <div className="about-university-status">
+            <span className="status-dot"></span> Verified Academic Track • Target Grants Ready
+          </div>
+        </div>
+      </div>
+
+      {/* Fast-Track Enrollment Modal */}
+      <FastTrackEnrollmentModal
+        isOpen={isEnrollModalOpen}
+        onClose={() => setIsEnrollModalOpen(false)}
+        university="Kenyatta University"
+        cohortId="KU_COHORT_2026_01"
+      />
 
       <div className="about-divider" />
 

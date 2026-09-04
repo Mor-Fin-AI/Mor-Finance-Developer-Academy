@@ -12,5 +12,4 @@ dnspython==2.8.0
 eth-account==0.13.7
 pyjwt==2.12.1
 py-solc-x>=2.0.5
-
-
+pytest>=8.0.0
