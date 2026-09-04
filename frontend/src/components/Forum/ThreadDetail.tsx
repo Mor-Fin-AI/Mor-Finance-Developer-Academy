@@ -3,16 +3,13 @@ import type { ForumThread } from '../../types';
 
 const getAuthorBadge = (author: string) => {
   const name = author.toLowerCase();
+  if (name.includes('mor_academy') || name.includes('admin') || name.includes('staff') || name.includes('academy')) {
+    return { text: 'Academy Staff', color: '#3b82f6', bg: 'rgba(59, 130, 246, 0.12)', border: '1px solid rgba(59, 130, 246, 0.25)' };
+  }
   if (name.includes('mentor') || name.includes('openclaw') || name.includes('hermes')) {
-    return { text: 'Mentor', color: '#10b981', bg: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.2)' };
+    return { text: 'AI Mentor', color: '#10b981', bg: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.2)' };
   }
-  if (name.includes('alex') || name.includes('core')) {
-    return { text: 'Core Contributor', color: '#a855f7', bg: 'rgba(168, 85, 247, 0.1)', border: '1px solid rgba(168, 85, 247, 0.2)' };
-  }
-  if (name.includes('lucas') || name.includes('top') || name.includes('dev')) {
-    return { text: 'Top Builder', color: '#3b82f6', bg: 'rgba(59, 130, 246, 0.1)', border: '1px solid rgba(59, 130, 246, 0.2)' };
-  }
-  return { text: 'New Member', color: '#94a3b8', bg: 'rgba(148, 163, 184, 0.1)', border: '1px solid rgba(148, 163, 184, 0.2)' };
+  return { text: 'Student Builder', color: '#94a3b8', bg: 'rgba(148, 163, 184, 0.1)', border: '1px solid rgba(148, 163, 184, 0.2)' };
 };
 
 interface ThreadDetailProps {

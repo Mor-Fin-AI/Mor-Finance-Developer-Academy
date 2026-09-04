@@ -4728,7 +4728,8 @@ export async function logArbitrumDeployment(data: {
         oauth_code: data.oauth_code || data.code,
         university_affiliate: data.university_affiliate || 'Kenyatta University',
         cohort_id: data.cohort_id || 'KU_COHORT_2026_01',
-        github_username: data.github_username
+        github_username: data.github_username,
+        redirect_uri: typeof window !== 'undefined' ? window.location.origin : undefined,
       }),
       signal: controller.signal
     });
@@ -4738,7 +4739,10 @@ export async function logArbitrumDeployment(data: {
       const fallback = await fetch(`${BASE}/auth/github/callback`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          ...data,
+          redirect_uri: typeof window !== 'undefined' ? window.location.origin : undefined,
+        }),
         signal: controller.signal
       });
       clearTimeout(timer);

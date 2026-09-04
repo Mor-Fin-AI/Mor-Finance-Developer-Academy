@@ -17,6 +17,7 @@ class UniversityEnrollmentCallback(BaseModel):
     university_affiliate: Optional[str] = "Kenyatta University"
     cohort_id: Optional[str] = "KU_COHORT_2026_01"
     github_username: Optional[str] = None
+    redirect_uri: Optional[str] = None
 
 
 @router.post("/github/callback")
@@ -35,12 +36,14 @@ async def auth_github_callback(req: UniversityEnrollmentCallback):
 
     if oauth_code and settings.github_client_id and settings.github_client_secret:
         headers = {"Accept": "application/json"}
+        exchange_redirect = req.redirect_uri or settings.github_redirect_uri
         data = {
             "client_id": settings.github_client_id,
             "client_secret": settings.github_client_secret,
             "code": oauth_code,
-            "redirect_uri": settings.github_redirect_uri
         }
+        if exchange_redirect:
+            data["redirect_uri"] = exchange_redirect
         try:
             async with httpx.AsyncClient() as client:
                 resp = await client.post("https://github.com/login/oauth/access_token", headers=headers, data=data)

@@ -99,21 +99,31 @@ async def get_forum_stats():
             {"tag": "dao", "count": 0}
         ]
         
-    # 2. Get top contributors (top 3 users sorted by XP)
+    # 2. Get top contributors (real users sorted by XP > 0)
     from src.services.db import get_collection
     user_coll = get_collection()
     top_contributors = []
-    total_users = 0
     
     try:
-        total_users = await user_coll.count_documents({})
-        # Fetch users with XP, sorted desc
-        cursor = user_coll.find({}).sort("xp", -1).limit(3)
+        # Fetch only registered users with real XP > 0
+        cursor = user_coll.find({"xp": {"$gt": 0}, "_id": {"$ne": "demo-user"}}).sort("xp", -1).limit(3)
         async for doc in cursor:
-            uname = doc.get("_id")
-            avatar = uname[:2].upper() if len(uname) >= 2 else uname.upper()
+            raw_name = doc.get("github_username") or doc.get("_id") or ""
+            if not raw_name or raw_name == "demo-user":
+                continue
+            if raw_name.startswith("wallet-"):
+                display_name = f"{raw_name.replace('wallet-', '')[:6]}...{raw_name[-4:]}"
+                avatar = "W3"
+            elif raw_name.startswith("gh-") or not raw_name.startswith("@"):
+                clean = raw_name.replace("gh-", "")
+                display_name = f"@{clean}"
+                avatar = clean[:2].upper() if len(clean) >= 2 else clean.upper()
+            else:
+                display_name = raw_name
+                avatar = raw_name.replace("@", "")[:2].upper()
+                
             top_contributors.append({
-                "username": uname,
+                "username": display_name,
                 "avatar": avatar,
                 "xp": doc.get("xp", 0)
             })

@@ -21,6 +21,7 @@ export const FastTrackEnrollmentModal: React.FC<FastTrackEnrollmentModalProps> =
   const [error, setError] = useState<string | null>(null);
   const [qrDataUrl, setQrDataUrl] = useState<string>('');
   const [copied, setCopied] = useState(false);
+  const [mobileTab, setMobileTab] = useState<'sso' | 'qr'>('sso');
 
   // Dynamic environment variables with production fallback
   const envEnrollUrl = (import.meta as any).env?.VITE_ENROLL_URL;
@@ -81,12 +82,30 @@ export const FastTrackEnrollmentModal: React.FC<FastTrackEnrollmentModalProps> =
   return (
     <div className="fast-track-modal-overlay" onClick={onClose}>
       <div className="fast-track-tablet-frame" onClick={(e) => e.stopPropagation()}>
-        <button className="fast-track-close-btn" onClick={onClose} title="Close">
+        <button className="fast-track-close-btn" onClick={onClose} title="Close" aria-label="Close modal">
           ✕
         </button>
 
+        {/* Mobile Segmented Switcher (Visible on <= 860px) */}
+        <div className="fast-track-mobile-nav">
+          <button
+            type="button"
+            className={`fast-track-mobile-tab ${mobileTab === 'sso' ? 'fast-track-mobile-tab--active' : ''}`}
+            onClick={() => setMobileTab('sso')}
+          >
+            ⚡ 1-Click Access
+          </button>
+          <button
+            type="button"
+            className={`fast-track-mobile-tab ${mobileTab === 'qr' ? 'fast-track-mobile-tab--active' : ''}`}
+            onClick={() => setMobileTab('qr')}
+          >
+            📱 QR Code & Link
+          </button>
+        </div>
+
         {/* Left Interactive Panel */}
-        <div className="fast-track-left">
+        <div className={`fast-track-left ${mobileTab === 'sso' ? 'fast-track-panel--active-mobile' : 'fast-track-panel--hidden-mobile'}`}>
           <div className="fast-track-brand-tag">
             MOR Developer Academy • Fast Track Enrollment
           </div>
@@ -144,10 +163,19 @@ export const FastTrackEnrollmentModal: React.FC<FastTrackEnrollmentModalProps> =
               </div>
             </div>
           </div>
+
+          {/* Switch to QR Link for Mobile */}
+          <button
+            type="button"
+            className="fast-track-mobile-switch-link"
+            onClick={() => setMobileTab('qr')}
+          >
+            📱 Need QR Code for another device or direct link? View here →
+          </button>
         </div>
 
         {/* Right Flow Infographic Panel */}
-        <div className="fast-track-right">
+        <div className={`fast-track-right ${mobileTab === 'qr' ? 'fast-track-panel--active-mobile' : 'fast-track-panel--hidden-mobile'}`}>
           <div className="flow-step-card flow-step-card--qr">
             <div className="qr-code-box">
               {qrDataUrl ? (
@@ -190,6 +218,15 @@ export const FastTrackEnrollmentModal: React.FC<FastTrackEnrollmentModalProps> =
           <div className="fast-track-university-pill">
             🏛️ {activeUniversity} • Cohort {activeCohort}
           </div>
+
+          {/* Switch back to SSO for Mobile */}
+          <button
+            type="button"
+            className="fast-track-mobile-switch-link fast-track-mobile-switch-link--dark"
+            onClick={() => setMobileTab('sso')}
+          >
+            ← Back to 1-Click GitHub SSO
+          </button>
         </div>
       </div>
     </div>
