@@ -87,18 +87,51 @@ export default function App() {
   const [showFastTrackModal, setShowFastTrackModal] = useState(false);
   const [enrollCohort, setEnrollCohort] = useState('KU_COHORT_2026_01');
   const [enrollUniversity, setEnrollUniversity] = useState('Kenyatta University');
+  const [enrollRedirecting, setEnrollRedirecting] = useState(false);
 
   // Check for direct enrollment link (e.g. /enroll, ?cohort=..., or ?enroll=true)
+  // Automatically routes user directly to GitHub OAuth authorization without intermediate modal click
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');
+    // If returning from GitHub OAuth with an authorization callback code, let the code handler below process it!
+    if (code) return;
+
     const cohort = params.get('cohort');
     const univ = params.get('university');
     const isEnrollPath = window.location.pathname.startsWith('/enroll');
+    const isEnrollQuery = params.get('enroll') === 'true' || Boolean(cohort);
 
-    if (cohort || isEnrollPath || params.get('enroll') === 'true') {
-      if (cohort) setEnrollCohort(cohort);
-      if (univ) setEnrollUniversity(univ);
-      setShowFastTrackModal(true);
+    if (cohort || isEnrollPath || isEnrollQuery) {
+      const targetCohort = cohort || 'KU_COHORT_2026_01';
+      const targetUniv = univ || 'Kenyatta University';
+      setEnrollCohort(targetCohort);
+      setEnrollUniversity(targetUniv);
+
+      const session = getSessionCookie();
+      if (session?.userId) {
+        navigate('/sandbox');
+        return;
+      }
+
+      // Automatically launch frictionless GitHub OAuth redirection directly
+      setEnrollRedirecting(true);
+      setLoading(true);
+      import('./api/client').then(({ initiateFrictionlessEnrollment }) => {
+        initiateFrictionlessEnrollment(
+          undefined,
+          window.location.origin,
+          targetUniv,
+          targetCohort,
+          5000
+        ).catch((err) => {
+          console.error("Direct enrollment auto-redirection error, falling back to modal:", err);
+          setEnrollRedirecting(false);
+          setLoading(false);
+          setLoginError(err.message || "Automatic GitHub redirection failed. Please use the button below.");
+          setShowFastTrackModal(true);
+        });
+      });
     }
   }, [location.pathname]);
 
@@ -477,6 +510,32 @@ export default function App() {
   if (!authType) {
     return (
       <>
+        {enrollRedirecting && (
+          <div
+            style={{
+              position: 'fixed',
+              inset: 0,
+              backgroundColor: 'rgba(3, 3, 7, 0.94)',
+              backdropFilter: 'blur(20px)',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              zIndex: 10000,
+              color: '#fff',
+              textAlign: 'center',
+              padding: '24px',
+            }}
+          >
+            <div className="spinner" style={{ width: '48px', height: '48px', borderWidth: '4px', marginBottom: '24px' }} />
+            <h3 style={{ fontSize: '1.45rem', fontWeight: 800, marginBottom: '10px' }}>
+              Routing to GitHub Authorization...
+            </h3>
+            <p style={{ fontSize: '0.95rem', color: '#94a3b8', maxWidth: '440px', lineHeight: 1.6 }}>
+              Fast-tracking your enrollment for <strong>{enrollUniversity}</strong> ({enrollCohort}). Redirecting to GitHub single sign-on...
+            </p>
+          </div>
+        )}
         <LandingPage
           onLoginGitHub={handleLoginGitHub}
           onLoginWallet={handleLoginWallet}
