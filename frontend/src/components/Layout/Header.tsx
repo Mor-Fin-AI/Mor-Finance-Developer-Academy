@@ -21,14 +21,14 @@ interface HeaderProps {
 }
 
 const PAGE_META: Record<NavPage, { title: string; subtitle: string }> = {
-  academy:      { title: 'Developer Academy',  subtitle: 'Learn and compile smart contracts' },
-  roadmap:      { title: 'Developer Academy',  subtitle: 'Learn and compile smart contracts' },
-  dashboard:    { title: 'My Dashboard',       subtitle: 'Track your Web3 progress & stats' },
+  academy:      { title: 'Developer Academy',  subtitle: 'Distributed ledger programming & algorithmic design' },
+  roadmap:      { title: 'Developer Academy',  subtitle: 'Distributed ledger programming & algorithmic design' },
+  dashboard:    { title: 'My Dashboard',       subtitle: 'Track your learning progress & software metrics' },
   analytics:    { title: 'Cohort Analytics',   subtitle: 'Ecosystem Developer Cohort Activity (May–August 2026)' },
-  sandbox:      { title: 'Multi-Chain Code Sandbox', subtitle: 'Universal IDE: Write, compile, and debug Solidity, Move, Cairo, Rust & ink!' },
+  sandbox:      { title: 'Multi-Runtime Sandbox', subtitle: 'Universal IDE: Write, compile, and debug Rust, Move, Cairo & distributed systems' },
   forum:        { title: 'Community Forum',    subtitle: 'Ask questions, share knowledge, and help others' },
-  hackathons:   { title: 'Web3 Hackathons',    subtitle: 'Build, innovate, and win.' },
-  careers:      { title: 'Career Dashboard',   subtitle: 'Web3 jobs, internships, ecosystem grants & startup hub' },
+  hackathons:   { title: 'Developer Hackathons', subtitle: 'Build, innovate, and solve real-world challenges' },
+  careers:      { title: 'Career Dashboard',   subtitle: 'Software engineering roles, internships & research grants' },
   mentor:       { title: 'AI Mentor Workspace',subtitle: 'Get real-time code reviews and support' },
   certificates: { title: 'My Certificates',    subtitle: 'View and export your verified achievements' },
   subscriptions: { title: 'Subscription Plans', subtitle: 'Choose a subscription plan to unlock premium mentorship and credentials' },
@@ -43,7 +43,7 @@ export const Header: React.FC<HeaderProps> = ({
   authType,
   progress,
   onLoginGitHub,
-  onLoginWallet,
+  onLoginWallet: _onLoginWallet,
   onLogout,
   onLinkGitHub,
   onLinkWallet,
@@ -51,7 +51,7 @@ export const Header: React.FC<HeaderProps> = ({
   isMobileNavOpen,
   onToggleMobileNav,
 }) => {
-  const { title, subtitle } = PAGE_META[activePage] || { title: 'Academy', subtitle: 'Learn Web3' };
+  const { title, subtitle } = PAGE_META[activePage] || { title: 'Academy', subtitle: 'Distributed Systems & Software Engineering' };
 
   const formatUser = () => {
     if (authType === 'github') {
@@ -84,7 +84,7 @@ export const Header: React.FC<HeaderProps> = ({
         )}
         <div className="header__title-group">
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <img src="/mor-logo.png" alt="MOR Finance" style={{ width: '22px', height: '22px', objectFit: 'contain', filter: 'drop-shadow(0 0 6px rgba(59,130,246,0.6))' }} />
+            <img src="/mor-logo.png" alt="MOR Developer Academy" style={{ width: '22px', height: '22px', objectFit: 'contain', filter: 'drop-shadow(0 0 6px rgba(59,130,246,0.6))' }} />
             <h1 className="header__title">{title}</h1>
           </div>
           <p className="header__subtitle">{subtitle}</p>
@@ -98,7 +98,7 @@ export const Header: React.FC<HeaderProps> = ({
             target="_blank"
             rel="noopener noreferrer"
             className="header__icon-btn"
-            title="MOR Finance GitHub Org"
+            title="MOR Developer Academy GitHub Org"
           >
             <span>🐙</span>
             <span className="header__link-label">GitHub</span>
@@ -134,7 +134,7 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="header__auth">
           {authType ? (
             <div className="auth-profile">
-              <span className="auth-profile__icon">{authType === 'github' ? '🐱' : '🦊'}</span>
+              <span className="auth-profile__icon">{authType === 'github' ? '🐱' : '🔑'}</span>
               <span className="auth-profile__name" title={userId}>{formatUser()}</span>
               {authType === 'wallet' && !progress?.github_username && (
                 <button className="btn btn--secondary btn--xs header-link-btn" onClick={onLinkGitHub} title="Link GitHub account" style={{ fontSize: '0.7rem', padding: '3px 8px', marginLeft: 8 }}>
@@ -142,8 +142,8 @@ export const Header: React.FC<HeaderProps> = ({
                 </button>
               )}
               {authType === 'github' && !progress?.wallet_address && (
-                <button className="btn btn--secondary btn--xs header-link-btn" onClick={onLinkWallet} title="Link Crypto wallet" style={{ fontSize: '0.7rem', padding: '3px 8px', marginLeft: 8 }}>
-                  🦊 Link Wallet
+                <button className="btn btn--secondary btn--xs header-link-btn" onClick={onLinkWallet} title="Link Developer Credential" style={{ fontSize: '0.7rem', padding: '3px 8px', marginLeft: 8 }}>
+                  🔑 Link Developer Key
                 </button>
               )}
               <button className="auth-profile__logout" onClick={onLogout} title="Disconnect session">
@@ -156,11 +156,8 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
           ) : (
             <div className="auth-buttons">
-              <button className="btn btn--secondary btn--sm" onClick={onLoginGitHub}>
-                🐱 GitHub
-              </button>
-              <button className="btn btn--primary btn--sm" onClick={onLoginWallet}>
-                🦊 Connect Wallet
+              <button className="btn btn--primary btn--sm" onClick={onLoginGitHub}>
+                🐱 Student Login
               </button>
             </div>
           )}

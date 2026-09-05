@@ -113,7 +113,7 @@ export const FastTrackEnrollmentModal: React.FC<FastTrackEnrollmentModalProps> =
           <div className="fast-track-hero">
             <h2 className="fast-track-title">
               Instant Access:<br />
-              Web3 Dev Environment
+              Distributed Systems Dev Environment
             </h2>
             <p className="fast-track-subtitle">
               No forms. No passwords. Use your existing GitHub to join the MOR Academy Beta.

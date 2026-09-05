@@ -9,18 +9,18 @@ export const AboutPage: React.FC = () => {
     <div className="about-page glass animate-fade-in">
       {/* Header */}
       <div className="about-header">
-        <span className="about-badge">ABOUT MOR FINANCE</span>
-        <h2 className="about-page__title">Empowering the Next Generation of Smart Contract Engineers</h2>
+        <span className="about-badge">ABOUT MOR ACADEMY</span>
+        <h2 className="about-page__title">Empowering the Next Generation of Distributed Systems &amp; Software Engineers</h2>
         <p className="about-page__desc">
-          Building a multichain Web3 developer education ecosystem. We bridge structured learning, live AI Mentors, real-world Solidity compilation, and verified open-source contributions.
+          Building an enterprise developer education platform for Distributed Ledger Programming &amp; Advanced Data Architectures. We bridge structured learning, live AI Mentors, real-world algorithmic compilation, and verified software contributions.
         </p>
       </div>
 
       {/* Factual Milestones & Platform Facts */}
       <div className="about-stats-grid">
         <div className="about-stat-card glass">
-          <div className="about-stat-number gradient-text">8+ Chains</div>
-          <div className="about-stat-label">Supported Ecosystems</div>
+          <div className="about-stat-number gradient-text">8+ Runtimes</div>
+          <div className="about-stat-label">Supported Distributed Runtimes</div>
         </div>
         <div className="about-stat-card glass">
           <div className="about-stat-number gradient-text">2026</div>
@@ -44,10 +44,10 @@ export const AboutPage: React.FC = () => {
         <div className="about-university-content">
           <div className="about-university-text">
             <h3 className="about-university-title">
-              University Web3 Onboarding Program
+              University Software Engineering Onboarding Program
             </h3>
             <p className="about-university-desc">
-              Turnkey academic infrastructure empowering university computer science departments, student developer clubs, and blockchain research groups. Featuring frictionless 1-click GitHub SSO cohort routing, multi-chain compiler sandboxes, and automated grant telemetry.
+              Turnkey academic infrastructure empowering university computer science departments, student developer clubs, and distributed systems research groups. Featuring frictionless 1-click GitHub SSO cohort routing, multi-runtime compiler sandboxes, and automated grant telemetry.
             </p>
           </div>
           <div className="about-university-actions">
@@ -81,18 +81,18 @@ export const AboutPage: React.FC = () => {
           </div>
           <div className="about-uni-feature-card">
             <div className="about-uni-feature-icon">💻</div>
-            <h4>8 Multi-Chain Sandboxes</h4>
+            <h4>8 Multi-Runtime Sandboxes</h4>
             <p>Hands-on compilation in Arbitrum Stylus (Rust), Base, Optimism, Solana, Aptos Move, Starknet, and ink!.</p>
           </div>
           <div className="about-uni-feature-card">
             <div className="about-uni-feature-icon">📊</div>
             <h4>Programmatic Grant Telemetry</h4>
-            <p>Real-time tracking of code completion, gas efficiency, and verified on-chain deployments for grant milestones.</p>
+            <p>Real-time tracking of code completion, execution efficiency, and verified project milestones.</p>
           </div>
           <div className="about-uni-feature-card">
             <div className="about-uni-feature-icon">🏆</div>
-            <h4>On-Chain Credentials</h4>
-            <p>Verifiable, non-transferable digital developer certificates issued directly upon smart contract deployment.</p>
+            <h4>Verified Developer Credentials</h4>
+            <p>Verifiable digital developer credentials issued directly upon project milestone completion and code verification.</p>
           </div>
         </div>
 
@@ -196,15 +196,15 @@ export const AboutPage: React.FC = () => {
 
       {/* Core Team & Contributors */}
       <div className="about-section-header">
-        <h3 className="about-section-title">Core Contributors & Engineering Team</h3>
-        <p className="about-section-sub">Built by core smart contract architects, AI researchers, and Web3 educators.</p>
+        <h3 className="about-section-title">Core Contributors &amp; Engineering Team</h3>
+        <p className="about-section-sub">Built by core distributed systems architects, AI researchers, and software engineering educators.</p>
       </div>
 
       <div className="about-team-grid">
         {[
-          { name: 'MOR Protocol Team', role: 'Smart Contract & Audit Leads', bio: 'Oversees MOR Vault contracts, yield mechanics, reentrancy audits, and protocol security.', icon: '⬡' },
-          { name: 'AI Engineering Group', role: 'OpenClaw & Hermes AI Lead', bio: 'Designs context-aware OpenClaw & Hermes AI agents for live Solidity code reviews and automated evaluations.', icon: '🤖' },
-          { name: 'Community Operations', role: 'Ecosystem & Developer Relations', bio: 'Manages developer bounties, Discord community office hours, hackathons, and cohort workshops.', icon: '🌐' }
+          { name: 'MOR Platform Architecture Team', role: 'Distributed Systems & Security Leads', bio: 'Oversees software architecture, algorithmic verification, concurrency safety, and system security.', icon: '⬡' },
+          { name: 'AI Engineering Group', role: 'OpenClaw & Hermes AI Lead', bio: 'Designs context-aware OpenClaw & Hermes AI agents for live code reviews, syntax verification, and automated evaluations.', icon: '🤖' },
+          { name: 'Community Operations', role: 'Developer Relations & Academics', bio: 'Manages developer bounties, Discord community office hours, hackathons, and cohort workshops.', icon: '🌐' }
         ].map((member) => (
           <div key={member.name} className="team-card glass">
             <div className="team-avatar">{member.icon}</div>
