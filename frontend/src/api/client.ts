@@ -4356,9 +4356,17 @@ export async function fetchDashboardData(userId: string): Promise<DashboardData>
 
 // ─── Certificates ─────────────────────────────────────────────────────────────
 export async function fetchCertificates(userId: string): Promise<Certificate[]> {
-  const res = await fetch(`${BASE}/certificates/${userId}`);
-  if (!res.ok) throw new Error(`Failed to fetch certificates: ${res.status}`);
-  return res.json();
+  try {
+    const res = await fetch(`${BASE}/certificates/${userId}`);
+    if (!res.ok) {
+      console.warn(`[Certificates] Response status: ${res.status}, returning empty list.`);
+      return [];
+    }
+    return await res.json();
+  } catch (err) {
+    console.warn('[Certificates] Network error fetching certificates:', err);
+    return [];
+  }
 }
 
 // ─── GitHub Activity ──────────────────────────────────────────────────────────

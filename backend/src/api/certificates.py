@@ -9,5 +9,9 @@ router = APIRouter()
 @router.get("/{user_id}")
 async def get_user_certificates(user_id: str):
     """Retrieve certificates earned by a specific user."""
-    user = await get_or_create_user(user_id)
-    return user.get("certificates", [])
+    try:
+        user = await get_or_create_user(user_id)
+        return user.get("certificates", [])
+    except Exception as e:
+        print(f"⚠️ Error retrieving certificates for {user_id}: {e}")
+        return []

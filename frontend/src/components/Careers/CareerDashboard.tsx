@@ -560,9 +560,9 @@ export const CareerDashboard: React.FC = () => {
           ) : (
             <>
               <div className="jobs-grid">
-                {jobs.map((job) => (
+                {jobs.map((job, idx) => (
                   <div
-                    key={job.id}
+                    key={job.id && job.id !== 'None' ? job.id : `job-${idx}`}
                     className={`job-card glass ${job.is_internship ? 'job-card--intern' : ''}`}
                   >
                     <div className="job-card__header">

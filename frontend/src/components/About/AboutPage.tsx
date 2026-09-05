@@ -52,14 +52,20 @@ export const AboutPage: React.FC = () => {
           </div>
           <div className="about-university-actions">
             <button
+              type="button"
               className="about-enroll-btn"
-              onClick={() => setIsEnrollModalOpen(true)}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setIsEnrollModalOpen(true);
+              }}
             >
               <span>⚡ Fast-Track Student Onboarding</span>
             </button>
             <a
               href="mailto:admin@morfinance.ai?subject=University%20Cohort%20Partnership%20Application"
               className="about-partner-btn"
+              onClick={(e) => e.stopPropagation()}
             >
               <span>🏛️ Partner Your University</span>
             </a>

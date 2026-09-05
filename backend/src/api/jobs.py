@@ -139,7 +139,7 @@ def fetch_live_web3_career_jobs(
                 raw_jobs = []
             
             formatted: List[Dict[str, Any]] = []
-            for item in raw_jobs:
+            for idx, item in enumerate(raw_jobs):
                 if not isinstance(item, dict):
                     continue
                     
@@ -161,8 +161,11 @@ def fetch_live_web3_career_jobs(
                 is_intern = any(k in title_lower or k in tags_lower for k in ["intern", "internship"])
                 is_junior = any(k in title_lower or k in tags_lower for k in ["junior", "graduate", "apprentice", "entry"])
                 
+                raw_id = item.get("id") or item.get("job_id") or item.get("slug")
+                job_id = str(raw_id) if raw_id and str(raw_id).lower() != "none" else f"job-{idx}-{abs(hash(title + company))}"
+
                 formatted.append({
-                    "id": str(item.get("id")),
+                    "id": job_id,
                     "title": title,
                     "company": company,
                     "location": (item.get("location") or item.get("city") or item.get("country") or "Remote").strip(),
