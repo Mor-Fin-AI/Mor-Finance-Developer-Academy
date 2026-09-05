@@ -120,21 +120,13 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Fast Track Institutional Enrollment Button */}
         {onOpenFastTrack && (
           <button
-            className="btn btn--accent btn--xs"
+            className="header__fast-track-btn"
             onClick={onOpenFastTrack}
-            style={{
-              background: 'linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%)',
-              color: '#ffffff',
-              border: '1px solid rgba(59, 130, 246, 0.5)',
-              fontWeight: 800,
-              fontSize: '0.74rem',
-              padding: '5px 10px',
-              borderRadius: '8px',
-              boxShadow: '0 0 12px rgba(37, 99, 235, 0.35)'
-            }}
             title="Kenyatta University Fast Track Enrollment"
           >
-            🎓 Fast Track (KU)
+            <span className="header__fast-track-text-full">🎓 Fast Track (KU)</span>
+            <span className="header__fast-track-text-mobile">🎓 KU Fast Track</span>
+            <span className="header__fast-track-text-compact">🎓 KU</span>
           </button>
         )}
 

@@ -3869,6 +3869,178 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
         }
       ]
     }
+  ],
+  "fullstack": [
+    {
+      "level_id": 1,
+      "title": "Level 1: Full-Stack Web3 Architecture & RPC Provider Topologies",
+      "total_lessons": 1,
+      "lessons": [
+        {
+          "id": "fullstack-1",
+          "level_id": 1,
+          "title": "Module 1: Full-Stack Web3 Architecture & RPC Provider Topologies",
+          "duration": "15 mins",
+          "xp": 150,
+          "content": "# Module 1: Full-Stack Web3 Architecture & RPC Provider Topologies\n### Full Stack Blockchain Developer Track | Developer Academy\n\nMaster end-to-end decentralized application architecture: client-side wallet connections (EIP-1193), JSON-RPC node infrastructure (Alchemy/Infura/QuickNode), multi-chain fallback providers, and CORS/WebSocket rate limiting.\n",
+          "quiz": [
+            {
+              "question": "What is the primary role of an RPC provider (like Infura or Alchemy) in full-stack Web3 architecture?",
+              "options": [
+                "To serve as a JSON-RPC gateway allowing web frontends to read blockchain state and broadcast signed transactions without running local archive nodes.",
+                "To custody user private keys on centralized servers.",
+                "To compile TypeScript code into WebAssembly.",
+                "To replace decentralized consensus with SQL queries."
+              ],
+              "correct_idx": 0
+            },
+            {
+              "question": "What standard interface defines how browser wallet extensions communicate with Web3 frontends?",
+              "options": [
+                "EIP-1193 JavaScript Ethereum Provider API (window.ethereum).",
+                "OAuth 2.0 PKCE protocol.",
+                "GraphQL Schema Definition.",
+                "FTP byte-stream protocol."
+              ],
+              "correct_idx": 0
+            }
+          ],
+          "exercise": {
+            "instruction": "Configure a Web3 provider setup script containing the keywords 'provider' and 'rpc'.",
+            "template": "// Full-Stack Web3 Module 1: Provider Setup\n",
+            "required_keywords": ["provider", "rpc"]
+          }
+        }
+      ]
+    },
+    {
+      "level_id": 2,
+      "title": "Level 2: Smart Contract Interaction Hooks with Viem, Wagmi v2 & React Query",
+      "total_lessons": 1,
+      "lessons": [
+        {
+          "id": "fullstack-2",
+          "level_id": 2,
+          "title": "Module 2: Smart Contract Interaction Hooks with Viem, Wagmi v2 & React Query",
+          "duration": "18 mins",
+          "xp": 200,
+          "content": "# Module 2: Smart Contract Interaction Hooks with Viem, Wagmi v2 & React Query\n### Full Stack Blockchain Developer Track | Developer Academy\n\nBuild reactive Web3 interfaces with Wagmi v2 and Viem: type-safe contract reads, write simulation (simulateContract), TanStack React Query cache invalidation, and custom hooks.\n",
+          "quiz": [
+            {
+              "question": "What makes Viem more performant and developer-friendly than legacy Web3 libraries?",
+              "options": [
+                "It is modular, lightweight, tree-shakeable, and provides end-to-end TypeScript type inference directly from Contract ABIs.",
+                "It eliminates the need for Solidity compilation.",
+                "It runs contracts entirely inside SQLite.",
+                "It does not require network connections."
+              ],
+              "correct_idx": 0
+            }
+          ],
+          "exercise": {
+            "instruction": "Implement a contract read/write hook using Wagmi and Viem. Must include 'wagmi' and 'viem'.",
+            "template": "// Full-Stack Web3 Module 2: Wagmi & Viem Hooks\n",
+            "required_keywords": ["wagmi", "viem"]
+          }
+        }
+      ]
+    },
+    {
+      "level_id": 3,
+      "title": "Level 3: Decentralized Indexing & Storage: The Graph, Subgraphs & IPFS",
+      "total_lessons": 1,
+      "lessons": [
+        {
+          "id": "fullstack-3",
+          "level_id": 3,
+          "title": "Module 3: Decentralized Indexing & Storage: The Graph, Subgraphs & IPFS",
+          "duration": "21 mins",
+          "xp": 250,
+          "content": "# Module 3: Decentralized Indexing & Storage: The Graph, Subgraphs & IPFS\n### Full Stack Blockchain Developer Track | Developer Academy\n\nArchitect scalable decentralized backends: writing AssemblyScript mappings for The Graph subgraphs, querying indexed blockchain entities via GraphQL, and pinning decentralized metadata with IPFS / Filecoin.\n",
+          "quiz": [
+            {
+              "question": "Why are indexing protocols like The Graph necessary for production full-stack Web3 applications?",
+              "options": [
+                "Standard RPC nodes only support basic key-value lookups; subgraphs index event logs into relational GraphQL databases for complex queries and filtering.",
+                "Because blockchains cannot execute smart contracts without subgraphs.",
+                "To replace all frontend React components with server-rendered HTML.",
+                "To encrypt all user wallet balances."
+              ],
+              "correct_idx": 0
+            }
+          ],
+          "exercise": {
+            "instruction": "Declare a Subgraph indexing entity schema with IPFS metadata resolution. Must include 'subgraph' and 'ipfs'.",
+            "template": "// Full-Stack Web3 Module 3: Subgraph & IPFS\n",
+            "required_keywords": ["subgraph", "ipfs"]
+          }
+        }
+      ]
+    },
+    {
+      "level_id": 4,
+      "title": "Level 4: Modern Account Abstraction: ERC-4337, Paymasters & Smart Sessions",
+      "total_lessons": 1,
+      "lessons": [
+        {
+          "id": "fullstack-4",
+          "level_id": 4,
+          "title": "Module 4: Modern Account Abstraction: ERC-4337, Paymasters & Smart Sessions",
+          "duration": "24 mins",
+          "xp": 300,
+          "content": "# Module 4: Modern Account Abstraction: ERC-4337, Paymasters & Smart Sessions\n### Full Stack Blockchain Developer Track | Developer Academy\n\nImplement next-generation Web3 UX: UserOperations, Bundlers, EntryPoint contract architecture, Gasless Paymasters (sponsoring transactions), and passkey/session-key authentication with Coinbase Smart Wallet / Biconomy.\n",
+          "quiz": [
+            {
+              "question": "What is the primary breakthrough of ERC-4337 Account Abstraction?",
+              "options": [
+                "It enables smart contract wallets with custom verification logic, gas sponsorship, and batching without requiring Ethereum protocol consensus changes.",
+                "It removes private key cryptography from Web3 entirely.",
+                "It replaces gas fees with monthly credit card subscriptions.",
+                "It turns all smart contracts into ERC-20 tokens."
+              ],
+              "correct_idx": 0
+            }
+          ],
+          "exercise": {
+            "instruction": "Write an ERC-4337 Paymaster validation snippet. Must contain 'ERC4337' and 'paymaster'.",
+            "template": "// Full-Stack Web3 Module 4: ERC-4337 Paymaster\n",
+            "required_keywords": ["ERC4337", "paymaster"]
+          }
+        }
+      ]
+    },
+    {
+      "level_id": 5,
+      "title": "Level 5: Full-Stack DApp Production Deployment & Multi-Chain Verification Challenge",
+      "total_lessons": 1,
+      "lessons": [
+        {
+          "id": "fullstack-5",
+          "level_id": 5,
+          "title": "Module 5: Full-Stack DApp Production Deployment & Multi-Chain Verification Challenge",
+          "duration": "27 mins",
+          "xp": 350,
+          "content": "# Module 5: Full-Stack DApp Production Deployment & Multi-Chain Verification Challenge\n### Full Stack Blockchain Developer Track | Developer Academy\n\nHands-on Deployment Challenge: Compile your full-stack DApp smart contracts, deploy to Arbitrum/Base/OP Sepolia testnets, integrate frontend ABI & Wagmi provider configuration, and verify on-chain artifacts.\n",
+          "quiz": [
+            {
+              "question": "What critical files must be synchronized between the smart contract repository and the frontend DApp during deployment?",
+              "options": [
+                "The deployed contract addresses for each target network and the compiled ABI JSON artifacts.",
+                "The .env file containing deployer private keys.",
+                "The compiler source code of solc.",
+                "The local Hardhat cache directory."
+              ],
+              "correct_idx": 0
+            }
+          ],
+          "exercise": {
+            "instruction": "Complete the Full Stack Testnet Deployment Challenge! Write a deployment configuration and verification snippet containing 'fullstack', 'deploy', 'testnet', and 'verify'.",
+            "template": "// ─── Full-Stack Multi-Chain Testnet Deployment & Verification ───\n// Targets: Arbitrum Sepolia / Base Sepolia / OP Sepolia\n\n// Complete deployment declaration below:\n",
+            "required_keywords": ["fullstack", "deploy", "testnet", "verify"]
+          }
+        }
+      ]
+    }
   ]
 };
 

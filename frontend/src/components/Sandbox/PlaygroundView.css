@@ -403,3 +403,296 @@
   padding: 40px 20px;
   line-height: 1.5;
 }
+
+/* ─── EVM Testnet Deployment Controls ─────────────────────────────────────── */
+.testnet-deploy-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(15, 23, 42, 0.6);
+  padding: 3px 6px;
+  border-radius: 8px;
+  border: 1px solid rgba(59, 130, 246, 0.25);
+}
+
+.testnet-select-dropdown {
+  background: rgba(255, 255, 255, 0.06);
+  color: #93c5fd;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+}
+
+.testnet-select-dropdown option {
+  background: #090a14;
+  color: #ffffff;
+}
+
+.testnet-faucet-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(16, 185, 129, 0.12);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.testnet-faucet-link:hover {
+  background: rgba(16, 185, 129, 0.22);
+  color: #6ee7b7;
+}
+
+.btn-deploy-testnet {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+  border: 1px solid rgba(96, 165, 250, 0.4) !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  box-shadow: 0 0 10px rgba(37, 99, 235, 0.3);
+  transition: all 0.2s ease;
+}
+
+.btn-deploy-testnet:hover:not(:disabled) {
+  background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%) !important;
+  box-shadow: 0 0 16px rgba(37, 99, 235, 0.5);
+  transform: translateY(-1px);
+}
+
+/* ─── Testnet Deployments Console Tab ─────────────────────────────────────── */
+.output-deployments-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.deployments-tab-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.deployments-tab-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.deployments-tab-title .title-text {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.deployments-count-badge {
+  background: rgba(37, 99, 235, 0.2);
+  color: #60a5fa;
+  border: 1px solid rgba(37, 99, 235, 0.4);
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+.btn-clear-deployments {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--clr-text-muted);
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-clear-deployments:hover {
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.deployments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 480px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.deployment-card {
+  background: rgba(15, 23, 42, 0.65);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  border-radius: 8px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.deployment-card:hover {
+  border-color: rgba(59, 130, 246, 0.45);
+  background: rgba(15, 23, 42, 0.85);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+.deployment-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.deployment-network-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.deployment-network-badge .net-icon {
+  font-size: 0.95rem;
+}
+
+.deployment-network-badge .net-name {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.deployment-network-badge .net-chain-id {
+  font-size: 0.7rem;
+  color: var(--clr-text-muted);
+}
+
+.deployment-badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-badge-verified {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+
+.deployment-time {
+  font-size: 0.7rem;
+  color: var(--clr-text-muted);
+}
+
+.deployment-card-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 0.78rem;
+}
+
+.dep-row-label {
+  font-weight: 700;
+  color: #94a3b8;
+  font-size: 0.72rem;
+  min-width: 58px;
+}
+
+.dep-contract-name {
+  font-weight: 800;
+  color: #f8fafc;
+}
+
+.dep-lang-tag {
+  color: #60a5fa;
+  font-size: 0.72rem;
+}
+
+.dep-address {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.76rem;
+  color: #60a5fa;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.dep-copy-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 0.8rem;
+  padding: 2px 4px;
+  opacity: 0.75;
+  transition: opacity 0.2s;
+}
+
+.dep-copy-btn:hover {
+  opacity: 1;
+}
+
+.dep-explorer-link,
+.dep-tx-link {
+  margin-left: auto;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #38bdf8;
+  text-decoration: none;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  padding: 2px 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.dep-explorer-link:hover,
+.dep-tx-link:hover {
+  background: rgba(56, 189, 248, 0.2);
+  color: #7dd3fc;
+  border-color: rgba(56, 189, 248, 0.5);
+}
+
+.dep-tx-hash {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.74rem;
+  color: #a7f3d0;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.deployment-card-footer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.72rem;
+  color: var(--clr-text-muted);
+}
+
+.dep-meta-stat strong {
+  color: #e2e8f0;
+}
+
+.dep-meta-telemetry {
+  margin-left: auto;
+  color: #a78bfa;
+  font-weight: 600;
+  font-size: 0.7rem;
+}

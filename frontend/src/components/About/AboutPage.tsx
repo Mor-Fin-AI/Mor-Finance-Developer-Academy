@@ -19,8 +19,8 @@ export const AboutPage: React.FC = () => {
       {/* Factual Milestones & Platform Facts */}
       <div className="about-stats-grid">
         <div className="about-stat-card glass">
-          <div className="about-stat-number gradient-text">2025 Q4</div>
-          <div className="about-stat-label">Founded</div>
+          <div className="about-stat-number gradient-text">8+ Chains</div>
+          <div className="about-stat-label">Supported Ecosystems</div>
         </div>
         <div className="about-stat-card glass">
           <div className="about-stat-number gradient-text">2026</div>

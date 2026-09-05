@@ -93,7 +93,12 @@ def build_user_levels(active_track: str, completed_ids: List[str]):
                 "completed_at": datetime.now(timezone.utc) if completed_cnt >= len(lvl_lessons) and len(lvl_lessons) > 0 else None
             })
     else:
-        chain_name = "Polkadot / Substrate" if t_id in ("polkadot", "substrate") else t_id.capitalize()
+        if t_id in ("polkadot", "substrate"):
+            chain_name = "Polkadot / Substrate"
+        elif t_id == "fullstack":
+            chain_name = "Full Stack Web3"
+        else:
+            chain_name = t_id.capitalize()
         t_lessons = get_track_lessons(t_id)
         
         chain_levels_meta = [

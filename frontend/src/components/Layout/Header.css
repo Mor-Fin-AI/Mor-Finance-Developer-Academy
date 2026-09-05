@@ -134,6 +134,42 @@
   color: #ffffff;
 }
 
+.header__fast-track-btn {
+  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
+  color: #ffffff;
+  border: 1px solid rgba(59, 130, 246, 0.5);
+  font-weight: 800;
+  font-size: 0.74rem;
+  padding: 5px 10px;
+  border-radius: 8px;
+  box-shadow: 0 0 12px rgba(37, 99, 235, 0.35);
+  cursor: pointer;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.header__fast-track-btn:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 0 16px rgba(59, 130, 246, 0.5);
+}
+
+.header__fast-track-text-full {
+  display: inline;
+}
+
+.header__fast-track-text-mobile {
+  display: none;
+}
+
+.header__fast-track-text-compact {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .header__link-label {
     display: none;
@@ -280,25 +316,65 @@
     font-size: 0.75rem;
     font-weight: 700;
   }
+  .header__fast-track-btn {
+    padding: 4px 8px;
+    font-size: 0.7rem;
+  }
+  .header__fast-track-text-full {
+    display: none !important;
+  }
+  .header__fast-track-text-mobile {
+    display: inline !important;
+  }
+  .header__fast-track-text-compact {
+    display: none !important;
+  }
 }
 
 @media (max-width: 480px) {
+  /* Tighten navigation bar inner container spacing */
   .header {
     padding: 0 6px;
+    gap: 4px;
   }
   .header__title {
     font-size: 0.8rem;
-    max-width: 95px;
+    max-width: 90px;
   }
   .header__links {
     display: none !important;
   }
   .header__right {
     gap: 3px;
+    align-items: center;
   }
   .header__stat {
     padding: 2px 5px;
     gap: 2px;
+  }
+  .header__fast-track-btn {
+    padding: 3px 6px;
+    font-size: 0.66rem;
+    border-radius: 6px;
+    box-shadow: 0 0 8px rgba(37, 99, 235, 0.25);
+    max-width: 58px;
+    overflow: hidden;
+  }
+  .header__fast-track-text-full {
+    display: none !important;
+  }
+  .header__fast-track-text-mobile {
+    display: none !important;
+  }
+  .header__fast-track-text-compact {
+    display: inline !important;
+  }
+  .auth-buttons .btn {
+    padding: 3px 6px !important;
+    font-size: 0.68rem !important;
+  }
+  .auth-buttons .btn-label {
+    display: none !important;
   }
 }
 

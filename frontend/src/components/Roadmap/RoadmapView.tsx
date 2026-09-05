@@ -88,6 +88,13 @@ const CHAIN_LOGOS: Record<string, React.ReactNode> = {
       <circle cx="7.5" cy="12" r="2" fill="#FFFFFF"/>
       <circle cx="16.5" cy="12" r="2" fill="#FFFFFF"/>
     </svg>
+  ),
+  fullstack: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+      <polyline points="2 17 12 22 22 17"></polyline>
+      <polyline points="2 12 12 17 22 12"></polyline>
+    </svg>
   )
 };
 
@@ -223,6 +230,18 @@ const ECOSYSTEMS = [
     p1_repo: 'https://github.com/paritytech/substrate',
     p2_name: 'use-ink ink! Smart Contracts',
     p2_repo: 'https://github.com/use-ink/ink'
+  },
+  {
+    id: 'fullstack',
+    name: 'Full Stack Web3',
+    badge: 'Full-Stack Blockchain Developer Track',
+    desc: 'Dedicated Full Stack Web3 Developer Path: Next.js 14, Viem, Wagmi v2, Ethers.js, The Graph Subgraphs, IPFS, ERC-4337 Account Abstraction, and Multi-Chain Testnet Deployment.',
+    architecture: 'Frontend DApp (React/Next.js), Reactive Hooks (Wagmi/Viem), Indexing (The Graph/Subgraphs), IPFS Storage, and EVM L2 Smart Contracts',
+    tooling: 'Next.js 14, TypeScript, Viem, Wagmi v2, Ethers.js, The Graph CLI, Foundry, and Hardhat',
+    p1_name: 'Scaffold-ETH 2 Full-Stack Starter',
+    p1_repo: 'https://github.com/scaffold-eth/scaffold-eth-2',
+    p2_name: 'Wagmi v2 Multi-Chain Hooks Kit',
+    p2_repo: 'https://github.com/wevm/wagmi'
   }
 ];
 

@@ -304,6 +304,8 @@ async def log_arbitrum_deployment(req: DeploymentLogRequest):
         explorer_base = "https://explorer.aptoslabs.com/account"
     elif "starknet" in net:
         explorer_base = "https://sepolia.starkscan.co/contract"
+    elif "ethereum" in net or "eth" in net:
+        explorer_base = "https://sepolia.etherscan.io/address" if "sepolia" in net else "https://etherscan.io/address"
     elif "polygon" in net:
         explorer_base = "https://amoy.polygonscan.com/address"
     else:

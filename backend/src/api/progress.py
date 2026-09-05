@@ -29,7 +29,8 @@ async def update_active_track(user_id: str = Query(...), track: str = Query(...)
     track = track.lower().strip()
     SUPPORTED_TRACKS = {
         "fundamentals", "ethereum", "arbitrum", "optimism", "polygon", 
-        "base", "solana", "avalanche", "polkadot", "substrate", "starknet", "aptos"
+        "base", "solana", "avalanche", "polkadot", "substrate", "starknet", "aptos",
+        "fullstack"
     }
     if track not in SUPPORTED_TRACKS:
         raise HTTPException(status_code=400, detail=f"Unsupported track '{track}'. Supported: {sorted(list(SUPPORTED_TRACKS))}")

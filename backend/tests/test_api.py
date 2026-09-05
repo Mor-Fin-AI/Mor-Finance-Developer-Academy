@@ -66,3 +66,29 @@ def test_multi_chain_compile_stylus():
         data = response.json()
         assert data["success"] is True
         assert "stylus" in data["compiler"].lower()
+
+def test_fullstack_track_courses():
+    with TestClient(app) as client:
+        response = client.get("/api/courses?track=fullstack")
+        assert response.status_code == 200
+        data = response.json()
+        assert len(data) == 5
+        assert "Full-Stack" in data[0]["title"] or "Architecture" in data[0]["title"]
+        assert len(data[0]["lessons"]) > 0
+
+def test_evm_testnet_deployment_logging():
+    with TestClient(app) as client:
+        payload = {
+            "developer_github_id": "test-dev-01",
+            "cohort_id": "KU_COHORT_2026_01",
+            "network": "base_sepolia",
+            "execution_environment": "evm_op_stack",
+            "contract_address": "0x4b78c93b6e8200b3d68122bf05973b18540b0171",
+            "programming_language": "solidity",
+            "gas_used_computation": 248000
+        }
+        response = client.post("/api/v1/analytics/deployment", json=payload)
+        assert response.status_code == 200
+        data = response.json()
+        assert data["success"] is True
+        assert "basescan.org" in data["explorer_url"]
