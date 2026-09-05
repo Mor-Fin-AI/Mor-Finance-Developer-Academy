@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import type { UserProgress } from '../../types';
 import { fetchGitHubUserStats } from '../../api/client';
 import type { GitHubUserStats } from '../../api/client';
+import { getStoredDeployments, subscribeDeployments } from '../../services/web3Deployer';
 import './Dashboard.css';
 
 interface DashboardProps {
@@ -23,6 +24,14 @@ export const Dashboard: React.FC<DashboardProps> = ({
 }) => {
   const [ghStats, setGhStats] = useState<GitHubUserStats | null>(null);
   const [ghLoading, setGhLoading] = useState<boolean>(false);
+  const [deployedContractsCount, setDeployedContractsCount] = useState<number>(() => getStoredDeployments().length);
+
+  useEffect(() => {
+    const unsub = subscribeDeployments((deps) => {
+      setDeployedContractsCount(deps.length);
+    });
+    return unsub;
+  }, []);
 
   const ghUsername = progress?.github_username || (userId && userId.startsWith('gh-') ? userId.replace('gh-', '') : null);
 
@@ -252,6 +261,13 @@ export const Dashboard: React.FC<DashboardProps> = ({
           <div>
             <h4 className="metric-card__title">Certificates Earned</h4>
             <div className="metric-card__value">{certificatesCount}</div>
+          </div>
+        </div>
+        <div className="metric-card-wrap" onClick={() => onNavigate?.('sandbox')} style={{ cursor: 'pointer' }} title="View deployed contracts in Playground">
+          <div className="metric-card__icon-container">🚀</div>
+          <div>
+            <h4 className="metric-card__title">Contracts Deployed</h4>
+            <div className="metric-card__value">{deployedContractsCount}</div>
           </div>
         </div>
       </div>

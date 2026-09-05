@@ -8,7 +8,12 @@ import {
   isWalletAvailable,
   connectWallet,
   getConnectedAccount,
-  EVM_TESTNETS
+  EVM_TESTNETS,
+  getStoredDeployments,
+  saveNewDeployment,
+  subscribeDeployments,
+  INITIAL_DEPLOYMENTS,
+  type DeployedContractRecord
 } from '../../services/web3Deployer';
 import './PlaygroundView.css';
 
@@ -596,70 +601,6 @@ contract OptimismSuperchainToken {
 
 
 
-export interface DeployedContractRecord {
-  id: string;
-  contractName: string;
-  contractAddress: string;
-  txHash: string;
-  networkId: string;
-  networkName: string;
-  networkIcon: string;
-  chainId: number;
-  explorerUrl: string;
-  gasUsed: number;
-  blockNumber: number;
-  timestamp: string;
-  language: string;
-}
-
-const INITIAL_DEPLOYMENTS: DeployedContractRecord[] = [
-  {
-    id: 'dep-arb-01',
-    contractName: 'SecureVault',
-    contractAddress: '0x4b78c93b6e8200b3d68122bf05973b18540b0171',
-    txHash: '0x3a9e14fc75d5a73e6b72013f9c6d31b017ec05370d02636a0f4db2398517c244',
-    networkId: 'arbitrum_sepolia',
-    networkName: 'Arbitrum Sepolia',
-    networkIcon: '🔵',
-    chainId: 421614,
-    explorerUrl: 'https://sepolia.arbiscan.io',
-    gasUsed: 264820,
-    blockNumber: 14892103,
-    timestamp: 'Verified',
-    language: 'Solidity'
-  },
-  {
-    id: 'dep-base-01',
-    contractName: 'BaseGaslessPaymaster',
-    contractAddress: '0x9183428d05ec2c6fe98db2579b69106093ca561b',
-    txHash: '0x71b83d95c104e76a94f6c406004bca992e59103e61c92019488b3014c27891ea',
-    networkId: 'base_sepolia',
-    networkName: 'Base Sepolia',
-    networkIcon: '🔷',
-    chainId: 84532,
-    explorerUrl: 'https://sepolia.basescan.org',
-    gasUsed: 198340,
-    blockNumber: 14892080,
-    timestamp: 'Verified',
-    language: 'Solidity'
-  },
-  {
-    id: 'dep-op-01',
-    contractName: 'OptimismCrossDomainBridge',
-    contractAddress: '0x38e55e0c501726a273b09bb4a9193108c9035274',
-    txHash: '0x5c4a7e8014e3b70868f037612f008432a5109403810237910549c690184b29a1',
-    networkId: 'optimism_sepolia',
-    networkName: 'OP Sepolia',
-    networkIcon: '🔴',
-    chainId: 11155420,
-    explorerUrl: 'https://sepolia-optimism.etherscan.io',
-    gasUsed: 218750,
-    blockNumber: 14892015,
-    timestamp: 'Verified',
-    language: 'Solidity'
-  }
-];
-
 export const PlaygroundView: React.FC = () => {
   const [selectedLangId, setSelectedLangId] = useState<string>('solidity');
   const activePreset = LANGUAGE_PRESETS.find((p) => p.id === selectedLangId) || LANGUAGE_PRESETS[0];
@@ -677,13 +618,15 @@ export const PlaygroundView: React.FC = () => {
   const [deployStepMessage, setDeployStepMessage] = useState<string | null>(null);
 
   const [deployedContracts, setDeployedContracts] = useState<DeployedContractRecord[]>(() => {
-    try {
-      const saved = localStorage.getItem('mor_deployed_contracts');
-      return saved ? JSON.parse(saved) : INITIAL_DEPLOYMENTS;
-    } catch {
-      return INITIAL_DEPLOYMENTS;
-    }
+    return getStoredDeployments();
   });
+
+  useEffect(() => {
+    const unsubscribe = subscribeDeployments((deps) => {
+      setDeployedContracts(deps);
+    });
+    return unsubscribe;
+  }, []);
 
   const activeTestnet = EVM_TESTNETS.find((t) => t.id === selectedTestnetId) || EVM_TESTNETS[0];
   const isEvmChain = ['solidity', 'base', 'optimism', 'arbitrum_stylus'].includes(activePreset.id);
@@ -907,13 +850,8 @@ export const PlaygroundView: React.FC = () => {
         language: activePreset.lang
       };
 
-      const updatedDeployments = [newRecord, ...deployedContracts];
+      const updatedDeployments = saveNewDeployment(newRecord);
       setDeployedContracts(updatedDeployments);
-      try {
-        localStorage.setItem('mor_deployed_contracts', JSON.stringify(updatedDeployments));
-      } catch (e) {
-        console.warn("Could not persist deployments:", e);
-      }
 
       // 5. Provide detailed deployment receipt in terminal console
       const receiptLog = `
@@ -923,6 +861,7 @@ export const PlaygroundView: React.FC = () => {
 • Target Network:      ${activeTestnet.name} (Chain ID: ${activeTestnet.chainId})
 • RPC Endpoint:        ${activeTestnet.rpcUrl}
 • Contract Name:       ${contractName}
+• Total Deployed:      ${updatedDeployments.length} Contracts Recorded (Count +1)
 • Signer Account:      ${deployerAddress} ${isLiveWalletDeploy ? '(Cryptographically Signed via Web3 Wallet)' : '(Simulated)'}
 • Contract Address:    ${contractAddress}
 • Transaction Hash:    ${txHash}
@@ -1016,6 +955,26 @@ export const PlaygroundView: React.FC = () => {
         </div>
 
         <div className="sandbox-header-actions">
+          <div
+            className="sandbox-deployed-stat-badge"
+            title="Total verified smart contracts deployed to live testnets"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              padding: '6px 14px',
+              borderRadius: '8px',
+              background: 'linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(16, 185, 129, 0.2))',
+              border: '1px solid rgba(59, 130, 246, 0.4)',
+              boxShadow: '0 0 15px rgba(37, 99, 235, 0.2)'
+            }}
+          >
+            <span style={{ fontSize: '1.25rem' }}>🚀</span>
+            <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.15 }}>
+              <span style={{ fontSize: '1.1rem', fontWeight: 800, color: '#93c5fd' }}>{deployedContracts.length}</span>
+              <span style={{ fontSize: '0.65rem', color: 'var(--clr-text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>Contracts Deployed</span>
+            </div>
+          </div>
           <button className="btn btn--secondary" onClick={handleDownloadCode} title="Download source file">
             💾 Export {activePreset.fileName}
           </button>
@@ -1183,6 +1142,24 @@ export const PlaygroundView: React.FC = () => {
                   >
                     🚰 Faucet
                   </a>
+                  <span
+                    className="testnet-deployed-count-pill"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                      fontSize: '0.74rem',
+                      fontWeight: 700,
+                      padding: '4px 8px',
+                      borderRadius: '6px',
+                      background: 'rgba(59, 130, 246, 0.15)',
+                      border: '1px solid rgba(59, 130, 246, 0.3)',
+                      color: '#93c5fd'
+                    }}
+                    title="Total verified contracts deployed across all testnets"
+                  >
+                    📦 {deployedContracts.length} Deployed
+                  </span>
                   <button
                     className="btn btn--primary btn--sm btn-deploy-testnet"
                     onClick={handleDeployToTestnet}

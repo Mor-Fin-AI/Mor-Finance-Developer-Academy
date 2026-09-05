@@ -24,22 +24,51 @@ class Database:
 
 db_instance = Database()
 
+def _ensure_connected():
+    """Ensure db_instance.client is active and connected to the current running event loop."""
+    needs_connect = False
+    if db_instance.client is None or db_instance.db is None:
+        needs_connect = True
+    else:
+        try:
+            loop = db_instance.client.get_io_loop()
+            if loop.is_closed():
+                needs_connect = True
+            else:
+                import asyncio
+                try:
+                    current_loop = asyncio.get_running_loop()
+                    if loop != current_loop:
+                        needs_connect = True
+                except RuntimeError:
+                    pass
+        except Exception:
+            needs_connect = True
+
+    if needs_connect:
+        db_instance.client = AsyncIOMotorClient(settings.mongodb_uri)
+        db_name = "devjobs"
+        if "/" in settings.mongodb_uri.split("://")[1]:
+            path = settings.mongodb_uri.split("://")[1].split("/")[1]
+            if "?" in path:
+                db_name = path.split("?")[0]
+            elif path:
+                db_name = path
+        db_instance.db = db_instance.client[db_name]
+
 def get_collection():
     """Retrieve the primary user data collection."""
-    if db_instance.db is None:
-        raise RuntimeError("Database not initialized")
+    _ensure_connected()
     return db_instance.db["developer_academy_users"]
 
 def get_forum_collection():
     """Retrieve the forum threads collection."""
-    if db_instance.db is None:
-        raise RuntimeError("Database not initialized")
+    _ensure_connected()
     return db_instance.db["developer_academy_forum"]
 
 def get_hackathons_collection():
     """Retrieve the hackathons collection."""
-    if db_instance.db is None:
-        raise RuntimeError("Database not initialized")
+    _ensure_connected()
     return db_instance.db["developer_academy_hackathons"]
 
 async def connect_to_mongo():
@@ -64,6 +93,8 @@ async def close_mongo_connection():
     """Close the MongoDB client connection."""
     if db_instance.client:
         db_instance.client.close()
+        db_instance.client = None
+        db_instance.db = None
         print("🛑 Closed MongoDB connection.")
 
 def build_user_levels(active_track: str, completed_ids: List[str]):
@@ -155,7 +186,9 @@ def create_default_user_dict(user_id: str, auth_type: str) -> Dict[str, Any]:
         "github_activities": [],
         "mentor_chat_sessions": [],
         "hackathons_registered": [],
-        "hackathon_submissions": {}
+        "hackathon_submissions": {},
+        "deployed_contracts": [],
+        "deployed_contracts_count": 0
     }
 
 async def get_or_create_user(user_id: str, auth_type: str = "demo") -> Dict[str, Any]:
@@ -426,6 +459,21 @@ async def get_kpis() -> Dict[str, Any]:
     sessions_res = await cursor_sessions.to_list(length=1)
     ai_mentor_sessions = sessions_res[0]["total"] if sessions_res else 0
     
+    # 9. Deployed Smart Contracts (Total count)
+    pipeline_deployments = [
+        {"$project": {"count": {"$size": {"$ifNull": ["$deployed_contracts", []]}}}},
+        {"$group": {"_id": None, "total": {"$sum": "$count"}}}
+    ]
+    cursor_deployments = coll.aggregate(pipeline_deployments)
+    deployments_res = await cursor_deployments.to_list(length=1)
+    db_deployments = deployments_res[0]["total"] if deployments_res else 0
+    try:
+        from src.api.arbitrum import SEEDED_DEPLOYMENTS
+        seeded_deps = len(SEEDED_DEPLOYMENTS)
+    except Exception:
+        seeded_deps = 0
+    total_deployed_contracts = max(db_deployments, seeded_deps)
+
     return {
         "registered_users": registered_users,
         "active_learners": active_learners,
@@ -434,7 +482,8 @@ async def get_kpis() -> Dict[str, Any]:
         "coding_exercises": coding_exercises,
         "certificates_issued": certificates_issued,
         "github_activity": github_activity,
-        "ai_mentor_sessions": ai_mentor_sessions
+        "ai_mentor_sessions": ai_mentor_sessions,
+        "deployed_contracts": total_deployed_contracts
     }
 
 

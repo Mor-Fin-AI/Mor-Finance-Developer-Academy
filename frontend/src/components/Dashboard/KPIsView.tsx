@@ -37,6 +37,7 @@ export const KPIsView: React.FC<KPIsViewProps> = ({ userId }) => {
     { label: 'Course Completions',     val: kpis.course_completion,     icon: '🎓', desc: 'Students completing 100% of curriculum' },
     { label: 'Average Quiz Score',     val: `${kpis.avg_quiz_score}%`,  icon: '📋', desc: 'Average grade on quiz evaluations' },
     { label: 'Coding Exercises',       val: kpis.coding_exercises,      icon: '💻', desc: 'Total Solidity smart contracts compiled' },
+    { label: 'Deployed Contracts',     val: kpis.deployed_contracts || 0, icon: '🚀', desc: 'Verified contracts deployed to live testnets' },
     { label: 'Certificates Generated', val: kpis.certificates_issued,   icon: '🏆', desc: 'Verifiable credentials issued' },
     { label: 'GitHub Activities',      val: kpis.github_activity,       icon: '🐱', desc: 'Simulated dev commit logs pushed' },
     { label: 'AI Mentor Chats',        val: kpis.ai_mentor_sessions,    icon: '🤖', desc: 'AI assistant streaming SSE chats' },

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { fetchArbitrumTelemetry, fetchCohortAnalytics } from '../../api/client';
+import { getStoredDeployments, subscribeDeployments } from '../../services/web3Deployer';
 import './AnalyticsPage.css';
 
 interface DeveloperActivityItem {
@@ -23,6 +24,14 @@ export const AnalyticsPage: React.FC = () => {
   const [activitySearch, setActivitySearch] = useState<string>('');
   const [arbTab, setArbTab] = useState<'telemetry' | 'deployments' | 'stylus' | 'base' | 'optimism' | 'solidity'>('telemetry');
   const [deploymentNetworkFilter, setDeploymentNetworkFilter] = useState<string>('All');
+  const [localDeploymentsCount, setLocalDeploymentsCount] = useState<number>(() => getStoredDeployments().length);
+
+  useEffect(() => {
+    const unsub = subscribeDeployments((deps) => {
+      setLocalDeploymentsCount(deps.length);
+    });
+    return unsub;
+  }, []);
   const [arbTelemetry, setArbTelemetry] = useState<any>(null);
 
   const [cohortData, setCohortData] = useState<{
@@ -67,6 +76,13 @@ export const AnalyticsPage: React.FC = () => {
     }
     return true;
   });
+
+  const totalDeployments = Math.max(
+    cohortData.testnet_deployments,
+    arbTelemetry?.recent_deployments?.length || 0,
+    arbTelemetry?.cohorts_summary?.total_arbitrum_deployments || 0,
+    localDeploymentsCount
+  );
 
   return (
     <div className="analytics-page animate-fade-in">
@@ -140,11 +156,11 @@ export const AnalyticsPage: React.FC = () => {
         </div>
 
         <div className="analytics-kpi-card kpi-card--pink">
-          <span className="kpi-card__icon">📜</span>
+          <span className="kpi-card__icon">🚀</span>
           <div className="kpi-card__content">
-            <span className="kpi-card__val">On-Chain Deployments</span>
-            <span className="kpi-card__lbl">Testnet Verification</span>
-            <span className="kpi-card__sub">Multi-Chain Compilers</span>
+            <span className="kpi-card__val">{totalDeployments}</span>
+            <span className="kpi-card__lbl">On-Chain Deployments</span>
+            <span className="kpi-card__sub">Arbitrum • Base • OP • Sepolia</span>
           </div>
         </div>
       </div>
@@ -372,7 +388,7 @@ export const AnalyticsPage: React.FC = () => {
             className={`arbitrum-tab-btn ${arbTab === 'deployments' ? 'active' : ''}`}
             onClick={() => setArbTab('deployments')}
           >
-            📡 Live Telemetry Deployments ({arbTelemetry?.recent_deployments?.length || 0})
+            📡 Live Telemetry Deployments ({totalDeployments})
           </button>
           <button
             className={`arbitrum-tab-btn ${arbTab === 'stylus' ? 'active' : ''}`}
@@ -437,7 +453,7 @@ export const AnalyticsPage: React.FC = () => {
                 </div>
                 <div className="milestone-stat-row">
                   <span>Verified Deployments:</span>
-                  <strong>{arbTelemetry?.recent_deployments?.length ? `${arbTelemetry.recent_deployments.length} Logged` : 'Active Stream'}</strong>
+                  <strong>{totalDeployments > 0 ? `${totalDeployments} Logged` : 'Active Stream'}</strong>
                 </div>
                 <div className="milestone-stat-row">
                   <span>Supported Chains:</span>

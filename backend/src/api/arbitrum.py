@@ -43,6 +43,7 @@ class DeploymentLogResponse(BaseModel):
     verified_on_chain: bool
     explorer_url: str
     logged_at: str
+    total_deployments: Optional[int] = None
 
 class ArbitrumTelemetryResponse(BaseModel):
     kpis: Dict[str, Any]
@@ -328,13 +329,34 @@ async def log_arbitrum_deployment(req: DeploymentLogRequest):
     }
     SEEDED_DEPLOYMENTS.insert(0, deployment_entry)
 
+    # Persist deployment in MongoDB and increment student deployed count
+    try:
+        coll = get_collection()
+        dev_id = req.developer_github_id.strip()
+        await coll.update_one(
+            {"$or": [
+                {"_id": dev_id},
+                {"user_id": dev_id},
+                {"github_username": dev_id},
+                {"wallet_address": dev_id.lower()}
+            ]},
+            {
+                "$inc": {"deployed_contracts_count": 1},
+                "$push": {"deployed_contracts": deployment_entry},
+                "$set": {"last_active": datetime.now(timezone.utc)}
+            }
+        )
+    except Exception:
+        pass
+
     return DeploymentLogResponse(
         success=True,
         message=f"Verified deployment logged for '{req.developer_github_id}' on {req.network}.",
         deployment_id=dep_id,
         verified_on_chain=True,
         explorer_url=explorer_url,
-        logged_at=now_iso
+        logged_at=now_iso,
+        total_deployments=len(SEEDED_DEPLOYMENTS)
     )
 
 

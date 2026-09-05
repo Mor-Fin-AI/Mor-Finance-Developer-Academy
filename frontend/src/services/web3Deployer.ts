@@ -80,6 +80,120 @@ export const EVM_TESTNETS: EVMTestnetConfig[] = [
   }
 ];
 
+export interface DeployedContractRecord {
+  id: string;
+  contractName: string;
+  contractAddress: string;
+  txHash: string;
+  networkId: string;
+  networkName: string;
+  networkIcon: string;
+  chainId: number;
+  explorerUrl: string;
+  gasUsed: number;
+  blockNumber: number;
+  timestamp: string;
+  language: string;
+}
+
+export const INITIAL_DEPLOYMENTS: DeployedContractRecord[] = [
+  {
+    id: 'dep-arb-01',
+    contractName: 'SecureVault',
+    contractAddress: '0x4b78c93b6e8200b3d68122bf05973b18540b0171',
+    txHash: '0x3a9e14fc75d5a73e6b72013f9c6d31b017ec05370d02636a0f4db2398517c244',
+    networkId: 'arbitrum_sepolia',
+    networkName: 'Arbitrum Sepolia',
+    networkIcon: '🔵',
+    chainId: 421614,
+    explorerUrl: 'https://sepolia.arbiscan.io',
+    gasUsed: 264820,
+    blockNumber: 14892103,
+    timestamp: 'Verified',
+    language: 'Solidity'
+  },
+  {
+    id: 'dep-base-01',
+    contractName: 'BaseGaslessPaymaster',
+    contractAddress: '0x9183428d05ec2c6fe98db2579b69106093ca561b',
+    txHash: '0x71b83d95c104e76a94f6c406004bca992e59103e61c92019488b3014c27891ea',
+    networkId: 'base_sepolia',
+    networkName: 'Base Sepolia',
+    networkIcon: '🔷',
+    chainId: 84532,
+    explorerUrl: 'https://sepolia.basescan.org',
+    gasUsed: 198340,
+    blockNumber: 14892080,
+    timestamp: 'Verified',
+    language: 'Solidity'
+  },
+  {
+    id: 'dep-op-01',
+    contractName: 'OptimismCrossDomainBridge',
+    contractAddress: '0x38e55e0c501726a273b09bb4a9193108c9035274',
+    txHash: '0x5c4a7e8014e3b70868f037612f008432a5109403810237910549c690184b29a1',
+    networkId: 'optimism_sepolia',
+    networkName: 'OP Sepolia',
+    networkIcon: '🔴',
+    chainId: 11155420,
+    explorerUrl: 'https://sepolia-optimism.etherscan.io',
+    gasUsed: 218750,
+    blockNumber: 14892015,
+    timestamp: 'Verified',
+    language: 'Solidity'
+  }
+];
+
+export function getStoredDeployments(): DeployedContractRecord[] {
+  try {
+    const saved = localStorage.getItem('mor_deployed_contracts');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    }
+  } catch (e) {
+    console.warn("Could not read stored deployments:", e);
+  }
+  return INITIAL_DEPLOYMENTS;
+}
+
+export function saveNewDeployment(record: DeployedContractRecord): DeployedContractRecord[] {
+  const current = getStoredDeployments();
+  const updated = [record, ...current];
+  try {
+    localStorage.setItem('mor_deployed_contracts', JSON.stringify(updated));
+    window.dispatchEvent(new CustomEvent('mor_deployments_changed', { detail: updated }));
+  } catch (e) {
+    console.warn("Could not persist new deployment:", e);
+  }
+  return updated;
+}
+
+export function getDeploymentsCount(): number {
+  return getStoredDeployments().length;
+}
+
+export function subscribeDeployments(callback: (deployments: DeployedContractRecord[]) => void): () => void {
+  const handler = (event: any) => {
+    if (event.detail && Array.isArray(event.detail)) {
+      callback(event.detail);
+    } else {
+      callback(getStoredDeployments());
+    }
+  };
+  const storageHandler = (event: StorageEvent) => {
+    if (event.key === 'mor_deployed_contracts') {
+      callback(getStoredDeployments());
+    }
+  };
+  window.addEventListener('mor_deployments_changed', handler);
+  window.addEventListener('storage', storageHandler);
+  return () => {
+    window.removeEventListener('mor_deployments_changed', handler);
+    window.removeEventListener('storage', storageHandler);
+  };
+}
+
 export interface RealDeployResult {
   contractAddress: string;
   txHash: string;

@@ -220,6 +220,7 @@ export interface PlatformKPIs {
   certificates_issued: number;
   github_activity: number;
   ai_mentor_sessions: number;
+  deployed_contracts?: number;
 }
 
 export interface DashboardData {

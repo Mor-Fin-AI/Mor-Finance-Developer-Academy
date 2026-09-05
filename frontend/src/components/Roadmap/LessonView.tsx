@@ -4,7 +4,17 @@ import type { Lesson, UserProgress } from '../../types';
 import { fetchLesson, postQuizSubmit, postExerciseSubmit, streamMentorChat } from '../../api/client';
 import { executeMultiChainCompiler } from '../../services/sandboxCompiler';
 import { trackStudentDeployment } from '../../services/telemetry';
-import { deployContractWithWallet, EVM_TESTNETS, connectWallet, isWalletAvailable, getConnectedAccount } from '../../services/web3Deployer';
+import {
+  deployContractWithWallet,
+  EVM_TESTNETS,
+  connectWallet,
+  isWalletAvailable,
+  getConnectedAccount,
+  getStoredDeployments,
+  saveNewDeployment,
+  subscribeDeployments,
+  type DeployedContractRecord
+} from '../../services/web3Deployer';
 import './LessonView.css';
 
 interface LessonViewProps {
@@ -44,9 +54,17 @@ export const LessonView: React.FC<LessonViewProps> = ({
   const [connectingWallet, setConnectingWallet] = useState(false);
   const [deployingTestnet, setDeployingTestnet] = useState(false);
   const [selectedTestnetId, setSelectedTestnetId] = useState<string>('arbitrum_sepolia');
+  const [deployedContractsCount, setDeployedContractsCount] = useState<number>(() => getStoredDeployments().length);
   
   const consoleEndRef = React.useRef<HTMLDivElement | null>(null);
   const lessonTabsRef = React.useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const unsub = subscribeDeployments((deps) => {
+      setDeployedContractsCount(deps.length);
+    });
+    return unsub;
+  }, []);
 
   useEffect(() => {
     if (consoleEndRef.current) {
@@ -425,6 +443,26 @@ export const LessonView: React.FC<LessonViewProps> = ({
         blockNumber = 14892100 + Math.floor(Math.random() * 30000);
       }
 
+      // Save to persistent deployment storage and notify other components
+      const newRecord: DeployedContractRecord = {
+        id: `dep-${Date.now()}`,
+        contractName,
+        contractAddress: contractAddress!,
+        txHash: txHash!,
+        networkId: activeTestnet.id,
+        networkName: activeTestnet.name,
+        networkIcon: activeTestnet.icon,
+        chainId: activeTestnet.chainId,
+        explorerUrl: activeTestnet.explorerUrl,
+        gasUsed,
+        blockNumber: blockNumber || 0,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        language: track.lang
+      };
+
+      const updatedDeployments = saveNewDeployment(newRecord);
+      setDeployedContractsCount(updatedDeployments.length);
+
       // Track telemetry
       trackStudentDeployment(
         deployerAddress,
@@ -457,6 +495,7 @@ export const LessonView: React.FC<LessonViewProps> = ({
         `• Target Network:    ${activeTestnet.name} (Chain ID: ${activeTestnet.chainId})`,
         `• RPC Endpoint:      ${activeTestnet.rpcUrl}`,
         `• Contract Name:     ${contractName}`,
+        `• Total Deployed:    ${updatedDeployments.length} Contracts Recorded (Count +1)`,
         `• Signer Account:    ${deployerAddress} ${isLiveWalletDeploy ? '(Cryptographically Signed via Web3 Wallet)' : '(Simulated)'}`,
         `• Contract Address:  ${contractAddress}`,
         `• Transaction Hash:  ${txHash}`,
@@ -874,6 +913,24 @@ export const LessonView: React.FC<LessonViewProps> = ({
                       >
                         🚰 Faucet
                       </a>
+
+                      <span
+                        style={{
+                          fontSize: '0.74rem',
+                          padding: '4px 8px',
+                          borderRadius: '6px',
+                          background: 'rgba(59, 130, 246, 0.15)',
+                          border: '1px solid rgba(59, 130, 246, 0.3)',
+                          color: '#93c5fd',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '4px',
+                          fontWeight: 700
+                        }}
+                        title="Total smart contracts you have deployed across all testnets"
+                      >
+                        📦 {deployedContractsCount} Deployed
+                      </span>
 
                       <button
                         className="btn btn--secondary btn--sm"
