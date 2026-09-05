@@ -71,7 +71,7 @@ export const EVM_TESTNETS: EVMTestnetConfig[] = [
     hexChainId: '0xaa36a7',
     chainName: 'Ethereum',
     symbol: 'SepoliaETH',
-    rpcUrl: 'https://rpc.sepolia.org',
+    rpcUrl: 'https://ethereum-sepolia-rpc.publicnode.com',
     explorerUrl: 'https://sepolia.etherscan.io',
     faucetUrl: 'https://sepoliafaucet.com',
     icon: '💎',

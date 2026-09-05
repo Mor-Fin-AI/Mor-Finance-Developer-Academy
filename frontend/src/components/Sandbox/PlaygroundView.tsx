@@ -15,6 +15,7 @@ import {
   INITIAL_DEPLOYMENTS,
   type DeployedContractRecord
 } from '../../services/web3Deployer';
+import { FormattedAiInsights } from './FormattedAiInsights';
 import './PlaygroundView.css';
 
 interface LanguagePreset {
@@ -1247,10 +1248,11 @@ export const PlaygroundView: React.FC = () => {
               </pre>
 
               {aiAnalysis && (
-                <div className="ai-analysis-card">
-                  <div className="ai-analysis-head">💡 Hermes / OpenClaw AI Mentor Insights:</div>
-                  <div className="ai-analysis-content">{aiAnalysis}</div>
-                </div>
+                <FormattedAiInsights
+                  content={aiAnalysis}
+                  isLoading={askingAi}
+                  onClear={() => setAiAnalysis('')}
+                />
               )}
             </div>
           )}
