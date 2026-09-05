@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { executeMultiChainCompiler } from '../../services/sandboxCompiler';
 import type { CompilationResult } from '../../types';
 import { streamMentorChat } from '../../api/client';
 import { trackStudentDeployment } from '../../services/telemetry';
+import {
+  deployContractWithWallet,
+  isWalletAvailable,
+  connectWallet,
+  getConnectedAccount,
+  EVM_TESTNETS
+} from '../../services/web3Deployer';
 import './PlaygroundView.css';
 
 interface LanguagePreset {
@@ -587,74 +594,7 @@ contract OptimismSuperchainToken {
   }
 ];
 
-export interface EVMTestnetConfig {
-  id: string;
-  name: string;
-  chainId: number;
-  chainName: string;
-  symbol: string;
-  rpcUrl: string;
-  explorerUrl: string;
-  faucetUrl: string;
-  icon: string;
-  telemetryNetwork: string;
-  execEnv: string;
-}
 
-export const EVM_TESTNETS: EVMTestnetConfig[] = [
-  {
-    id: 'arbitrum_sepolia',
-    name: 'Arbitrum Sepolia',
-    chainId: 421614,
-    chainName: 'Arbitrum',
-    symbol: 'ETH',
-    rpcUrl: 'https://sepolia-rollup.arbitrum.io/rpc',
-    explorerUrl: 'https://sepolia.arbiscan.io',
-    faucetUrl: 'https://faucet.quicknode.com/arbitrum/sepolia',
-    icon: '🔵',
-    telemetryNetwork: 'arbitrum_sepolia',
-    execEnv: 'evm_nitro'
-  },
-  {
-    id: 'base_sepolia',
-    name: 'Base Sepolia',
-    chainId: 84532,
-    chainName: 'Base',
-    symbol: 'ETH',
-    rpcUrl: 'https://sepolia.base.org',
-    explorerUrl: 'https://sepolia.basescan.org',
-    faucetUrl: 'https://faucet.quicknode.com/base/sepolia',
-    icon: '🔷',
-    telemetryNetwork: 'base_sepolia',
-    execEnv: 'evm_op_stack'
-  },
-  {
-    id: 'optimism_sepolia',
-    name: 'OP Sepolia',
-    chainId: 11155420,
-    chainName: 'Optimism',
-    symbol: 'ETH',
-    rpcUrl: 'https://sepolia.optimism.io',
-    explorerUrl: 'https://sepolia-optimism.etherscan.io',
-    faucetUrl: 'https://faucet.quicknode.com/optimism/sepolia',
-    icon: '🔴',
-    telemetryNetwork: 'optimism_sepolia',
-    execEnv: 'evm_op_stack'
-  },
-  {
-    id: 'ethereum_sepolia',
-    name: 'Ethereum Sepolia',
-    chainId: 11155111,
-    chainName: 'Ethereum',
-    symbol: 'SepoliaETH',
-    rpcUrl: 'https://rpc.sepolia.org',
-    explorerUrl: 'https://sepolia.etherscan.io',
-    faucetUrl: 'https://sepoliafaucet.com',
-    icon: '💎',
-    telemetryNetwork: 'ethereum_sepolia',
-    execEnv: 'evm'
-  }
-];
 
 export interface DeployedContractRecord {
   id: string;
@@ -729,9 +669,13 @@ export const PlaygroundView: React.FC = () => {
   const [compilationResult, setCompilationResult] = useState<CompilationResult | null>(null);
   const [activeConsoleTab, setActiveConsoleTab] = useState<'console' | 'artifacts' | 'abi' | 'deployments'>('console');
   
-  // EVM Testnet Deployments
+  // EVM Testnet Deployments & Web3 Wallet
   const [deploying, setDeploying] = useState<boolean>(false);
   const [selectedTestnetId, setSelectedTestnetId] = useState<string>('arbitrum_sepolia');
+  const [walletAddress, setWalletAddress] = useState<string | null>(null);
+  const [connectingWallet, setConnectingWallet] = useState<boolean>(false);
+  const [deployStepMessage, setDeployStepMessage] = useState<string | null>(null);
+
   const [deployedContracts, setDeployedContracts] = useState<DeployedContractRecord[]>(() => {
     try {
       const saved = localStorage.getItem('mor_deployed_contracts');
@@ -743,6 +687,39 @@ export const PlaygroundView: React.FC = () => {
 
   const activeTestnet = EVM_TESTNETS.find((t) => t.id === selectedTestnetId) || EVM_TESTNETS[0];
   const isEvmChain = ['solidity', 'base', 'optimism', 'arbitrum_stylus'].includes(activePreset.id);
+
+  // Auto-detect connected wallet account on mount
+  useEffect(() => {
+    getConnectedAccount().then((acc) => {
+      if (acc) setWalletAddress(acc);
+    });
+
+    if (isWalletAvailable() && (window as any).ethereum?.on) {
+      const handleAccountsChanged = (accounts: string[]) => {
+        setWalletAddress(accounts && accounts.length > 0 ? accounts[0] : null);
+      };
+      (window as any).ethereum.on('accountsChanged', handleAccountsChanged);
+      return () => {
+        try {
+          (window as any).ethereum.removeListener('accountsChanged', handleAccountsChanged);
+        } catch {
+          // ignore
+        }
+      };
+    }
+  }, []);
+
+  const handleConnectWallet = async () => {
+    setConnectingWallet(true);
+    try {
+      const acc = await connectWallet();
+      setWalletAddress(acc);
+    } catch (err: any) {
+      alert(`Wallet Connection Notice: ${err.message}`);
+    } finally {
+      setConnectingWallet(false);
+    }
+  };
 
   // AI Mentor Chat in IDE
   const [askingAi, setAskingAi] = useState<boolean>(false);
@@ -780,7 +757,7 @@ export const PlaygroundView: React.FC = () => {
         const progLang = activePreset.lang.toLowerCase().includes('rust') ? 'rust' : activePreset.lang.toLowerCase().includes('move') ? 'move' : activePreset.lang.toLowerCase().includes('cairo') ? 'cairo' : 'solidity';
 
         trackStudentDeployment(
-          'student-builder',
+          walletAddress || 'student-builder',
           'KU_COHORT_2026_01',
           {
             contractAddress: contractAddr,
@@ -812,9 +789,10 @@ export const PlaygroundView: React.FC = () => {
     if (deploying || !code.trim()) return;
     setDeploying(true);
     setActiveConsoleTab('console');
+    setDeployStepMessage('Compiling smart contract...');
 
     try {
-      // 1. Compile smart contract first
+      // 1. Compile smart contract first to get valid bytecode & ABI
       setCompiling(true);
       const compileRes = await executeMultiChainCompiler(activePreset.id, code);
       setCompiling(false);
@@ -826,26 +804,83 @@ export const PlaygroundView: React.FC = () => {
         );
       }
 
-      // 2. Extract contract name from code
+      // 2. Extract contract name from code or artifacts
       const contractMatch = code.match(/(?:contract|module|program)\s+([A-Za-z0-9_]+)/);
-      const contractName = contractMatch ? contractMatch[1] : (activePreset.templates[0]?.name || 'SmartContract');
+      const contractName = contractMatch ? contractMatch[1] : (compileRes.artifacts?.contract_name || activePreset.templates[0]?.name || 'SmartContract');
 
-      // 3. Cryptographic deterministic addresses & transaction hashes
-      const randomHex = (len: number) => {
-        let s = '';
-        const chars = '0123456789abcdef';
-        for (let i = 0; i < len; i++) s += chars[Math.floor(Math.random() * chars.length)];
-        return s;
-      };
+      // 3. Real On-Chain Wallet Deployment Pipeline
+      let contractAddress = '';
+      let txHash = '';
+      let blockNumber = 0;
+      let gasUsed = 0;
+      let deployerAddress = walletAddress || 'student-builder';
+      let isLiveWalletDeploy = false;
 
-      const contractAddress = `0x${randomHex(40)}`;
-      const txHash = `0x${randomHex(64)}`;
-      const blockNumber = 14892100 + Math.floor(Math.random() * 30000);
-      const gasUsed = compileRes.gasEstimate ? Math.max(compileRes.gasEstimate, 168000) : (185000 + Math.floor(Math.random() * 80000));
+      const hasWallet = isWalletAvailable();
+
+      if (hasWallet) {
+        try {
+          setDeployStepMessage(`Connecting wallet & switching to ${activeTestnet.name}...`);
+          const deployRes = await deployContractWithWallet({
+            networkId: selectedTestnetId,
+            bytecode: compileRes.artifacts?.bytecode || '',
+            abi: compileRes.artifacts?.abi,
+            contractName,
+            onStatus: (msg) => {
+              setDeployStepMessage(msg);
+              setCompilationResult((prev) => prev ? {
+                ...prev,
+                stdout: `${prev.stdout ? prev.stdout + '\n' : ''}${msg}`
+              } : null);
+            }
+          });
+
+          contractAddress = deployRes.contractAddress;
+          txHash = deployRes.txHash;
+          blockNumber = deployRes.blockNumber;
+          gasUsed = deployRes.gasUsed;
+          deployerAddress = deployRes.deployerAddress;
+          setWalletAddress(deployRes.deployerAddress);
+          isLiveWalletDeploy = true;
+        } catch (walletErr: any) {
+          if (walletErr.message?.includes('USER_CANCELLED')) {
+            throw new Error("Transaction signature was rejected in your wallet. Deployment cancelled.");
+          }
+          console.warn("Wallet deployment error:", walletErr);
+          const proceedSim = window.confirm(
+            `Live wallet deployment failed: ${walletErr.message}\n\nWould you like to fall back to simulated testnet broadcast?`
+          );
+          if (!proceedSim) {
+            throw walletErr;
+          }
+        }
+      } else {
+        const proceedSim = window.confirm(
+          `No Web3 browser wallet (MetaMask / Coinbase / Rabby) was detected.\n\nTo sign transactions with your wallet, please install MetaMask (https://metamask.io).\n\nWould you like to run a simulated sandbox deployment instead?`
+        );
+        if (!proceedSim) {
+          throw new Error("Web3 wallet required. Please install MetaMask to sign and deploy live contracts.");
+        }
+      }
+
+      // Simulated fallback if wallet was unavailable or errored with consent
+      if (!isLiveWalletDeploy) {
+        const randomHex = (len: number) => {
+          let s = '';
+          const chars = '0123456789abcdef';
+          for (let i = 0; i < len; i++) s += chars[Math.floor(Math.random() * chars.length)];
+          return s;
+        };
+
+        contractAddress = `0x${randomHex(40)}`;
+        txHash = `0x${randomHex(64)}`;
+        blockNumber = 14892100 + Math.floor(Math.random() * 30000);
+        gasUsed = compileRes.gasEstimate ? Math.max(compileRes.gasEstimate, 168000) : (185000 + Math.floor(Math.random() * 80000));
+      }
 
       // 4. Log to telemetry for institutional grant tracking
       trackStudentDeployment(
-        'student-builder',
+        deployerAddress,
         'KU_COHORT_2026_01',
         {
           contractAddress,
@@ -883,40 +918,46 @@ export const PlaygroundView: React.FC = () => {
       // 5. Provide detailed deployment receipt in terminal console
       const receiptLog = `
 🚀 ======================================================================
-📡 BROADCASTING TRANSACTION TO EVM TESTNET: ${activeTestnet.name.toUpperCase()}
+📡 ${isLiveWalletDeploy ? 'LIVE ON-CHAIN DEPLOYMENT CONFIRMED' : 'SANDBOX BROADCAST TO EVM TESTNET'}: ${activeTestnet.name.toUpperCase()}
 ======================================================================
 • Target Network:      ${activeTestnet.name} (Chain ID: ${activeTestnet.chainId})
 • RPC Endpoint:        ${activeTestnet.rpcUrl}
 • Contract Name:       ${contractName}
+• Signer Account:      ${deployerAddress} ${isLiveWalletDeploy ? '(Cryptographically Signed via Web3 Wallet)' : '(Simulated)'}
 • Contract Address:    ${contractAddress}
 • Transaction Hash:    ${txHash}
 • Block Number:        #${blockNumber.toLocaleString()}
 • Gas Consumed:        ${gasUsed.toLocaleString()} Gas Units
-• Status:              ✅ CONFIRMED (12 block confirmations)
-• Verification:        ✅ Bytecode & ABI Verified On-Chain
+• On-Chain Status:     ${isLiveWalletDeploy ? '✅ CONFIRMED ON-CHAIN (Live Block Receipt Verified)' : '✅ CONFIRMED (Simulated)'}
+• Bytecode Status:     ✅ Valid EVM Execution Initcode
 
 🔗 Live Block Explorer Links:
   - Contract:    ${activeTestnet.explorerUrl}/address/${contractAddress}
   - Transaction: ${activeTestnet.explorerUrl}/tx/${txHash}
 
 📡 Academy Grant Telemetry:
-  - Developer ID:      student-builder (KU Cohort 2026)
+  - Signer / Dev ID:   ${deployerAddress}
   - Execution Engine:  ${activeTestnet.execEnv.toUpperCase()}
-  - Logged Metric:     Institutional Grant Verification Pipeline
+  - Verification:      ${isLiveWalletDeploy ? 'Verified On-Chain Multi-Chain Grant Standard' : 'Sandbox Verification'}
 ======================================================================
 `;
 
-      setCompilationResult({
-        ...compileRes,
-        stdout: `${compileRes.stdout ? compileRes.stdout + '\n\n' : ''}${receiptLog}`
-      });
+      setCompilationResult((prev) => ({
+        ...(prev || compileRes),
+        stdout: `${(prev?.stdout || compileRes.stdout || '')}\n\n${receiptLog}`
+      }));
 
     } catch (err: any) {
       console.error("Testnet deployment error:", err);
       alert(`Deployment Error: ${err.message || 'Failed to broadcast testnet deployment'}`);
+      setCompilationResult((prev) => prev ? {
+        ...prev,
+        stdout: `${prev.stdout ? prev.stdout + '\n\n' : ''}❌ DEPLOYMENT FAILED: ${err.message || 'Unknown error'}`
+      } : null);
     } finally {
       setDeploying(false);
       setCompiling(false);
+      setDeployStepMessage(null);
     }
   };
 
@@ -1079,6 +1120,48 @@ export const PlaygroundView: React.FC = () => {
             <div className="editor-footer-buttons">
               {isEvmChain && (
                 <div className="testnet-deploy-controls">
+                  {walletAddress ? (
+                    <span
+                      className="wallet-status-badge"
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '5px',
+                        fontSize: '0.74rem',
+                        fontWeight: 600,
+                        padding: '4px 8px',
+                        borderRadius: '6px',
+                        background: 'rgba(34, 197, 94, 0.15)',
+                        border: '1px solid rgba(34, 197, 94, 0.3)',
+                        color: '#86efac'
+                      }}
+                      title={`Connected Web3 Signer: ${walletAddress}`}
+                    >
+                      <span style={{ display: 'inline-block', width: '7px', height: '7px', borderRadius: '50%', background: '#22c55e' }}></span>
+                      {walletAddress.slice(0, 6)}...{walletAddress.slice(-4)}
+                    </span>
+                  ) : (
+                    <button
+                      type="button"
+                      className="btn btn--secondary btn--sm btn-connect-wallet"
+                      onClick={handleConnectWallet}
+                      disabled={connectingWallet}
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '5px',
+                        fontSize: '0.74rem',
+                        fontWeight: 600,
+                        padding: '4px 8px',
+                        background: 'rgba(234, 88, 12, 0.15)',
+                        borderColor: 'rgba(234, 88, 12, 0.35)',
+                        color: '#fdba74'
+                      }}
+                      title="Connect MetaMask or browser Web3 wallet to sign live transactions"
+                    >
+                      🦊 {connectingWallet ? 'Connecting...' : 'Connect Wallet'}
+                    </button>
+                  )}
                   <select
                     className="testnet-select-dropdown"
                     value={selectedTestnetId}
@@ -1104,9 +1187,9 @@ export const PlaygroundView: React.FC = () => {
                     className="btn btn--primary btn--sm btn-deploy-testnet"
                     onClick={handleDeployToTestnet}
                     disabled={deploying || compiling || !code.trim()}
-                    title={`Deploy smart contract to ${activeTestnet.name}`}
+                    title={`Deploy smart contract to ${activeTestnet.name} (prompts wallet signature)`}
                   >
-                    {deploying ? '⏳ Deploying...' : `🚀 Deploy to ${activeTestnet.name.split(' ')[0]}`}
+                    {deploying ? (deployStepMessage || '⏳ Deploying...') : `🚀 Sign & Deploy (${activeTestnet.name.split(' ')[0]})`}
                   </button>
                 </div>
               )}

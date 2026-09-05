@@ -792,9 +792,17 @@ def compile_code_sandbox(chain: str, language: str, code: str, lesson_id: Option
 
                 if not errors and output.get("contracts", {}).get("Contract.sol"):
                     contracts = output["contracts"]["Contract.sol"]
-                    first_name = list(contracts.keys())[0]
-                    contract_name = first_name
-                    c_data = contracts[first_name]
+                    chosen_name = None
+                    for c_name, c_cand in contracts.items():
+                        b_obj = c_cand.get("evm", {}).get("bytecode", {}).get("object", "")
+                        if b_obj:
+                            chosen_name = c_name
+                            break
+                    if not chosen_name:
+                        chosen_name = list(contracts.keys())[0]
+
+                    contract_name = chosen_name
+                    c_data = contracts[chosen_name]
                     abi = c_data.get("abi", [])
                     bytecode = "0x" + c_data.get("evm", {}).get("bytecode", {}).get("object", "")
                     gas_est_data = c_data.get("evm", {}).get("gasEstimates", {}).get("creation", {})

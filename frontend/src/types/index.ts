@@ -84,6 +84,8 @@ export interface CompilationResult {
     classHash?: string;
     moduleAddress?: string;
     wasmHash?: string;
+    contract_name?: string;
+    compiler_target?: string;
   };
 }
 
