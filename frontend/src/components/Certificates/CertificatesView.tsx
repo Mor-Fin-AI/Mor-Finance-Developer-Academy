@@ -1,7 +1,8 @@
 // ─── CertificatesView — Verifiable Multi-Chain Credentials for Grant Standards ───
 import React, { useState, useEffect } from 'react';
-import type { Certificate } from '../../types';
-import { fetchCertificates } from '../../api/client';
+import { useNavigate } from 'react-router-dom';
+import type { Certificate, UserProgress } from '../../types';
+import { fetchCertificates, fetchProgress, postActiveTrack } from '../../api/client';
 import './CertificatesView.css';
 
 interface CertificatesViewProps {
@@ -17,6 +18,7 @@ interface ChainCredentialTemplate {
   icon: string;
   color: string;
   level_id: number;
+  requiredLessonIds: string[];
   requirements: string[];
 }
 
@@ -24,31 +26,33 @@ const CHAIN_CREDENTIALS: ChainCredentialTemplate[] = [
   {
     id: 'cert-aptos',
     trackId: 'aptos',
-    chainName: 'Aptos',
+    chainName: 'Aptos Move',
     title: 'Aptos Move Certified Developer',
     grantStandard: 'Aptos Foundation Grant Benchmark Standard',
     icon: '⚡',
     color: '#06b6d4',
     level_id: 5,
+    requiredLessonIds: ['aptos-1', 'aptos-2', 'aptos-3', 'aptos-4', 'aptos-5'],
     requirements: [
-      '5 Complete Learning Modules',
-      '30 Move & Block-STM Quiz Questions (100%)',
+      '5 Complete Learning Modules (Modules 1–5)',
+      '30 Move & Block-STM Quiz Questions (100% Passing)',
       'Aptos Testnet Move Deployment Challenge',
-      'Verified On-Chain Module Bytecode'
+      'Verified On-Chain Module Bytecode & Explorer Class'
     ]
   },
   {
     id: 'cert-starknet',
     trackId: 'starknet',
-    chainName: 'Starknet',
+    chainName: 'Starknet Cairo',
     title: 'Starknet Cairo & ZK Certified Developer',
     grantStandard: 'Starknet Foundation Grant Benchmark Standard',
     icon: '✨',
     color: '#ec4899',
     level_id: 5,
+    requiredLessonIds: ['starknet-1', 'starknet-2', 'starknet-3', 'starknet-4', 'starknet-5'],
     requirements: [
-      '5 Complete Learning Modules',
-      '30 Cairo & STARK Quiz Questions (100%)',
+      '5 Complete Learning Modules (Modules 1–5)',
+      '30 Cairo & STARK Quiz Questions (100% Passing)',
       'Starknet Sepolia Cairo Deployment Challenge',
       'Verified Class Hash & Account Abstraction'
     ]
@@ -56,15 +60,16 @@ const CHAIN_CREDENTIALS: ChainCredentialTemplate[] = [
   {
     id: 'cert-solana',
     trackId: 'solana',
-    chainName: 'Solana',
+    chainName: 'Solana Anchor',
     title: 'Solana Anchor Certified Developer',
     grantStandard: 'Solana Superteam & Foundation Grant Standard',
     icon: '☀️',
     color: '#f59e0b',
     level_id: 5,
+    requiredLessonIds: ['solana-1', 'solana-2', 'solana-3', 'solana-4', 'solana-5'],
     requirements: [
-      '5 Complete Learning Modules',
-      '30 Anchor & Sealevel Quiz Questions (100%)',
+      '5 Complete Learning Modules (Modules 1–5)',
+      '30 Anchor & Sealevel Quiz Questions (100% Passing)',
       'Solana Devnet Anchor Deployment Challenge',
       'Verified IDL & Program Derived Addresses'
     ]
@@ -78,9 +83,10 @@ const CHAIN_CREDENTIALS: ChainCredentialTemplate[] = [
     icon: '🟣',
     color: '#a855f7',
     level_id: 5,
+    requiredLessonIds: ['polkadot-1', 'polkadot-2', 'polkadot-3', 'polkadot-4', 'polkadot-5'],
     requirements: [
-      '5 Complete Learning Modules',
-      '30 ink! & Substrate Quiz Questions (100%)',
+      '5 Complete Learning Modules (Modules 1–5)',
+      '30 ink! & Substrate Quiz Questions (100% Passing)',
       'Polkadot Wasm Deployment Challenge',
       'Verified ink! Metadata & Extrinsic Hash'
     ]
@@ -94,27 +100,68 @@ const CHAIN_CREDENTIALS: ChainCredentialTemplate[] = [
     icon: '🛡️',
     color: '#3b82f6',
     level_id: 5,
+    requiredLessonIds: ['1-1', '1-2', '2-1', '2-2', '3-1', '3-2', '4-1', '5-1'],
     requirements: [
-      '5 Complete Learning Modules',
-      '30 Solidity & Security Quiz Questions (100%)',
+      '5 Complete Core Learning Levels (Levels 1–5)',
+      '30 Solidity & Security Quiz Questions (100% Passing)',
       'Sepolia / Base Testnet Deployment Challenge',
       'Verified Source Code on Etherscan'
+    ]
+  },
+  {
+    id: 'cert-fullstack',
+    trackId: 'fullstack',
+    chainName: 'Full Stack Web3',
+    title: 'Full Stack Blockchain Developer',
+    grantStandard: 'Full Stack Web3 Engineering Benchmark Standard',
+    icon: '🚀',
+    color: '#10b981',
+    level_id: 5,
+    requiredLessonIds: ['fullstack-1', 'fullstack-2', 'fullstack-3', 'fullstack-4', 'fullstack-5'],
+    requirements: [
+      '5 Complete Learning Modules (End-to-End)',
+      'Full Stack Architecture & Indexing Quizzes (100% Passing)',
+      'Multi-Chain Testnet Full Stack DApp Challenge',
+      'Verified On-Chain Contract & Live Frontend UI'
     ]
   }
 ];
 
 export const CertificatesView: React.FC<CertificatesViewProps> = ({ userId }) => {
+  const navigate = useNavigate();
   const [certs, setCerts] = useState<Certificate[]>([]);
+  const [userProgress, setUserProgress] = useState<UserProgress | null>(null);
   const [loading, setLoading] = useState(true);
   const [filterChain, setFilterChain] = useState<string>('all');
+  const [navigatingTrack, setNavigatingTrack] = useState<string | null>(null);
 
   useEffect(() => {
     setLoading(true);
-    fetchCertificates(userId)
-      .then((data) => setCerts(data))
-      .catch((err) => console.error("Error fetching certificates:", err))
+    Promise.all([
+      fetchCertificates(userId).catch(() => [] as Certificate[]),
+      fetchProgress(userId).catch(() => null)
+    ])
+      .then(([certsData, progressData]) => {
+        setCerts(certsData);
+        setUserProgress(progressData);
+      })
+      .catch((err) => console.error("Error fetching credentials:", err))
       .finally(() => setLoading(false));
   }, [userId]);
+
+  const handleGoToCourse = async (trackId: string) => {
+    setNavigatingTrack(trackId);
+    try {
+      if (userId) {
+        await postActiveTrack(userId, trackId, '');
+      }
+    } catch (err) {
+      console.warn("Could not set active track:", err);
+    } finally {
+      setNavigatingTrack(null);
+      navigate('/academy');
+    }
+  };
 
   const handleDownload = (cert: {
     level_title: string;
@@ -343,18 +390,19 @@ export const CertificatesView: React.FC<CertificatesViewProps> = ({ userId }) =>
           Ecosystem <span className="gradient-text">Credentials & Certificates</span>
         </h1>
         <p className="certs-subtitle">
-          Verifiable credentials representing completed learning modules, 25–30 quiz masteries, and verified testnet smart contract deployment challenges across Aptos, Starknet, Solana, Polkadot, and Ethereum.
+          Verifiable credentials earned by completing learning modules, passing comprehensive quiz evaluations, and deploying verified smart contracts to live testnets across Aptos, Starknet, Solana, Polkadot, Full Stack Web3, and EVM chains.
         </p>
 
         {/* Chain Filter Tabs */}
         <div className="certs-filter-bar">
           {[
             { id: 'all', label: 'All Ecosystems' },
-            { id: 'aptos', label: '⚡ Aptos Move' },
+            { id: 'fundamentals', label: '🛡️ Ethereum EVM' },
+            { id: 'fullstack', label: '🚀 Full Stack Web3' },
             { id: 'starknet', label: '✨ Starknet Cairo' },
-            { id: 'solana', label: '🟠 Solana Anchor' },
-            { id: 'polkadot', label: '🟣 Polkadot ink!' },
-            { id: 'fundamentals', label: '🛡️ Ethereum EVM' }
+            { id: 'aptos', label: '⚡ Aptos Move' },
+            { id: 'solana', label: '☀️ Solana Anchor' },
+            { id: 'polkadot', label: '🟣 Polkadot ink!' }
           ].map((item) => (
             <button
               key={item.id}
@@ -367,31 +415,54 @@ export const CertificatesView: React.FC<CertificatesViewProps> = ({ userId }) =>
         </div>
       </div>
 
-      {/* Grid of 5 Standard Ecosystem Credentials */}
+      {/* Grid of Standard Ecosystem Credentials */}
       <div className="certs-grid">
         {filteredTemplates.map((template) => {
-          // Check if user earned this specific certificate or level 5
-          const userEarnedCert = certs.find(
-            (c) =>
-              c.level_id === template.level_id ||
-              c.level_title.toLowerCase().includes(template.chainName.toLowerCase()) ||
-              c.level_title.toLowerCase().includes(template.trackId)
-          );
+          const completedIds = userProgress?.completed_lesson_ids || [];
 
-          const displayCertId = userEarnedCert?.certificate_id || `${template.id}-${userId.slice(0, 8)}`;
+          // 1. Strict certificate matching (MUST match track_id or explicit track title, NEVER generic level_id: 5)
+          const userEarnedCert = certs.find((c) => {
+            if (c.track_id && c.track_id.toLowerCase() === template.trackId.toLowerCase()) {
+              return true;
+            }
+            const titleLower = (c.level_title || '').toLowerCase();
+            if (template.trackId === 'fundamentals') {
+              return titleLower.includes('evm') || titleLower.includes('security') || titleLower.includes('dao governance') || titleLower.includes('blockchain fundamentals');
+            }
+            if (template.trackId === 'fullstack') {
+              return titleLower.includes('full stack');
+            }
+            if (template.trackId === 'polkadot') {
+              return titleLower.includes('polkadot') || titleLower.includes('substrate');
+            }
+            return titleLower.includes(template.trackId);
+          });
+
+          // 2. Count completed modules
+          const completedCount = template.requiredLessonIds.filter((id) =>
+            completedIds.includes(id)
+          ).length;
+          const totalCount = template.requiredLessonIds.length;
+          const allModulesDone = totalCount > 0 && completedCount >= totalCount;
+
+          // 3. Official conferral check: ONLY conferred if certificate earned or all track modules completed!
+          const isConferred = Boolean(userEarnedCert || allModulesDone);
+          const displayCertId = userEarnedCert?.certificate_id || (isConferred ? `${template.id}-${userId.slice(0, 8)}` : null);
 
           return (
             <div
               key={template.id}
-              className="cert-card glass"
+              className={`cert-card glass ${isConferred ? 'cert-card--conferred' : 'cert-card--locked'}`}
               style={{ borderTop: `4px solid ${template.color}` }}
             >
               <div className="cert-card__watermark">⬡</div>
               <div className="cert-card__seal">{template.icon}</div>
 
               <div className="cert-card__header">
-                <span className="cert-card__level">
-                  5 Modules • 30 Quizzes • 1 Deployment
+                <span className={`cert-card__level ${!isConferred ? 'cert-card__level--locked' : ''}`}>
+                  {isConferred
+                    ? '🏆 Course 100% Completed & Conferred'
+                    : `🔒 ${completedCount} of ${totalCount} Modules Completed (${Math.round((completedCount / totalCount) * 100)}%)`}
                 </span>
                 <h3 className="cert-card__title">{template.title}</h3>
                 <span className="cert-card__standard">{template.grantStandard}</span>
@@ -401,11 +472,39 @@ export const CertificatesView: React.FC<CertificatesViewProps> = ({ userId }) =>
               <div className="cert-card__requirements">
                 <span className="cert-card__lbl">Grant Standard Checklist:</span>
                 <ul>
-                  {template.requirements.map((req, idx) => (
-                    <li key={idx}>
-                      <span className="check-icon">✓</span> {req}
-                    </li>
-                  ))}
+                  {template.requirements.map((req, idx) => {
+                    let isReqMet = false;
+                    let customReqText = req;
+                    if (isConferred) {
+                      isReqMet = true;
+                    } else {
+                      if (idx === 0) {
+                        isReqMet = completedCount >= totalCount;
+                        customReqText = isReqMet ? req : `${completedCount} of ${totalCount} Learning Modules Completed`;
+                      } else if (idx === 1) {
+                        isReqMet = completedCount >= Math.max(1, totalCount - 1);
+                        customReqText = isReqMet ? req : `Quiz Masteries In Progress (${completedCount}/${totalCount})`;
+                      } else if (idx === 2) {
+                        const deploymentLessonId = template.requiredLessonIds[totalCount - 1];
+                        isReqMet = completedIds.includes(deploymentLessonId);
+                        customReqText = isReqMet ? req : `Testnet Deployment Challenge (Module ${totalCount} Required)`;
+                      } else {
+                        isReqMet = false;
+                        customReqText = `Awaiting 100% Course Completion & Verification`;
+                      }
+                    }
+
+                    return (
+                      <li key={idx} className={isReqMet ? 'req-met' : 'req-unmet'}>
+                        <span className={`check-icon ${isReqMet ? 'check-icon--done' : 'check-icon--pending'}`}>
+                          {isReqMet ? '✓' : '○'}
+                        </span>{' '}
+                        <span className={isReqMet ? 'req-text--done' : 'req-text--pending'}>
+                          {customReqText}
+                        </span>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
 
@@ -421,39 +520,60 @@ export const CertificatesView: React.FC<CertificatesViewProps> = ({ userId }) =>
               <div className="cert-card__meta">
                 <div>
                   <span className="cert-card__lbl">Credential ID:</span>
-                  <span className="cert-card__val cert-card__val--id">
-                    {displayCertId.slice(0, 16)}...
+                  <span className={`cert-card__val ${displayCertId ? 'cert-card__val--id' : 'cert-card__val--locked'}`}>
+                    {displayCertId ? `${displayCertId.slice(0, 18)}...` : '🔒 Unlocked Upon Course Completion'}
                   </span>
                 </div>
                 <div>
                   <span className="cert-card__lbl">Status:</span>
-                  <span className="cert-status-badge">
-                    {userEarnedCert ? '🏆 Conferred' : '⚡ Ready to Claim'}
+                  <span className={`cert-status-badge ${isConferred ? 'cert-status-badge--conferred' : 'cert-status-badge--locked'}`}>
+                    {isConferred ? '🏆 Conferred' : `🔒 Incomplete (${completedCount}/${totalCount})`}
                   </span>
                 </div>
               </div>
 
               <div className="cert-card__actions">
-                <button
-                  className="btn btn--primary cert-action-btn"
-                  onClick={() =>
-                    handleDownload({
-                      level_title: template.title,
-                      level_id: template.level_id,
-                      certificate_id: displayCertId,
-                      recipient: userId,
-                      grantStandard: template.grantStandard
-                    })
-                  }
-                >
-                  💾 Download PDF Certificate
-                </button>
-                <button
-                  className="btn btn--secondary cert-action-btn"
-                  onClick={() => handleShare(template.title, displayCertId)}
-                >
-                  🐦 Share to X
-                </button>
+                {isConferred ? (
+                  <>
+                    <button
+                      className="btn btn--primary cert-action-btn"
+                      onClick={() =>
+                        handleDownload({
+                          level_title: template.title,
+                          level_id: template.level_id,
+                          certificate_id: displayCertId || `${template.id}-${userId.slice(0, 8)}`,
+                          recipient: userId,
+                          grantStandard: template.grantStandard
+                        })
+                      }
+                    >
+                      💾 Download PDF Certificate
+                    </button>
+                    <button
+                      className="btn btn--secondary cert-action-btn"
+                      onClick={() => handleShare(template.title, displayCertId || `${template.id}-${userId.slice(0, 8)}`)}
+                    >
+                      🐦 Share to X
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      className="btn btn--outline cert-action-btn cert-action-btn--locked"
+                      disabled
+                      title="Complete all course modules and the testnet deployment challenge to confer this credential."
+                    >
+                      🔒 Credential Locked (Finish Course)
+                    </button>
+                    <button
+                      className="btn btn--primary cert-action-btn cert-action-btn--goto"
+                      onClick={() => handleGoToCourse(template.trackId)}
+                      disabled={navigatingTrack === template.trackId}
+                    >
+                      {navigatingTrack === template.trackId ? 'Loading Course...' : `🚀 Go to Course (${template.chainName})`}
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           );

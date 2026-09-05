@@ -289,18 +289,26 @@ async def log_exercise_submission(user_id: str, lesson_id: str, code: str, passe
     if passed:
         await complete_lesson_for_user(user_id, level_id, lesson_id)
 
-async def issue_certificate(user_id: str, level_id: int, title: str):
-    """Issue a completed level certificate."""
+async def issue_certificate(user_id: str, level_id: int, title: str, track_id: Optional[str] = None):
+    """Issue a completed course / level certificate."""
     coll = get_collection()
     
     # Check if certificate already exists
     user = await get_or_create_user(user_id)
-    exists = any(c["level_id"] == level_id for c in user.get("certificates", []))
+    resolved_track = track_id or user.get("active_track", "fundamentals")
+    
+    # Prevent duplicate certificate for the same track or exact level title
+    exists = any(
+        c.get("track_id") == resolved_track or 
+        (c.get("level_id") == level_id and c.get("level_title") == title)
+        for c in user.get("certificates", [])
+    )
     if exists:
         return
 
     cert = {
-        "certificate_id": f"cert-{level_id}-{int(datetime.now(timezone.utc).timestamp())}",
+        "certificate_id": f"cert-{resolved_track}-{level_id}-{int(datetime.now(timezone.utc).timestamp())}",
+        "track_id": resolved_track,
         "level_id": level_id,
         "level_title": title,
         "issued_at": datetime.now(timezone.utc),
@@ -466,10 +474,24 @@ async def complete_lesson_for_user(user_id: str, level_id: int, lesson_id: str):
         }
     )
     
-    # If the level is now fully completed, issue certificate automatically
-    current_lvl_obj = next((l for l in levels if l["level_id"] == level_id), None)
-    if current_lvl_obj and current_lvl_obj["completed_lessons"] >= current_lvl_obj["total_lessons"]:
-        await issue_certificate(user_id, level_id, current_lvl_obj["title"])
+    # Certificates are ONLY conferred once the user finishes the course (100% of track modules completed)!
+    total_lessons_in_track = sum(l.get("total_lessons", 0) for l in levels)
+    completed_lessons_in_track = sum(l.get("completed_lessons", 0) for l in levels)
+    track_fully_completed = total_lessons_in_track > 0 and completed_lessons_in_track >= total_lessons_in_track
+
+    if track_fully_completed:
+        track_display = {
+            "aptos": "Aptos Move Certified Developer",
+            "starknet": "Starknet Cairo & ZK Certified Developer",
+            "solana": "Solana Anchor Certified Developer",
+            "polkadot": "Polkadot & Substrate Certified Developer",
+            "substrate": "Polkadot & Substrate Certified Developer",
+            "fundamentals": "EVM Smart Contract Security Specialist",
+            "ethereum": "EVM Smart Contract Security Specialist",
+            "fullstack": "Full Stack Blockchain Developer"
+        }.get(active_track.lower(), f"{active_track.capitalize()} Certified Developer")
+        
+        await issue_certificate(user_id, level_id, track_display, track_id=active_track.lower())
         
     return await get_or_create_user(user_id)
 

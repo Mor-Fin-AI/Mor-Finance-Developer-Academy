@@ -34,6 +34,8 @@ export interface UserProgress {
   hackathons_registered?: string[];
   hackathon_submissions?: Record<string, HackathonSubmission>;
   mentor_chat_sessions?: MentorChatSession[];
+  completed_lesson_ids?: string[];
+  certificates?: Certificate[];
 }
 
 export interface ProgressUpdate {
@@ -194,6 +196,7 @@ export interface Course {
 
 export interface Certificate {
   certificate_id: string;
+  track_id?: string;
   level_id: number;
   level_title: string;
   issued_at: string;

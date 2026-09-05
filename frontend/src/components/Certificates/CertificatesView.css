@@ -214,14 +214,66 @@
   font-size: 0.82rem;
 }
 
+.cert-card__val--locked {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.cert-card--locked {
+  background: rgba(15, 23, 42, 0.5);
+  border-color: rgba(255, 255, 255, 0.05);
+}
+
+.cert-card__level--locked {
+  color: #f59e0b;
+}
+
 .cert-status-badge {
   display: inline-block;
   font-size: 0.78rem;
   font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 6px;
+}
+
+.cert-status-badge--conferred {
   color: #34d399;
-  background: rgba(16, 185, 129, 0.12);
-  padding: 2px 8px;
-  border-radius: 4px;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.cert-status-badge--locked {
+  color: #fb7185;
+  background: rgba(244, 63, 94, 0.12);
+  border: 1px solid rgba(244, 63, 94, 0.25);
+}
+
+.req-met {
+  color: #f1f5f9;
+}
+
+.req-unmet {
+  color: #64748b;
+}
+
+.check-icon--done {
+  color: #10b981;
+  font-weight: 800;
+}
+
+.check-icon--pending {
+  color: #64748b;
+  font-weight: 700;
+}
+
+.req-text--done {
+  color: #cbd5e1;
+}
+
+.req-text--pending {
+  color: #94a3b8;
 }
 
 .cert-card__meta {
@@ -247,6 +299,27 @@
   font-size: 0.88rem;
   font-weight: 700;
   padding: 10px;
+}
+
+.cert-action-btn--locked {
+  opacity: 0.5;
+  cursor: not-allowed !important;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  color: #94a3b8;
+}
+
+.cert-action-btn--goto {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: #ffffff;
+  border: none;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.25);
+}
+
+.cert-action-btn--goto:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
 }
 
 /* Loading & Empty */

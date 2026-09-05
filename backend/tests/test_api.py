@@ -92,3 +92,37 @@ def test_evm_testnet_deployment_logging():
         data = response.json()
         assert data["success"] is True
         assert "basescan.org" in data["explorer_url"]
+
+@pytest.mark.asyncio
+async def test_certificate_only_issued_on_full_track_completion():
+    from src.services.db import complete_lesson_for_user, get_or_create_user, get_collection
+    test_uid = "test-learner-starknet-cert-check"
+    coll = get_collection()
+    await coll.delete_one({"_id": test_uid})
+    
+    # 1. User starts Starknet track
+    await get_or_create_user(test_uid)
+    await coll.update_one({"_id": test_uid}, {"$set": {"active_track": "starknet"}})
+    
+    # Complete only module 1
+    user_after_mod1 = await complete_lesson_for_user(test_uid, 1, "starknet-1")
+    # Verify NO certificate issued for partial completion
+    starknet_certs = [c for c in user_after_mod1.get("certificates", []) if "starknet" in c.get("track_id", "").lower()]
+    assert len(starknet_certs) == 0, "Certificate must NOT be issued on module 1 completion!"
+    
+    # Complete modules 2, 3, 4
+    await complete_lesson_for_user(test_uid, 2, "starknet-2")
+    await complete_lesson_for_user(test_uid, 3, "starknet-3")
+    user_after_mod4 = await complete_lesson_for_user(test_uid, 4, "starknet-4")
+    starknet_certs = [c for c in user_after_mod4.get("certificates", []) if "starknet" in c.get("track_id", "").lower()]
+    assert len(starknet_certs) == 0, "Certificate must NOT be issued on 4/5 modules completion!"
+    
+    # Complete module 5 (final module / testnet challenge)
+    user_after_mod5 = await complete_lesson_for_user(test_uid, 5, "starknet-5")
+    starknet_certs = [c for c in user_after_mod5.get("certificates", []) if "starknet" in c.get("track_id", "").lower()]
+    assert len(starknet_certs) == 1, "Certificate MUST be issued once all 5 track modules are completed!"
+    assert starknet_certs[0]["track_id"] == "starknet"
+    assert "Starknet" in starknet_certs[0]["level_title"]
+    
+    # Clean up test user
+    await coll.delete_one({"_id": test_uid})
