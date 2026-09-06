@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './SubscriptionPlans.css';
 
-export const SubscriptionPlans: React.FC = () => {
+export const SubscriptionPlans: React.FC<{ isLoggedIn?: boolean }> = ({ isLoggedIn = true }) => {
   const [activePlan, setActivePlan] = useState<string>('Free');
   const plans = [
     {
@@ -9,7 +9,7 @@ export const SubscriptionPlans: React.FC = () => {
       tagline: 'Get Started',
       icon: '🎁',
       price: 0,
-      description: 'Explore the academy and start your Web3 learning journey.',
+      description: isLoggedIn ? 'Explore the academy and start your Web3 learning journey.' : 'Explore the academy and start your software architecture learning journey.',
       features: [
         'Core Curriculum (Basics)',
         'Selected Video Lessons',
@@ -43,7 +43,9 @@ export const SubscriptionPlans: React.FC = () => {
       tagline: 'Unlock Opportunities',
       icon: '🚀',
       price: 29,
-      description: 'Unlock career, freelance & startup opportunities with in-demand Web3 skills.',
+      description: isLoggedIn
+        ? 'Unlock career, freelance & startup opportunities with in-demand Web3 skills.'
+        : 'Unlock career, freelance & startup opportunities with in-demand enterprise programming architecture.',
       isCareer: true,
       subgrid: [
         { title: 'Get Hired', desc: 'Job ready skills', icon: '💼' },
@@ -52,9 +54,9 @@ export const SubscriptionPlans: React.FC = () => {
       ],
       features: [
         'Everything in Basic',
-        'Solidity • Rust • Go',
-        '7 Multi-Chains',
-        'DAO Development',
+        isLoggedIn ? 'Solidity • Rust • Go' : '✓ Advanced Object-Oriented Languages (Engine Frameworks)',
+        isLoggedIn ? '7 Multi-Chains' : '✓ 7 Distributed Infrastructure Environments',
+        isLoggedIn ? 'DAO Development' : '✓ Automated Organization Engineering',
         'Real Projects & Case Studies',
         'Career & Freelance Resources',
         'Portfolio & Resume Guidance'
@@ -67,11 +69,13 @@ export const SubscriptionPlans: React.FC = () => {
       tagline: 'Build & Advance',
       icon: '💻',
       price: 149,
-      description: 'Build real-world dApps and advance your developer career.',
+      description: isLoggedIn
+        ? 'Build real-world dApps and advance your developer career.'
+        : 'Build real-world enterprise systems and advance your developer career.',
       features: [
         'Everything in Career Boost',
-        'Advanced Smart Contracts',
-        'DeFi & Protocol Development',
+        isLoggedIn ? 'Advanced Smart Contracts' : 'Advanced Logic Protocols',
+        isLoggedIn ? 'DeFi & Protocol Development' : 'Automated Financial Systems & Architecture',
         'AI Mentor (Unlimited asks)',
         'Code Review (Hermes)',
         'Priority Support',
@@ -86,7 +90,9 @@ export const SubscriptionPlans: React.FC = () => {
       tagline: 'Scale & Lead',
       icon: '🏢',
       price: 499,
-      description: 'For teams and organizations building the future of Web3.',
+      description: isLoggedIn
+        ? 'For teams and organizations building the future of Web3.'
+        : 'For teams and organizations building the future of distributed systems.',
       features: [
         'Everything in Pro',
         'Team Access (Up to 10)',
@@ -103,10 +109,10 @@ export const SubscriptionPlans: React.FC = () => {
   ];
 
   const footerFeatures = [
-    { title: 'Learn', desc: 'Master Web3 skills step-by-step', icon: '🎓' },
+    { title: 'Learn', desc: isLoggedIn ? 'Master Web3 skills step-by-step' : 'Master enterprise software skills step-by-step', icon: '🎓' },
     { title: 'Get Hired', desc: 'Job-ready skills & career resources', icon: '💼' },
     { title: 'Freelance', desc: 'Find clients & projects to earn', icon: '🤝' },
-    { title: 'Startup', desc: 'Build, launch & grow your Web3 idea', icon: '🚀' },
+    { title: 'Startup', desc: isLoggedIn ? 'Build, launch & grow your Web3 idea' : 'Build, launch & grow your tech idea', icon: '🚀' },
     { title: 'Earn & Lead', desc: 'Earn badges, certificates & recognition', icon: '🏆' },
     { title: 'Community', desc: 'Connect, collaborate & grow together', icon: '👥' }
   ];

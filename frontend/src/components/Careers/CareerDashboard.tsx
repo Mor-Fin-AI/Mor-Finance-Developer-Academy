@@ -201,7 +201,7 @@ const STARTUP_IDEAS: StartupIdea[] = [
   }
 ];
 
-const OPPORTUNITY_CARDS = [
+const getOpportunityCards = (isLoggedIn: boolean) => [
   {
     id: 'gitcoin',
     name: 'Gitcoin Grants & Bounties',
@@ -219,23 +219,27 @@ const OPPORTUNITY_CARDS = [
     desc: 'Participate in global Solana Foundation hackathons with millions in prize pools and seed funding for top DeFi, payments, and consumer Web3 applications.',
     tags: ['Solana', 'Anchor Framework', 'Seed Rounds', 'Hackathons'],
     url: 'https://solana.com/hackathon',
-    actionText: 'View Solana Hackathons ↗',
+    actionText: isLoggedIn ? 'View Solana Hackathons ↗' : 'View High-Performance Computing Sprints ↗',
     icon: '☀️'
   },
   {
     id: 'polkadot-grants',
-    name: 'Polkadot & Web3 Foundation Grants',
-    badge: 'Decentralized Futures & Pallets',
-    desc: 'Ongoing grant funding for Substrate runtime pallets, ink! smart contracts, developer tooling, bridges, and parachain infrastructure.',
-    tags: ['Web3 Foundation', 'Substrate', 'ink! Rust', 'Ecosystem Grants'],
+    name: isLoggedIn ? 'Polkadot & Web3 Foundation Grants' : 'Cross-Platform & Distributed Foundation Innovation',
+    badge: isLoggedIn ? 'Decentralized Futures & Pallets' : 'Future Architecture & Modular Systems',
+    desc: isLoggedIn
+      ? 'Ongoing grant funding for Substrate runtime pallets, ink! smart contracts, developer tooling, bridges, and parachain infrastructure.'
+      : 'Ongoing technical funding for modular system runtimes, automated compliance scripting, advanced developer tooling, network data bridges, and parallel system scaling infrastructure.',
+    tags: isLoggedIn
+      ? ['Web3 Foundation', 'Substrate', 'ink! Rust', 'Ecosystem Grants']
+      : ['Enterprise Tech Foundation', 'Modular Systems', 'Advanced Systems Code', 'Corporate Tech Grants'],
     url: 'https://web3.foundation/grants/',
-    actionText: 'Apply for Polkadot Grants ↗',
+    actionText: isLoggedIn ? 'Apply for Polkadot Grants ↗' : 'Apply for Innovation Funding ↗',
     icon: '🟣'
   },
   {
     id: 'starknet-ecosystem',
-    name: 'Starknet Foundation Grants & Hub',
-    badge: 'ZK-Rollup Builder Grants',
+    name: isLoggedIn ? 'Starknet Foundation Grants & Hub' : 'Advanced Systems Foundation & Hub',
+    badge: isLoggedIn ? 'ZK-Rollup Builder Grants' : 'Privacy-Preserving Engineering Grants',
     desc: 'Direct grants and builder seed funding for Cairo developers building scalable dApps, Account Abstraction infrastructure, and DeFi protocols on Starknet.',
     tags: ['Starknet', 'Cairo', 'ZK-Rollups', 'Builder Grants'],
     url: 'https://www.starknet.io/ecosystem/',
@@ -285,7 +289,11 @@ const FREELANCE_LINKS = [
   }
 ];
 
-export const CareerDashboard: React.FC = () => {
+export interface CareerDashboardProps {
+  isLoggedIn?: boolean;
+}
+
+export const CareerDashboard: React.FC<CareerDashboardProps> = ({ isLoggedIn = true }) => {
   // Main view filter: default to 'jobs'
   const [viewFilter, setViewFilter] = useState<MainViewFilter>('jobs');
 
@@ -379,12 +387,14 @@ export const CareerDashboard: React.FC = () => {
       {/* Header Banner */}
       <div className="career-header glass animate-fade-up">
         <div className="career-header__content">
-          <div className="career-header__badge">💼 Web3 Career & Opportunities</div>
+          <div className="career-header__badge">{isLoggedIn ? '💼 Web3 Career & Opportunities' : '💼 Tech Career & Opportunities'}</div>
           <h1 className="career-header__title">
             Developer <span className="gradient-text">Career Hub</span>
           </h1>
           <p className="career-header__desc">
-            Explore live Web3 protocol jobs, early-career internships, ecosystem grants, startup blueprints, and freelance platforms — all in one place.
+            {isLoggedIn
+              ? 'Explore live Web3 protocol jobs, early-career internships, ecosystem grants, startup blueprints, and freelance platforms — all in one place.'
+              : 'Explore live software engineering jobs, early-career internships, innovation grants, startup blueprints, and freelance platforms — all in one place.'}
           </p>
         </div>
       </div>
@@ -420,7 +430,7 @@ export const CareerDashboard: React.FC = () => {
             onClick={() => setViewFilter('opportunities')}
           >
             <span className="view-btn__icon">🚀</span>
-            <span>Grants & Hackathons</span>
+            <span>{isLoggedIn ? 'Grants & Hackathons' : 'Innovation & Sprints'}</span>
           </button>
 
           <button
@@ -476,14 +486,14 @@ export const CareerDashboard: React.FC = () => {
             <span className="filter-label">Quick Tags:</span>
             {[
               { id: 'all', label: 'All' },
-              { id: 'solidity', label: 'Solidity' },
-              { id: 'rust', label: 'Rust' },
+              { id: 'solidity', label: isLoggedIn ? 'Solidity' : 'Logic Engine' },
+              { id: 'rust', label: isLoggedIn ? 'Rust' : 'System Architecture' },
               { id: 'go', label: 'Go / Golang' },
               { id: 'ai', label: 'AI & Agents' },
-              { id: 'ethereum', label: 'Ethereum' },
-              { id: 'solana', label: 'Solana' },
-              { id: 'polkadot', label: 'Polkadot' },
-              { id: 'defi', label: 'DeFi' }
+              { id: 'ethereum', label: isLoggedIn ? 'Ethereum' : 'Distributed Logic' },
+              { id: 'solana', label: isLoggedIn ? 'Solana' : 'High-Throughput Environment' },
+              { id: 'polkadot', label: isLoggedIn ? 'Polkadot' : 'Cross-Platform Protocols' },
+              { id: 'defi', label: isLoggedIn ? 'DeFi' : 'Automated Finance Systems' }
             ].map((cat) => (
               <button
                 key={cat.id}
@@ -522,7 +532,7 @@ export const CareerDashboard: React.FC = () => {
             <span>
               Showing page <strong>{currentPage}</strong> of <strong>{totalPages}</strong> ({totalJobs} total matching opportunities)
             </span>
-            <span className="source-badge">⚡ Live feed via Web3.Career API</span>
+            <span className="source-badge">⚡ {isLoggedIn ? 'Live feed via Web3.Career API' : 'Live Tech Career Feed'}</span>
           </div>
 
           {/* Cards Grid */}
@@ -660,7 +670,7 @@ export const CareerDashboard: React.FC = () => {
       {viewFilter === 'opportunities' && (
         <div className="career-results-section animate-fade-in">
           <div className="opportunities-grid">
-            {OPPORTUNITY_CARDS.map((opp) => (
+            {getOpportunityCards(isLoggedIn).map((opp) => (
               <div key={opp.id} className="opportunity-card glass">
                 <div className="opportunity-card__header">
                   <div className="opportunity-icon">{opp.icon}</div>

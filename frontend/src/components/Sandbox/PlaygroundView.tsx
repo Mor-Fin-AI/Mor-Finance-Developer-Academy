@@ -16,6 +16,8 @@ import {
   type DeployedContractRecord
 } from '../../services/web3Deployer';
 import { FormattedAiInsights } from './FormattedAiInsights';
+import { TransakWidgetModal } from '../OnRamp/TransakWidgetModal';
+import { LOGGED_OUT_SANDBOX_BOILERPLATE } from '../../utils/complianceMask';
 import './PlaygroundView.css';
 
 interface LanguagePreset {
@@ -602,11 +604,17 @@ contract OptimismSuperchainToken {
 
 
 
-export const PlaygroundView: React.FC = () => {
+export interface PlaygroundViewProps {
+  isLoggedIn?: boolean;
+}
+
+export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = true }) => {
   const [selectedLangId, setSelectedLangId] = useState<string>('solidity');
   const activePreset = LANGUAGE_PRESETS.find((p) => p.id === selectedLangId) || LANGUAGE_PRESETS[0];
 
-  const [code, setCode] = useState<string>(activePreset.templates[0].code);
+  const [code, setCode] = useState<string>(() =>
+    isLoggedIn ? activePreset.templates[0].code : LOGGED_OUT_SANDBOX_BOILERPLATE
+  );
   const [compiling, setCompiling] = useState<boolean>(false);
   const [compilationResult, setCompilationResult] = useState<CompilationResult | null>(null);
   const [activeConsoleTab, setActiveConsoleTab] = useState<'console' | 'artifacts' | 'abi' | 'deployments'>('console');
@@ -617,6 +625,7 @@ export const PlaygroundView: React.FC = () => {
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
   const [connectingWallet, setConnectingWallet] = useState<boolean>(false);
   const [deployStepMessage, setDeployStepMessage] = useState<string | null>(null);
+  const [isOnRampOpen, setIsOnRampOpen] = useState<boolean>(false);
 
   const [deployedContracts, setDeployedContracts] = useState<DeployedContractRecord[]>(() => {
     return getStoredDeployments();
@@ -947,11 +956,15 @@ export const PlaygroundView: React.FC = () => {
           <div className="sandbox-header-tag">
             <span>💻 MULTI-CHAIN CODE SANDBOX</span>
             <span>•</span>
-            <span>UNIVERSAL WEB3 COMPILER</span>
+            <span>{isLoggedIn ? 'UNIVERSAL WEB3 COMPILER' : 'UNIVERSAL SOFTWARE LOGIC COMPILER'}</span>
           </div>
-          <h1 className="sandbox-header-title">Interactive Smart Contract Playground</h1>
+          <h1 className="sandbox-header-title">
+            {isLoggedIn ? 'Interactive Smart Contract Playground' : 'Interactive Software Architecture Playground'}
+          </h1>
           <p className="sandbox-header-subtitle">
-            Write, compile, test, and analyze smart contracts across <strong>Solidity, Rust (Anchor &amp; Stylus), Move, Cairo 2.0, and ink! Wasm</strong> with real Web3 toolchains and AI Mentor assistance.
+            {isLoggedIn
+              ? 'Write, compile, test, and analyze smart contracts across Solidity, Rust (Anchor & Stylus), Move, Cairo 2.0, and ink! Wasm with real Web3 toolchains and AI Mentor assistance.'
+              : 'Write, compile, test, and analyze object-oriented software architecture and system logic engines across high-performance execution environments.'}
           </p>
         </div>
 
@@ -987,17 +1000,34 @@ export const PlaygroundView: React.FC = () => {
 
       {/* Language Tabs Bar */}
       <div className="sandbox-lang-bar glass">
-        {LANGUAGE_PRESETS.map((preset) => (
-          <button
-            key={preset.id}
-            className={`sandbox-lang-btn ${selectedLangId === preset.id ? 'active' : ''}`}
-            onClick={() => handleSelectLanguage(preset.id)}
-          >
-            <span className="lang-icon">{preset.icon}</span>
-            <span className="lang-name">{preset.lang}</span>
-            <span className="lang-chain">{preset.chain.split('/')[0].trim()}</span>
-          </button>
-        ))}
+        {LANGUAGE_PRESETS.map((preset) => {
+          const btnName = isLoggedIn
+            ? preset.lang
+            : preset.id === 'solidity'
+            ? 'Object-Oriented Logic'
+            : preset.id === 'solana'
+            ? 'System-Level'
+            : preset.lang;
+          const btnChain = isLoggedIn
+            ? preset.chain.split('/')[0].trim()
+            : preset.id === 'solidity'
+            ? 'Engine'
+            : preset.id === 'solana'
+            ? 'Infrastructure Compiler'
+            : 'Runtime';
+
+          return (
+            <button
+              key={preset.id}
+              className={`sandbox-lang-btn ${selectedLangId === preset.id ? 'active' : ''}`}
+              onClick={() => handleSelectLanguage(preset.id)}
+            >
+              <span className="lang-icon">{preset.icon}</span>
+              <span className="lang-name">{btnName}</span>
+              <span className="lang-chain">{btnChain}</span>
+            </button>
+          );
+        })}
       </div>
 
       {/* Editor & Console Grid */}
@@ -1027,11 +1057,21 @@ export const PlaygroundView: React.FC = () => {
                   marginLeft: '4px'
                 }}
               >
-                {LANGUAGE_PRESETS.map((p) => (
-                  <option key={p.id} value={p.id} style={{ background: '#090a14', color: '#fff' }}>
-                    {p.icon} {p.lang} ({p.chain.split('/')[0].trim()})
-                  </option>
-                ))}
+                {LANGUAGE_PRESETS.map((p) => {
+                  const label = isLoggedIn
+                    ? `${p.icon} ${p.lang} (${p.chain.split('/')[0].trim()})`
+                    : p.id === 'solidity'
+                    ? `${p.icon} Active Syntax Environment`
+                    : p.id === 'solana'
+                    ? `${p.icon} System Infrastructure Compiler`
+                    : `${p.icon} ${p.lang} Architecture`;
+
+                  return (
+                    <option key={p.id} value={p.id} style={{ background: '#090a14', color: '#fff' }}>
+                      {label}
+                    </option>
+                  );
+                })}
               </select>
               <span className="editor-filename">{activePreset.fileName}</span>
               <span className="editor-target-env">{activePreset.targetEnv}</span>
@@ -1040,16 +1080,24 @@ export const PlaygroundView: React.FC = () => {
             {/* Boilerplate & Template selector */}
             <div className="editor-templates-selector">
               <span style={{ fontSize: '0.72rem', color: 'var(--clr-text-muted)', marginRight: '4px' }}>Templates:</span>
-              {activePreset.templates.map((t, idx) => (
-                <button
-                  key={idx}
-                  className="template-pill-btn"
-                  onClick={() => handleSelectTemplate(t.code)}
-                  title={t.description}
-                >
-                  ⚡ {t.name}
-                </button>
-              ))}
+              {activePreset.templates.map((t, idx) => {
+                let displayName = t.name;
+                if (!isLoggedIn) {
+                  if (t.name.includes('Secure Vault')) displayName = 'Secure Memory Buffer Pattern';
+                  if (t.name.includes('ERC-20')) displayName = 'Standard Account Ledger Format';
+                }
+
+                return (
+                  <button
+                    key={idx}
+                    className="template-pill-btn"
+                    onClick={() => handleSelectTemplate(t.code)}
+                    title={t.description}
+                  >
+                    ⚡ {displayName}
+                  </button>
+                );
+              })}
               <button
                 className="template-pill-btn"
                 onClick={() => handleSelectTemplate(`// Write your custom ${activePreset.lang} code here\n\n`)}
@@ -1078,7 +1126,13 @@ export const PlaygroundView: React.FC = () => {
             </div>
 
             <div className="editor-footer-buttons">
-              {isEvmChain && (
+              {!isLoggedIn && (
+                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '0.74rem', color: '#94a3b8', padding: '5px 12px', background: 'rgba(255,255,255,0.03)', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.08)' }}>
+                  🔒 Sign in to access live multi-runtime compiler execution &amp; deployment
+                </div>
+              )}
+
+              {isLoggedIn && isEvmChain && (
                 <div className="testnet-deploy-controls">
                   {walletAddress ? (
                     <span
@@ -1143,6 +1197,27 @@ export const PlaygroundView: React.FC = () => {
                   >
                     🚰 Faucet
                   </a>
+                  <button
+                    type="button"
+                    className="testnet-onramp-btn"
+                    onClick={() => setIsOnRampOpen(true)}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                      fontSize: '0.74rem',
+                      fontWeight: 600,
+                      padding: '4px 8px',
+                      borderRadius: '6px',
+                      background: 'rgba(16, 185, 129, 0.15)',
+                      border: '1px solid rgba(16, 185, 129, 0.35)',
+                      color: '#6ee7b7',
+                      cursor: 'pointer'
+                    }}
+                    title="Acquire protocol gas via Card or Bank Transfer (Transak)"
+                  >
+                    ⚡ Gas On-Ramp
+                  </button>
                   <span
                     className="testnet-deployed-count-pill"
                     style={{
@@ -1417,6 +1492,15 @@ export const PlaygroundView: React.FC = () => {
           )}
         </div>
       </div>
+
+      {isLoggedIn && (
+        <TransakWidgetModal
+          isOpen={isOnRampOpen}
+          onClose={() => setIsOnRampOpen(false)}
+          defaultNetwork={activeTestnet.chainName.toLowerCase()}
+          walletAddress={walletAddress || ''}
+        />
+      )}
     </div>
   );
 };

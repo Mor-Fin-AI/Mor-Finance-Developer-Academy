@@ -13,8 +13,9 @@ interface RoadmapPageProps {
   userId: string;
   token: string;
   onProgressUpdate: (updatedProgress: UserProgress) => void;
+  isLoggedIn?: boolean;
 }
-export const RoadmapPage: React.FC<RoadmapPageProps> = ({ progress, loading, onSelectLevel, userId, token, onProgressUpdate }) => (
+export const RoadmapPage: React.FC<RoadmapPageProps> = ({ progress, loading, onSelectLevel, userId, token, onProgressUpdate, isLoggedIn }) => (
   <RoadmapView
     progress={progress}
     loading={loading}
@@ -22,6 +23,7 @@ export const RoadmapPage: React.FC<RoadmapPageProps> = ({ progress, loading, onS
     userId={userId}
     token={token}
     onProgressUpdate={onProgressUpdate}
+    isLoggedIn={isLoggedIn}
   />
 );
 

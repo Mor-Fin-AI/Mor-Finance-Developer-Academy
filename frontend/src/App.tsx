@@ -347,21 +347,21 @@ export default function App() {
         navigate('/academy');
         return;
       } catch (err: any) {
-        console.error("Wallet signature auth failed:", err);
-        setLoginError(err.message || "Failed to authenticate wallet.");
+        console.error("Developer key signature auth failed:", err);
+        setLoginError(err.message || "Failed to authenticate developer key.");
         return;
       } finally {
         setLoading(false);
       }
     }
 
-    // Fallback Mock Login if no window.ethereum wallet is present or if user cancels signature
+    // Fallback Mock Login if no cryptographic key provider is present or if user cancels signature
     const address = prompt(
-      "Enter your Ethereum Wallet Address to connect (Fallback Mock Mode):",
+      "Enter your Authorized Developer Key Address (PKI / 0x...):",
       "0x" + Array.from({ length: 40 }, () => Math.floor(Math.random() * 16).toString(16)).join("")
     );
     if (!address || !address.trim() || !address.startsWith("0x") || address.length !== 42) {
-      alert("Invalid Ethereum address format.");
+      alert("Invalid Developer Key address format.");
       return;
     }
 
@@ -378,7 +378,7 @@ export default function App() {
       navigate('/academy');
     } catch (err: any) {
       console.error(err);
-      setLoginError(err.message || "Failed to connect wallet.");
+      setLoginError(err.message || "Failed to authenticate developer key.");
     } finally {
       setLoading(false);
     }
@@ -462,11 +462,11 @@ export default function App() {
 
     if (!address) {
       const input = prompt(
-        "Enter Ethereum Wallet Address to link (Fallback Mock Mode):",
+        "Enter Developer Key Address to link (Fallback Mock Mode):",
         "0x" + Array.from({ length: 40 }, () => Math.floor(Math.random() * 16).toString(16)).join("")
       );
       if (!input || !input.trim() || !input.startsWith("0x") || input.length !== 42) {
-        alert("Invalid Ethereum address format.");
+        alert("Invalid Developer Key address format.");
         return;
       }
       address = input.trim();
@@ -507,7 +507,10 @@ export default function App() {
     navigate(page === 'academy' ? '/academy' : `/${page}`);
   };
 
-  if (!authType) {
+  const isLoggedIn = Boolean(authType && userId);
+
+  // If unauthenticated and on the root or login route, show the full LandingPage
+  if (!isLoggedIn && (location.pathname === '/' || location.pathname === '/login')) {
     return (
       <>
         {enrollRedirecting && (
@@ -560,7 +563,7 @@ export default function App() {
     );
   }
 
-  if (location.pathname === '/login') {
+  if (isLoggedIn && location.pathname === '/login') {
     return <Navigate to="/academy" replace />;
   }
 
@@ -574,6 +577,7 @@ export default function App() {
         onLogout={handleLogout}
         isOpen={mobileNavOpen}
         onClose={() => setMobileNavOpen(false)}
+        isLoggedIn={isLoggedIn}
       />
       <Header
         activePage={activePage}
@@ -606,7 +610,8 @@ export default function App() {
       />
       <main className="app-main" id="main-content">
         <Routes>
-          <Route path="/" element={<Navigate to="/academy" replace />} />
+          <Route path="/" element={<Navigate to={isLoggedIn ? "/academy" : "/"} replace />} />
+          <Route path="/login" element={<Navigate to={isLoggedIn ? "/academy" : "/"} replace />} />
           <Route path="/roadmap" element={<Navigate to="/academy" replace />} />
           <Route path="/enroll" element={<Navigate to="/academy" replace />} />
           <Route path="/academy" element={
@@ -635,34 +640,59 @@ export default function App() {
                 userId={userId}
                 token={jwtToken || ''}
                 onProgressUpdate={handleProgressUpdate}
+                isLoggedIn={isLoggedIn}
               />
             )
           } />
           <Route path="/dashboard" element={
-            <DashboardPage
-              progress={progress}
-              loading={loading}
-              userId={userId}
-              onProgressUpdate={handleProgressUpdate}
-              token={jwtToken || ''}
-              onNavigate={(page) => navigate(`/${page}`)}
-            />
+            isLoggedIn ? (
+              <DashboardPage
+                progress={progress}
+                loading={loading}
+                userId={userId}
+                onProgressUpdate={handleProgressUpdate}
+                token={jwtToken || ''}
+                onNavigate={(page) => navigate(`/${page}`)}
+              />
+            ) : (
+              <Navigate to="/" replace />
+            )
           } />
           <Route path="/analytics" element={<Navigate to="/academy" replace />} />
-          <Route path="/sandbox" element={<PlaygroundView />} />
-          <Route path="/playground" element={<PlaygroundView />} />
-          <Route path="/forum" element={<ForumView userId={userId} token={jwtToken || ''} />} />
-          <Route path="/hackathons" element={<HackathonsView userId={userId} onProgressUpdate={handleProgressUpdate} token={jwtToken || ''} />} />
-          <Route path="/careers" element={<CareerDashboard />} />
-          <Route path="/mentor" element={<MentorPage currentLevel={progress?.current_level ?? 1} userId={userId} />} />
-          <Route path="/certificates" element={<CertificatesView userId={userId} />} />
-          <Route path="/subscriptions" element={<SubscriptionPlans />} />
+          <Route path="/sandbox" element={<PlaygroundView isLoggedIn={isLoggedIn} />} />
+          <Route path="/playground" element={<PlaygroundView isLoggedIn={isLoggedIn} />} />
+          <Route path="/forum" element={
+            isLoggedIn ? (
+              <ForumView userId={userId} token={jwtToken || ''} />
+            ) : (
+              <Navigate to="/" replace />
+            )
+          } />
+          <Route path="/hackathons" element={
+            isLoggedIn ? (
+              <HackathonsView userId={userId} onProgressUpdate={handleProgressUpdate} token={jwtToken || ''} />
+            ) : (
+              <Navigate to="/" replace />
+            )
+          } />
+          <Route path="/careers" element={<CareerDashboard isLoggedIn={isLoggedIn} />} />
+          <Route path="/career" element={<CareerDashboard isLoggedIn={isLoggedIn} />} />
+          <Route path="/mentor" element={
+            isLoggedIn ? (
+              <MentorPage currentLevel={progress?.current_level ?? 1} userId={userId} />
+            ) : (
+              <Navigate to="/" replace />
+            )
+          } />
+          <Route path="/certificates" element={<CertificatesView userId={userId} isLoggedIn={isLoggedIn} />} />
+          <Route path="/subscriptions" element={<SubscriptionPlans isLoggedIn={isLoggedIn} />} />
+          <Route path="/subscribe" element={<SubscriptionPlans isLoggedIn={isLoggedIn} />} />
           <Route path="/about" element={<AboutPage />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<Navigate to={isLoggedIn ? "/academy" : "/"} replace />} />
         </Routes>
         
         <footer className="app-global-footer" style={{ textAlign: 'center', padding: '32px 16px 16px 16px', borderTop: '1px solid rgba(255, 255, 255, 0.06)', fontSize: '0.75rem', color: 'var(--clr-text-muted)', marginTop: '40px' }}>
-          © 2026 Morfinance AI. 66 Paul Street, London, EC2A 4NA. All rights reserved. | AI-Powered Web3 Developer Academy
+          © 2026 Morfinance AI. 66 Paul Street, London, EC2A 4NA. All rights reserved. | {isLoggedIn ? 'AI-Powered Web3 Developer Academy' : 'Enterprise EdTech & Software Architecture Academy'}
         </footer>
       </main>
     </div>

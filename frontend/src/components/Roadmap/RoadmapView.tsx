@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import type { UserProgress } from '../../types';
 import { LevelCard } from './LevelCard';
 import { postActiveTrack } from '../../api/client';
+import { SYLLABUS_COMPLIANCE_MAP } from '../../utils/complianceMask';
 import './RoadmapView.css';
 
 interface RoadmapViewProps {
@@ -12,6 +13,7 @@ interface RoadmapViewProps {
   userId: string;
   token: string;
   onProgressUpdate: (updatedProgress: UserProgress) => void;
+  isLoggedIn?: boolean;
 }
 
 const CHAIN_LOGOS: Record<string, React.ReactNode> = {
@@ -252,6 +254,7 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
   userId,
   token,
   onProgressUpdate,
+  isLoggedIn = true,
 }) => {
   const [switching, setSwitching] = useState(false);
 
@@ -278,15 +281,21 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
   const currentOverallPct = totalLessonsInTrack > 0 ? Math.round((completedLessonsInTrack / totalLessonsInTrack) * 100) : 0;
   const trackLevelCount = progress.levels.length || 5;
 
+  const activeTrackDisplayName = isLoggedIn
+    ? activeTrackId
+    : activeTrackId === 'solana'
+    ? 'High-Performance Engine'
+    : (SYLLABUS_COMPLIANCE_MAP[activeTrackId] || activeTrackId);
+
   return (
     <div className="roadmap">
       {/* Hero */}
       <div className="roadmap__hero">
         <h2 className="roadmap__hero-title">
-          Your Web3 <span className="gradient-text">Learning Journey</span>
+          {isLoggedIn ? 'Your Web3' : 'Your Distributed Systems'} <span className="gradient-text">Learning Journey</span>
         </h2>
         <p className="roadmap__hero-desc">
-          {trackLevelCount} progressive {trackLevelCount === 1 ? 'module' : 'modules'} covering {selectedEco.name} fundamentals, architecture, smart contracts, testing, and verified deployment.
+          {trackLevelCount} progressive {trackLevelCount === 1 ? 'module' : 'modules'} covering {isLoggedIn ? selectedEco.name : (SYLLABUS_COMPLIANCE_MAP[selectedEco.id] || selectedEco.name)} fundamentals, architecture, logic protocols, testing, and verified deployment.
         </p>
         <div className="roadmap__hero-stats">
           <div className="roadmap__hero-stat">
@@ -312,9 +321,11 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
       <div className="roadmap__track-switcher glass animate-fade-up">
         <div className="track-switcher__header">
           <div>
-            <h3 className="track-switcher__title">Active Ecosystem Learning Track</h3>
+            <h3 className="track-switcher__title">
+              {isLoggedIn ? 'Active Ecosystem Learning Track' : 'Active Architecture Learning Track'}
+            </h3>
             <p className="track-switcher__subtitle">
-              Select an ecosystem track to customize your level 7 curriculum. Currently active: <strong style={{ color: 'var(--clr-primary-light)', textTransform: 'capitalize' }}>{activeTrackId}</strong>
+              Select an architecture track to customize your curriculum. Currently active: <strong style={{ color: 'var(--clr-primary-light)', textTransform: 'capitalize' }}>{activeTrackDisplayName}</strong>
             </p>
           </div>
         </div>
@@ -322,6 +333,8 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
         <div className="track-switcher__grid">
           {ECOSYSTEMS.map((eco) => {
             const isActive = eco.id === activeTrackId;
+            const cardLabel = isLoggedIn ? eco.name : (SYLLABUS_COMPLIANCE_MAP[eco.id] || eco.name);
+
             return (
               <button
                 key={eco.id}
@@ -343,7 +356,7 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
                 <span className="track-btn__icon" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '24px' }}>
                   {CHAIN_LOGOS[eco.id]}
                 </span>
-                <span className="track-btn__name">{eco.name}</span>
+                <span className="track-btn__name">{cardLabel}</span>
                 {isActive && <span className="track-btn__badge">Active</span>}
               </button>
             );
@@ -355,13 +368,29 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
             <div className="track-overview__header" style={{ marginBottom: '12px' }}>
               <div className="track-overview__title" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '1.2rem', fontWeight: 800, color: '#fff', flexWrap: 'wrap' }}>
                 <span style={{ display: 'inline-flex', alignItems: 'center' }}>{CHAIN_LOGOS[selectedEco.id]}</span>
-                <span>Dedicated {selectedEco.name} Learning Path</span>
-                <span className="badge badge--primary" style={{ fontSize: '0.65rem', padding: '3px 8px', marginLeft: 'auto' }}>{selectedEco.badge}</span>
+                <span>
+                  {isLoggedIn
+                    ? `Dedicated ${selectedEco.name} Learning Path`
+                    : selectedEco.id === 'solana'
+                    ? 'Dedicated High-Performance Learning Path'
+                    : `Dedicated ${SYLLABUS_COMPLIANCE_MAP[selectedEco.id] || selectedEco.name} Learning Path`}
+                </span>
+                <span className="badge badge--primary" style={{ fontSize: '0.65rem', padding: '3px 8px', marginLeft: 'auto' }}>
+                  {isLoggedIn
+                    ? selectedEco.badge
+                    : selectedEco.id === 'solana'
+                    ? 'High-Throughput Parallel Systems Engine'
+                    : selectedEco.badge}
+                </span>
               </div>
             </div>
             
             <p className="track-overview__desc" style={{ fontSize: '0.88rem', color: 'var(--clr-text-secondary)', lineHeight: '1.5', marginBottom: '16px' }}>
-              {selectedEco.desc}
+              {isLoggedIn
+                ? selectedEco.desc
+                : selectedEco.id === 'solana'
+                ? 'Dedicated Systems Developer Onboarding Path: Sealevel Parallel Processing Logic, Proof-of-Sequence Validation, Structured Compilation Frameworks, and Programmatically Derived Storage Addresses.'
+                : selectedEco.desc}
             </p>
 
             {/* Dedicated Chain Learning Details Block */}

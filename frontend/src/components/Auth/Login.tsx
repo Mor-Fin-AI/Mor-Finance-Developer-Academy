@@ -30,7 +30,7 @@ export const Login: React.FC<LoginProps> = ({
         </div>
 
         <h2 className="login-heading" style={{ fontSize: '1.75rem', fontWeight: 800, color: '#fff', textAlign: 'center', lineHeight: '1.3', marginBottom: '12px' }}>
-          Continue your Web3 journey.
+          Continue your Software Architecture journey.
         </h2>
 
         <p className="login-subtitle" style={{ fontSize: '0.85rem', color: 'var(--clr-text-secondary)', textAlign: 'center', lineHeight: '1.6', marginBottom: '32px' }}>
@@ -105,7 +105,7 @@ export const Login: React.FC<LoginProps> = ({
                 e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
               }}
             >
-              <span style={{ fontSize: '1.2rem' }}>🦊</span> Collect wallet
+              <span style={{ fontSize: '1.2rem' }}>🔑</span> Authorized Developer Key
             </button>
 
             {error && (

@@ -7,6 +7,7 @@ import './CertificatesView.css';
 
 interface CertificatesViewProps {
   userId: string;
+  isLoggedIn?: boolean;
 }
 
 interface ChainCredentialTemplate {
@@ -127,7 +128,7 @@ const CHAIN_CREDENTIALS: ChainCredentialTemplate[] = [
   }
 ];
 
-export const CertificatesView: React.FC<CertificatesViewProps> = ({ userId }) => {
+export const CertificatesView: React.FC<CertificatesViewProps> = ({ userId, isLoggedIn = true }) => {
   const navigate = useNavigate();
   const [certs, setCerts] = useState<Certificate[]>([]);
   const [userProgress, setUserProgress] = useState<UserProgress | null>(null);
@@ -385,12 +386,20 @@ export const CertificatesView: React.FC<CertificatesViewProps> = ({ userId }) =>
     <div className="certs-container animate-fade-up">
       {/* Header Banner */}
       <div className="certs-header glass">
-        <div className="certs-badge">🏆 Multi-Chain Developer Standards</div>
+        <div className="certs-badge">
+          {isLoggedIn ? '🏆 Multi-Chain Developer Standards' : '🏆 DISTRIBUTED INFRASTRUCTURE SYSTEM STANDARDS'}
+        </div>
         <h1 className="certs-title">
-          Ecosystem <span className="gradient-text">Credentials & Certificates</span>
+          {isLoggedIn ? (
+            <>Ecosystem <span className="gradient-text">Credentials & Certificates</span></>
+          ) : (
+            <>System Architecture <span className="gradient-text">Credentials & Certifications</span></>
+          )}
         </h1>
         <p className="certs-subtitle">
-          Verifiable credentials earned by completing learning modules, passing comprehensive quiz evaluations, and deploying verified smart contracts to live testnets across Aptos, Starknet, Solana, Polkadot, Full Stack Web3, and EVM chains.
+          {isLoggedIn
+            ? 'Verifiable credentials earned by completing learning modules, passing comprehensive quiz evaluations, and deploying verified smart contracts to live testnets across Aptos, Starknet, Solana, Polkadot, Full Stack Web3, and EVM chains.'
+            : 'Verifiable credentials earned by completing learning modules, passing comprehensive quiz evaluations, and deploying verified logic protocols to production-ready sandbox testing environments across modern object-oriented database layers, high-throughput cloud clusters, and modular backend networks.'}
         </p>
 
         {/* Chain Filter Tabs */}

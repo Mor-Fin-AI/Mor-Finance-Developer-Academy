@@ -3,6 +3,7 @@ import type { UserProgress } from '../../types';
 import { fetchGitHubUserStats } from '../../api/client';
 import type { GitHubUserStats } from '../../api/client';
 import { getStoredDeployments, subscribeDeployments } from '../../services/web3Deployer';
+import { TransakWidgetModal } from '../OnRamp/TransakWidgetModal';
 import './Dashboard.css';
 
 interface DashboardProps {
@@ -25,6 +26,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
   const [ghStats, setGhStats] = useState<GitHubUserStats | null>(null);
   const [ghLoading, setGhLoading] = useState<boolean>(false);
   const [deployedContractsCount, setDeployedContractsCount] = useState<number>(() => getStoredDeployments().length);
+  const [showTransakModal, setShowTransakModal] = useState<boolean>(false);
 
   useEffect(() => {
     const unsub = subscribeDeployments((deps) => {
@@ -272,6 +274,75 @@ export const Dashboard: React.FC<DashboardProps> = ({
         </div>
       </div>
 
+      {/* Transak Fiat-to-Crypto Workspace On-Ramp Card (Authenticated Session Only) */}
+      <div className="dashboard-onramp-card glass animate-fade-in" style={{
+        padding: '20px 24px',
+        borderRadius: 'var(--radius-lg)',
+        border: '1px solid rgba(59, 130, 246, 0.25)',
+        background: 'linear-gradient(135deg, rgba(30, 58, 138, 0.22) 0%, rgba(15, 23, 42, 0.65) 100%)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        gap: '16px'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <div style={{
+            width: '46px',
+            height: '46px',
+            borderRadius: '12px',
+            background: 'linear-gradient(135deg, #2563eb, #3b82f6)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '1.4rem',
+            boxShadow: '0 4px 14px rgba(37, 99, 235, 0.35)',
+            flexShrink: 0
+          }}>
+            💳
+          </div>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+              <h4 style={{ margin: 0, fontSize: '1.02rem', fontWeight: 700, color: '#f8fafc' }}>
+                Instant Protocol &amp; Testnet Asset Ramp
+              </h4>
+              <span style={{
+                fontSize: '0.68rem',
+                padding: '2px 8px',
+                borderRadius: '999px',
+                background: 'rgba(59, 130, 246, 0.2)',
+                border: '1px solid rgba(59, 130, 246, 0.4)',
+                color: '#93c5fd',
+                fontWeight: 600
+              }}>
+                Transak KYC Protected
+              </span>
+            </div>
+            <p style={{ margin: '4px 0 0 0', fontSize: '0.82rem', color: 'var(--clr-text-secondary)' }}>
+              Acquire testnet gas, L2 protocol assets, and developer tokens instantly via card or bank transfer without leaving your dashboard.
+            </p>
+          </div>
+        </div>
+        <div>
+          <button
+            className="btn btn--primary"
+            onClick={() => setShowTransakModal(true)}
+            style={{
+              padding: '10px 20px',
+              fontSize: '0.85rem',
+              fontWeight: 700,
+              background: 'linear-gradient(135deg, #2563eb, #1d4ed8)',
+              boxShadow: '0 4px 16px rgba(37, 99, 235, 0.4)',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px'
+            }}
+          >
+            <span>⚡</span> Open Transak Ramp
+          </button>
+        </div>
+      </div>
+
       {/* Row 2 Grid: Overall Progress + Activity Breakdown */}
       <div className="analytics-row-two">
         {/* Overall Progress panel */}
@@ -488,6 +559,13 @@ export const Dashboard: React.FC<DashboardProps> = ({
           ))}
         </div>
       </div>
+
+      <TransakWidgetModal
+        isOpen={showTransakModal}
+        onClose={() => setShowTransakModal(false)}
+        walletAddress={progress?.wallet_address || (userId?.startsWith('0x') ? userId : '')}
+        defaultNetwork="arbitrum"
+      />
     </div>
   );
 };

@@ -27,7 +27,7 @@ export const AboutPage: React.FC = () => {
           <div className="about-stat-label">Academy Launched</div>
         </div>
         <div className="about-stat-card glass">
-          <div className="about-stat-number gradient-text">Multichain</div>
+          <div className="about-stat-number gradient-text">Multi-Runtime</div>
           <div className="about-stat-label">Ecosystem Learning Tracks</div>
         </div>
         <div className="about-stat-card glass">
@@ -122,7 +122,7 @@ export const AboutPage: React.FC = () => {
           <div className="about-card__icon">🌐</div>
           <h3 className="about-card__title">Open-Source Mission</h3>
           <p className="about-card__text">
-            Building a multichain Web3 developer education ecosystem designed to onboard, educate, and certify high-caliber smart contract developers through open-source innovation.
+            Building a distributed systems education ecosystem designed to onboard, educate, and certify high-caliber software architects through open-source innovation.
           </p>
         </div>
 
@@ -130,15 +130,15 @@ export const AboutPage: React.FC = () => {
           <div className="about-card__icon">🎯</div>
           <h3 className="about-card__title">Current Focus</h3>
           <p className="about-card__text">
-            Developer Academy, AI Mentors (OpenClaw & Hermes), Community Forum, Hackathons, and active Open-Source Contributions.
+            Developer Academy, AI Mentors (OpenClaw & Hermes), Community Forum, Technical Sprints, and active Open-Source System Contributions.
           </p>
         </div>
 
         <div className="about-card glass">
           <div className="about-card__icon">⬡</div>
-          <h3 className="about-card__title">Supported Ecosystems</h3>
+          <h3 className="about-card__title">Supported Cloud Environments</h3>
           <p className="about-card__text">
-            Ethereum, Arbitrum, Optimism, Base, Polygon, Avalanche, Solana, Starknet, Aptos & Polkadot multi-chain compatibility and hands-on developer labs.
+            Modern object-oriented database layers, high-scale execution environments, fault-proof networks, parallel processing protocol clusters, high-throughput distributed architectures, and hands-on developer infrastructure testing labs.
           </p>
         </div>
       </div>
@@ -148,7 +148,7 @@ export const AboutPage: React.FC = () => {
       {/* Roadmap & Milestones Timeline */}
       <div className="about-section-header">
         <h3 className="about-section-title">Actual Strategic Roadmap</h3>
-        <p className="about-section-sub">Our official execution timeline for building multichain Web3 developer infrastructure.</p>
+        <p className="about-section-sub">Our official execution timeline for building high-performance distributed enterprise software infrastructure.</p>
       </div>
 
       <div className="about-roadmap-grid">
@@ -157,7 +157,7 @@ export const AboutPage: React.FC = () => {
             phase: '2026 Q1 & Q2',
             status: 'COMPLETED',
             title: 'Full Development of Academy & Developer Onboarding',
-            desc: 'Core platform development, interactive learning tracks, smart contract compiler sandboxes, and developer onboarding workflows.'
+            desc: 'Core platform development, interactive learning tracks, software architecture compiler sandboxes, and developer onboarding workflows.'
           },
           {
             phase: '2026 Q3',
@@ -168,20 +168,20 @@ export const AboutPage: React.FC = () => {
           {
             phase: '2026 Q3',
             status: 'COMPLETED',
-            title: 'Multichain Learning Tracks',
-            desc: 'Dedicated ecosystem learning tracks launched across Ethereum, Arbitrum, Base, Optimism, Polygon, Avalanche, Solana, Starknet, Aptos, and Polkadot.'
+            title: 'Distributed Infrastructure Learning Tracks',
+            desc: 'Dedicated ecosystem learning tracks launched across modern object-oriented database layers, high-scale execution environments, fault-proof networks, parallel processing protocol clusters, high-throughput distributed architectures, and hands-on developer infrastructure testing labs.'
           },
           {
             phase: '2026 Q4',
             status: 'IN PROGRESS',
             title: 'AI-Powered Protocol Services & Developer Tooling',
-            desc: 'Advanced AI code auditing, automated gas optimization, and protocol integration services for enterprise developers.'
+            desc: 'Advanced AI code auditing, automated performance optimization, and protocol integration services for enterprise developers.'
           },
           {
             phase: '2027',
             status: 'UPCOMING',
             title: 'Enterprise Infrastructure & Global Community Expansion',
-            desc: 'Deploying enterprise developer training, cryptographic credential verification, and global Web3 developer community expansion.'
+            desc: 'Deploying enterprise developer training, cryptographic credential verification, and global distributed software engineering community expansion.'
           }
         ].map((item) => (
           <div key={item.phase + item.title} className={`roadmap-phase-card glass ${item.status.toLowerCase().replace(' ', '-')}`}>

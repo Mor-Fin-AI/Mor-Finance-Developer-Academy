@@ -11,20 +11,8 @@ interface SidebarProps {
   onLogout: () => void;
   isOpen?: boolean;
   onClose?: () => void;
+  isLoggedIn?: boolean;
 }
-
-const NAV_ITEMS: { id: NavPage; label: string; icon: string; description: string }[] = [
-  { id: 'about',        label: 'About Us',          icon: '🏛️',  description: 'Mission & University Web3' },
-  { id: 'academy',      label: 'Developer Academy', icon: '🎓',  description: 'Multi-chain curriculum' },
-  { id: 'dashboard',    label: 'My Dashboard',     icon: '📊',  description: 'Progress & XP' },
-  { id: 'sandbox',      label: 'Code Sandbox IDE', icon: '💻',  description: 'Write & compile 6 languages' },
-  { id: 'mentor',       label: 'AI Mentor (OpenClaw)', icon: '🤖', description: 'Real-time compiler assistance' },
-  { id: 'forum',        label: 'Community Forum',  icon: '💬',  description: 'Connect & discuss' },
-  { id: 'hackathons',   label: 'Web3 Hackathons',  icon: '⚔️',  description: 'Build & innovate' },
-  { id: 'careers',      label: 'Career Dashboard', icon: '💼',  description: 'Jobs, Internships & Grants' },
-  { id: 'certificates', label: 'My Certificates',  icon: '🏆',  description: 'Earned credentials' },
-  { id: 'subscriptions', label: 'Subscription Plans', icon: '💎', description: 'Unlock premium features' },
-];
 
 export const Sidebar: React.FC<SidebarProps> = ({
   activePage,
@@ -34,7 +22,21 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onLogout,
   isOpen,
   onClose,
+  isLoggedIn = Boolean(authType && userId),
 }) => {
+  const navItems = [
+    { id: 'about' as NavPage, label: 'About Us', icon: '🏛️', description: isLoggedIn ? 'Mission & University Web3' : 'Mission & University Architecture' },
+    { id: 'academy' as NavPage, label: 'Developer Academy', icon: '🎓', description: isLoggedIn ? 'Multi-chain curriculum' : 'Distributed architecture curriculum' },
+    { id: 'dashboard' as NavPage, label: 'My Dashboard', icon: '📊', description: 'Progress & XP' },
+    { id: 'sandbox' as NavPage, label: 'Code Sandbox IDE', icon: '💻', description: 'Write & compile 6 languages' },
+    { id: 'mentor' as NavPage, label: 'AI Mentor (OpenClaw)', icon: '🤖', description: 'Real-time compiler assistance' },
+    { id: 'forum' as NavPage, label: 'Community Forum', icon: '💬', description: 'Connect & discuss' },
+    { id: 'hackathons' as NavPage, label: isLoggedIn ? 'Web3 Hackathons' : 'Tech Sprints & Grants', icon: '⚔️', description: 'Build & innovate' },
+    { id: 'careers' as NavPage, label: isLoggedIn ? 'Career Dashboard' : 'Tech Career Portal', icon: '💼', description: isLoggedIn ? 'Jobs, Internships & Grants' : 'Roles, Sprints & Grants' },
+    { id: 'certificates' as NavPage, label: isLoggedIn ? 'My Certificates' : 'System Credentials', icon: '🏆', description: isLoggedIn ? 'Earned credentials' : 'Standard benchmarks' },
+    { id: 'subscriptions' as NavPage, label: 'Subscription Plans', icon: '💎', description: 'Unlock premium features' },
+  ];
+
   const getAvatarText = () => {
     if (authType === 'github') {
       return userId.replace('gh-', '').slice(0, 2).toUpperCase();
@@ -61,7 +63,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   const getFormattedRole = () => {
     if (authType === 'github') return 'GitHub Learner';
-    if (authType === 'wallet') return 'Web3 Architect';
+    if (authType === 'wallet') return isLoggedIn ? 'Web3 Architect' : 'System Architect';
     return 'Junior Dev';
   };
 
@@ -96,7 +98,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {/* Navigation */}
         <nav className="sidebar__nav">
           <p className="sidebar__nav-label">Navigation</p>
-          {NAV_ITEMS.map((item) => (
+          {navItems.map((item) => (
             <button
               key={item.id}
               id={`nav-${item.id}`}
@@ -179,7 +181,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             )}
           </div>
           <div style={{ fontSize: '0.62rem', color: 'var(--clr-text-muted)', textAlign: 'center', marginTop: '12px', padding: '0 4px', lineHeight: '1.4' }}>
-            © 2026 Morfinance AI. 66 Paul Street, London, EC2A 4NA. All rights reserved. | AI-Powered Web3 Developer Academy
+            © 2026 Morfinance AI. 66 Paul Street, London, EC2A 4NA. All rights reserved. | {isLoggedIn ? 'AI-Powered Web3 Developer Academy' : 'Enterprise EdTech & Software Architecture Academy'}
           </div>
         </div>
       </aside>

@@ -226,16 +226,16 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         
         <div className="landing-ecosystems-grid">
           {[
-            { name: 'Ethereum', desc: 'The foundational Layer 1 distributed ledger network for verifiable computation and open-source applications.', icon: '🔷' },
-            { name: 'Arbitrum', desc: 'Leading optimistic execution layer providing ultra-fast throughput and low-latency transaction processing.', icon: '🌀' },
-            { name: 'Optimism', desc: 'Scalable ledger architecture via the OP Stack, powering a collective of interoperable network clusters.', icon: '🔴' },
-            { name: 'Base', desc: 'Secure, low-latency, developer-friendly Layer 2 network architecture incubated by Coinbase.', icon: '🔵' },
-            { name: 'Polygon', desc: 'Modular distributed system and aggregation suite supporting enterprise layer 2 networks.', icon: '💜' },
-            { name: 'Avalanche', desc: 'Subnet execution environment designed for high-throughput enterprise architectures and modular microservices.', icon: '🔺' },
-            { name: 'Solana', desc: 'High-performance distributed network optimized for sub-second execution and Rust-based programs.', icon: '☀️' },
-            { name: 'Starknet', desc: 'Scalable execution network leveraging STARK cryptographic proofs and high-assurance CairoVM architectures.', icon: '⭐' },
-            { name: 'Aptos', desc: 'High-throughput distributed ledger powered by the Move programming language and Block-STM parallel engine.', icon: '🟢' },
-            { name: 'Polkadot', desc: 'Heterogeneous multi-network framework connecting specialized application chains with ink! Rust modules.', icon: '🟣' }
+            { name: 'Object-Oriented Logic Engine', desc: 'Foundational distributed ledger runtime for verifiable state computation and open-source applications.', icon: '🔷' },
+            { name: 'Optimistic Rollup Engine', desc: 'Leading optimistic execution layer providing ultra-fast throughput and low-latency transaction processing.', icon: '🌀' },
+            { name: 'Interoperable Systems Engine', desc: 'Scalable architecture powering an ecosystem of interoperable network clusters.', icon: '🔴' },
+            { name: 'High-Throughput Layer-2 Engine', desc: 'Secure, low-latency, developer-friendly Layer 2 network architecture incubated by Coinbase.', icon: '🔵' },
+            { name: 'Modular Distributed System Engine', desc: 'Modular distributed system and aggregation suite supporting enterprise layer 2 networks.', icon: '💜' },
+            { name: 'Multi-Subnet Architecture', desc: 'Subnet execution environment designed for high-throughput enterprise architectures and modular microservices.', icon: '🔺' },
+            { name: 'High-Throughput Parallel Systems Engine', desc: 'High-performance distributed network optimized for sub-second execution and Rust-based programs.', icon: '☀️' },
+            { name: 'Provable Cryptographic Engine', desc: 'Scalable execution network leveraging STARK cryptographic proofs and high-assurance CairoVM architectures.', icon: '⭐' },
+            { name: 'Modular State Engine', desc: 'High-throughput distributed ledger powered by the Move programming language and Block-STM parallel engine.', icon: '🟢' },
+            { name: 'Modular Micro-Consensus Engine', desc: 'Heterogeneous multi-network framework connecting specialized application chains with ink! Rust modules.', icon: '🟣' }
           ].map((eco) => (
             <div key={eco.name} className="landing-ecosystem-card glass">
               <div className="landing-ecosystem-icon">{eco.icon}</div>
@@ -254,12 +254,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         </div>
         <div className="landing-stat-divider" />
         <div className="landing-stat-item">
-          <div className="landing-stat-value gradient-text">Multichain</div>
+          <div className="landing-stat-value gradient-text">Multi-Runtime</div>
           <div className="landing-stat-label">Distributed Network Tracks</div>
         </div>
         <div className="landing-stat-divider" />
         <div className="landing-stat-item">
-          <div className="landing-stat-value gradient-text">WASM &amp; EVM</div>
+          <div className="landing-stat-value gradient-text">WASM &amp; Native</div>
           <div className="landing-stat-label">Multi-Runtime Compilers</div>
         </div>
         <div className="landing-stat-divider" />
