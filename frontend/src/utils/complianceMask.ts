@@ -14,7 +14,7 @@ export const sanitizeComplianceText = (text: string, _isLoggedIn?: boolean): str
   return text
     .replace(w(115,109,97,114,116,32,99,111,110,116,114,97,99,116,91,115,93,63), 'system logic engine')
     .replace(w(115,109,97,114,116,45,99,111,110,116,114,97,99,116,91,115,93,63), 'system-logic-engine')
-    .replace(w(115,111,108,105,100,105,116,121), 'system syntax')
+    .replace(w(115,111,108,105,100,105,116,121), 'EVM Language')
     .replace(w(115,111,108,99), 'logic compiler')
     .replace(w(119,101,98,91,92,115,45,93,63,51), 'distributed systems')
     .replace(w(98,108,111,99,107,99,104,97,105,110,91,115,93,63), 'distributed systems')
@@ -51,7 +51,7 @@ export const SYLLABUS_COMPLIANCE_MAP: Record<string, string> = {
 
 export const LOGGED_OUT_SANDBOX_BOILERPLATE = `/**
  * Enterprise Application State Manager
- * Architecture: Object-Oriented Logic Engine
+ * Architecture: EVM Language Engine
  * Environment: Secure Memory Buffer
  */
 class StateManager {
@@ -80,7 +80,7 @@ class StateManager {
   }
 }
 
-// Initialize object-oriented logic engine
+// Initialize EVM logic engine
 const engine = new StateManager({ version: "2.4.0", mode: "distributed" });
 console.log("System-Level Infrastructure Compiler initialized.");
 `;

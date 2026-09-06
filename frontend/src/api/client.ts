@@ -204,7 +204,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "question": "What role does the Move Bytecode Verifier play before execution?",
         "options": [
           "It rigorously verifies type safety, memory bounds, and resource linearity before any code can run on-chain.",
-          "It translates Move to Object-Oriented Logic.",
+          "It translates Move to EVM Language.",
           "It mines unverified transactions.",
           "It formats code indentation."
         ],
@@ -555,7 +555,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "What is the primary scaling mechanism of Starknet as a Layer-2 ZK-Rollup?",
         "options": [
-          "It executes thousands of transactions off-chain, bundles them into a single STARK validity proof, and verifies it on Ethereum L1.",
+          "It executes thousands of transactions off-chain, bundles them into a single STARK validity proof, and verifies it on EVM L1.",
           "It runs sidechains with separate consensus and no L1 security.",
           "It deletes historical transactions every 30 days.",
           "It uses centralized web servers without asymmetric verification."
@@ -575,7 +575,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "What does Native Account Abstraction mean on Starknet?",
         "options": [
-          "All accounts are logic modules with custom validation (`__validate__`) and execution (`__execute__`) logic \u2014 there are no EOAs.",
+          "All accounts are logic modules with custom validation (`__validate__`) and execution (`__execute__`) logic — there are no EOAs.",
           "Accounts are managed by centralized email servers.",
           "Users have no private keys.",
           "Modules cannot hold balances."
@@ -597,7 +597,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "options": [
           "It receives transactions, orders them, executes Cairo bytecode, and generates L2 blocks before sending state diffs to the Prover.",
           "It mines Proof of Work hashes.",
-          "It verifies Ethereum L1 consensus.",
+          "It verifies EVM L1 consensus.",
           "It hosts user frontends."
         ],
         "correct_idx": 0
@@ -608,7 +608,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
           "Using Sierra (Safe Intermediate Execution Representation) which ensures all branches and operations are provable without crashes.",
           "By running Java bytecode in a sandbox.",
           "By preventing loops and if statements.",
-          "By executing code on Ethereum L1 directly."
+          "By executing code on EVM L1 directly."
         ],
         "correct_idx": 0
       }
@@ -713,7 +713,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "options": [
           "#[starknet::contract]",
           "#[contract]",
-          "#[object-oriented logic::contract]",
+          "#[evm_language::contract]",
           "#[program]"
         ],
         "correct_idx": 0
@@ -729,7 +729,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "correct_idx": 0
       },
       {
-        "question": "How do Cairo Components replace Object-Oriented Logic-style module inheritance?",
+        "question": "How do Cairo Components replace EVM Language-style module inheritance?",
         "options": [
           "Components are modular, composable module logic packages (like OpenZeppelin standard ledger modules) that can be embedded into any module state.",
           "Components are CSS UI widgets.",
@@ -989,7 +989,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "question": "What is Gulf Stream in Solana network engineering?",
         "options": [
           "A mempool-less transaction forwarding protocol that pushes transactions to upcoming leaders before block generation.",
-          "A cross-chain bridge to Ethereum.",
+          "A cross-chain bridge to EVM Base Layer.",
           "An ocean current monitoring system.",
           "A cold storage hardware developer key."
         ],
@@ -1782,7 +1782,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "question": "What role does the Move Bytecode Verifier play before execution?",
               "options": [
                 "It rigorously verifies type safety, memory bounds, and resource linearity before any code can run on-chain.",
-                "It translates Move to Object-Oriented Logic.",
+                "It translates Move to EVM Language.",
                 "It mines unverified transactions.",
                 "It formats code indentation."
               ],
@@ -2170,7 +2170,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "What is the primary scaling mechanism of Starknet as a Layer-2 ZK-Rollup?",
               "options": [
-                "It executes thousands of transactions off-chain, bundles them into a single STARK validity proof, and verifies it on Ethereum L1.",
+                "It executes thousands of transactions off-chain, bundles them into a single STARK validity proof, and verifies it on EVM L1.",
                 "It runs sidechains with separate consensus and no L1 security.",
                 "It deletes historical transactions every 30 days.",
                 "It uses centralized web servers without asymmetric verification."
@@ -2212,7 +2212,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "options": [
                 "It receives transactions, orders them, executes Cairo bytecode, and generates L2 blocks before sending state diffs to the Prover.",
                 "It mines Proof of Work hashes.",
-                "It verifies Ethereum L1 consensus.",
+                "It verifies EVM L1 consensus.",
                 "It hosts user frontends."
               ],
               "correct_idx": 0
@@ -2223,7 +2223,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
                 "Using Sierra (Safe Intermediate Execution Representation) which ensures all branches and operations are provable without crashes.",
                 "By running Java bytecode in a sandbox.",
                 "By preventing loops and if statements.",
-                "By executing code on Ethereum L1 directly."
+                "By executing code on EVM L1 directly."
               ],
               "correct_idx": 0
             }
@@ -2342,7 +2342,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "options": [
                 "#[starknet::contract]",
                 "#[contract]",
-                "#[object-oriented logic::contract]",
+                "#[evm_language::contract]",
                 "#[program]"
               ],
               "correct_idx": 0
@@ -2358,7 +2358,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "correct_idx": 0
             },
             {
-              "question": "How do Cairo Components replace Object-Oriented Logic-style module inheritance?",
+              "question": "How do Cairo Components replace EVM Language-style module inheritance?",
               "options": [
                 "Components are modular, composable module logic packages (like OpenZeppelin standard ledger modules) that can be embedded into any module state.",
                 "Components are CSS UI widgets.",
@@ -2641,7 +2641,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "question": "What is Gulf Stream in Solana network engineering?",
               "options": [
                 "A mempool-less transaction forwarding protocol that pushes transactions to upcoming leaders before block generation.",
-                "A cross-chain bridge to Ethereum.",
+                "A cross-chain bridge to EVM Base Layer.",
                 "An ocean current monitoring system.",
                 "A cold storage hardware developer key."
               ],
@@ -3897,7 +3897,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "What standard interface defines how developer key extensions communicate with Distributed Systems frontends?",
               "options": [
-                "EIP-1193 JavaScript Ethereum Provider API (window.ethereum).",
+                "EIP-1193 JavaScript Provider API (window.ethereum).",
                 "OAuth 2.0 PKCE protocol.",
                 "GraphQL Schema Definition.",
                 "FTP byte-stream protocol."
@@ -3930,7 +3930,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "question": "What makes Viem more performant and developer-friendly than legacy Distributed Systems libraries?",
               "options": [
                 "It is modular, lightweight, tree-shakeable, and provides end-to-end TypeScript type inference directly from Module ABIs.",
-                "It eliminates the need for Object-Oriented Logic compilation.",
+                "It eliminates the need for EVM Language compilation.",
                 "It runs modules entirely inside SQLite.",
                 "It does not require network connections."
               ],
@@ -3993,7 +3993,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "What is the primary breakthrough of Account Abstraction Standard Account Abstraction?",
               "options": [
-                "It enables logic module developer key with custom verification logic, gas sponsorship, and batching without requiring Ethereum protocol consensus changes.",
+                "It enables logic module developer key with custom verification logic, gas sponsorship, and batching without requiring base protocol consensus changes.",
                 "It removes private key asymmetric verification from Distributed Systems entirely.",
                 "It replaces gas fees with monthly credit card subscriptions.",
                 "It turns all logic modules into Asset Standard tokens."
@@ -4806,7 +4806,7 @@ export async function fetchArbitrumTelemetry(): Promise<ArbitrumTelemetryData> {
       milestone_3_progress: "100% (Workforce Retention & Job Placement)"
     },
     recent_deployments: [],
-    evm_registry_code: `// SPDX-License-Identifier: MIT\n// Language: Object-Oriented Logic\n\ncontract ArbitrumAcademyRegistry {\n    address public academyAdmin;\n    struct DeveloperProfile {\n        string githubId;\n        string trackingCohort;\n        bool hasDeployedModule;\n        bool hasDeployedStylus;\n        bool isJobPlaced;\n    }\n    mapping(address => DeveloperProfile) public developers;\n    modifier onlyAdmin() { require(msg.sender == academyAdmin, "Unauthorized"); _; }\n    constructor() { academyAdmin = msg.sender; }\n    function onboardDeveloper(address _wallet, string memory _gId, string memory _c) external onlyAdmin {\n        developers[_wallet] = DeveloperProfile(_gId, _c, false, false, false);\n    }\n    function verifyMilestone(address _wallet, string memory _mType, bool _status) external onlyAdmin {\n        DeveloperProfile storage dev = developers[_wallet];\n        if (keccak256(bytes(_mType)) == keccak256(bytes("logic"))) dev.hasDeployedModule = _status;\n        else if (keccak256(bytes(_mType)) == keccak256(bytes("stylus"))) dev.hasDeployedStylus = _status;\n        else if (keccak256(bytes(_mType)) == keccak256(bytes("careers"))) dev.isJobPlaced = _status;\n    }\n}`,
+    evm_registry_code: `// SPDX-License-Identifier: MIT\n// Language: EVM Language\n\ncontract ArbitrumAcademyRegistry {\n    address public academyAdmin;\n    struct DeveloperProfile {\n        string githubId;\n        string trackingCohort;\n        bool hasDeployedModule;\n        bool hasDeployedStylus;\n        bool isJobPlaced;\n    }\n    mapping(address => DeveloperProfile) public developers;\n    modifier onlyAdmin() { require(msg.sender == academyAdmin, "Unauthorized"); _; }\n    constructor() { academyAdmin = msg.sender; }\n    function onboardDeveloper(address _wallet, string memory _gId, string memory _c) external onlyAdmin {\n        developers[_wallet] = DeveloperProfile(_gId, _c, false, false, false);\n    }\n    function verifyMilestone(address _wallet, string memory _mType, bool _status) external onlyAdmin {\n        DeveloperProfile storage dev = developers[_wallet];\n        if (keccak256(bytes(_mType)) == keccak256(bytes("logic"))) dev.hasDeployedModule = _status;\n        else if (keccak256(bytes(_mType)) == keccak256(bytes("stylus"))) dev.hasDeployedStylus = _status;\n        else if (keccak256(bytes(_mType)) == keccak256(bytes("careers"))) dev.isJobPlaced = _status;\n    }\n}`,
     stylus_rust_template: `#![cfg_attr(not(feature = "export-abi"), no_main)]\nextern crate alloc;\nuse stylus_sdk::{prelude::*, storage::StorageU256};\n\n#[storage]\n#[entrypoint]\npub struct AcademyCounter { number_of_graduates: StorageU256; }\n\n#[public]\nimpl AcademyCounter {\n    pub fn get_graduates(&self) -> Result<u64, Vec<u8>> { Ok(self.number_of_graduates.get().as_u64()) }\n    pub fn increment_graduates(&mut self) -> Result<(), Vec<u8>> {\n        let current = self.number_of_graduates.get();\n        self.number_of_graduates.set(current + 1);\n        Ok(())\n    }\n}`
   };
 }

@@ -498,7 +498,7 @@ export const CareerDashboard: React.FC<CareerDashboardProps> = ({ isLoggedIn = f
             <span className="filter-label">Quick Tags:</span>
             {[
               { id: 'all', label: 'All' },
-              { id: 'logic_engine', label: 'Logic Engine' },
+              { id: 'evm_language', label: 'EVM Language' },
               { id: 'rust', label: 'System Architecture' },
               { id: 'go', label: 'Go / Golang' },
               { id: 'ai', label: 'AI & Agents' },

@@ -16,7 +16,6 @@ import {
   type DeployedContractRecord
 } from '../../services/liveDeployer';
 import { FormattedAiInsights } from './FormattedAiInsights';
-import { TransakWidgetModal } from '../OnRamp/TransakWidgetModal';
 import { LOGGED_OUT_SANDBOX_BOILERPLATE } from '../../utils/complianceMask';
 import './PlaygroundView.css';
 
@@ -38,18 +37,18 @@ interface LanguagePreset {
 const LANGUAGE_PRESETS: LanguagePreset[] = [
   {
     id: 'evm_logic',
-    chain: 'Distributed State Environments',
-    lang: 'Object-Oriented Logic',
+    chain: 'Standard Runtime',
+    lang: 'EVM Language',
     fileName: 'LogicModule.js',
     icon: '💎',
     compiler: 'Execution Runtime Compiler v0.8.20',
-    targetEnv: 'Enterprise Logic Execution Environment',
+    targetEnv: 'EVM Execution Environment',
     templates: [
       {
         name: 'Secure Memory Buffer Pattern',
         description: 'Concurrency-resistant memory buffer using structured state verification',
         code: `// SPDX-License-Identifier: MIT
-// Language: Object-Oriented Logic ^0.8.20
+// Language: EVM Language ^0.8.20
 
 /**
  * @title SecureMemoryBuffer
@@ -98,7 +97,7 @@ contract SecureMemoryBuffer {
         name: 'Standard Account Ledger Format',
         description: 'Fixed-allocation account ledger with state events and allowances',
         code: `// SPDX-License-Identifier: MIT
-// Language: Object-Oriented Logic ^0.8.20
+// Language: EVM Language ^0.8.20
 
 contract AccountLedgerStandard {
     string public name = "Academy Account Ledger";
@@ -407,7 +406,7 @@ impl AcademyCounter {
   {
     id: 'base',
     chain: 'Base (Coinbase L2)',
-    lang: 'Object-Oriented Logic (Base)',
+    lang: 'EVM Language (Base)',
     fileName: 'BaseAccountAbstraction.js',
     icon: '🔵',
     compiler: 'Execution Runtime Compiler v0.8.20 (Base Optimizations)',
@@ -417,7 +416,7 @@ impl AcademyCounter {
         name: 'Gasless Paymaster (EIP-4337)',
         description: 'Sponsors gas execution for users interacting with Base logic modules',
         code: `// SPDX-License-Identifier: MIT
-// Language: Object-Oriented Logic ^0.8.20
+// Language: EVM Language ^0.8.20
 
 /**
  * @title BaseGaslessPaymaster
@@ -465,7 +464,7 @@ contract BaseGaslessPaymaster {
         name: 'Base Verification Badge',
         description: 'Verification badge compatible credential proof module',
         code: `// SPDX-License-Identifier: MIT
-// Language: Object-Oriented Logic ^0.8.20
+// Language: EVM Language ^0.8.20
 
 /**
  * @title BaseAttendanceProof
@@ -500,7 +499,7 @@ contract BaseAttendanceProof {
   {
     id: 'optimism',
     chain: 'Optimism',
-    lang: 'Object-Oriented Logic (Optimism)',
+    lang: 'EVM Language (Optimism)',
     fileName: 'OptimismCrossDomainBridge.js',
     icon: '🔴',
     compiler: 'Execution Runtime Compiler v0.8.20 (Superchain)',
@@ -510,7 +509,7 @@ contract BaseAttendanceProof {
         name: 'OP Superchain Cross-Domain Bridge',
         description: 'Cross-L2 message transmitter communicating via the Optimism Superchain Messenger',
         code: `// SPDX-License-Identifier: MIT
-// Language: Object-Oriented Logic ^0.8.20
+// Language: EVM Language ^0.8.20
 
 /**
  * @title OptimismCrossDomainBridge
@@ -562,7 +561,7 @@ contract OptimismCrossDomainBridge {
         name: 'Optimism Superchain Account Ledger',
         description: 'Standard Superchain-compatible state ledger template',
         code: `// SPDX-License-Identifier: MIT
-// Language: Object-Oriented Logic ^0.8.20
+// Language: EVM Language ^0.8.20
 
 contract OptimismSuperchainLedger {
     string public name = "OP Superchain Ledger";
@@ -622,7 +621,6 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = fal
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
   const [connectingWallet, setConnectingWallet] = useState<boolean>(false);
   const [deployStepMessage, setDeployStepMessage] = useState<string | null>(null);
-  const [isOnRampOpen, setIsOnRampOpen] = useState<boolean>(false);
 
   const [deployedContracts, setDeployedContracts] = useState<DeployedContractRecord[]>(() => {
     return getStoredDeployments();
@@ -635,7 +633,7 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = fal
         .replace(/SecureVault/g, 'SecureMemoryManager')
         .replace(/BaseGaslessPaymaster/g, 'GaslessBatchProcessor')
         .replace(/OptimismCrossDomainBridge/g, 'CrossDomainRouter'),
-      language: 'System Logic',
+      language: dep.language || 'EVM Language',
       networkName: dep.networkName.replace(/Sepolia/g, 'Cluster'),
       explorerUrl: dep.explorerUrl || 'https://github.com',
     }));
@@ -1016,12 +1014,12 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = fal
       <div className="sandbox-lang-bar glass">
         {LANGUAGE_PRESETS.map((preset) => {
           const btnName = preset.id === 'evm_logic'
-            ? 'Object-Oriented Logic'
+            ? 'EVM Language'
             : preset.id === 'solana'
             ? 'System-Level'
             : preset.lang;
           const btnChain = preset.id === 'evm_logic'
-            ? 'Engine'
+            ? 'Runtime'
             : preset.id === 'solana'
             ? 'Infrastructure Compiler'
             : preset.chain.split('/')[0].trim();
@@ -1069,9 +1067,9 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = fal
               >
                 {LANGUAGE_PRESETS.map((p) => {
                   const label = !isLoggedIn
-                    ? `${p.icon} Logic Engine (${p.id === 'solana' ? 'High Throughput' : p.id === 'evm_logic' ? 'Standard' : p.lang})`
+                    ? `${p.icon} EVM Language (${p.id === 'solana' ? 'High Throughput' : p.id === 'evm_logic' ? 'Runtime' : p.lang})`
                     : p.id === 'evm_logic'
-                    ? `${p.icon} Active Syntax Environment`
+                    ? `${p.icon} EVM Language (Runtime)`
                     : p.id === 'solana'
                     ? `${p.icon} System Infrastructure Compiler`
                     : `${p.icon} ${p.lang} (${p.chain.split('/')[0].trim()})`;
@@ -1205,27 +1203,6 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = fal
                   >
                     🚰 Faucet
                   </a>
-                  <button
-                    type="button"
-                    className="testnet-onramp-btn"
-                    onClick={() => setIsOnRampOpen(true)}
-                    style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '4px',
-                      fontSize: '0.74rem',
-                      fontWeight: 600,
-                      padding: '4px 8px',
-                      borderRadius: '6px',
-                      background: 'rgba(16, 185, 129, 0.15)',
-                      border: '1px solid rgba(16, 185, 129, 0.35)',
-                      color: '#6ee7b7',
-                      cursor: 'pointer'
-                    }}
-                    title="Acquire protocol gas via Card or Bank Transfer (Transak)"
-                  >
-                    ⚡ Gas On-Ramp
-                  </button>
                   <span
                     className="testnet-deployed-count-pill"
                     style={{
@@ -1446,7 +1423,7 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = fal
                       <div className="deployment-card-row">
                         <span className="dep-row-label">Module:</span>
                         <span className="dep-contract-name">{dep.contractName}</span>
-                        <span className="dep-lang-tag">({dep.language || 'System Logic'})</span>
+                        <span className="dep-lang-tag">({dep.language || 'EVM Language'})</span>
                       </div>
 
                       <div className="deployment-card-row">
@@ -1501,14 +1478,6 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = fal
         </div>
       </div>
 
-      {isLoggedIn && (
-        <TransakWidgetModal
-          isOpen={isOnRampOpen}
-          onClose={() => setIsOnRampOpen(false)}
-          defaultNetwork={activeTestnet.chainName.toLowerCase()}
-          walletAddress={walletAddress || ''}
-        />
-      )}
     </div>
   );
 };

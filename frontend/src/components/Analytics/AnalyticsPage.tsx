@@ -123,7 +123,7 @@ export const AnalyticsPage: React.FC = () => {
           <span className="kpi-card__icon">🌱</span>
           <div className="kpi-card__content">
             <span className="kpi-card__val">Core Fundamentals</span>
-            <span className="kpi-card__lbl">Object-Oriented Logic &amp; EVM Nitro</span>
+            <span className="kpi-card__lbl">EVM Language &amp; EVM Nitro</span>
             <span className="kpi-card__sub">Interactive Sandbox Labs</span>
           </div>
         </div>
@@ -290,7 +290,7 @@ export const AnalyticsPage: React.FC = () => {
                 <div className="legend-dot dot--beginner" />
                 <div className="legend-info">
                   <span className="legend-name">Beginner Tier</span>
-                  <span className="legend-desc">Core Object-Oriented Logic, EVM Nitro &amp; Distributed Basics</span>
+                  <span className="legend-desc">Core EVM Language, EVM Nitro &amp; Distributed Basics</span>
                 </div>
               </div>
 
@@ -615,7 +615,7 @@ impl AcademyCounter {
             </div>
             <pre className="arbitrum-code-block">
               {arbTelemetry?.base_paymaster_template || `// SPDX-License-Identifier: MIT
-// Language: Object-Oriented Logic
+// Language: EVM Language
 
 /**
  * @title BaseGaslessPaymaster
@@ -672,7 +672,7 @@ contract BaseGaslessPaymaster {
             </div>
             <pre className="arbitrum-code-block">
               {arbTelemetry?.optimism_superchain_template || `// SPDX-License-Identifier: MIT
-// Language: Object-Oriented Logic
+// Language: EVM Language
 
 /**
  * @title OptimismCrossDomainBridge
@@ -730,7 +730,7 @@ contract OptimismCrossDomainBridge {
             </div>
             <pre className="arbitrum-code-block">
               {arbTelemetry?.evm_registry_code || `// SPDX-License-Identifier: MIT
-// Language: Object-Oriented Logic
+// Language: EVM Language
 
 contract ArbitrumAcademyRegistry {
     address public academyAdmin;
@@ -794,7 +794,7 @@ contract ArbitrumAcademyRegistry {
                 { chain: 'Polygon', icon: '🟣', count: 0, deployments: 0, color: '#8247e5', pct: 0, standard: 'zkEVM & Validium Deployments' },
                 { chain: 'Base', icon: '🔷', count: 0, deployments: 0, color: '#0052ff', pct: 0, standard: 'Enterprise Paymaster Deployments' },
                 { chain: 'Optimism', icon: '🔴', count: 0, deployments: 0, color: '#ef4444', pct: 0, standard: 'OP Stack & Superchain Deployments' },
-                { chain: 'Ethereum', icon: '💎', count: 0, deployments: 0, color: '#627eea', pct: 0, standard: 'Logic Engine Deployments' },
+                { chain: 'Distributed State Engines', icon: '💎', count: 0, deployments: 0, color: '#627eea', pct: 0, standard: 'Logic Engine Deployments' },
                 { chain: 'Polkadot', icon: '🟣', count: 0, deployments: 0, color: '#a855f7', pct: 0, standard: 'ink! Wasm & Substrate Deployments' },
                 { chain: 'Aptos', icon: '⚡', count: 0, deployments: 0, color: '#06b6d4', pct: 0, standard: 'Move & Testnet Module Publishing' },
                 { chain: 'Starknet', icon: '✨', count: 0, deployments: 0, color: '#ec4899', pct: 0, standard: 'Cairo 2.0 & Sepolia ZK Deployments' }
@@ -854,7 +854,7 @@ contract ArbitrumAcademyRegistry {
             >
               <option value="All">All Ecosystem Tracks</option>
               <option value="fundamentals">🌐 Fundamentals</option>
-              <option value="ethereum">💎 Ethereum</option>
+              <option value="ethereum">💎 EVM Standard</option>
               <option value="arbitrum">🔵 Arbitrum</option>
               <option value="optimism">🔴 Optimism</option>
               <option value="polygon">🟣 Polygon</option>

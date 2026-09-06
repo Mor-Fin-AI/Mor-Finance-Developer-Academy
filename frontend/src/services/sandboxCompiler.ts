@@ -211,9 +211,9 @@ function compileLogicInstant(code: string, chain: string): CompilationResult {
     ? 'Base Sepolia (Chain ID: 84532 / OP Stack)'
     : isOptimism
     ? 'OP Sepolia / OP Mainnet (Superchain Standard)'
-    : `${chain || 'Ethereum / Arbitrum Nitro'} (Shanghai EVM)`;
+    : `${chain || 'EVM Standard / Arbitrum Nitro'} (Shanghai EVM)`;
 
-  const langName = isBase ? 'Logic Engine (Base)' : isOptimism ? 'Logic Engine (Optimism)' : 'Object-Oriented Logic';
+  const langName = isBase ? 'EVM Language (Base)' : isOptimism ? 'EVM Language (Optimism)' : 'EVM Language';
 
   const stdoutLines: string[] = [
     `$ logic-engine --optimize --bin --schema ${contractName}.js`,
@@ -246,7 +246,7 @@ function compileLogicInstant(code: string, chain: string): CompilationResult {
 
   return {
     success,
-    chain: isBase ? 'Base' : isOptimism ? 'Optimism' : chain || 'Ethereum',
+    chain: isBase ? 'Base' : isOptimism ? 'Optimism' : chain || 'EVM Standard',
     language: langName,
     compiler: compilerName,
     stdout: stdoutLines.join('\n'),

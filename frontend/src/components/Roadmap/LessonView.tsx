@@ -224,7 +224,7 @@ export const LessonView: React.FC<LessonViewProps> = ({
       return {
         trackId: 'base',
         trackName: 'Base',
-        lang: 'Object-Oriented Logic',
+        lang: 'EVM Language',
         fileName: 'Paymaster.js',
         compiler: 'Execution Runtime Compiler v0.8.20',
         badge: 'Base Sepolia',
@@ -236,7 +236,7 @@ export const LessonView: React.FC<LessonViewProps> = ({
       return {
         trackId: 'optimism',
         trackName: 'Optimism',
-        lang: 'Object-Oriented Logic',
+        lang: 'EVM Language',
         fileName: 'Superchain.js',
         compiler: 'Execution Runtime Compiler v0.8.20',
         badge: 'OP Stack Superchain',
@@ -248,7 +248,7 @@ export const LessonView: React.FC<LessonViewProps> = ({
       return {
         trackId: 'polygon',
         trackName: 'Polygon',
-        lang: 'Object-Oriented Logic',
+        lang: 'EVM Language',
         fileName: 'zkVault.js',
         compiler: 'Execution Runtime Compiler v0.8.20',
         badge: 'Polygon zkEVM',
@@ -258,8 +258,8 @@ export const LessonView: React.FC<LessonViewProps> = ({
     }
     return {
       trackId: 'ethereum',
-      trackName: 'Ethereum',
-      lang: 'Object-Oriented Logic',
+      trackName: 'EVM Standard',
+      lang: 'EVM Language',
       fileName: 'LogicModule.js',
       compiler: 'Execution Runtime Compiler v0.8.20',
       badge: 'Enterprise Security',

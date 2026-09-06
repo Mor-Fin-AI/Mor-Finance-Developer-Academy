@@ -226,7 +226,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         
         <div className="landing-ecosystems-grid">
           {[
-            { name: 'Object-Oriented Logic Engine', desc: 'Foundational distributed ledger runtime for verifiable state computation and open-source applications.', icon: '🔷' },
+            { name: 'EVM Language Engine', desc: 'Foundational distributed ledger runtime for verifiable state computation and open-source applications.', icon: '🔷' },
             { name: 'Optimistic Rollup Engine', desc: 'Leading optimistic execution layer providing ultra-fast throughput and low-latency transaction processing.', icon: '🌀' },
             { name: 'Interoperable Systems Engine', desc: 'Scalable architecture powering an ecosystem of interoperable network clusters.', icon: '🔴' },
             { name: 'High-Throughput Layer-2 Engine', desc: 'Secure, low-latency, developer-friendly Layer 2 network architecture incubated by Coinbase.', icon: '🔵' },

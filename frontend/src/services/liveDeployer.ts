@@ -1,7 +1,7 @@
 /**
  * Real Distributed System Logic Testnet Deployment Service.
  * Connects directly to browser signers (PKI / Key-Pair Auth),
- * switches or adds target execution testnets (Arbitrum Sepolia, Base Sepolia, OP Sepolia, Ethereum Sepolia),
+ * switches or adds target execution testnets (Arbitrum Sepolia, Base Sepolia, OP Sepolia, Sepolia),
  * requests user cryptographic signature via eth_sendTransaction,
  * and tracks the live testnet receipt to obtain real module addresses.
  */
@@ -66,17 +66,17 @@ export const EVM_TESTNETS: EVMTestnetConfig[] = [
   },
   {
     id: 'ethereum_sepolia',
-    name: 'Ethereum Sepolia',
+    name: 'Sepolia Testnet',
     chainId: 11155111,
     hexChainId: '0xaa36a7',
-    chainName: 'Ethereum',
+    chainName: 'EVM Standard',
     symbol: 'ETH',
     rpcUrl: 'https://rpc.sepolia.org',
     explorerUrl: 'https://sepolia.etherscan.io',
     faucetUrl: 'https://sepoliafaucet.com',
     icon: '🔷',
     telemetryNetwork: 'Sepolia Testnet',
-    execEnv: 'Ethereum Virtual Machine'
+    execEnv: 'EVM Execution Environment'
   }
 ];
 
@@ -113,7 +113,7 @@ export const INITIAL_DEPLOYMENTS: DeployedContractRecord[] = [
     gasUsed: 264820,
     blockNumber: 14892103,
     timestamp: 'Verified',
-    language: 'Object-Oriented Logic'
+    language: 'EVM Language'
   },
   {
     id: 'dep-base-01',
@@ -128,7 +128,7 @@ export const INITIAL_DEPLOYMENTS: DeployedContractRecord[] = [
     gasUsed: 198340,
     blockNumber: 14892080,
     timestamp: 'Verified',
-    language: 'Object-Oriented Logic'
+    language: 'EVM Language'
   },
   {
     id: 'dep-op-01',
@@ -143,7 +143,7 @@ export const INITIAL_DEPLOYMENTS: DeployedContractRecord[] = [
     gasUsed: 218750,
     blockNumber: 14892015,
     timestamp: 'Verified',
-    language: 'Object-Oriented Logic'
+    language: 'EVM Language'
   }
 ];
 
@@ -218,7 +218,7 @@ export interface DeployOptions {
   onStatus?: (message: string) => void;
 }
 
-/** Check if an Ethereum EIP-1193 provider exists in the window context */
+/** Check if an EIP-1193 provider exists in the window context */
 export function isWalletAvailable(): boolean {
   return typeof window !== 'undefined' && Boolean((window as any).ethereum);
 }
