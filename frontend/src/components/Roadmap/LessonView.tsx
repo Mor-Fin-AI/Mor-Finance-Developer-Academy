@@ -223,11 +223,11 @@ export const LessonView: React.FC<LessonViewProps> = ({
     if (raw.includes('base')) {
       return {
         trackId: 'base',
-        trackName: 'Base',
+        trackName: 'Core Database Frameworks',
         lang: 'EVM Language',
         fileName: 'Paymaster.js',
         compiler: 'Execution Runtime Compiler v0.8.20',
-        badge: 'Base Sepolia',
+        badge: 'Core Database Sandbox',
         icon: '🔷',
         sampleArtifact: 'Bytecode + Interface Schema'
       };
@@ -235,11 +235,11 @@ export const LessonView: React.FC<LessonViewProps> = ({
     if (raw.includes('optimism')) {
       return {
         trackId: 'optimism',
-        trackName: 'Optimism',
+        trackName: 'Fault-Proof Systems',
         lang: 'EVM Language',
         fileName: 'Superchain.js',
         compiler: 'Execution Runtime Compiler v0.8.20',
-        badge: 'OP Stack Superchain',
+        badge: 'Fault-Proof Engine',
         icon: '🔴',
         sampleArtifact: 'Bytecode + Interface Schema'
       };

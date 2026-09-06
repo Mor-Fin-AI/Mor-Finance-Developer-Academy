@@ -160,7 +160,7 @@ export const AnalyticsPage: React.FC = () => {
           <div className="kpi-card__content">
             <span className="kpi-card__val">{totalDeployments}</span>
             <span className="kpi-card__lbl">On-Chain Deployments</span>
-            <span className="kpi-card__sub">Arbitrum • Base • OP • Sepolia</span>
+            <span className="kpi-card__sub">Arbitrum • Core Database • Fault-Proof • Sepolia</span>
           </div>
         </div>
       </div>
@@ -319,11 +319,11 @@ export const AnalyticsPage: React.FC = () => {
         <div className="analytics-chart-header" style={{ marginBottom: '16px' }}>
           <div>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '0.74rem', fontWeight: 800, color: '#60a5fa', textTransform: 'uppercase', marginBottom: '6px' }}>
-              🔵 Arbitrum • 🔷 Base • 🔴 Optimism Telemetry
+              🔵 Arbitrum • 🔷 Core Database • 🔴 Fault-Proof Systems Telemetry
             </div>
             <h3 className="analytics-chart-title">L2 Scaling &amp; Multi-Chain Grant Telemetry</h3>
             <span className="analytics-chart-subtitle">
-              Programmatic grant verification tracking Arbitrum Stylus (WASM/Nitro), Base (OP Stack Paymasters), and Optimism (Superchain Cross-Domain Messaging) across Cohort KU_COHORT_2026_01.
+              Programmatic grant verification tracking Arbitrum Stylus (WASM/Nitro), Core Database Frameworks (Paymasters), and Fault-Proof Systems (Superchain Cross-Domain Messaging) across Cohort KU_COHORT_2026_01.
             </span>
           </div>
           <span className="analytics-chart-pill" style={{ background: 'rgba(59, 130, 246, 0.15)', color: '#93c5fd', borderColor: '#3b82f6' }}>
@@ -400,13 +400,13 @@ export const AnalyticsPage: React.FC = () => {
             className={`arbitrum-tab-btn ${arbTab === 'base' ? 'active' : ''}`}
             onClick={() => setArbTab('base')}
           >
-            🔷 Base Paymaster
+            🔷 Core Database Paymaster
           </button>
           <button
             className={`arbitrum-tab-btn ${arbTab === 'optimism' ? 'active' : ''}`}
             onClick={() => setArbTab('optimism')}
           >
-            🔴 Optimism Superchain
+            🔴 Fault-Proof Systems
           </button>
           <button
             className={`arbitrum-tab-btn ${arbTab === 'evm_logic' ? 'active' : ''}`}
@@ -433,14 +433,14 @@ export const AnalyticsPage: React.FC = () => {
                   <span className="step-icon">✅</span>
                   <div>
                     <strong>Milestone 2: Multi-Chain Sandbox Compilers</strong>
-                    <p>WASM Stylus, Base OP Stack, and Optimism Superchain compilation verified.</p>
+                    <p>WASM Stylus, Core Database Frameworks, and Fault-Proof Systems compilation verified.</p>
                   </div>
                 </div>
                 <div className="milestone-step done">
                   <span className="step-icon">✅</span>
                   <div>
                     <strong>Milestone 3: Soulbound DID Credential Registry</strong>
-                    <p>On-chain Arbitrum &amp; Base credential registry modules ready for testnet minting.</p>
+                    <p>On-chain Arbitrum &amp; Core Database credential registry modules ready for testnet minting.</p>
                   </div>
                 </div>
               </div>
@@ -457,7 +457,7 @@ export const AnalyticsPage: React.FC = () => {
                 </div>
                 <div className="milestone-stat-row">
                   <span>Supported Chains:</span>
-                  <strong>Arbitrum, Base, Optimism, Solana, Aptos</strong>
+                  <strong>Arbitrum, Core Database Frameworks, Fault-Proof Systems, Solana, Aptos</strong>
                 </div>
                 <div className="milestone-stat-row">
                   <span>Telemetry Registry:</span>
@@ -490,7 +490,7 @@ export const AnalyticsPage: React.FC = () => {
                       color: deploymentNetworkFilter === netKey ? '#fff' : 'var(--clr-text-secondary)'
                     }}
                   >
-                    {netKey === 'All' ? '🌐 All Ecosystems' : netKey === 'base' ? '🔷 Base' : netKey === 'optimism' ? '🔴 Optimism' : netKey === 'arbitrum' ? '🔵 Arbitrum' : netKey === 'solana' ? '🟠 Solana' : '⚡ Aptos'}
+                    {netKey === 'All' ? '🌐 All Ecosystems' : netKey === 'base' ? '🔷 Core Database Frameworks' : netKey === 'optimism' ? '🔴 Fault-Proof Systems' : netKey === 'arbitrum' ? '🔵 Arbitrum' : netKey === 'solana' ? '🟠 Solana' : '⚡ Aptos'}
                   </button>
                 ))}
               </div>
@@ -533,9 +533,9 @@ export const AnalyticsPage: React.FC = () => {
                       {deps.map((row: any, idx: number) => {
                         const netLower = (row.network || '').toLowerCase();
                         const netBadge = netLower.includes('base')
-                          ? { label: 'Base Sepolia', icon: '🔷', color: '#0052ff', bg: 'rgba(0,82,255,0.15)' }
+                          ? { label: 'Core Database Sandbox', icon: '🔷', color: '#0052ff', bg: 'rgba(0,82,255,0.15)' }
                           : netLower.includes('optimism') || netLower.includes('op')
-                          ? { label: 'OP Sepolia', icon: '🔴', color: '#ef4444', bg: 'rgba(239,68,68,0.15)' }
+                          ? { label: 'Fault-Proof Sepolia', icon: '🔴', color: '#ef4444', bg: 'rgba(239,68,68,0.15)' }
                           : netLower.includes('solana')
                           ? { label: 'Solana Devnet', icon: '🟠', color: '#f59e0b', bg: 'rgba(245,158,11,0.15)' }
                           : netLower.includes('aptos')
@@ -611,17 +611,17 @@ impl AcademyCounter {
         {arbTab === 'base' && (
           <div>
             <div style={{ marginBottom: '10px', fontSize: '0.8rem', color: 'var(--clr-text-secondary)' }}>
-              <strong>Base Gasless Paymaster &amp; Account Abstraction (Base Sepolia / Chain ID: 84532)</strong>: Execution sponsorship paymaster optimized for frictionless student onboarding.
+              <strong>Core Database Gasless Paymaster &amp; Account Abstraction (Database Sandbox)</strong>: Execution sponsorship paymaster optimized for frictionless student onboarding.
             </div>
             <pre className="arbitrum-code-block">
               {arbTelemetry?.base_paymaster_template || `// SPDX-License-Identifier: MIT
 // Language: EVM Language
 
 /**
- * @title BaseGaslessPaymaster
- * @notice Execution sponsorship paymaster optimized for Base Sepolia.
+ * @title DatabaseGaslessPaymaster
+ * @notice Execution sponsorship paymaster optimized for database sandbox.
  */
-contract BaseGaslessPaymaster {
+contract DatabaseGaslessPaymaster {
     address public immutable owner;
     mapping(address => bool) public sponsoredContracts;
     uint256 public totalGasSponsored;
@@ -668,22 +668,22 @@ contract BaseGaslessPaymaster {
         {arbTab === 'optimism' && (
           <div>
             <div style={{ marginBottom: '10px', fontSize: '0.8rem', color: 'var(--clr-text-secondary)' }}>
-              <strong>Optimism Superchain Cross-Domain Bridge (OP Sepolia / OP Mainnet)</strong>: Native cross-L2 message transmitter communicating via the standard Optimism Superchain Messenger.
+              <strong>Fault-Proof Systems Cross-Domain Bridge (Fault-Proof Standard)</strong>: Native cross-network message transmitter communicating via the standard Fault-Proof Messenger.
             </div>
             <pre className="arbitrum-code-block">
               {arbTelemetry?.optimism_superchain_template || `// SPDX-License-Identifier: MIT
 // Language: EVM Language
 
 /**
- * @title OptimismCrossDomainBridge
- * @notice Cross-domain message transmitter communicating via the Optimism Superchain Messenger.
+ * @title FaultProofCrossDomainBridge
+ * @notice Cross-domain message transmitter communicating via the Fault-Proof Messenger.
  */
 interface ICrossDomainMessenger {
     function sendMessage(address _target, bytes calldata _message, uint32 _gasLimit) external payable;
     function xDomainMessageSender() external view returns (address);
 }
 
-contract OptimismCrossDomainBridge {
+contract FaultProofCrossDomainBridge {
     address public constant OP_MESSENGER = 0x4200000000000000000000000000000000000007;
     address public owner;
     uint256 public crossChainTransfersCount;
@@ -792,8 +792,8 @@ contract ArbitrumAcademyRegistry {
                 { chain: 'Arbitrum', icon: '🔵', count: 0, deployments: 0, color: '#3b82f6', pct: 0, standard: 'Nitro & Stylus Wasm Deployments' },
                 { chain: 'Solana', icon: '🟠', count: 0, deployments: 0, color: '#f59e0b', pct: 0, standard: 'Anchor & Devnet Deployments' },
                 { chain: 'Polygon', icon: '🟣', count: 0, deployments: 0, color: '#8247e5', pct: 0, standard: 'zkEVM & Validium Deployments' },
-                { chain: 'Base', icon: '🔷', count: 0, deployments: 0, color: '#0052ff', pct: 0, standard: 'Enterprise Paymaster Deployments' },
-                { chain: 'Optimism', icon: '🔴', count: 0, deployments: 0, color: '#ef4444', pct: 0, standard: 'OP Stack & Superchain Deployments' },
+                { chain: 'Core Database Frameworks', icon: '🔷', count: 0, deployments: 0, color: '#0052ff', pct: 0, standard: 'Enterprise Paymaster Deployments' },
+                { chain: 'Fault-Proof Systems', icon: '🔴', count: 0, deployments: 0, color: '#ef4444', pct: 0, standard: 'Fault-Proof Deployments' },
                 { chain: 'Distributed State Engines', icon: '💎', count: 0, deployments: 0, color: '#627eea', pct: 0, standard: 'Logic Engine Deployments' },
                 { chain: 'Polkadot', icon: '🟣', count: 0, deployments: 0, color: '#a855f7', pct: 0, standard: 'ink! Wasm & Substrate Deployments' },
                 { chain: 'Aptos', icon: '⚡', count: 0, deployments: 0, color: '#06b6d4', pct: 0, standard: 'Move & Testnet Module Publishing' },
@@ -856,9 +856,9 @@ contract ArbitrumAcademyRegistry {
               <option value="fundamentals">🌐 Fundamentals</option>
               <option value="ethereum">💎 EVM Standard</option>
               <option value="arbitrum">🔵 Arbitrum</option>
-              <option value="optimism">🔴 Optimism</option>
+              <option value="optimism">🔴 Fault-Proof Systems</option>
               <option value="polygon">🟣 Polygon</option>
-              <option value="base">🔷 Base</option>
+              <option value="base">🔷 Core Database Frameworks</option>
               <option value="solana">🟠 Solana</option>
               <option value="avalanche">🔺 Avalanche</option>
               <option value="aptos">🟢 Aptos</option>

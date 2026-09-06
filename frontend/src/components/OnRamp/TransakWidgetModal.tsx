@@ -20,8 +20,8 @@ interface NetworkOption {
 
 const SUPPORTED_ONRAMP_NETWORKS: NetworkOption[] = [
   { id: 'arbitrum', name: 'Arbitrum (Nitro)', transakNetwork: 'arbitrum', symbol: 'ETH', icon: '🌀', testnetName: 'Arbitrum Sepolia' },
-  { id: 'base', name: 'Base (Coinbase L2)', transakNetwork: 'base', symbol: 'ETH', icon: '🔵', testnetName: 'Base Sepolia' },
-  { id: 'optimism', name: 'Optimism (OP Stack)', transakNetwork: 'optimism', symbol: 'ETH', icon: '🔴', testnetName: 'OP Sepolia' },
+  { id: 'base', name: 'Core Database Frameworks', transakNetwork: 'base', symbol: 'ETH', icon: '🔵', testnetName: 'Database Sepolia' },
+  { id: 'optimism', name: 'Fault-Proof Systems', transakNetwork: 'optimism', symbol: 'ETH', icon: '🔴', testnetName: 'Fault-Proof Sepolia' },
   { id: 'ethereum', name: 'EVM L1', transakNetwork: 'ethereum', symbol: 'ETH', icon: '🔷', testnetName: 'Sepolia' },
   { id: 'polygon', name: 'Polygon', transakNetwork: 'polygon', symbol: 'POL', icon: '💜', testnetName: 'Polygon Amoy' },
 ];

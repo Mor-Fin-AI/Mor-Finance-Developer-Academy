@@ -86,7 +86,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ isLoggedIn: _isLoggedIn = 
           <div className="about-uni-feature-card">
             <div className="about-uni-feature-icon">💻</div>
             <h4>8 Multi-Runtime Sandboxes</h4>
-            <p>Hands-on compilation in Arbitrum Stylus (Rust), Base, Optimism, Solana, Aptos Move, Starknet, and ink!.</p>
+            <p>Hands-on compilation in Arbitrum Stylus (Rust), Core Database Frameworks, Fault-Proof Systems, Solana, Aptos Move, Starknet, and ink!.</p>
           </div>
           <div className="about-uni-feature-card">
             <div className="about-uni-feature-icon">📊</div>

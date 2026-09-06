@@ -1,7 +1,7 @@
 /**
  * Real Distributed System Logic Testnet Deployment Service.
  * Connects directly to browser signers (PKI / Key-Pair Auth),
- * switches or adds target execution testnets (Arbitrum Sepolia, Base Sepolia, OP Sepolia, Sepolia),
+ * switches or adds target execution testnets (Arbitrum Sepolia, Database Sepolia, Fault-Proof Sepolia, Sepolia),
  * requests user cryptographic signature via eth_sendTransaction,
  * and tracks the live testnet receipt to obtain real module addresses.
  */
@@ -38,31 +38,31 @@ export const EVM_TESTNETS: EVMTestnetConfig[] = [
   },
   {
     id: 'base_sepolia',
-    name: 'Base Sepolia',
+    name: 'Database Sepolia',
     chainId: 84532,
     hexChainId: '0x14a34',
-    chainName: 'Base',
+    chainName: 'Core Database Frameworks',
     symbol: 'ETH',
     rpcUrl: 'https://sepolia.base.org',
     explorerUrl: 'https://sepolia.basescan.org',
     faucetUrl: 'https://www.coinbase.com/faucets/base-ethereum-sepolia-faucet',
     icon: '🔵',
-    telemetryNetwork: 'Base Sepolia',
-    execEnv: 'Base L2 (Coinbase OP Stack)'
+    telemetryNetwork: 'Database Sepolia',
+    execEnv: 'Core Database Execution Layer'
   },
   {
     id: 'optimism_sepolia',
-    name: 'OP Sepolia',
+    name: 'Fault-Proof Sepolia',
     chainId: 11155420,
     hexChainId: '0xaa37dc',
-    chainName: 'Optimism',
+    chainName: 'Fault-Proof Systems',
     symbol: 'ETH',
     rpcUrl: 'https://sepolia.optimism.io',
     explorerUrl: 'https://sepolia-optimism.etherscan.io',
     faucetUrl: 'https://faucet.quicknode.com/optimism/sepolia',
     icon: '🔴',
-    telemetryNetwork: 'OP Sepolia',
-    execEnv: 'OP Stack Superchain'
+    telemetryNetwork: 'Fault-Proof Sepolia',
+    execEnv: 'Fault-Proof Superchain'
   },
   {
     id: 'ethereum_sepolia',
@@ -117,11 +117,11 @@ export const INITIAL_DEPLOYMENTS: DeployedContractRecord[] = [
   },
   {
     id: 'dep-base-01',
-    contractName: 'BaseGaslessBatchProcessor',
+    contractName: 'DatabaseBatchProcessor',
     contractAddress: '0x9183428d05ec2c6fe98db2579b69106093ca561b',
     txHash: '0x71b83d95c104e76a94f6c406004bca992e59103e61c92019488b3014c27891ea',
     networkId: 'base_sepolia',
-    networkName: 'Base Sepolia',
+    networkName: 'Database Sepolia',
     networkIcon: '🔷',
     chainId: 84532,
     explorerUrl: 'https://sepolia.basescan.org',
@@ -132,11 +132,11 @@ export const INITIAL_DEPLOYMENTS: DeployedContractRecord[] = [
   },
   {
     id: 'dep-op-01',
-    contractName: 'OptimismCrossDomainRouter',
+    contractName: 'FaultProofCrossDomainRouter',
     contractAddress: '0x38e55e0c501726a273b09bb4a9193108c9035274',
     txHash: '0x5c4a7e8014e3b70868f037612f008432a5109403810237910549c690184b29a1',
     networkId: 'optimism_sepolia',
-    networkName: 'OP Sepolia',
+    networkName: 'Fault-Proof Sepolia',
     networkIcon: '🔴',
     chainId: 11155420,
     explorerUrl: 'https://sepolia-optimism.etherscan.io',

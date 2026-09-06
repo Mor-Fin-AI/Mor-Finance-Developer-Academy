@@ -4035,7 +4035,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
           ],
           "exercise": {
             "instruction": "Complete the Full Stack Testnet Deployment Challenge! Write a deployment configuration and verification snippet containing 'fullstack', 'deploy', 'testnet', and 'verify'.",
-            "template": "// ─── Full-Stack Multi-Chain Testnet Deployment & Verification ───\n// Targets: Arbitrum Sepolia / Base Sepolia / OP Sepolia\n\n// Complete deployment declaration below:\n",
+            "template": "// ─── Full-Stack Multi-Chain Testnet Deployment & Verification ───\n// Targets: Arbitrum Sepolia / Database Sepolia / Fault-Proof Sepolia\n\n// Complete deployment declaration below:\n",
             "required_keywords": ["fullstack", "deploy", "testnet", "verify"]
           }
         }

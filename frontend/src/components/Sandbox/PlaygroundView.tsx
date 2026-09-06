@@ -405,24 +405,24 @@ impl AcademyCounter {
   },
   {
     id: 'base',
-    chain: 'Base (Coinbase L2)',
-    lang: 'EVM Language (Base)',
-    fileName: 'BaseAccountAbstraction.js',
+    chain: 'Core Database Frameworks',
+    lang: 'Core Database Frameworks',
+    fileName: 'DatabaseAccountAbstraction.js',
     icon: '🔵',
-    compiler: 'Execution Runtime Compiler v0.8.20 (Base Optimizations)',
-    targetEnv: 'Base Sepolia (Chain ID: 84532)',
+    compiler: 'Execution Runtime Compiler v0.8.20 (Database Engine)',
+    targetEnv: 'Core Database Frameworks Sandbox',
     templates: [
       {
-        name: 'Gasless Paymaster (EIP-4337)',
-        description: 'Sponsors gas execution for users interacting with Base logic modules',
+        name: 'Gasless Paymaster (Account Abstraction)',
+        description: 'Sponsors gas execution for users interacting with logic modules',
         code: `// SPDX-License-Identifier: MIT
 // Language: EVM Language ^0.8.20
 
 /**
- * @title BaseGaslessPaymaster
- * @notice Validates and sponsors user operation gas on Base L2.
+ * @title DatabaseGaslessPaymaster
+ * @notice Validates and sponsors user operation gas in database sandbox.
  */
-contract BaseGaslessPaymaster {
+contract DatabaseGaslessPaymaster {
     address public owner;
     mapping(address => bool) public allowedCallers;
 
@@ -461,18 +461,18 @@ contract BaseGaslessPaymaster {
 }`
       },
       {
-        name: 'Base Verification Badge',
+        name: 'Database Verification Badge',
         description: 'Verification badge compatible credential proof module',
         code: `// SPDX-License-Identifier: MIT
 // Language: EVM Language ^0.8.20
 
 /**
- * @title BaseAttendanceProof
- * @notice Non-transferable onchain attendance proof on Base Sepolia.
+ * @title DatabaseAttendanceProof
+ * @notice Non-transferable onchain attendance proof in database sandbox.
  */
-contract BaseAttendanceProof {
-    string public name = "Base Academy Attendance";
-    string public symbol = "BASE-ATTEND";
+contract DatabaseAttendanceProof {
+    string public name = "Academy Attendance";
+    string public symbol = "ACAD-ATTEND";
     address public admin;
 
     mapping(address => bool) public hasAttended;
@@ -498,29 +498,29 @@ contract BaseAttendanceProof {
   },
   {
     id: 'optimism',
-    chain: 'Optimism',
-    lang: 'EVM Language (Optimism)',
-    fileName: 'OptimismCrossDomainBridge.js',
+    chain: 'Fault-Proof Systems',
+    lang: 'Fault-Proof Systems',
+    fileName: 'FaultProofCrossDomainBridge.js',
     icon: '🔴',
-    compiler: 'Execution Runtime Compiler v0.8.20 (Superchain)',
-    targetEnv: 'OP Sepolia / OP Mainnet (Superchain)',
+    compiler: 'Execution Runtime Compiler v0.8.20 (Fault-Proof Standard)',
+    targetEnv: 'Fault-Proof Execution Engine (Superchain Standard)',
     templates: [
       {
-        name: 'OP Superchain Cross-Domain Bridge',
-        description: 'Cross-L2 message transmitter communicating via the Optimism Superchain Messenger',
+        name: 'Fault-Proof Cross-Domain Bridge',
+        description: 'Cross-domain message transmitter communicating via fault-proof messaging',
         code: `// SPDX-License-Identifier: MIT
 // Language: EVM Language ^0.8.20
 
 /**
- * @title OptimismCrossDomainBridge
- * @notice Cross-L2 message transmitter communicating via the Optimism Superchain Messenger.
+ * @title FaultProofCrossDomainBridge
+ * @notice Cross-domain message transmitter communicating via the fault-proof messenger.
  */
 interface ICrossDomainMessenger {
     function sendMessage(address _target, bytes calldata _message, uint32 _gasLimit) external payable;
     function xDomainMessageSender() external view returns (address);
 }
 
-contract OptimismCrossDomainBridge {
+contract FaultProofCrossDomainBridge {
     address public constant OP_MESSENGER = 0x4200000000000000000000000000000000000007;
     address public owner;
     uint256 public crossChainTransfersCount;
@@ -558,14 +558,14 @@ contract OptimismCrossDomainBridge {
 }`
       },
       {
-        name: 'Optimism Superchain Account Ledger',
-        description: 'Standard Superchain-compatible state ledger template',
+        name: 'Fault-Proof Systems Account Ledger',
+        description: 'Standard fault-proof compatible state ledger template',
         code: `// SPDX-License-Identifier: MIT
 // Language: EVM Language ^0.8.20
 
-contract OptimismSuperchainLedger {
-    string public name = "OP Superchain Ledger";
-    string public symbol = "OPL";
+contract FaultProofSuperchainLedger {
+    string public name = "Fault-Proof Ledger";
+    string public symbol = "FPL";
     uint8 public decimals = 18;
     uint256 public totalSupply;
 
@@ -1017,11 +1017,19 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = fal
             ? 'EVM Language'
             : preset.id === 'solana'
             ? 'System-Level'
+            : preset.id === 'base'
+            ? 'Core Database'
+            : preset.id === 'optimism'
+            ? 'Fault-Proof'
             : preset.lang;
           const btnChain = preset.id === 'evm_logic'
             ? 'Runtime'
             : preset.id === 'solana'
             ? 'Infrastructure Compiler'
+            : preset.id === 'base'
+            ? 'Database Engine'
+            : preset.id === 'optimism'
+            ? 'Fault-Proof Systems'
             : preset.chain.split('/')[0].trim();
 
           return (
@@ -1067,11 +1075,15 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = fal
               >
                 {LANGUAGE_PRESETS.map((p) => {
                   const label = !isLoggedIn
-                    ? `${p.icon} EVM Language (${p.id === 'solana' ? 'High Throughput' : p.id === 'evm_logic' ? 'Runtime' : p.lang})`
+                    ? `${p.icon} EVM Language (${p.id === 'solana' ? 'High Throughput' : p.id === 'evm_logic' ? 'Runtime' : p.id === 'base' ? 'Core Database' : p.id === 'optimism' ? 'Fault-Proof' : p.lang})`
                     : p.id === 'evm_logic'
                     ? `${p.icon} EVM Language (Runtime)`
                     : p.id === 'solana'
                     ? `${p.icon} System Infrastructure Compiler`
+                    : p.id === 'base'
+                    ? `${p.icon} Core Database Frameworks`
+                    : p.id === 'optimism'
+                    ? `${p.icon} Fault-Proof Systems`
                     : `${p.icon} ${p.lang} (${p.chain.split('/')[0].trim()})`;
 
                   return (

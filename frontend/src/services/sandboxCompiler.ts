@@ -202,18 +202,18 @@ function compileLogicInstant(code: string, chain: string): CompilationResult {
   const isOptimism = chainLower.includes('optimism') || chainLower.includes('op');
 
   const compilerName = isBase
-    ? 'logic-compiler v0.8.20 (Base Sepolia OP Stack)'
+    ? 'logic-compiler v0.8.20 (Database Engine Standard)'
     : isOptimism
-    ? 'logic-compiler v0.8.20 (OP Stack Superchain EVM)'
+    ? 'logic-compiler v0.8.20 (Fault-Proof Standard)'
     : 'logic-compiler v0.8.20+commit.a1b79de6 (EVM Nitro)';
 
   const targetEnv = isBase
-    ? 'Base Sepolia (Chain ID: 84532 / OP Stack)'
+    ? 'Core Database Frameworks (Chain ID: 84532)'
     : isOptimism
-    ? 'OP Sepolia / OP Mainnet (Superchain Standard)'
+    ? 'Fault-Proof Systems (Superchain Standard)'
     : `${chain || 'EVM Standard / Arbitrum Nitro'} (Shanghai EVM)`;
 
-  const langName = isBase ? 'EVM Language (Base)' : isOptimism ? 'EVM Language (Optimism)' : 'EVM Language';
+  const langName = isBase ? 'Core Database Frameworks' : isOptimism ? 'Fault-Proof Systems' : 'EVM Language';
 
   const stdoutLines: string[] = [
     `$ logic-engine --optimize --bin --schema ${contractName}.js`,
@@ -226,9 +226,9 @@ function compileLogicInstant(code: string, chain: string): CompilationResult {
       `Binary:\n${bytecode.slice(0, 68)}...`,
       `Module Interface Schema: [${functions.length} function(s), ${events.length} event(s)]`,
       isBase
-        ? `OP Stack Gas (L2 Execution): ~${gasEstimate.toLocaleString()} gas | L1 Calldata Overhead: ~1,840 gas`
+        ? `Database Engine Gas (L2 Execution): ~${gasEstimate.toLocaleString()} gas | L1 Calldata Overhead: ~1,840 gas`
         : isOptimism
-        ? `Superchain Gas (L2 Execution): ~${gasEstimate.toLocaleString()} gas | Cross-Domain Messenger: Verified`
+        ? `Fault-Proof Gas (L2 Execution): ~${gasEstimate.toLocaleString()} gas | Cross-Domain Messenger: Verified`
         : `Gas Estimation: Creation ~${gasEstimate.toLocaleString()} gas`,
       `✅ Module logic successfully verified and compiled via ${compilerName}.`
     );
@@ -246,7 +246,7 @@ function compileLogicInstant(code: string, chain: string): CompilationResult {
 
   return {
     success,
-    chain: isBase ? 'Base' : isOptimism ? 'Optimism' : chain || 'EVM Standard',
+    chain: isBase ? 'Core Database Frameworks' : isOptimism ? 'Fault-Proof Systems' : chain || 'EVM Standard',
     language: langName,
     compiler: compilerName,
     stdout: stdoutLines.join('\n'),
