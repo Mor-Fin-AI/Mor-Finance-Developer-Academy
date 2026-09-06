@@ -204,7 +204,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             {
               icon: '💬',
               title: 'Community Forum',
-              desc: 'Collaborate with fellow builders, request peer code reviews, and join collaborative engineering hackathons.'
+              desc: 'Collaborate with fellow builders, request peer code reviews, and join collaborative engineering sprints.'
             }
           ].map((item) => (
             <div key={item.title} className="built-dev-card glass">
@@ -233,7 +233,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             { name: 'Modular Distributed System Engine', desc: 'Modular distributed system and aggregation suite supporting enterprise layer 2 networks.', icon: '💜' },
             { name: 'Multi-Subnet Architecture', desc: 'Subnet execution environment designed for high-throughput enterprise architectures and modular microservices.', icon: '🔺' },
             { name: 'High-Throughput Parallel Systems Engine', desc: 'High-performance distributed network optimized for sub-second execution and Rust-based programs.', icon: '☀️' },
-            { name: 'Provable Cryptographic Engine', desc: 'Scalable execution network leveraging STARK cryptographic proofs and high-assurance CairoVM architectures.', icon: '⭐' },
+            { name: 'Provable Verification Engine', desc: 'Scalable execution network leveraging STARK validity proofs and high-assurance CairoVM architectures.', icon: '✨' },
             { name: 'Modular State Engine', desc: 'High-throughput distributed ledger powered by the Move programming language and Block-STM parallel engine.', icon: '🟢' },
             { name: 'Modular Micro-Consensus Engine', desc: 'Heterogeneous multi-network framework connecting specialized application chains with ink! Rust modules.', icon: '🟣' }
           ].map((eco) => (
@@ -392,7 +392,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 </button>
               )}
 
-              {/* Developer Key & Cryptographic Authentication - Gated Inside Student Gateway */}
+              {/* Developer Key & Key-Pair Authentication - Gated Inside Student Gateway */}
               <div style={{ margin: '12px 0 4px 0', borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '16px' }}>
                 <span style={{ fontSize: '0.72rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 700 }}>
                   Advanced Developer Authentication
@@ -420,7 +420,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                   color: '#93c5fd',
                 }}
               >
-                <span>🔑</span> Authorized Developer Key (PKI / Cryptographic Auth)
+                <span>🔑</span> Authorized Developer Key (PKI / Key-Pair Auth)
               </button>
             </div>
 

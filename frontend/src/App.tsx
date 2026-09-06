@@ -5,6 +5,7 @@ import type { NavPage, UserProgress, Course } from './types';
 import { fetchProgress, fetchCourses, authGithub, authWallet, fetchAuthConfig, enrollUniversityStudent } from './api/client';
 import { Sidebar } from './components/Layout/Sidebar';
 import { Header }  from './components/Layout/Header';
+import { HeadLayoutMeta } from './components/Layout/HeadLayoutMeta';
 import { RoadmapPage, DashboardPage, MentorPage } from './pages';
 import { LessonsList } from './components/Roadmap/LessonsList';
 import { LessonView } from './components/Roadmap/LessonView';
@@ -156,11 +157,11 @@ export default function App() {
               setAuthType(session.authType);
               setSessionCookie(resProgress.user_id, session.authType, session.token || jwtToken || '');
               setProgress(resProgress);
-              alert("GitHub account linked successfully to your wallet profile!");
+              alert("GitHub account linked successfully to your developer profile!");
             })
             .catch((err) => {
               console.error("Link GitHub error:", err);
-              alert(err.message || "Failed to link GitHub to wallet.");
+              alert(err.message || "Failed to link GitHub to developer profile.");
             })
             .finally(() => setLoading(false));
         });
@@ -327,7 +328,7 @@ export default function App() {
         const address = accounts[0];
         
         // 2. Generate Authentication Message with Nonce
-        const message = `Welcome to Developer Academy!\n\nSign this message to authenticate your wallet session.\nNonce: ${Math.floor(Math.random() * 1000000)}`;
+        const message = `Welcome to Developer Academy!\n\nSign this message to authenticate your developer session.\nNonce: ${Math.floor(Math.random() * 1000000)}`;
         
         // 3. Request Cryptographic Signature
         const signature = await win.ethereum.request({
@@ -431,7 +432,7 @@ export default function App() {
       alert(`GitHub account @${username.trim()} linked successfully!`);
     } catch (err: any) {
       console.error(err);
-      alert(err.message || "Failed to link GitHub to wallet profile.");
+      alert(err.message || "Failed to link GitHub to developer profile.");
     } finally {
       setLoading(false);
     }
@@ -513,6 +514,7 @@ export default function App() {
   if (!isLoggedIn && (location.pathname === '/' || location.pathname === '/login')) {
     return (
       <>
+        <HeadLayoutMeta isLoggedIn={false} />
         {enrollRedirecting && (
           <div
             style={{
@@ -569,6 +571,7 @@ export default function App() {
 
   return (
     <div className="app-layout">
+      <HeadLayoutMeta isLoggedIn={isLoggedIn} activePage={activePage} />
       <Sidebar
         activePage={activePage}
         onNavigate={handleNavigate}
@@ -594,6 +597,7 @@ export default function App() {
         onOpenFastTrack={() => setShowFastTrackModal(true)}
         isMobileNavOpen={mobileNavOpen}
         onToggleMobileNav={() => setMobileNavOpen((prev) => !prev)}
+        isLoggedIn={isLoggedIn}
       />
       <FastTrackEnrollmentModal
         isOpen={showFastTrackModal}
@@ -692,7 +696,7 @@ export default function App() {
         </Routes>
         
         <footer className="app-global-footer" style={{ textAlign: 'center', padding: '32px 16px 16px 16px', borderTop: '1px solid rgba(255, 255, 255, 0.06)', fontSize: '0.75rem', color: 'var(--clr-text-muted)', marginTop: '40px' }}>
-          © 2026 Morfinance AI. 66 Paul Street, London, EC2A 4NA. All rights reserved. | {isLoggedIn ? 'AI-Powered Web3 Developer Academy' : 'Enterprise EdTech & Software Architecture Academy'}
+          © 2026 Morfinance AI. 66 Paul Street, London, EC2A 4NA. All rights reserved. | Enterprise EdTech & Software Architecture Academy
         </footer>
       </main>
     </div>

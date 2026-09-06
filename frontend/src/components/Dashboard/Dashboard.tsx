@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import type { UserProgress } from '../../types';
 import { fetchGitHubUserStats } from '../../api/client';
 import type { GitHubUserStats } from '../../api/client';
-import { getStoredDeployments, subscribeDeployments } from '../../services/web3Deployer';
+import { getStoredDeployments, subscribeDeployments } from '../../services/liveDeployer';
 import { TransakWidgetModal } from '../OnRamp/TransakWidgetModal';
 import './Dashboard.css';
 
@@ -204,22 +204,22 @@ export const Dashboard: React.FC<DashboardProps> = ({
     
     if (level < 3) {
       return [
-        { name: 'Introduction to Solidity Syntax', icon: '💻', tags: 'Basics • 2h 30m', match: 98 },
+        { name: 'Introduction to Logic Syntax & State Machines', icon: '💻', tags: 'Basics • 2h 30m', match: 98 },
         { name: 'Peer-to-Peer Network Models', icon: '⚙️', tags: 'Infrastructure • 3h 15m', match: 92 },
-        { name: 'Cryptography Foundations', icon: '🧠', tags: 'Security • 4h 00m', match: 90 }
+        { name: 'Enterprise Security Foundations', icon: '🧠', tags: 'Security • 4h 00m', match: 90 }
       ];
     }
     if (level < 6) {
       return [
-        { name: 'DeFi AMM Pool Construction', icon: '💸', tags: 'DeFi • 6h 30m', match: 96 },
-        { name: 'DAO Governance Mechanisms', icon: '🗳️', tags: 'Governance • 5h 15m', match: 93 },
-        { name: 'Account Abstraction & ERC-4337', icon: '🔐', tags: 'Architecture • 7h 00m', match: 92 }
+        { name: 'Automated Liquidity & Algorithmic Engines', icon: '💸', tags: 'FinTech • 6h 30m', match: 96 },
+        { name: 'Distributed Consensus & Governance Mechanisms', icon: '🗳️', tags: 'Governance • 5h 15m', match: 93 },
+        { name: 'Programmatic Account & Permission Architecture', icon: '🔐', tags: 'Architecture • 7h 00m', match: 92 }
       ];
     }
     return [
       { name: `Advanced ${capitalizedTrack} Scaling Solutions`, icon: '⚡', tags: `${capitalizedTrack} • 8h 30m`, match: 98 },
-      { name: `Secure Smart Contract Audits on ${capitalizedTrack}`, icon: '🛡️', tags: `Security • 6h 15m`, match: 95 },
-      { name: `Optimizing Gas Mechanics on ${capitalizedTrack}`, icon: '⛽', tags: `Optimization • 5h 00m`, match: 92 }
+      { name: `Secure Logic Engine Audits on ${capitalizedTrack}`, icon: '🛡️', tags: `Security • 6h 15m`, match: 95 },
+      { name: `Optimizing Execution Efficiency on ${capitalizedTrack}`, icon: '⛽', tags: `Optimization • 5h 00m`, match: 92 }
     ];
   };
 
@@ -263,16 +263,16 @@ export const Dashboard: React.FC<DashboardProps> = ({
             <div className="metric-card__value">{certificatesCount}</div>
           </div>
         </div>
-        <div className="metric-card-wrap" onClick={() => onNavigate?.('sandbox')} style={{ cursor: 'pointer' }} title="View deployed contracts in Playground">
+        <div className="metric-card-wrap" onClick={() => onNavigate?.('sandbox')} style={{ cursor: 'pointer' }} title="View deployed modules in Playground">
           <div className="metric-card__icon-container">🚀</div>
           <div>
-            <h4 className="metric-card__title">Contracts Deployed</h4>
+            <h4 className="metric-card__title">Modules Deployed</h4>
             <div className="metric-card__value">{deployedContractsCount}</div>
           </div>
         </div>
       </div>
 
-      {/* Transak Fiat-to-Crypto Workspace On-Ramp Card (Authenticated Session Only) */}
+      {/* Transak Workspace Sandbox Credits On-Ramp Card (Authenticated Session Only) */}
       <div className="dashboard-onramp-card glass animate-fade-in" style={{
         padding: '20px 24px',
         borderRadius: 'var(--radius-lg)',
@@ -302,7 +302,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
               <h4 style={{ margin: 0, fontSize: '1.02rem', fontWeight: 700, color: '#f8fafc' }}>
-                Instant Protocol &amp; Testnet Asset Ramp
+                Instant Protocol &amp; Sandbox Asset Ramp
               </h4>
               <span style={{
                 fontSize: '0.68rem',
@@ -317,7 +317,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
               </span>
             </div>
             <p style={{ margin: '4px 0 0 0', fontSize: '0.82rem', color: 'var(--clr-text-secondary)' }}>
-              Acquire testnet gas, L2 protocol assets, and developer tokens instantly via card or bank transfer without leaving your dashboard.
+              Acquire sandbox credits, protocol assets, and developer environment access instantly via card or bank transfer without leaving your dashboard.
             </p>
           </div>
         </div>

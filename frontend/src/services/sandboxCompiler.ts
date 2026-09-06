@@ -1,6 +1,6 @@
 /**
- * High-Performance Multi-Chain Smart Contract Sandbox Compiler & AST Verifier.
- * Supports Solidity (EVM / Arbitrum Nitro / Base / Polygon / Optimism),
+ * High-Performance Multi-Chain Logic Engine Sandbox Compiler & AST Verifier.
+ * Supports EVM Nitro / Base / Polygon / Optimism,
  * Solana (Rust & Anchor), Aptos (Move), Starknet (Cairo 2.0),
  * Polkadot (ink! Wasm), and Arbitrum Stylus (Rust).
  */
@@ -77,9 +77,8 @@ function analyzeBrackets(code: string): string[] {
   return errors;
 }
 
-// ─── 1. Solidity Compiler & AST Engine ──────────────────────────────────────
-
-function compileSolidityInstant(code: string, chain: string): CompilationResult {
+// ─── 1. Logic Engine Compiler & AST Analyzer ────────────────────────────────
+function compileLogicInstant(code: string, chain: string): CompilationResult {
   const errors: string[] = [];
   const warnings: string[] = [];
 
@@ -116,16 +115,16 @@ function compileSolidityInstant(code: string, chain: string): CompilationResult 
   });
 
   // Phase 2: Pragma & Contract Structure
-  const hasPragma = codeLines.some(l => l.clean.startsWith('pragma solidity'));
-  if (!hasPragma && !code.includes('pragma solidity')) {
-    warnings.push("Warning: Missing 'pragma solidity ^0.8.x;' declaration.");
+  const hasPragma = codeLines.some(l => l.clean.startsWith('pragma') || l.clean.startsWith('// Language:'));
+  if (!hasPragma && !code.includes('pragma') && !code.includes('Language:')) {
+    warnings.push("Notice: Optional header / language version directive omitted.");
   }
 
   const hasContract = codeLines.some(l => 
     /\b(contract|interface|library|abstract\s+contract)\s+([A-Za-z0-9_]+)/.test(l.clean)
   );
-  if (!hasContract && !code.includes('contract ') && !code.includes('interface ') && !code.includes('library ')) {
-    errors.push("DeclarationError: Source file does not declare any contract, interface, or library.");
+  if (!hasContract && !code.includes('contract ') && !code.includes('interface ') && !code.includes('library ') && !code.includes('class ') && !code.includes('module ')) {
+    errors.push("DeclarationError: Source file does not declare any logic module, interface, or class.");
   }
 
   // Phase 3: Statement Terminations (Semicolon check)
@@ -159,7 +158,7 @@ function compileSolidityInstant(code: string, chain: string): CompilationResult 
   });
 
   // Extract functions and contract name
-  let contractName = 'SmartContract';
+  let contractName = 'LogicModule';
   const functions: string[] = [];
   const events: string[] = [];
 
@@ -203,10 +202,10 @@ function compileSolidityInstant(code: string, chain: string): CompilationResult 
   const isOptimism = chainLower.includes('optimism') || chainLower.includes('op');
 
   const compilerName = isBase
-    ? 'solc v0.8.20 (Base Sepolia OP Stack)'
+    ? 'logic-compiler v0.8.20 (Base Sepolia OP Stack)'
     : isOptimism
-    ? 'solc v0.8.20 (OP Stack Superchain EVM)'
-    : 'solc v0.8.20+commit.a1b79de6 (EVM Nitro)';
+    ? 'logic-compiler v0.8.20 (OP Stack Superchain EVM)'
+    : 'logic-compiler v0.8.20+commit.a1b79de6 (EVM Nitro)';
 
   const targetEnv = isBase
     ? 'Base Sepolia (Chain ID: 84532 / OP Stack)'
@@ -214,24 +213,24 @@ function compileSolidityInstant(code: string, chain: string): CompilationResult 
     ? 'OP Sepolia / OP Mainnet (Superchain Standard)'
     : `${chain || 'Ethereum / Arbitrum Nitro'} (Shanghai EVM)`;
 
-  const langName = isBase ? 'Solidity (Base)' : isOptimism ? 'Solidity (Optimism)' : 'Solidity';
+  const langName = isBase ? 'Logic Engine (Base)' : isOptimism ? 'Logic Engine (Optimism)' : 'Object-Oriented Logic';
 
   const stdoutLines: string[] = [
-    `$ solc --optimize --bin --abi ${contractName}.sol`,
-    `======= ${contractName}.sol:${contractName} =======`,
+    `$ logic-engine --optimize --bin --schema ${contractName}.js`,
+    `======= ${contractName}.js:${contractName} =======`,
     `🔍 Target Architecture: ${targetEnv}`,
   ];
 
   if (success) {
     stdoutLines.push(
       `Binary:\n${bytecode.slice(0, 68)}...`,
-      `Contract JSON ABI: [${functions.length} function(s), ${events.length} event(s)]`,
+      `Module Interface Schema: [${functions.length} function(s), ${events.length} event(s)]`,
       isBase
         ? `OP Stack Gas (L2 Execution): ~${gasEstimate.toLocaleString()} gas | L1 Calldata Overhead: ~1,840 gas`
         : isOptimism
         ? `Superchain Gas (L2 Execution): ~${gasEstimate.toLocaleString()} gas | Cross-Domain Messenger: Verified`
         : `Gas Estimation: Creation ~${gasEstimate.toLocaleString()} gas`,
-      `✅ Solidity contract successfully compiled via ${compilerName}.`
+      `✅ Module logic successfully verified and compiled via ${compilerName}.`
     );
     if (warnings.length > 0) {
       stdoutLines.push('', '⚠️ Compiler Warnings:');
@@ -281,7 +280,7 @@ function compileSolanaInstant(code: string): CompilationResult {
   const hasAccounts = code.includes('#[derive(Accounts)]') || code.includes('#[account]');
 
   if (!hasProgram && !hasDeclareId && !hasAccounts && !code.includes('solana_program')) {
-    errors.push("error[E0433]: cannot find macro `declare_id!` or attribute `#[program]` in scope. Solana Anchor contracts must declare a program module or account struct.");
+    errors.push("error[E0433]: cannot find macro `declare_id!` or attribute `#[program]` in scope. Solana Anchor programs must declare a program module or account struct.");
   }
 
   lines.forEach((raw, idx) => {
@@ -516,10 +515,10 @@ function compileCairoInstant(code: string): CompilationResult {
   const hasStorageStruct = code.includes('#[storage]');
 
   if (!hasContractMacro) {
-    errors.push("error[Cairo001]: Starknet contract requires '#[starknet::contract]' attribute macro on module.");
+    errors.push("error[Cairo001]: Starknet module requires '#[starknet::contract]' attribute macro on module.");
   }
   if (code.includes('#[starknet::contract]') && !hasStorageStruct) {
-    errors.push("error[Cairo002]: Contract missing mandatory '#[storage]' struct declaration for persistent state.");
+    errors.push("error[Cairo002]: Module missing mandatory '#[storage]' struct declaration for persistent state.");
   }
 
   lines.forEach((raw, idx) => {
@@ -614,10 +613,10 @@ function compilePolkadotInstant(code: string): CompilationResult {
   const hasConstructor = code.includes('#[ink(constructor)]');
 
   if (!hasContract) {
-    errors.push("error[ink001]: Polkadot smart contract missing '#[ink::contract]' attribute macro on module.");
+    errors.push("error[ink001]: Polkadot logic module missing '#[ink::contract]' attribute macro on module.");
   }
   if (hasContract && !hasStorage) {
-    errors.push("error[ink002]: Missing '#[ink(storage)]' struct declaration for persistent contract storage.");
+    errors.push("error[ink002]: Missing '#[ink(storage)]' struct declaration for persistent module storage.");
   }
   if (hasContract && !hasConstructor) {
     errors.push("error[ink003]: Missing '#[ink(constructor)]' method (e.g. 'pub fn new(...) -> Self').");
@@ -642,7 +641,7 @@ function compilePolkadotInstant(code: string): CompilationResult {
   const wasmHash = '0x9b4c1a2f9012a9c3847b203948123049';
 
   const stdoutLines: string[] = [
-    `$ cargo contract build --release`,
+    `$ cargo module build --release`,
     ` [1/4] Building cargo project`,
     `   Compiling ink_primitives v5.0.0`,
     `   Compiling ink_storage v5.0.0`,
@@ -650,7 +649,7 @@ function compilePolkadotInstant(code: string): CompilationResult {
     `   Compiling ink v5.0.0`,
     `   Compiling scale-info v2.11.1`,
     `   Compiling parity-scale-codec v3.6.12`,
-    `   Compiling academy_contract v0.1.0 (/workspace/contracts/academy_contract)`,
+    `   Compiling academy_module v0.1.0 (/workspace/modules/academy_module)`,
   ];
 
   if (success) {
@@ -659,18 +658,18 @@ function compilePolkadotInstant(code: string): CompilationResult {
       ` [3/4] Optimizing Wasm bytecode via wasm-opt -O3`,
       `       Original Wasm size:  46.4 KB`,
       `       Optimized Wasm size: 18.2 KB (-60.7%)`,
-      ` [4/4] Generating target/ink/academy_contract.contract bundle`,
+      ` [4/4] Generating target/ink/academy_module.wasm bundle`,
       `Code Hash: ${wasmHash}`,
       `Ref Time Weight: 24,000 ps`,
       `Storage Deposit: 0.0425 ROC / DOT`,
-      `✅ ink! 5.0 Wasm contract bundle successfully compiled (target/ink/academy_contract.contract).`
+      `✅ ink! 5.0 Wasm module bundle successfully compiled (target/ink/academy_module.wasm).`
     );
   } else {
     stdoutLines.push(
       '',
       ...errors,
       '',
-      `error: could not compile \`academy_contract\` (bin "academy_contract") due to ${errors.length} previous error(s)`,
+      `error: could not compile \`academy_module\` (bin "academy_module") due to ${errors.length} previous error(s)`,
       `error: build failed`
     );
   }
@@ -679,7 +678,7 @@ function compilePolkadotInstant(code: string): CompilationResult {
     success,
     chain: 'Polkadot',
     language: 'Rust (ink! Wasm)',
-    compiler: 'cargo-contract v4.0.0 / ink! 5.0 (pallet-contracts)',
+    compiler: 'cargo-module v4.0.0 / ink! 5.0 (pallet-modules)',
     stdout: stdoutLines.join('\n'),
     stderr: success ? undefined : errors.join('\n'),
     syntaxErrors: errors,
@@ -700,10 +699,10 @@ function compileStylusInstant(code: string): CompilationResult {
   const hasStorage = code.includes('sol_storage!') || code.includes('#[storage]');
 
   if (!hasEntrypoint) {
-    errors.push("error[Stylus001]: Arbitrum Stylus contract missing '#[entrypoint]' or '#[public]' macro attribute.");
+    errors.push("error[Stylus001]: Arbitrum Stylus module missing '#[entrypoint]' or '#[public]' macro attribute.");
   }
   if (!hasStorage) {
-    errors.push("error[Stylus002]: Arbitrum Stylus contracts require state declaration via 'sol_storage! { pub struct ... }' macro.");
+    errors.push("error[Stylus002]: Arbitrum Stylus modules require state declaration via 'sol_storage! { pub struct ... }' macro.");
   }
 
   lines.forEach((raw, idx) => {
@@ -745,9 +744,9 @@ function compileStylusInstant(code: string): CompilationResult {
       `[3/3] Compressing WASM binary with Brotli algorithm:`,
       `      Uncompressed WASM: 42.6 KB`,
       `      Compressed WASM:   14.2 KB`,
-      `Stylus Contract Hash: ${wasmHash}`,
+      `Stylus Module Hash: ${wasmHash}`,
       `Estimated Gas Savings: 84.6x compared to standard EVM bytecode`,
-      `✅ Arbitrum Stylus contract verified & ready for testnet deployment.`
+      `✅ Arbitrum Stylus module verified & ready for testnet deployment.`
     );
   } else {
     stdoutLines.push(
@@ -783,10 +782,10 @@ export async function executeMultiChainCompiler(
   const c = (chain || 'ethereum').toLowerCase();
 
   // Realistic build delay (simulates AST parsing, dependency loading, and compiler backend pass)
-  const isSolidity = c.includes('ethereum') || c.includes('base') || c.includes('polygon') || c.includes('arbitrum_nitro') || c.includes('sepolia');
-  const simulatedDelayMs = isSolidity ? 200 : 750 + Math.floor(Math.random() * 250);
+  const isLogicEngine = c.includes('ethereum') || c.includes('base') || c.includes('polygon') || c.includes('arbitrum_nitro') || c.includes('sepolia');
+  const simulatedDelayMs = isLogicEngine ? 200 : 750 + Math.floor(Math.random() * 250);
 
-  // Call real native backend compiler (solc / cargo / anchor / movevm / scarb)
+  // Call real native backend compiler (logic-compiler / cargo / anchor / movevm / scarb)
   try {
     const [res] = await Promise.all([
       fetch(`${BASE}/exercise/compile`, {
@@ -794,7 +793,7 @@ export async function executeMultiChainCompiler(
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           chain: c,
-          language: c.includes('solana') ? 'rust' : c.includes('move') || c.includes('aptos') ? 'move' : c.includes('cairo') || c.includes('starknet') ? 'cairo' : 'solidity',
+          language: c.includes('solana') ? 'rust' : c.includes('move') || c.includes('aptos') ? 'move' : c.includes('cairo') || c.includes('starknet') ? 'cairo' : 'evm_logic',
           code,
           lesson_id: lessonId
         })
@@ -838,5 +837,5 @@ export async function executeMultiChainCompiler(
     return compileStylusInstant(code);
   }
 
-  return compileSolidityInstant(code, chain);
+  return compileLogicInstant(code, chain);
 }

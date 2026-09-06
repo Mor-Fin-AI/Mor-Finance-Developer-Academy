@@ -18,6 +18,7 @@ interface HeaderProps {
   onOpenFastTrack?: () => void;
   isMobileNavOpen?: boolean;
   onToggleMobileNav?: () => void;
+  isLoggedIn?: boolean;
 }
 
 const PAGE_META: Record<NavPage, { title: string; subtitle: string }> = {
@@ -50,8 +51,12 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenFastTrack,
   isMobileNavOpen,
   onToggleMobileNav,
+  isLoggedIn = false,
 }) => {
-  const { title, subtitle } = PAGE_META[activePage] || { title: 'Academy', subtitle: 'Distributed Systems & Software Engineering' };
+  const getHeaderMeta = (page: NavPage, _loggedIn: boolean) => {
+    return PAGE_META[page] || { title: 'Academy', subtitle: 'Distributed Systems & Software Engineering' };
+  };
+  const { title, subtitle } = getHeaderMeta(activePage, isLoggedIn);
 
   const formatUser = () => {
     if (authType === 'github') {

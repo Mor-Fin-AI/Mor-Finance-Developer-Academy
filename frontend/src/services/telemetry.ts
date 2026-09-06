@@ -1,6 +1,6 @@
 /**
  * Telemetry & Multichain Deployment Tracker Service
- * Tracks student contract deployments by chain and language for institutional grant metrics.
+ * Tracks student software module deployments by chain and language for institutional grant metrics.
  */
 
 // Dynamically determine the analytics deployment endpoint
@@ -22,7 +22,7 @@ export interface DeploymentPayload {
   contractAddress: string;
   network: string; // 'arbitrum_sepolia', 'base_sepolia', 'optimism_sepolia', 'solana_devnet', 'polygon_amoy', 'aptos_testnet', etc.
   executionEnvironment: string; // 'wasm_stylus', 'evm_op_stack', 'evm_nitro', 'sealevel_svm', 'move_vm', 'cairo_vm', etc.
-  programmingLanguage: string; // 'solidity', 'rust', 'move', 'cairo', 'go'
+  programmingLanguage: string; // 'logic', 'rust', 'move', 'cairo', 'go'
   gasUsed: number | string;
 }
 
@@ -41,7 +41,7 @@ export async function trackStudentDeployment(
       network: network, // 'arbitrum_sepolia', 'solana_devnet', etc.
       execution_environment: executionEnvironment, // 'wasm_stylus', 'evm', etc.
       contract_address: contractAddress,
-      programming_language: programmingLanguage, // 'solidity', 'rust', 'go'
+      programming_language: programmingLanguage, // 'logic', 'rust', 'go'
       gas_used_computation: parseInt(String(gasUsed), 10) || 0,
       timestamp: new Date().toISOString()
     };

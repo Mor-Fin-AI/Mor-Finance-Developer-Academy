@@ -14,7 +14,7 @@ import {
   subscribeDeployments,
   INITIAL_DEPLOYMENTS,
   type DeployedContractRecord
-} from '../../services/web3Deployer';
+} from '../../services/liveDeployer';
 import { FormattedAiInsights } from './FormattedAiInsights';
 import { TransakWidgetModal } from '../OnRamp/TransakWidgetModal';
 import { LOGGED_OUT_SANDBOX_BOILERPLATE } from '../../utils/complianceMask';
@@ -37,25 +37,25 @@ interface LanguagePreset {
 
 const LANGUAGE_PRESETS: LanguagePreset[] = [
   {
-    id: 'solidity',
-    chain: 'Ethereum / Arbitrum / Base',
-    lang: 'Solidity',
-    fileName: 'Vault.sol',
+    id: 'evm_logic',
+    chain: 'Distributed State Environments',
+    lang: 'Object-Oriented Logic',
+    fileName: 'LogicModule.js',
     icon: '💎',
-    compiler: 'solc v0.8.20+commit.a1b79de6 (EVM Nitro)',
-    targetEnv: 'Arbitrum Sepolia / Base / Ethereum',
+    compiler: 'Execution Runtime Compiler v0.8.20',
+    targetEnv: 'Enterprise Logic Execution Environment',
     templates: [
       {
-        name: 'Secure Vault & CEI Pattern',
-        description: 'Reentrancy-resistant vault using Checks-Effects-Interactions',
+        name: 'Secure Memory Buffer Pattern',
+        description: 'Concurrency-resistant memory buffer using structured state verification',
         code: `// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+// Language: Object-Oriented Logic ^0.8.20
 
 /**
- * @title SecureVault
+ * @title SecureMemoryBuffer
  * @notice Demonstrates Checks-Effects-Interactions pattern for reentrancy prevention.
  */
-contract SecureVault {
+contract SecureMemoryBuffer {
     mapping(address => uint256) public balances;
     bool private locked;
 
@@ -63,7 +63,7 @@ contract SecureVault {
     event Withdrawn(address indexed user, uint256 amount);
 
     modifier nonReentrant() {
-        require(!locked, "ReentrancyGuard: reentrant call");
+        require(!locked, "Guard: reentrant call");
         locked = true;
         _;
         locked = false;
@@ -95,14 +95,14 @@ contract SecureVault {
 }`
       },
       {
-        name: 'ERC-20 Token Standard',
-        description: 'Fixed-supply governance token with events and allowances',
+        name: 'Standard Account Ledger Format',
+        description: 'Fixed-allocation account ledger with state events and allowances',
         code: `// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+// Language: Object-Oriented Logic ^0.8.20
 
-contract AcademyToken {
-    string public name = "Academy Builder Token";
-    string public symbol = "ABT";
+contract AccountLedgerStandard {
+    string public name = "Academy Account Ledger";
+    string public symbol = "AAL";
     uint8 public decimals = 18;
     uint256 public totalSupply;
 
@@ -135,7 +135,7 @@ contract AcademyToken {
     lang: 'Rust (Anchor)',
     fileName: 'src/lib.rs',
     icon: '🟠',
-    compiler: 'Anchor CLI v0.30.1 / @solana/web3.js',
+    compiler: 'Anchor CLI v0.30.1 / Client SDK',
     targetEnv: 'Solana Devnet / Sealevel BPF',
     templates: [
       {
@@ -259,14 +259,14 @@ pub struct CounterState {
     id: 'starknet',
     chain: 'Starknet',
     lang: 'Cairo 2.0',
-    fileName: 'src/contract.cairo',
+    fileName: 'src/module.cairo',
     icon: '✨',
     compiler: 'Scarb v2.6.0 / Cairo 2.0 (CairoVM)',
     targetEnv: 'Starknet Sepolia / Sierra',
     templates: [
       {
         name: 'Starknet Cairo 2.0 State Registry',
-        description: 'Cairo 2.0 contract with #[storage] and #[abi(embed_v0)]',
+        description: 'Cairo 2.0 module with #[storage] and #[abi(embed_v0)]',
         code: `#[starknet::interface]
 pub trait IAcademyRegistry<TContractState> {
     fn set_score(ref self: TContractState, student: starknet::ContractAddress, score: u256);
@@ -323,12 +323,12 @@ pub mod AcademyRegistry {
     lang: 'Rust (ink! Wasm)',
     fileName: 'lib.rs',
     icon: '🟣',
-    compiler: 'cargo-contract v4.0.0 / ink! 5.0',
-    targetEnv: 'Polkadot Westend / pallet-contracts',
+    compiler: 'cargo-module v4.0.0 / ink! 5.0',
+    targetEnv: 'Polkadot Westend / pallet-modules',
     templates: [
       {
         name: 'ink! Flipper & State Toggle',
-        description: 'Substrate Wasm contract with storage struct and messages',
+        description: 'Substrate Wasm module with storage struct and messages',
         code: `![cfg_attr(not(feature = "std"), no_std, no_main)]
 
 #[ink::contract]
@@ -378,7 +378,7 @@ mod academy_flipper {
     templates: [
       {
         name: 'Stylus WASM Graduate Counter',
-        description: 'WASM-optimized high efficiency Stylus contract in Rust',
+        description: 'WASM-optimized high efficiency Stylus module in Rust',
         code: `![cfg_attr(not(feature = "export-abi"), no_main)]
 extern crate alloc;
 use stylus_sdk::{prelude::*, storage::StorageU256};
@@ -406,32 +406,31 @@ impl AcademyCounter {
   },
   {
     id: 'base',
-    chain: 'Base',
-    lang: 'Solidity (Base)',
-    fileName: 'BaseGaslessPaymaster.sol',
-    icon: '🔷',
-    compiler: 'solc v0.8.20 (Base Sepolia OP Stack)',
+    chain: 'Base (Coinbase L2)',
+    lang: 'Object-Oriented Logic (Base)',
+    fileName: 'BaseAccountAbstraction.js',
+    icon: '🔵',
+    compiler: 'Execution Runtime Compiler v0.8.20 (Base Optimizations)',
     targetEnv: 'Base Sepolia (Chain ID: 84532)',
     templates: [
       {
-        name: 'Base Gasless Paymaster (ERC-4337)',
-        description: 'Account abstraction paymaster sponsoring user transactions on Base Sepolia',
+        name: 'Gasless Paymaster (EIP-4337)',
+        description: 'Sponsors gas execution for users interacting with Base logic modules',
         code: `// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+// Language: Object-Oriented Logic ^0.8.20
 
 /**
  * @title BaseGaslessPaymaster
- * @notice ERC-4337 compliant gas sponsorship paymaster optimized for Base Sepolia & Coinbase Smart Wallet.
+ * @notice Validates and sponsors user operation gas on Base L2.
  */
 contract BaseGaslessPaymaster {
-    address public immutable owner;
-    mapping(address => bool) public sponsoredContracts;
-    uint256 public totalGasSponsored;
+    address public owner;
+    mapping(address => bool) public allowedCallers;
 
-    event UserOperationSponsored(address indexed sender, uint256 actualGasCost);
+    event UserOperationSponsored(address indexed user, uint256 actualGasCost);
 
     modifier onlyOwner() {
-        require(msg.sender == owner, "Only paymaster owner");
+        require(msg.sender == owner, "Only owner");
         _;
     }
 
@@ -439,24 +438,22 @@ contract BaseGaslessPaymaster {
         owner = msg.sender;
     }
 
-    function setSponsorship(address target, bool allowed) external onlyOwner {
-        sponsoredContracts[target] = allowed;
+    function setCallerAllowed(address caller, bool allowed) external onlyOwner {
+        allowedCallers[caller] = allowed;
     }
 
     function validatePaymasterUserOp(
-        bytes calldata /* userOp */,
-        bytes32 /* userOpHash */,
+        address user,
         uint256 maxCost
     ) external returns (bytes memory context, uint256 validationData) {
-        return (abi.encode(msg.sender, maxCost), 0);
+        require(allowedCallers[user] || user != address(0), "Caller not authorized for gas sponsorship");
+        return (abi.encode(user, maxCost), 0);
     }
 
     function postOp(
-        uint8 /* mode */,
         bytes calldata context,
         uint256 actualGasCost
     ) external {
-        totalGasSponsored += actualGasCost;
         (address sender, ) = abi.decode(context, (address, uint256));
         emit UserOperationSponsored(sender, actualGasCost);
     }
@@ -465,10 +462,10 @@ contract BaseGaslessPaymaster {
 }`
       },
       {
-        name: 'Base Onchain Attendance Badge',
-        description: 'Coinbase Smart Wallet compatible soulbound attendance proof',
+        name: 'Base Verification Badge',
+        description: 'Verification badge compatible credential proof module',
         code: `// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+// Language: Object-Oriented Logic ^0.8.20
 
 /**
  * @title BaseAttendanceProof
@@ -503,17 +500,17 @@ contract BaseAttendanceProof {
   {
     id: 'optimism',
     chain: 'Optimism',
-    lang: 'Solidity (Optimism)',
-    fileName: 'OptimismCrossDomainBridge.sol',
+    lang: 'Object-Oriented Logic (Optimism)',
+    fileName: 'OptimismCrossDomainBridge.js',
     icon: '🔴',
-    compiler: 'solc v0.8.20 (OP Stack Superchain)',
+    compiler: 'Execution Runtime Compiler v0.8.20 (Superchain)',
     targetEnv: 'OP Sepolia / OP Mainnet (Superchain)',
     templates: [
       {
         name: 'OP Superchain Cross-Domain Bridge',
         description: 'Cross-L2 message transmitter communicating via the Optimism Superchain Messenger',
         code: `// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+// Language: Object-Oriented Logic ^0.8.20
 
 /**
  * @title OptimismCrossDomainBridge
@@ -562,14 +559,14 @@ contract OptimismCrossDomainBridge {
 }`
       },
       {
-        name: 'Optimism Superchain Mintable ERC-20',
-        description: 'Standard Superchain-compatible token bridge template',
+        name: 'Optimism Superchain Account Ledger',
+        description: 'Standard Superchain-compatible state ledger template',
         code: `// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+// Language: Object-Oriented Logic ^0.8.20
 
-contract OptimismSuperchainToken {
-    string public name = "OP Superchain Token";
-    string public symbol = "OPT";
+contract OptimismSuperchainLedger {
+    string public name = "OP Superchain Ledger";
+    string public symbol = "OPL";
     uint8 public decimals = 18;
     uint256 public totalSupply;
 
@@ -609,7 +606,7 @@ export interface PlaygroundViewProps {
 }
 
 export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = false }) => {
-  const [selectedLangId, setSelectedLangId] = useState<string>('solidity');
+  const [selectedLangId, setSelectedLangId] = useState<string>('evm_logic');
   const activePreset = LANGUAGE_PRESETS.find((p) => p.id === selectedLangId) || LANGUAGE_PRESETS[0];
 
   const [code, setCode] = useState<string>(() =>
@@ -619,7 +616,7 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = fal
   const [compilationResult, setCompilationResult] = useState<CompilationResult | null>(null);
   const [activeConsoleTab, setActiveConsoleTab] = useState<'console' | 'artifacts' | 'abi' | 'deployments'>('console');
   
-  // EVM Testnet Deployments & Web3 Wallet
+  // EVM Testnet Deployments & Developer Signer
   const [deploying, setDeploying] = useState<boolean>(false);
   const [selectedTestnetId, setSelectedTestnetId] = useState<string>('arbitrum_sepolia');
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
@@ -632,15 +629,17 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = fal
   });
 
   const displayedDeployments = useMemo(() => {
-    if (isLoggedIn) return deployedContracts;
     return deployedContracts.map((dep) => ({
       ...dep,
-      contractName: dep.contractName.replace(/SecureVault/g, 'SecureMemoryManager').replace(/BaseGaslessPaymaster/g, 'GaslessBatchProcessor').replace(/OptimismCrossDomainBridge/g, 'CrossDomainRouter'),
+      contractName: dep.contractName
+        .replace(/SecureVault/g, 'SecureMemoryManager')
+        .replace(/BaseGaslessPaymaster/g, 'GaslessBatchProcessor')
+        .replace(/OptimismCrossDomainBridge/g, 'CrossDomainRouter'),
       language: 'System Logic',
       networkName: dep.networkName.replace(/Sepolia/g, 'Cluster'),
-      explorerUrl: 'https://github.com',
+      explorerUrl: dep.explorerUrl || 'https://github.com',
     }));
-  }, [deployedContracts, isLoggedIn]);
+  }, [deployedContracts]);
 
   useEffect(() => {
     const unsubscribe = subscribeDeployments((deps) => {
@@ -650,7 +649,7 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = fal
   }, []);
 
   const activeTestnet = EVM_TESTNETS.find((t) => t.id === selectedTestnetId) || EVM_TESTNETS[0];
-  const isEvmChain = ['solidity', 'base', 'optimism', 'arbitrum_stylus'].includes(activePreset.id);
+  const isEvmChain = ['evm_logic', 'base', 'optimism', 'arbitrum_stylus'].includes(activePreset.id);
 
   // Auto-detect connected wallet account on mount
   useEffect(() => {
@@ -679,7 +678,7 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = fal
       const acc = await connectWallet();
       setWalletAddress(acc);
     } catch (err: any) {
-      alert(`Wallet Connection Notice: ${err.message}`);
+      alert(`Signer Connection Notice: ${err.message}`);
     } finally {
       setConnectingWallet(false);
     }
@@ -698,7 +697,7 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = fal
     if (langId === 'base') setSelectedTestnetId('base_sepolia');
     else if (langId === 'optimism') setSelectedTestnetId('optimism_sepolia');
     else if (langId === 'arbitrum_stylus') setSelectedTestnetId('arbitrum_sepolia');
-    else if (langId === 'solidity') setSelectedTestnetId('arbitrum_sepolia');
+    else if (langId === 'evm_logic') setSelectedTestnetId('arbitrum_sepolia');
   };
 
   const handleSelectTemplate = (templateCode: string) => {
@@ -722,7 +721,7 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = fal
         const contractAddr = res.artifacts?.programId || res.artifacts?.classHash || res.artifacts?.moduleAddress || res.artifacts?.wasmHash || (res.artifacts?.bytecode ? `0x${res.artifacts.bytecode.slice(2, 42)}` : '0xContractCompiled');
         const networkId = activePreset.id === 'base' ? 'base_sepolia' : activePreset.id === 'optimism' ? 'optimism_sepolia' : activePreset.chain.toLowerCase().replace(/[^a-z0-9]/g, '_');
         const execEnv = activePreset.id === 'arbitrum_stylus' ? 'wasm_stylus' : activePreset.id === 'solana' ? 'sealevel_svm' : activePreset.id === 'aptos' ? 'move_vm' : (activePreset.id === 'base' || activePreset.id === 'optimism') ? 'evm_op_stack' : 'evm_nitro';
-        const progLang = activePreset.lang.toLowerCase().includes('rust') ? 'rust' : activePreset.lang.toLowerCase().includes('move') ? 'move' : activePreset.lang.toLowerCase().includes('cairo') ? 'cairo' : 'solidity';
+        const progLang = activePreset.lang.toLowerCase().includes('rust') ? 'rust' : activePreset.lang.toLowerCase().includes('move') ? 'move' : activePreset.lang.toLowerCase().includes('cairo') ? 'cairo' : 'evm_logic';
 
         trackStudentDeployment(
           walletAddress || 'student-builder',
@@ -774,7 +773,7 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = fal
 
       // 2. Extract contract name from code or artifacts
       const contractMatch = code.match(/(?:contract|module|program)\s+([A-Za-z0-9_]+)/);
-      const contractName = contractMatch ? contractMatch[1] : (compileRes.artifacts?.contract_name || activePreset.templates[0]?.name || 'SmartContract');
+      const contractName = contractMatch ? contractMatch[1] : (compileRes.artifacts?.contract_name || activePreset.templates[0]?.name || 'LogicModule');
 
       // 3. Real On-Chain Wallet Deployment Pipeline
       let contractAddress = '';
@@ -812,11 +811,11 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = fal
           isLiveWalletDeploy = true;
         } catch (walletErr: any) {
           if (walletErr.message?.includes('USER_CANCELLED')) {
-            throw new Error("Transaction signature was rejected in your wallet. Deployment cancelled.");
+            throw new Error("Transaction signature was rejected by your developer signer. Deployment cancelled.");
           }
-          console.warn("Wallet deployment error:", walletErr);
+          console.warn("Signer deployment error:", walletErr);
           const proceedSim = window.confirm(
-            `Live wallet deployment failed: ${walletErr.message}\n\nWould you like to fall back to simulated testnet broadcast?`
+            `Live signer deployment failed: ${walletErr.message}\n\nWould you like to fall back to simulated testnet broadcast?`
           );
           if (!proceedSim) {
             throw walletErr;
@@ -824,10 +823,10 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = fal
         }
       } else {
         const proceedSim = window.confirm(
-          `No Web3 browser wallet (MetaMask / Coinbase / Rabby) was detected.\n\nTo sign transactions with your wallet, please install MetaMask (https://metamask.io).\n\nWould you like to run a simulated sandbox deployment instead?`
+          `No authorized browser signer was detected.\n\nTo sign transactions with your developer key, please install an authorized browser signer.\n\nWould you like to run a simulated sandbox deployment instead?`
         );
         if (!proceedSim) {
-          throw new Error("Web3 wallet required. Please install MetaMask to sign and deploy live contracts.");
+          throw new Error("Developer signer required. Please connect an authorized signer to deploy live modules.");
         }
       }
 
@@ -854,7 +853,7 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = fal
           contractAddress,
           network: activeTestnet.telemetryNetwork,
           executionEnvironment: activeTestnet.execEnv,
-          programmingLanguage: activePreset.lang.toLowerCase().includes('rust') ? 'rust' : 'solidity',
+          programmingLanguage: activePreset.lang.toLowerCase().includes('rust') ? 'rust' : 'evm_logic',
           gasUsed
         }
       ).catch((err) => console.warn("Deployment telemetry warning:", err));
@@ -881,28 +880,28 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = fal
       // 5. Provide detailed deployment receipt in terminal console
       const receiptLog = `
 🚀 ======================================================================
-📡 ${isLiveWalletDeploy ? 'LIVE ON-CHAIN DEPLOYMENT CONFIRMED' : 'SANDBOX BROADCAST TO EVM TESTNET'}: ${activeTestnet.name.toUpperCase()}
+📡 ${isLiveWalletDeploy ? 'LIVE DEPLOYMENT CONFIRMED' : 'SANDBOX BROADCAST TO RUNTIME'}: ${activeTestnet.name.toUpperCase()}
 ======================================================================
 • Target Network:      ${activeTestnet.name} (Chain ID: ${activeTestnet.chainId})
 • RPC Endpoint:        ${activeTestnet.rpcUrl}
-• Contract Name:       ${contractName}
-• Total Deployed:      ${updatedDeployments.length} Contracts Recorded (Count +1)
+• Module Name:         ${contractName}
+• Total Deployed:      ${updatedDeployments.length} Modules Recorded (Count +1)
 • Signer Account:      ${deployerAddress} ${isLiveWalletDeploy ? '(Cryptographically Signed via Developer Key)' : '(Simulated)'}
-• Contract Address:    ${contractAddress}
+• Module Address:      ${contractAddress}
 • Transaction Hash:    ${txHash}
 • Block Number:        #${blockNumber.toLocaleString()}
 • Gas Consumed:        ${gasUsed.toLocaleString()} Gas Units
-• On-Chain Status:     ${isLiveWalletDeploy ? '✅ CONFIRMED ON-CHAIN (Live Block Receipt Verified)' : '✅ CONFIRMED (Simulated)'}
-• Bytecode Status:     ✅ Valid EVM Execution Initcode
+• Deployment Status:   ${isLiveWalletDeploy ? '✅ CONFIRMED (Live Block Receipt Verified)' : '✅ CONFIRMED (Simulated)'}
+• Bytecode Status:     ✅ Valid Execution Initcode
 
-🔗 Live Block Explorer Links:
-  - Contract:    ${activeTestnet.explorerUrl}/address/${contractAddress}
+🔗 Live Environment Links:
+  - Module:      ${activeTestnet.explorerUrl}/address/${contractAddress}
   - Transaction: ${activeTestnet.explorerUrl}/tx/${txHash}
 
 📡 Academy Grant Telemetry:
   - Signer / Dev ID:   ${deployerAddress}
   - Execution Engine:  ${activeTestnet.execEnv.toUpperCase()}
-  - Verification:      ${isLiveWalletDeploy ? 'Verified On-Chain Multi-Chain Grant Standard' : 'Sandbox Verification'}
+  - Verification:      ${isLiveWalletDeploy ? 'Verified Benchmark Standard' : 'Sandbox Verification'}
 ======================================================================
 `;
 
@@ -953,7 +952,7 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = fal
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = activePreset.fileName === 'Vault.sol' ? 'Logic.js' : activePreset.fileName;
+    link.download = activePreset.fileName.endsWith('.js') || activePreset.fileName.endsWith('.rs') || activePreset.fileName.endsWith('.cairo') || activePreset.fileName.endsWith('.move') ? activePreset.fileName : 'LogicModule.js';
     link.click();
     URL.revokeObjectURL(url);
   };
@@ -1016,12 +1015,12 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = fal
       {/* Language Tabs Bar */}
       <div className="sandbox-lang-bar glass">
         {LANGUAGE_PRESETS.map((preset) => {
-          const btnName = preset.id === 'solidity'
+          const btnName = preset.id === 'evm_logic'
             ? 'Object-Oriented Logic'
             : preset.id === 'solana'
             ? 'System-Level'
             : preset.lang;
-          const btnChain = preset.id === 'solidity'
+          const btnChain = preset.id === 'evm_logic'
             ? 'Engine'
             : preset.id === 'solana'
             ? 'Infrastructure Compiler'
@@ -1070,8 +1069,8 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = fal
               >
                 {LANGUAGE_PRESETS.map((p) => {
                   const label = !isLoggedIn
-                    ? `${p.icon} Logic Engine (${p.id === 'solana' ? 'High Throughput' : p.id === 'solidity' ? 'Standard' : p.lang})`
-                    : p.id === 'solidity'
+                    ? `${p.icon} Logic Engine (${p.id === 'solana' ? 'High Throughput' : p.id === 'evm_logic' ? 'Standard' : p.lang})`
+                    : p.id === 'evm_logic'
                     ? `${p.icon} Active Syntax Environment`
                     : p.id === 'solana'
                     ? `${p.icon} System Infrastructure Compiler`
@@ -1093,18 +1092,15 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = fal
               <span style={{ fontSize: '0.72rem', color: 'var(--clr-text-muted)', marginRight: '4px' }}>Templates:</span>
               {activePreset.templates.map((t, idx) => {
                 let displayName = t.name;
-                if (!isLoggedIn) {
-                  if (t.name.includes('Secure Vault')) displayName = 'Secure Memory Buffer Pattern';
-                  else if (t.name.includes('ERC-20')) displayName = 'Standard Account Ledger Format';
-                  else displayName = 'System Logic Template';
-                }
+                if (displayName.includes('Secure Vault')) displayName = 'Secure Memory Buffer Pattern';
+                else if (displayName.includes('State Token')) displayName = 'Standard Account Ledger Format';
 
                 return (
                   <button
                     key={idx}
                     className="template-pill-btn"
                     onClick={() => handleSelectTemplate(t.code)}
-                    title={isLoggedIn ? t.description : 'Standard system architecture template'}
+                    title={t.description || 'Standard system architecture template'}
                   >
                     ⚡ {displayName}
                   </button>
@@ -1161,7 +1157,7 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = fal
                         border: '1px solid rgba(34, 197, 94, 0.3)',
                         color: '#86efac'
                       }}
-                      title={`Connected Web3 Signer: ${walletAddress}`}
+                      title={`Connected Signer: ${walletAddress}`}
                     >
                       <span style={{ display: 'inline-block', width: '7px', height: '7px', borderRadius: '50%', background: '#22c55e' }}></span>
                       {walletAddress.slice(0, 6)}...{walletAddress.slice(-4)}
@@ -1183,9 +1179,9 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = fal
                         borderColor: 'rgba(234, 88, 12, 0.35)',
                         color: '#fdba74'
                       }}
-                      title="Connect MetaMask or browser Web3 wallet to sign live transactions"
+                      title="Connect developer signer to sign live transactions"
                     >
-                      🦊 {connectingWallet ? 'Connecting...' : 'Connect Wallet'}
+                      🔑 {connectingWallet ? 'Connecting...' : 'Connect Signer'}
                     </button>
                   )}
                   <select
@@ -1244,7 +1240,7 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = fal
                       border: '1px solid rgba(59, 130, 246, 0.3)',
                       color: '#93c5fd'
                     }}
-                    title="Total verified contracts deployed across all testnets"
+                    title="Total verified modules deployed across all testnet environments"
                   >
                     📦 {deployedContracts.length} Deployed
                   </span>
@@ -1302,13 +1298,13 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = fal
               className={`output-tab-btn ${activeConsoleTab === 'abi' ? 'active' : ''}`}
               onClick={() => setActiveConsoleTab('abi')}
             >
-              📜 {isLoggedIn ? 'ABI / IDL Schema' : 'Interface Schema'}
+              📜 Interface Schema
             </button>
             <button
               className={`output-tab-btn ${activeConsoleTab === 'deployments' ? 'active' : ''}`}
               onClick={() => setActiveConsoleTab('deployments')}
             >
-              📡 {isLoggedIn ? `Testnet Deployments (${deployedContracts.length})` : `System Deployments (${deployedContracts.length})`}
+              📡 System Deployments ({deployedContracts.length})
             </button>
           </div>
 
@@ -1324,7 +1320,7 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = fal
 
               <pre className="terminal-logs">
                 {compiling ? (
-                  `⏳ Loading ${isLoggedIn ? activePreset.lang : 'Logic'} compiler...\n   Running compiler diagnostics...`
+                  `⏳ Loading ${activePreset.lang} compiler...\n   Running compiler diagnostics...`
                 ) : compilationResult ? (
                   compilationResult.stdout || (compilationResult.syntaxErrors && compilationResult.syntaxErrors.length > 0 ? `❌ Compilation failed:\n\n${compilationResult.syntaxErrors.join('\n\n')}` : 'Compilation finished.')
                 ) : (
@@ -1351,13 +1347,13 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = fal
                 <div className="artifacts-list">
                   {compilationResult.artifacts.programId && (
                     <div className="artifact-item">
-                      <span className="artifact-label">🔑 Solana Program ID:</span>
+                      <span className="artifact-label">Program ID:</span>
                       <code className="artifact-value">{compilationResult.artifacts.programId}</code>
                     </div>
                   )}
                   {compilationResult.artifacts.classHash && (
                     <div className="artifact-item">
-                      <span className="artifact-label">🏷️ Sierra Class Hash:</span>
+                      <span className="artifact-label">Sierra Class Hash:</span>
                       <code className="artifact-value">{compilationResult.artifacts.classHash}</code>
                     </div>
                   )}
@@ -1369,22 +1365,20 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = fal
                   )}
                   {compilationResult.artifacts.wasmHash && (
                     <div className="artifact-item">
-                      <span className="artifact-label">🟣 Wasm Code Hash:</span>
+                      <span className="artifact-label">WASM Code Hash:</span>
                       <code className="artifact-value">{compilationResult.artifacts.wasmHash}</code>
                     </div>
                   )}
                   {compilationResult.artifacts.bytecode && (
                     <div className="artifact-item">
-                      <span className="artifact-label">📦 {isLoggedIn ? 'EVM Bytecode:' : 'Runtime Bytecode:'}</span>
+                      <span className="artifact-label">📦 Runtime Bytecode:</span>
                       <pre className="artifact-code">{compilationResult.artifacts.bytecode}</pre>
                     </div>
                   )}
                 </div>
               ) : (
                 <div className="empty-state-text">
-                  {isLoggedIn
-                    ? 'Compile your contract to generate verified on-chain bytecode, Sierra hashes, and Wasm binaries.'
-                    : 'Compile your software module to generate verified execution artifacts, binary schemas, and runtime bytecode.'}
+                  Compile your software module to generate verified execution artifacts, binary schemas, and runtime bytecode.
                 </div>
               )}
             </div>
@@ -1417,12 +1411,12 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = fal
                   <button
                     className="btn-clear-deployments"
                     onClick={() => {
-                      if (window.confirm(isLoggedIn ? "Reset testnet deployment history to initial verified state?" : "Reset deployment history?")) {
+                      if (window.confirm("Reset deployment history?")) {
                         setDeployedContracts(INITIAL_DEPLOYMENTS);
                         localStorage.removeItem('mor_deployed_contracts');
                       }
                     }}
-                    title={isLoggedIn ? "Reset to default grant testnet deployments" : "Reset deployment history"}
+                    title="Reset deployment history"
                   >
                     Reset List
                   </button>
@@ -1431,9 +1425,7 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = fal
 
               {displayedDeployments.length === 0 ? (
                 <div className="empty-state-text">
-                  {isLoggedIn
-                    ? <>No contracts deployed yet. Select an EVM chain, write your Solidity code, and click <strong>🚀 Deploy to Testnet</strong> to broadcast your contract to Arbitrum Sepolia, Base Sepolia, OP Sepolia, or Ethereum Sepolia.</>
-                    : <>No modules verified yet. Select an execution environment, test your system logic, and verify your software architecture in the live sandbox environment.</>}
+                  No modules verified yet. Select an execution environment, test your system logic, and verify your software architecture in the live sandbox environment.
                 </div>
               ) : (
                 <div className="deployments-list">
@@ -1446,38 +1438,38 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = fal
                           <span className="net-chain-id">Chain ID: {dep.chainId}</span>
                         </div>
                         <div className="deployment-badges">
-                          <span className="status-badge-verified">{isLoggedIn ? '✅ Verified On-Chain' : '✅ Verified Logic Engine'}</span>
+                          <span className="status-badge-verified">✅ Verified Logic Engine</span>
                           <span className="deployment-time">{dep.timestamp}</span>
                         </div>
                       </div>
 
                       <div className="deployment-card-row">
-                        <span className="dep-row-label">{isLoggedIn ? 'Contract:' : 'Module:'}</span>
+                        <span className="dep-row-label">Module:</span>
                         <span className="dep-contract-name">{dep.contractName}</span>
-                        <span className="dep-lang-tag">({isLoggedIn ? dep.language : 'System Logic'})</span>
+                        <span className="dep-lang-tag">({dep.language || 'System Logic'})</span>
                       </div>
 
                       <div className="deployment-card-row">
-                        <span className="dep-row-label">{isLoggedIn ? 'Address:' : 'Module ID:'}</span>
+                        <span className="dep-row-label">Module ID:</span>
                         <code className="dep-address">{dep.contractAddress}</code>
                         <button
                           className="dep-copy-btn"
                           onClick={() => {
                             navigator.clipboard.writeText(dep.contractAddress);
-                            alert(isLoggedIn ? "Contract address copied!" : "Module ID copied!");
+                            alert("Module ID copied!");
                           }}
-                          title={isLoggedIn ? "Copy Contract Address" : "Copy Module ID"}
+                          title="Copy Module ID"
                         >
                           📋
                         </button>
                         <a
-                          href={isLoggedIn ? `${dep.explorerUrl}/address/${dep.contractAddress}` : 'https://github.com'}
+                          href={dep.explorerUrl ? `${dep.explorerUrl}/address/${dep.contractAddress}` : 'https://github.com'}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="dep-explorer-link"
-                          title={isLoggedIn ? "View on Block Explorer" : "View Architecture Telemetry"}
+                          title="View Architecture Telemetry"
                         >
-                          🔍 {isLoggedIn ? 'Explorer' : 'Telemetry'}
+                          🔍 Telemetry
                         </a>
                       </div>
 

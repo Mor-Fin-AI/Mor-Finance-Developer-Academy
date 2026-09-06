@@ -2,6 +2,7 @@
 import React from 'react';
 import type { Course, UserProgress } from '../../types';
 import { LEVEL_COLORS } from '../../types';
+import { sanitizeComplianceText } from '../../utils/complianceMask';
 import './LessonsList.css';
 
 interface LessonsListProps {
@@ -71,7 +72,7 @@ export const LessonsList: React.FC<LessonsListProps> = ({
           ← Back to Roadmap
         </button>
         <h2 className="lessons-list-title" style={{ '--level-color': color } as React.CSSProperties}>
-          Level {levelId} — {course.title}
+          Level {levelId} — {sanitizeComplianceText(course.title)}
         </h2>
         <p className="lessons-list-subtitle">
           Complete each lesson and pass the quiz/exercise to unlock the next.
@@ -104,7 +105,7 @@ export const LessonsList: React.FC<LessonsListProps> = ({
                     <span className="lesson-duration">⏱ {lesson.duration}</span>
                     <span className="lesson-xp">⚡ {lesson.xp} XP</span>
                   </div>
-                  <h3 className="lesson-row-card__title">{lesson.title}</h3>
+                  <h3 className="lesson-row-card__title">{sanitizeComplianceText(lesson.title)}</h3>
                 </div>
 
                 <div className="lesson-row-card__action">

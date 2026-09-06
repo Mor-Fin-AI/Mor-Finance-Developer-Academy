@@ -145,7 +145,7 @@ export async function authWallet(
   });
   if (!res.ok) {
     const errData = await res.json().catch(() => ({}));
-    throw new Error(errData.detail || "Wallet auth failed.");
+    throw new Error(errData.detail || "Developer auth failed.");
   }
   return res.json();
 }
@@ -158,15 +158,15 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
     "title": "Module 1: Aptos Architecture, MoveVM & Block-STM Parallel Engine",
     "duration": "15 mins",
     "xp": 150,
-    "content": "# Module 1: Aptos Architecture, MoveVM & Block-STM Parallel Engine\n### Aptos Ecosystem Track | Developer Academy\n\nMaster Aptos Layer-1 architecture, MoveVM bytecode verification, resource safety, and Block-STM optimistic parallel transaction execution.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Aptos.\n2. **Toolchain Proficiency**: Master Aptos CLI & Move SDK for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Move code on MoveVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Aptos Testnet / Devnet** and verify artifacts on **Aptos Explorer**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/aptos-labs/aptos-core](https://github.com/aptos-labs/aptos-core)\n- **Ecosystem Starter Templates**: [https://github.com/aptos-labs/aptos-developer-docs](https://github.com/aptos-labs/aptos-developer-docs)\n- **Block Explorer & State Verifier**: **Aptos Explorer**\n- **Native Testnet Environment**: **Aptos Testnet / Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "content": "# Module 1: Aptos Architecture, MoveVM & Block-STM Parallel Engine\n### Aptos Ecosystem Track | Developer Academy\n\nMaster Aptos Layer-1 architecture, MoveVM bytecode verification, resource safety, and Block-STM optimistic parallel transaction execution.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Aptos.\n2. **Toolchain Proficiency**: Master Aptos CLI & Move SDK for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Move code on MoveVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Aptos Testnet / Devnet** and verify artifacts on **Aptos Explorer**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/aptos-labs/aptos-core](https://github.com/aptos-labs/aptos-core)\n- **Ecosystem Starter Templates**: [https://github.com/aptos-labs/aptos-developer-docs](https://github.com/aptos-labs/aptos-developer-docs)\n- **Block Explorer & State Verifier**: **Aptos Explorer**\n- **Native Testnet Environment**: **Aptos Testnet / Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
     "quiz": [
       {
         "question": "What is the primary innovation of Aptos's Block-STM parallel execution engine?",
         "options": [
           "It executes transactions optimistically in parallel and validates dependencies concurrently, achieving over 100k TPS without sharding.",
           "It executes transactions one by one in single-threaded order.",
-          "It disables smart contract state changes.",
-          "It replaces blockchain with centralized SQL."
+          "It disables logic module state changes.",
+          "It replaces distributed system with centralized SQL."
         ],
         "correct_idx": 0
       },
@@ -174,7 +174,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "question": "How does Move's linear type system protect digital assets compared to EVM?",
         "options": [
           "Move treats assets as scarce Resources that can never be copied, duplicated, or silently discarded.",
-          "Move allows infinite token cloning.",
+          "Move allows infinite balance duplication.",
           "Move stores all balances in a single public array.",
           "Move requires no signature verification."
         ],
@@ -184,7 +184,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "question": "What is a Resource Account in Aptos?",
         "options": [
           "An autonomous account used by developers to manage modules, publish packages, and control state without a direct private key.",
-          "A standard user wallet with 12 seed words.",
+          "A standard user credential with 12 seed words.",
           "A temporary testnet faucet account.",
           "A bank savings account."
         ],
@@ -204,19 +204,19 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "question": "What role does the Move Bytecode Verifier play before execution?",
         "options": [
           "It rigorously verifies type safety, memory bounds, and resource linearity before any code can run on-chain.",
-          "It translates Move to Solidity.",
-          "It mines APT tokens.",
+          "It translates Move to Object-Oriented Logic.",
+          "It mines unverified transactions.",
           "It formats code indentation."
         ],
         "correct_idx": 0
       },
       {
-        "question": "Why are reentrancy attacks virtually impossible in native Move smart contracts?",
+        "question": "Why are reentrancy attacks virtually impossible in native Move logic modules?",
         "options": [
           "Move enforces strict resource borrow semantics and does not permit uncontrolled dynamic call dispatch loops.",
-          "Move contracts have no external functions.",
-          "Move disables token transfers.",
-          "Move contracts do not use state."
+          "Move modules have no external functions.",
+          "Move disables balance transfers.",
+          "Move modules do not use state."
         ],
         "correct_idx": 0
       }
@@ -236,7 +236,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
     "title": "Module 2: Aptos Toolchain, Aptos CLI & Move.toml Environment Setup",
     "duration": "18 mins",
     "xp": 200,
-    "content": "# Module 2: Aptos Toolchain, Aptos CLI & Move.toml Environment Setup\n### Aptos Ecosystem Track | Developer Academy\n\nConfigure the official Aptos CLI toolchain, local testnet faucets, Move.toml package dependencies, and automated unit testing.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Aptos.\n2. **Toolchain Proficiency**: Master Aptos CLI & Move SDK for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Move code on MoveVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Aptos Testnet / Devnet** and verify artifacts on **Aptos Explorer**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/aptos-labs/aptos-core](https://github.com/aptos-labs/aptos-core)\n- **Ecosystem Starter Templates**: [https://github.com/aptos-labs/aptos-developer-docs](https://github.com/aptos-labs/aptos-developer-docs)\n- **Block Explorer & State Verifier**: **Aptos Explorer**\n- **Native Testnet Environment**: **Aptos Testnet / Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "content": "# Module 2: Aptos Toolchain, Aptos CLI & Move.toml Environment Setup\n### Aptos Ecosystem Track | Developer Academy\n\nConfigure the official Aptos CLI toolchain, local testnet faucets, Move.toml package dependencies, and automated unit testing.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Aptos.\n2. **Toolchain Proficiency**: Master Aptos CLI & Move SDK for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Move code on MoveVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Aptos Testnet / Devnet** and verify artifacts on **Aptos Explorer**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/aptos-labs/aptos-core](https://github.com/aptos-labs/aptos-core)\n- **Ecosystem Starter Templates**: [https://github.com/aptos-labs/aptos-developer-docs](https://github.com/aptos-labs/aptos-developer-docs)\n- **Block Explorer & State Verifier**: **Aptos Explorer**\n- **Native Testnet Environment**: **Aptos Testnet / Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
     "quiz": [
       {
         "question": "Which command initializes a new Aptos developer profile and generates testnet keypairs?",
@@ -272,7 +272,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "question": "How do developers fund their testnet account using the Aptos CLI?",
         "options": [
           "aptos account fund-with-faucet --account default",
-          "aptos buy tokens --credit-card",
+          "aptos account create --faucet",
           "aptos mine --blocks 100",
           "aptos transfer from master"
         ],
@@ -284,7 +284,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
           "They decouple source code from hardcoded addresses, allowing seamless deployment to dynamic account addresses.",
           "They create DNS records.",
           "They encrypt GitHub commits.",
-          "They rename user wallets."
+          "They rename user credential."
         ],
         "correct_idx": 0
       },
@@ -311,10 +311,10 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
   "aptos-3": {
     "id": "aptos-3",
     "level_id": 3,
-    "title": "Module 3: Move Smart Contracts: Resources, Structs & Abilities",
+    "title": "Module 3: Move Logic Modules: Resources, Structs & Abilities",
     "duration": "21 mins",
     "xp": 250,
-    "content": "# Module 3: Move Smart Contracts: Resources, Structs & Abilities\n### Aptos Ecosystem Track | Developer Academy\n\nWrite production Move modules featuring the four abilities (key, store, copy, drop), global storage access, and Fungible Assets.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Aptos.\n2. **Toolchain Proficiency**: Master Aptos CLI & Move SDK for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Move code on MoveVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Aptos Testnet / Devnet** and verify artifacts on **Aptos Explorer**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/aptos-labs/aptos-core](https://github.com/aptos-labs/aptos-core)\n- **Ecosystem Starter Templates**: [https://github.com/aptos-labs/aptos-developer-docs](https://github.com/aptos-labs/aptos-developer-docs)\n- **Block Explorer & State Verifier**: **Aptos Explorer**\n- **Native Testnet Environment**: **Aptos Testnet / Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "content": "# Module 3: Move Logic Modules: Resources, Structs & Abilities\n### Aptos Ecosystem Track | Developer Academy\n\nWrite production Move modules featuring the four abilities (key, store, copy, drop), global storage access, and Fungible Assets.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Aptos.\n2. **Toolchain Proficiency**: Master Aptos CLI & Move SDK for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Move code on MoveVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Aptos Testnet / Devnet** and verify artifacts on **Aptos Explorer**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/aptos-labs/aptos-core](https://github.com/aptos-labs/aptos-core)\n- **Ecosystem Starter Templates**: [https://github.com/aptos-labs/aptos-developer-docs](https://github.com/aptos-labs/aptos-developer-docs)\n- **Block Explorer & State Verifier**: **Aptos Explorer**\n- **Native Testnet Environment**: **Aptos Testnet / Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
     "quiz": [
       {
         "question": "What are the four core abilities in the Move programming language?",
@@ -351,7 +351,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "options": [
           "`copy` allows value duplicating, while `drop` allows values to be popped/destroyed when leaving scope.",
           "`copy` destroys resources and `drop` clones them.",
-          "`copy` is for NFTs and `drop` is for tokens.",
+          "`copy` is for state records and `drop` is for disposable values.",
           "Both abilities do the exact same thing."
         ],
         "correct_idx": 0
@@ -359,10 +359,10 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "How does the Aptos Fungible Asset (FA) standard improve upon legacy Coin modules?",
         "options": [
-          "It provides a unified, object-based standard for fungible tokens with native metadata, royalties, and deposit hooks.",
+          "It provides a unified, object-based standard for fungible state records with native metadata, royalties, and deposit hooks.",
           "It requires 50% more gas.",
-          "It prevents token transfers entirely.",
-          "It only works on Bitcoin."
+          "It prevents balance transfers entirely.",
+          "It only works on Legacy Mainframe."
         ],
         "correct_idx": 0
       },
@@ -379,7 +379,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
     ],
     "exercise": {
       "instruction": "Write a Move code snippet for Module 3. The code must contain the keywords 'Resource' and 'abilities'.",
-      "template": "// Aptos Module 3: Move Smart Contracts: Resources, Structs & Abilities\n// Language: Move\n// Write implementation below:\n",
+      "template": "// Aptos Module 3: Move Logic Modules: Resources, Structs & Abilities\n// Language: Move\n// Write implementation below:\n",
       "required_keywords": [
         "Resource",
         "abilities"
@@ -389,16 +389,16 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
   "aptos-4": {
     "id": "aptos-4",
     "level_id": 4,
-    "title": "Module 4: Full-Stack Aptos DApps & TypeScript SDK Integration",
+    "title": "Module 4: Full-Stack Aptos application & TypeScript SDK Integration",
     "duration": "24 mins",
     "xp": 300,
-    "content": "# Module 4: Full-Stack Aptos DApps & TypeScript SDK Integration\n### Aptos Ecosystem Track | Developer Academy\n\nConnect Web3 frontends with the @aptos-labs/ts-sdk, integrate Petra/Pontem wallets, and execute entry function payloads.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Aptos.\n2. **Toolchain Proficiency**: Master Aptos CLI & Move SDK for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Move code on MoveVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Aptos Testnet / Devnet** and verify artifacts on **Aptos Explorer**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/aptos-labs/aptos-core](https://github.com/aptos-labs/aptos-core)\n- **Ecosystem Starter Templates**: [https://github.com/aptos-labs/aptos-developer-docs](https://github.com/aptos-labs/aptos-developer-docs)\n- **Block Explorer & State Verifier**: **Aptos Explorer**\n- **Native Testnet Environment**: **Aptos Testnet / Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "content": "# Module 4: Full-Stack Aptos application & TypeScript SDK Integration\n### Aptos Ecosystem Track | Developer Academy\n\nConnect Distributed Systems frontends with the @aptos-labs/ts-sdk, integrate Petra/Pontem developer key, and execute entry function payloads.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Aptos.\n2. **Toolchain Proficiency**: Master Aptos CLI & Move SDK for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Move code on MoveVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Aptos Testnet / Devnet** and verify artifacts on **Aptos Explorer**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/aptos-labs/aptos-core](https://github.com/aptos-labs/aptos-core)\n- **Ecosystem Starter Templates**: [https://github.com/aptos-labs/aptos-developer-docs](https://github.com/aptos-labs/aptos-developer-docs)\n- **Block Explorer & State Verifier**: **Aptos Explorer**\n- **Native Testnet Environment**: **Aptos Testnet / Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
     "quiz": [
       {
-        "question": "Which official package is used to build modern Web3 frontends and scripts on Aptos?",
+        "question": "Which official package is used to build modern Distributed Systems frontends and scripts on Aptos?",
         "options": [
           "@aptos-labs/ts-sdk",
-          "web3.js legacy",
+          "distributed systems.js legacy",
           "ethers v4",
           "aptos-php-client"
         ],
@@ -407,7 +407,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "What is an `entry` function in an Aptos Move module?",
         "options": [
-          "A public entrypoint function that can be called directly by external transactions signed by user wallets.",
+          "A public entrypoint function that can be called directly by external transactions signed by user credential.",
           "A private helper function for internal recursion.",
           "The constructor function that only runs once at genesis.",
           "A compiler configuration macro."
@@ -415,7 +415,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "correct_idx": 0
       },
       {
-        "question": "How does a frontend DApp request Petra Wallet to sign and broadcast a Move transaction?",
+        "question": "How does a frontend application request Petra developer key to sign and broadcast a Move transaction?",
         "options": [
           "window.aptos.signAndSubmitTransaction({ payload: { function: '0x1::...::transfer', typeArguments: [], functionArguments: [recipient, amount] } })",
           "window.alert('sign transfer')",
@@ -425,7 +425,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "correct_idx": 0
       },
       {
-        "question": "What API does the Aptos Indexer provide for lightning-fast historical queries and token balances?",
+        "question": "What API does the Aptos Indexer provide for lightning-fast historical queries and account balances?",
         "options": [
           "GraphQL API endpoint with real-time subscriptions.",
           "SOAP XML endpoints.",
@@ -457,7 +457,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
     ],
     "exercise": {
       "instruction": "Write a Move code snippet for Module 4. The code must contain the keywords 'AptosSDK' and 'TypeScript'.",
-      "template": "// Aptos Module 4: Full-Stack Aptos DApps & TypeScript SDK Integration\n// Language: Move\n// Write implementation below:\n",
+      "template": "// Aptos Module 4: Full-Stack Aptos application & TypeScript SDK Integration\n// Language: Move\n// Write implementation below:\n",
       "required_keywords": [
         "AptosSDK",
         "TypeScript"
@@ -470,7 +470,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
     "title": "Module 5: Aptos Testnet Deployment Challenge & Verification",
     "duration": "27 mins",
     "xp": 350,
-    "content": "# Module 5: Aptos Testnet Deployment Challenge & Verification\n### Aptos Ecosystem Track | Developer Academy\n\nHands-on Deployment Challenge: Compile your Move package, publish to Aptos Testnet, verify bytecode on Aptos Explorer, and complete certification.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Aptos.\n2. **Toolchain Proficiency**: Master Aptos CLI & Move SDK for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Move code on MoveVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Aptos Testnet / Devnet** and verify artifacts on **Aptos Explorer**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/aptos-labs/aptos-core](https://github.com/aptos-labs/aptos-core)\n- **Ecosystem Starter Templates**: [https://github.com/aptos-labs/aptos-developer-docs](https://github.com/aptos-labs/aptos-developer-docs)\n- **Block Explorer & State Verifier**: **Aptos Explorer**\n- **Native Testnet Environment**: **Aptos Testnet / Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "content": "# Module 5: Aptos Testnet Deployment Challenge & Verification\n### Aptos Ecosystem Track | Developer Academy\n\nHands-on Deployment Challenge: Compile your Move package, publish to Aptos Testnet, verify bytecode on Aptos Explorer, and complete certification.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Aptos.\n2. **Toolchain Proficiency**: Master Aptos CLI & Move SDK for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Move code on MoveVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Aptos Testnet / Devnet** and verify artifacts on **Aptos Explorer**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/aptos-labs/aptos-core](https://github.com/aptos-labs/aptos-core)\n- **Ecosystem Starter Templates**: [https://github.com/aptos-labs/aptos-developer-docs](https://github.com/aptos-labs/aptos-developer-docs)\n- **Block Explorer & State Verifier**: **Aptos Explorer**\n- **Native Testnet Environment**: **Aptos Testnet / Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
     "quiz": [
       {
         "question": "Which Aptos CLI command publishes a compiled Move module to Aptos Testnet?",
@@ -550,7 +550,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
     "title": "Module 1: Starknet Architecture, CairoVM & STARK Validity Proofs",
     "duration": "15 mins",
     "xp": 150,
-    "content": "# Module 1: Starknet Architecture, CairoVM & STARK Validity Proofs\n### Starknet Ecosystem Track | Developer Academy\n\nExplore Starknet ZK-Rollup architecture, STARK validity proofs, CairoVM execution, and native Account Abstraction.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Starknet.\n2. **Toolchain Proficiency**: Master Scarb, Starkli & Snforge for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Cairo code on CairoVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Starknet Sepolia** and verify artifacts on **Starkscan / Voyager**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/starkware-libs/cairo](https://github.com/starkware-libs/cairo)\n- **Ecosystem Starter Templates**: [https://github.com/OpenZeppelin/cairo-contracts](https://github.com/OpenZeppelin/cairo-contracts)\n- **Block Explorer & State Verifier**: **Starkscan / Voyager**\n- **Native Testnet Environment**: **Starknet Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "content": "# Module 1: Starknet Architecture, CairoVM & STARK Validity Proofs\n### Starknet Ecosystem Track | Developer Academy\n\nExplore Starknet ZK-Rollup architecture, STARK validity proofs, CairoVM execution, and native Account Abstraction.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Starknet.\n2. **Toolchain Proficiency**: Master Scarb, Starkli & Snforge for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Cairo code on CairoVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Starknet Sepolia** and verify artifacts on **Starkscan / Voyager**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/starkware-libs/cairo](https://github.com/starkware-libs/cairo)\n- **Ecosystem Starter Templates**: [https://github.com/OpenZeppelin/cairo-modules](https://github.com/OpenZeppelin/cairo-modules)\n- **Block Explorer & State Verifier**: **Starkscan / Voyager**\n- **Native Testnet Environment**: **Starknet Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
     "quiz": [
       {
         "question": "What is the primary scaling mechanism of Starknet as a Layer-2 ZK-Rollup?",
@@ -558,7 +558,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
           "It executes thousands of transactions off-chain, bundles them into a single STARK validity proof, and verifies it on Ethereum L1.",
           "It runs sidechains with separate consensus and no L1 security.",
           "It deletes historical transactions every 30 days.",
-          "It uses centralized web servers without cryptography."
+          "It uses centralized web servers without asymmetric verification."
         ],
         "correct_idx": 0
       },
@@ -568,17 +568,17 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
           "STARKs require no trusted setup ceremony and are transparent and post-quantum secure.",
           "STARKs require toxic waste ceremonies.",
           "STARKs are slower to verify.",
-          "STARKs only work on Bitcoin."
+          "STARKs only work on Legacy Mainframe."
         ],
         "correct_idx": 0
       },
       {
         "question": "What does Native Account Abstraction mean on Starknet?",
         "options": [
-          "All accounts are smart contracts with custom validation (`__validate__`) and execution (`__execute__`) logic \u2014 there are no EOAs.",
+          "All accounts are logic modules with custom validation (`__validate__`) and execution (`__execute__`) logic \u2014 there are no EOAs.",
           "Accounts are managed by centralized email servers.",
           "Users have no private keys.",
-          "Contracts cannot hold balances."
+          "Modules cannot hold balances."
         ],
         "correct_idx": 0
       },
@@ -628,7 +628,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
     "title": "Module 2: Cairo 2.0 Tooling: Scarb, Starkli & Snforge Environment",
     "duration": "18 mins",
     "xp": 200,
-    "content": "# Module 2: Cairo 2.0 Tooling: Scarb, Starkli & Snforge Environment\n### Starknet Ecosystem Track | Developer Academy\n\nSet up Scarb package manager, Starkli CLI account management, and Snforge testing framework for Starknet Sepolia.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Starknet.\n2. **Toolchain Proficiency**: Master Scarb, Starkli & Snforge for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Cairo code on CairoVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Starknet Sepolia** and verify artifacts on **Starkscan / Voyager**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/starkware-libs/cairo](https://github.com/starkware-libs/cairo)\n- **Ecosystem Starter Templates**: [https://github.com/OpenZeppelin/cairo-contracts](https://github.com/OpenZeppelin/cairo-contracts)\n- **Block Explorer & State Verifier**: **Starkscan / Voyager**\n- **Native Testnet Environment**: **Starknet Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "content": "# Module 2: Cairo 2.0 Tooling: Scarb, Starkli & Snforge Environment\n### Starknet Ecosystem Track | Developer Academy\n\nSet up Scarb package manager, Starkli CLI account management, and Snforge testing framework for Starknet Sepolia.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Starknet.\n2. **Toolchain Proficiency**: Master Scarb, Starkli & Snforge for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Cairo code on CairoVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Starknet Sepolia** and verify artifacts on **Starkscan / Voyager**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/starkware-libs/cairo](https://github.com/starkware-libs/cairo)\n- **Ecosystem Starter Templates**: [https://github.com/OpenZeppelin/cairo-modules](https://github.com/OpenZeppelin/cairo-modules)\n- **Block Explorer & State Verifier**: **Starkscan / Voyager**\n- **Native Testnet Environment**: **Starknet Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
     "quiz": [
       {
         "question": "Which official build tool and package manager is used for Cairo and Starknet projects?",
@@ -641,7 +641,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "correct_idx": 0
       },
       {
-        "question": "What command-line tool is used for declaring class hashes and deploying contract instances on Starknet?",
+        "question": "What command-line tool is used for declaring class hashes and deploying module instances on Starknet?",
         "options": [
           "starkli",
           "hardhat",
@@ -653,7 +653,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "Why are Starknet deployments split into two distinct steps (`declare` and `deploy`)?",
         "options": [
-          "`declare` registers the immutable contract class code and computes the class hash once, while `deploy` instantiates individual contract instances.",
+          "`declare` registers the immutable module class code and computes the class hash once, while `deploy` instantiates individual module instances.",
           "Because the compiler cannot run in one step.",
           "To charge double gas fees.",
           "To verify user identity."
@@ -661,7 +661,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "correct_idx": 0
       },
       {
-        "question": "Which testing framework provides blazing-fast unit tests and cheatcodes for Cairo contracts?",
+        "question": "Which testing framework provides blazing-fast unit tests and cheatcodes for Cairo modules?",
         "options": [
           "snforge (Starknet Foundry)",
           "Mocha/Chai",
@@ -681,7 +681,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "correct_idx": 0
       },
       {
-        "question": "Which testnet is the primary network for Starknet contract testing and grant verifications?",
+        "question": "Which testnet is the primary network for Starknet module testing and grant verifications?",
         "options": [
           "Starknet Sepolia",
           "Goerli (deprecated)",
@@ -703,23 +703,23 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
   "starknet-3": {
     "id": "starknet-3",
     "level_id": 3,
-    "title": "Module 3: Cairo Smart Contracts: Storage, Components & Events",
+    "title": "Module 3: Cairo Logic Modules: Storage, Components & Events",
     "duration": "21 mins",
     "xp": 250,
-    "content": "# Module 3: Cairo Smart Contracts: Storage, Components & Events\n### Starknet Ecosystem Track | Developer Academy\n\nWrite secure Cairo 2.0 contracts using #[starknet::contract], storage mappings, Cairo components, and events.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Starknet.\n2. **Toolchain Proficiency**: Master Scarb, Starkli & Snforge for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Cairo code on CairoVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Starknet Sepolia** and verify artifacts on **Starkscan / Voyager**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/starkware-libs/cairo](https://github.com/starkware-libs/cairo)\n- **Ecosystem Starter Templates**: [https://github.com/OpenZeppelin/cairo-contracts](https://github.com/OpenZeppelin/cairo-contracts)\n- **Block Explorer & State Verifier**: **Starkscan / Voyager**\n- **Native Testnet Environment**: **Starknet Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "content": "# Module 3: Cairo Logic Modules: Storage, Components & Events\n### Starknet Ecosystem Track | Developer Academy\n\nWrite secure Cairo 2.0 modules using #[starknet::contract], storage mappings, Cairo components, and events.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Starknet.\n2. **Toolchain Proficiency**: Master Scarb, Starkli & Snforge for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Cairo code on CairoVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Starknet Sepolia** and verify artifacts on **Starkscan / Voyager**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/starkware-libs/cairo](https://github.com/starkware-libs/cairo)\n- **Ecosystem Starter Templates**: [https://github.com/OpenZeppelin/cairo-modules](https://github.com/OpenZeppelin/cairo-modules)\n- **Block Explorer & State Verifier**: **Starkscan / Voyager**\n- **Native Testnet Environment**: **Starknet Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
     "quiz": [
       {
-        "question": "Which attribute macro marks a module as a deployable Starknet smart contract in Cairo 2.0?",
+        "question": "Which attribute macro marks a module as a deployable Starknet logic module in Cairo 2.0?",
         "options": [
           "#[starknet::contract]",
           "#[contract]",
-          "#[solidity::contract]",
+          "#[object-oriented logic::contract]",
           "#[program]"
         ],
         "correct_idx": 0
       },
       {
-        "question": "Where is contract persistent state declared in a Cairo smart contract?",
+        "question": "Where is module persistent state declared in a Cairo logic module?",
         "options": [
           "Inside the `#[storage]` struct definition.",
           "In global memory variables.",
@@ -729,12 +729,12 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "correct_idx": 0
       },
       {
-        "question": "How do Cairo Components replace Solidity-style contract inheritance?",
+        "question": "How do Cairo Components replace Object-Oriented Logic-style module inheritance?",
         "options": [
-          "Components are modular, composable contract logic packages (like OpenZeppelin ERC20) that can be embedded into any contract state.",
+          "Components are modular, composable module logic packages (like OpenZeppelin standard ledger modules) that can be embedded into any module state.",
           "Components are CSS UI widgets.",
           "Components replace RPC endpoints.",
-          "Components delete contract storage."
+          "Components delete module storage."
         ],
         "correct_idx": 0
       },
@@ -749,7 +749,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "correct_idx": 0
       },
       {
-        "question": "How are events declared and emitted in Cairo smart contracts?",
+        "question": "How are events declared and emitted in Cairo logic modules?",
         "options": [
           "Declared inside an `#[event]` enum and emitted via `self.emit(EventName { ... })`.",
           "By printing to console with `println!()`.",
@@ -759,7 +759,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "correct_idx": 0
       },
       {
-        "question": "What access control pattern is standard in Cairo OpenZeppelin contracts?",
+        "question": "What access control pattern is standard in Cairo OpenZeppelin modules?",
         "options": [
           "Ownable Component (`#[abi(embed_v0)] impl OwnableImpl`) and AccessControl Component.",
           "Hardcoding admin private key in storage.",
@@ -771,7 +771,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
     ],
     "exercise": {
       "instruction": "Write a Cairo code snippet for Module 3. The code must contain the keywords 'starknet' and 'contract'.",
-      "template": "// Starknet Module 3: Cairo Smart Contracts: Storage, Components & Events\n// Language: Cairo\n// Write implementation below:\n",
+      "template": "// Starknet Module 3: Cairo Logic Modules: Storage, Components & Events\n// Language: Cairo\n// Write implementation below:\n",
       "required_keywords": [
         "starknet",
         "contract",
@@ -782,16 +782,16 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
   "starknet-4": {
     "id": "starknet-4",
     "level_id": 4,
-    "title": "Module 4: Full-Stack Starknet DApps & Starknet.js Integration",
+    "title": "Module 4: Full-Stack Starknet application & Starknet.js Integration",
     "duration": "24 mins",
     "xp": 300,
-    "content": "# Module 4: Full-Stack Starknet DApps & Starknet.js Integration\n### Starknet Ecosystem Track | Developer Academy\n\nBuild full-stack DApps with Starknet.js v6, connect ArgentX & Braavos wallets, and leverage Account Abstraction multicalls.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Starknet.\n2. **Toolchain Proficiency**: Master Scarb, Starkli & Snforge for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Cairo code on CairoVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Starknet Sepolia** and verify artifacts on **Starkscan / Voyager**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/starkware-libs/cairo](https://github.com/starkware-libs/cairo)\n- **Ecosystem Starter Templates**: [https://github.com/OpenZeppelin/cairo-contracts](https://github.com/OpenZeppelin/cairo-contracts)\n- **Block Explorer & State Verifier**: **Starkscan / Voyager**\n- **Native Testnet Environment**: **Starknet Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "content": "# Module 4: Full-Stack Starknet application & Starknet.js Integration\n### Starknet Ecosystem Track | Developer Academy\n\nBuild full-stack application with Starknet.js v6, connect ArgentX & Braavos developer key, and leverage Account Abstraction multicalls.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Starknet.\n2. **Toolchain Proficiency**: Master Scarb, Starkli & Snforge for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Cairo code on CairoVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Starknet Sepolia** and verify artifacts on **Starkscan / Voyager**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/starkware-libs/cairo](https://github.com/starkware-libs/cairo)\n- **Ecosystem Starter Templates**: [https://github.com/OpenZeppelin/cairo-modules](https://github.com/OpenZeppelin/cairo-modules)\n- **Block Explorer & State Verifier**: **Starkscan / Voyager**\n- **Native Testnet Environment**: **Starknet Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
     "quiz": [
       {
-        "question": "Which JavaScript/TypeScript SDK is the industry standard for Starknet DApps?",
+        "question": "Which JavaScript/TypeScript SDK is the industry standard for Starknet application?",
         "options": [
           "starknet.js (v6)",
-          "web3.js",
+          "distributed systems.js",
           "ethers.js v5",
           "viem EVM"
         ],
@@ -802,25 +802,25 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "options": [
           "Multicalls \u2014 users can approve tokens AND execute a swap in a single atomic transaction signature.",
           "Transactions require no internet connection.",
-          "Gas is refunded in Bitcoin.",
-          "Wallets have no passcodes."
+          "Gas is refunded in Legacy Mainframe.",
+          "developer key have no passcodes."
         ],
         "correct_idx": 0
       },
       {
-        "question": "Which popular Web3 smart contract wallets are native to Starknet?",
+        "question": "Which popular Distributed Systems logic module developer key are native to Starknet?",
         "options": [
-          "Argent X and Braavos",
-          "MetaMask only",
-          "Phantom only",
-          "Coinbase Wallet extension only"
+          "Starknet CLI and Native Keyring",
+          "Authorized signer only",
+          "Local keyring only",
+          "Hardware key module only"
         ],
         "correct_idx": 0
       },
       {
         "question": "What is a Paymaster on Starknet?",
         "options": [
-          "A smart contract that sponsors transaction gas fees or allows users to pay gas in alternative ERC-20 tokens (like USDC or STRK).",
+          "A logic module that sponsors transaction gas fees or allows users to pay gas in alternative Asset Standard tokens (like Network Credits or USDC).",
           "A payroll employee.",
           "A hardware mining machine.",
           "A block explorer advertisement."
@@ -828,9 +828,9 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "correct_idx": 0
       },
       {
-        "question": "How do developers query read-only contract state using Starknet.js?",
+        "question": "How do developers query read-only module state using Starknet.js?",
         "options": [
-          "Using `myContract.call('get_balance', [userAddress])` without submitting a transaction.",
+          "Using `myModule.call('get_balance', [userAddress])` without submitting a transaction.",
           "By broadcasting a signed transaction that pays gas.",
           "By querying an SQL database.",
           "By restarting the RPC node."
@@ -838,7 +838,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "correct_idx": 0
       },
       {
-        "question": "What RPC method retrieves filtered contract events directly from Starknet RPC nodes?",
+        "question": "What RPC method retrieves filtered module events directly from Starknet RPC nodes?",
         "options": [
           "starknet_getEvents",
           "eth_getLogs",
@@ -850,7 +850,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
     ],
     "exercise": {
       "instruction": "Write a Cairo code snippet for Module 4. The code must contain the keywords 'StarknetJS' and 'ArgentX'.",
-      "template": "// Starknet Module 4: Full-Stack Starknet DApps & Starknet.js Integration\n// Language: Cairo\n// Write implementation below:\n",
+      "template": "// Starknet Module 4: Full-Stack Starknet application & Starknet.js Integration\n// Language: Cairo\n// Write implementation below:\n",
       "required_keywords": [
         "StarknetJS",
         "ArgentX"
@@ -863,13 +863,13 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
     "title": "Module 5: Starknet Sepolia Deployment Challenge & ZK Verification",
     "duration": "27 mins",
     "xp": 350,
-    "content": "# Module 5: Starknet Sepolia Deployment Challenge & ZK Verification\n### Starknet Ecosystem Track | Developer Academy\n\nHands-on Deployment Challenge: Build with Scarb, declare your class hash, deploy to Starknet Sepolia, and verify on Starkscan.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Starknet.\n2. **Toolchain Proficiency**: Master Scarb, Starkli & Snforge for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Cairo code on CairoVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Starknet Sepolia** and verify artifacts on **Starkscan / Voyager**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/starkware-libs/cairo](https://github.com/starkware-libs/cairo)\n- **Ecosystem Starter Templates**: [https://github.com/OpenZeppelin/cairo-contracts](https://github.com/OpenZeppelin/cairo-contracts)\n- **Block Explorer & State Verifier**: **Starkscan / Voyager**\n- **Native Testnet Environment**: **Starknet Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "content": "# Module 5: Starknet Sepolia Deployment Challenge & ZK Verification\n### Starknet Ecosystem Track | Developer Academy\n\nHands-on Deployment Challenge: Build with Scarb, declare your class hash, deploy to Starknet Sepolia, and verify on Starkscan.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Starknet.\n2. **Toolchain Proficiency**: Master Scarb, Starkli & Snforge for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Cairo code on CairoVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Starknet Sepolia** and verify artifacts on **Starkscan / Voyager**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/starkware-libs/cairo](https://github.com/starkware-libs/cairo)\n- **Ecosystem Starter Templates**: [https://github.com/OpenZeppelin/cairo-modules](https://github.com/OpenZeppelin/cairo-modules)\n- **Block Explorer & State Verifier**: **Starkscan / Voyager**\n- **Native Testnet Environment**: **Starknet Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
     "quiz": [
       {
-        "question": "Which command declares a compiled Cairo contract class hash to Starknet Sepolia?",
+        "question": "Which command declares a compiled Cairo module class hash to Starknet Sepolia?",
         "options": [
-          "starkli declare target/dev/my_contract.contract_class.json --network sepolia",
-          "starkli upload contract",
+          "starkli declare target/dev/my_module.module_class.json --network sepolia",
+          "starkli upload module",
           "scarb push mainnet",
           "npm run declare"
         ],
@@ -879,14 +879,14 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "question": "Which command instantiates and deploys a declared class hash with constructor arguments?",
         "options": [
           "starkli deploy <CLASS_HASH> <CONSTRUCTOR_ARGS> --network sepolia",
-          "starkli create contract",
+          "starkli create module",
           "forge create",
           "cargo deploy"
         ],
         "correct_idx": 0
       },
       {
-        "question": "Where can developers and grant evaluators verify deployed Cairo contracts on Starknet Sepolia?",
+        "question": "Where can developers and grant evaluators verify deployed Cairo modules on Starknet Sepolia?",
         "options": [
           "Starkscan (sepolia.starkscan.co) or Voyager (sepolia.voyager.online).",
           "Etherscan mainnet.",
@@ -896,10 +896,10 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "correct_idx": 0
       },
       {
-        "question": "What role does the Universal Deployer Contract (UDC) play on Starknet?",
+        "question": "What role does the Universal Deployer Module (UDM) play on Starknet?",
         "options": [
-          "It standardizes deterministic contract address deployment using salt and caller addresses across the network.",
-          "It burns unused STRK tokens.",
+          "It standardizes deterministic module address deployment using salt and caller addresses across the network.",
+          "It burns unused transaction execution credits.",
           "It manages user seed phrases.",
           "It routes DNS traffic."
         ],
@@ -908,7 +908,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "What verification artifact confirms successful completion of the Starknet Deployment Challenge?",
         "options": [
-          "A confirmed transaction hash on Starknet Sepolia with verified contract class and initial storage state.",
+          "A confirmed transaction hash on Starknet Sepolia with verified module class and initial storage state.",
           "A local terminal log screenshot.",
           "A paper certificate.",
           "A GitHub commit with no deployment."
@@ -918,7 +918,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "Why is completing this deployment challenge critical for Starknet Foundation grant reviewers?",
         "options": [
-          "It provides immutable on-chain proof of working Cairo smart contract deployments and real Layer-2 builder impact.",
+          "It provides immutable on-chain proof of working Cairo logic module deployments and real Layer-2 builder impact.",
           "It guarantees immediate grant funding without review.",
           "It eliminates the need for code review.",
           "It waives all future gas fees."
@@ -943,12 +943,12 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
     "title": "Module 1: Solana Architecture, Sealevel Runtime & Proof of History",
     "duration": "15 mins",
     "xp": 150,
-    "content": "# Module 1: Solana Architecture, Sealevel Runtime & Proof of History\n### Solana Ecosystem Track | Developer Academy\n\nMaster Solana high-throughput architecture: Proof of History (PoH), Sealevel parallel execution, and the Account model.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Solana.\n2. **Toolchain Proficiency**: Master Anchor Framework & Solana CLI for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Rust & Anchor code on Sealevel adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Solana Devnet** and verify artifacts on **Solana Explorer / Solscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/coral-xyz/anchor](https://github.com/coral-xyz/anchor)\n- **Ecosystem Starter Templates**: [https://github.com/solana-labs/solana-program-library](https://github.com/solana-labs/solana-program-library)\n- **Block Explorer & State Verifier**: **Solana Explorer / Solscan**\n- **Native Testnet Environment**: **Solana Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "content": "# Module 1: Solana Architecture, Sealevel Runtime & Proof of History\n### Solana Ecosystem Track | Developer Academy\n\nMaster Solana high-throughput architecture: Proof of History (PoH), Sealevel parallel execution, and the Account model.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Solana.\n2. **Toolchain Proficiency**: Master Anchor Framework & Solana CLI for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Rust & Anchor code on Sealevel adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Solana Devnet** and verify artifacts on **Solana Explorer / Solscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/coral-xyz/anchor](https://github.com/coral-xyz/anchor)\n- **Ecosystem Starter Templates**: [https://github.com/solana-labs/solana-program-library](https://github.com/solana-labs/solana-program-library)\n- **Block Explorer & State Verifier**: **Solana Explorer / Solscan**\n- **Native Testnet Environment**: **Solana Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
     "quiz": [
       {
         "question": "What is Proof of History (PoH) in Solana architecture?",
         "options": [
-          "A verifiable cryptographic delay function (VDF) that creates a decentralized clock before consensus, enabling parallel processing.",
+          "A verifiable asymmetric verification delay function (VDF) that creates a decentralized clock before consensus, enabling parallel processing.",
           "A Proof of Work mining algorithm.",
           "A database backup system.",
           "A KYC identity verification standard."
@@ -956,7 +956,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "correct_idx": 0
       },
       {
-        "question": "How does the Sealevel parallel smart contract runtime achieve massive throughput?",
+        "question": "How does the Sealevel parallel logic module runtime achieve massive throughput?",
         "options": [
           "By reading and writing to non-overlapping accounts concurrently across multiple CPU threads and GPU cores.",
           "By executing all transactions on a single thread.",
@@ -991,7 +991,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
           "A mempool-less transaction forwarding protocol that pushes transactions to upcoming leaders before block generation.",
           "A cross-chain bridge to Ethereum.",
           "An ocean current monitoring system.",
-          "A cold storage hardware wallet."
+          "A cold storage hardware developer key."
         ],
         "correct_idx": 0
       },
@@ -1000,7 +1000,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "options": [
           "Transactions must explicitly declare all accounts they intend to read and write in advance.",
           "Transactions are paused when two users click send.",
-          "Global locks on the entire blockchain state.",
+          "Global locks on the entire distributed system state.",
           "Transactions run only at midnight."
         ],
         "correct_idx": 0
@@ -1021,10 +1021,10 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
     "title": "Module 2: Solana Toolchain, Anchor Framework & Local Validator",
     "duration": "18 mins",
     "xp": 200,
-    "content": "# Module 2: Solana Toolchain, Anchor Framework & Local Validator\n### Solana Ecosystem Track | Developer Academy\n\nConfigure Solana CLI, Anchor framework, Anchor.toml, solana-test-validator, and Devnet airdrop funding.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Solana.\n2. **Toolchain Proficiency**: Master Anchor Framework & Solana CLI for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Rust & Anchor code on Sealevel adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Solana Devnet** and verify artifacts on **Solana Explorer / Solscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/coral-xyz/anchor](https://github.com/coral-xyz/anchor)\n- **Ecosystem Starter Templates**: [https://github.com/solana-labs/solana-program-library](https://github.com/solana-labs/solana-program-library)\n- **Block Explorer & State Verifier**: **Solana Explorer / Solscan**\n- **Native Testnet Environment**: **Solana Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "content": "# Module 2: Solana Toolchain, Anchor Framework & Local Validator\n### Solana Ecosystem Track | Developer Academy\n\nConfigure Solana CLI, Anchor framework, Anchor.toml, solana-test-validator, and Devnet airdrop funding.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Solana.\n2. **Toolchain Proficiency**: Master Anchor Framework & Solana CLI for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Rust & Anchor code on Sealevel adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Solana Devnet** and verify artifacts on **Solana Explorer / Solscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/coral-xyz/anchor](https://github.com/coral-xyz/anchor)\n- **Ecosystem Starter Templates**: [https://github.com/solana-labs/solana-program-library](https://github.com/solana-labs/solana-program-library)\n- **Block Explorer & State Verifier**: **Solana Explorer / Solscan**\n- **Native Testnet Environment**: **Solana Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
     "quiz": [
       {
-        "question": "Which framework is the industry standard for writing secure, idiomatic Solana smart contracts in Rust?",
+        "question": "Which framework is the industry standard for writing secure, idiomatic Solana logic modules in Rust?",
         "options": [
           "Anchor Framework",
           "Hardhat",
@@ -1064,7 +1064,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "correct_idx": 0
       },
       {
-        "question": "How do you request 2 free SOL on Solana Devnet for contract deployment testing?",
+        "question": "How do you request testnet execution credits on Solana Devnet for module deployment testing?",
         "options": [
           "solana airdrop 2 --url devnet",
           "solana buy 2 devnet",
@@ -1096,16 +1096,16 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
   "solana-3": {
     "id": "solana-3",
     "level_id": 3,
-    "title": "Module 3: Anchor Smart Contracts: Accounts, PDAs & Instructions",
+    "title": "Module 3: Anchor Logic Modules: Accounts, PDAs & Instructions",
     "duration": "21 mins",
     "xp": 250,
-    "content": "# Module 3: Anchor Smart Contracts: Accounts, PDAs & Instructions\n### Solana Ecosystem Track | Developer Academy\n\nImplement Anchor programs with #[derive(Accounts)], Program Derived Addresses (PDAs), and account validation constraints.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Solana.\n2. **Toolchain Proficiency**: Master Anchor Framework & Solana CLI for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Rust & Anchor code on Sealevel adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Solana Devnet** and verify artifacts on **Solana Explorer / Solscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/coral-xyz/anchor](https://github.com/coral-xyz/anchor)\n- **Ecosystem Starter Templates**: [https://github.com/solana-labs/solana-program-library](https://github.com/solana-labs/solana-program-library)\n- **Block Explorer & State Verifier**: **Solana Explorer / Solscan**\n- **Native Testnet Environment**: **Solana Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "content": "# Module 3: Anchor Logic Modules: Accounts, PDAs & Instructions\n### Solana Ecosystem Track | Developer Academy\n\nImplement Anchor programs with #[derive(Accounts)], Program Derived Addresses (PDAs), and account validation constraints.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Solana.\n2. **Toolchain Proficiency**: Master Anchor Framework & Solana CLI for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Rust & Anchor code on Sealevel adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Solana Devnet** and verify artifacts on **Solana Explorer / Solscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/coral-xyz/anchor](https://github.com/coral-xyz/anchor)\n- **Ecosystem Starter Templates**: [https://github.com/solana-labs/solana-program-library](https://github.com/solana-labs/solana-program-library)\n- **Block Explorer & State Verifier**: **Solana Explorer / Solscan**\n- **Native Testnet Environment**: **Solana Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
     "quiz": [
       {
         "question": "What is a Program Derived Address (PDA) in Solana?",
         "options": [
           "An account address deterministically derived from program ID and seed bytes that has no private key, controlled solely by the program.",
-          "A standard user wallet address.",
+          "A standard user credential address.",
           "A random number generated by miners.",
           "A temporary session token."
         ],
@@ -1134,7 +1134,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "What is a Cross-Program Invocation (CPI) on Solana?",
         "options": [
-          "A direct on-chain call from one Solana program to another (e.g. calling the SPL Token program to transfer tokens).",
+          "A direct on-chain call from one Solana program to another (e.g. calling the Token program to update balances).",
           "An API call from frontend to backend.",
           "A database query.",
           "An off-chain bridge."
@@ -1147,15 +1147,15 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
           "Through declarative account constraints like `#[account(signer)]` and `#[account(mut, has_one = authority)]`.",
           "By disabling multi-user transactions.",
           "By encrypting all account data with passwords.",
-          "By running contracts in read-only mode."
+          "By running modules in read-only mode."
         ],
         "correct_idx": 0
       },
       {
-        "question": "What standard token library is used for fungible and non-fungible tokens on Solana?",
+        "question": "What standard token library is used for state records and digital credentials on Solana?",
         "options": [
           "SPL Token (Solana Program Library) and Token-2022 Extensions.",
-          "ERC-20 standard.",
+          "Asset Standard standard.",
           "Move Coin module.",
           "Cairo token component."
         ],
@@ -1164,7 +1164,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
     ],
     "exercise": {
       "instruction": "Write a Rust & Anchor code snippet for Module 3. The code must contain the keywords 'PDA' and 'AnchorProgram'.",
-      "template": "// Solana Module 3: Anchor Smart Contracts: Accounts, PDAs & Instructions\n// Language: Rust & Anchor\n// Write implementation below:\n",
+      "template": "// Solana Module 3: Anchor Logic Modules: Accounts, PDAs & Instructions\n// Language: Rust & Anchor\n// Write implementation below:\n",
       "required_keywords": [
         "PDA",
         "AnchorProgram"
@@ -1174,16 +1174,16 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
   "solana-4": {
     "id": "solana-4",
     "level_id": 4,
-    "title": "Module 4: Full-Stack Solana DApps & @solana/web3.js Integration",
+    "title": "Module 4: Full-Stack Solana application & @solana/distributed systems.js Integration",
     "duration": "24 mins",
     "xp": 300,
-    "content": "# Module 4: Full-Stack Solana DApps & @solana/web3.js Integration\n### Solana Ecosystem Track | Developer Academy\n\nBuild responsive Solana DApps with @solana/web3.js, @coral-xyz/anchor, Phantom wallet adapter, and versioned transactions.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Solana.\n2. **Toolchain Proficiency**: Master Anchor Framework & Solana CLI for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Rust & Anchor code on Sealevel adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Solana Devnet** and verify artifacts on **Solana Explorer / Solscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/coral-xyz/anchor](https://github.com/coral-xyz/anchor)\n- **Ecosystem Starter Templates**: [https://github.com/solana-labs/solana-program-library](https://github.com/solana-labs/solana-program-library)\n- **Block Explorer & State Verifier**: **Solana Explorer / Solscan**\n- **Native Testnet Environment**: **Solana Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "content": "# Module 4: Full-Stack Solana application & @solana/distributed systems.js Integration\n### Solana Ecosystem Track | Developer Academy\n\nBuild responsive Solana application with @solana/distributed systems.js, @coral-xyz/anchor, Phantom developer key adapter, and versioned transactions.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Solana.\n2. **Toolchain Proficiency**: Master Anchor Framework & Solana CLI for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Rust & Anchor code on Sealevel adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Solana Devnet** and verify artifacts on **Solana Explorer / Solscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/coral-xyz/anchor](https://github.com/coral-xyz/anchor)\n- **Ecosystem Starter Templates**: [https://github.com/solana-labs/solana-program-library](https://github.com/solana-labs/solana-program-library)\n- **Block Explorer & State Verifier**: **Solana Explorer / Solscan**\n- **Native Testnet Environment**: **Solana Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
     "quiz": [
       {
         "question": "Which JavaScript libraries are used to build interactive full-stack Solana web applications?",
         "options": [
-          "@solana/web3.js, @coral-xyz/anchor, and @solana/wallet-adapter-react",
-          "web3.py",
+          "@solana/distributed systems.js, @coral-xyz/anchor, and @solana/developer key-adapter-react",
+          "distributed systems.py",
           "ethers v5",
           "starknet.js"
         ],
@@ -1203,7 +1203,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "question": "How do you initialize a typed Anchor Program client in TypeScript?",
         "options": [
           "const program = new Program(IDL, programId, provider);",
-          "const program = new Contract(abi, address);",
+          "const program = new LogicProgram(abi, address);",
           "const program = loadProgram('solana');",
           "const program = fetchProgram(rpc);"
         ],
@@ -1220,12 +1220,12 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "correct_idx": 0
       },
       {
-        "question": "Which popular browser extension wallets are standard across the Solana ecosystem?",
+        "question": "Which popular browser extension developer key are standard across the Solana ecosystem?",
         "options": [
           "Phantom and Solflare",
           "ArgentX only",
-          "SubWallet only",
-          "MetaMask only"
+          "Subdeveloper key only",
+          "Authorized signer only"
         ],
         "correct_idx": 0
       },
@@ -1234,17 +1234,17 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "options": [
           "Using dedicated RPC providers (Helius, Triton, QuickNode) and implementing retry backoffs.",
           "By closing the user's browser.",
-          "By removing wallet connections.",
+          "By removing developer key connections.",
           "By deploying private testnets."
         ],
         "correct_idx": 0
       }
     ],
     "exercise": {
-      "instruction": "Write a Rust & Anchor code snippet for Module 4. The code must contain the keywords 'SolanaWeb3' and 'Phantom'.",
-      "template": "// Solana Module 4: Full-Stack Solana DApps & @solana/web3.js Integration\n// Language: Rust & Anchor\n// Write implementation below:\n",
+      "instruction": "Write a Rust & Anchor code snippet for Module 4. The code must contain the keywords 'SolanaDistributed Systems' and 'Phantom'.",
+      "template": "// Solana Module 4: Full-Stack Solana application & @solana/distributed systems.js Integration\n// Language: Rust & Anchor\n// Write implementation below:\n",
       "required_keywords": [
-        "SolanaWeb3",
+        "SolanaDistributed Systems",
         "Phantom"
       ]
     }
@@ -1255,13 +1255,13 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
     "title": "Module 5: Solana Devnet Deployment Challenge & Verification",
     "duration": "27 mins",
     "xp": 350,
-    "content": "# Module 5: Solana Devnet Deployment Challenge & Verification\n### Solana Ecosystem Track | Developer Academy\n\nHands-on Deployment Challenge: Build your Anchor program, deploy bytecode to Solana Devnet, publish IDL, and verify on Solscan.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Solana.\n2. **Toolchain Proficiency**: Master Anchor Framework & Solana CLI for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Rust & Anchor code on Sealevel adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Solana Devnet** and verify artifacts on **Solana Explorer / Solscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/coral-xyz/anchor](https://github.com/coral-xyz/anchor)\n- **Ecosystem Starter Templates**: [https://github.com/solana-labs/solana-program-library](https://github.com/solana-labs/solana-program-library)\n- **Block Explorer & State Verifier**: **Solana Explorer / Solscan**\n- **Native Testnet Environment**: **Solana Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "content": "# Module 5: Solana Devnet Deployment Challenge & Verification\n### Solana Ecosystem Track | Developer Academy\n\nHands-on Deployment Challenge: Build your Anchor program, deploy bytecode to Solana Devnet, publish IDL, and verify on Solscan.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Solana.\n2. **Toolchain Proficiency**: Master Anchor Framework & Solana CLI for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Rust & Anchor code on Sealevel adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Solana Devnet** and verify artifacts on **Solana Explorer / Solscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/coral-xyz/anchor](https://github.com/coral-xyz/anchor)\n- **Ecosystem Starter Templates**: [https://github.com/solana-labs/solana-program-library](https://github.com/solana-labs/solana-program-library)\n- **Block Explorer & State Verifier**: **Solana Explorer / Solscan**\n- **Native Testnet Environment**: **Solana Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
     "quiz": [
       {
         "question": "Which command deploys a compiled Solana program binary to Devnet?",
         "options": [
           "solana program deploy target/deploy/my_program.so --url devnet",
-          "solana upload contract",
+          "solana upload program",
           "anchor publish",
           "npm run deploy:devnet"
         ],
@@ -1291,7 +1291,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "question": "What keypair authority is required to execute future program upgrades on Solana?",
         "options": [
           "The Upgrade Authority keypair configured during initial program deployment.",
-          "Any random user wallet.",
+          "Any random user credential.",
           "The validator leader.",
           "A cloud API token."
         ],
@@ -1335,15 +1335,15 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
     "title": "Module 1: Polkadot Architecture, Shared Security & XCM Cross-Chain Protocol",
     "duration": "15 mins",
     "xp": 150,
-    "content": "# Module 1: Polkadot Architecture, Shared Security & XCM Cross-Chain Protocol\n### Polkadot Ecosystem Track | Developer Academy\n\nUnderstand Polkadot Relay Chain & Parachains, Nominated Proof of Stake (NPoS), Shared Security, and Cross-Consensus Messaging (XCM).\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polkadot.\n2. **Toolchain Proficiency**: Master cargo-contract, Substrate & Swanky for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Rust & ink! code on Wasm & pallet-contracts adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Westend / Rococo / Substrate Node** and verify artifacts on **Subscan / Polkadot.js Apps**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/paritytech/polkadot-sdk](https://github.com/paritytech/polkadot-sdk)\n- **Ecosystem Starter Templates**: [https://github.com/use-ink/ink](https://github.com/use-ink/ink)\n- **Block Explorer & State Verifier**: **Subscan / Polkadot.js Apps**\n- **Native Testnet Environment**: **Westend / Rococo / Substrate Node**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "content": "# Module 1: Polkadot Architecture, Shared Security & XCM Cross-Chain Protocol\n### Polkadot Ecosystem Track | Developer Academy\n\nUnderstand Polkadot Relay Chain & Parachains, Nominated Proof of Stake (NPoS), Shared Security, and Cross-Consensus Messaging (XCM).\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polkadot.\n2. **Toolchain Proficiency**: Master cargo-module, Substrate & Swanky for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Rust & ink! code on Wasm & pallet-modules adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Westend / Rococo / Substrate Node** and verify artifacts on **Subscan / Polkadot.js Apps**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/paritytech/polkadot-sdk](https://github.com/paritytech/polkadot-sdk)\n- **Ecosystem Starter Templates**: [https://github.com/use-ink/ink](https://github.com/use-ink/ink)\n- **Block Explorer & State Verifier**: **Subscan / Polkadot.js Apps**\n- **Native Testnet Environment**: **Westend / Rococo / Substrate Node**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
     "quiz": [
       {
         "question": "What is the primary role of the Polkadot Relay Chain in the multi-chain ecosystem?",
         "options": [
           "It coordinates shared security, consensus, and trust-free cross-chain messaging (XCM) across all connected parachains.",
-          "It executes individual smart contracts directly on the relay chain.",
+          "It executes individual logic modules directly on the relay chain.",
           "It hosts user frontends on decentralized servers.",
-          "It mines Bitcoin blocks."
+          "It mines Legacy Mainframe blocks."
         ],
         "correct_idx": 0
       },
@@ -1360,7 +1360,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "What is XCM (Cross-Consensus Messaging) in Polkadot?",
         "options": [
-          "A standardized, language-agnostic message format for trust-free interoperability between parachains, smart contracts, and relay chains.",
+          "A standardized, language-agnostic message format for trust-free interoperability between parachains, logic modules, and relay chains.",
           "An email newsletter for token holders.",
           "A WebSocket protocol for browser notifications.",
           "A compiler optimizer for C++."
@@ -1390,9 +1390,9 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "What is the Substrate framework in Polkadot ecosystem development?",
         "options": [
-          "A modular, extensible Rust framework for building custom, sovereign blockchains and execution runtimes (FRAME pallets).",
+          "A modular, extensible Rust framework for building custom, sovereign distributed systems and execution runtimes (FRAME pallets).",
           "A React CSS framework.",
-          "A hardware wallet manufacturing kit.",
+          "A hardware developer key manufacturing kit.",
           "A database query language."
         ],
         "correct_idx": 0
@@ -1410,15 +1410,15 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
   "polkadot-2": {
     "id": "polkadot-2",
     "level_id": 2,
-    "title": "Module 2: Substrate & ink! Toolchain: cargo-contract & Swanky Suite",
+    "title": "Module 2: Substrate & ink! Toolchain: cargo-module & Swanky Suite",
     "duration": "18 mins",
     "xp": 200,
-    "content": "# Module 2: Substrate & ink! Toolchain: cargo-contract & Swanky Suite\n### Polkadot Ecosystem Track | Developer Academy\n\nSet up cargo-contract, WebAssembly (Wasm) target toolchains, Substrate Contracts Node, and Polkadot.js Apps developer interface.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polkadot.\n2. **Toolchain Proficiency**: Master cargo-contract, Substrate & Swanky for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Rust & ink! code on Wasm & pallet-contracts adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Westend / Rococo / Substrate Node** and verify artifacts on **Subscan / Polkadot.js Apps**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/paritytech/polkadot-sdk](https://github.com/paritytech/polkadot-sdk)\n- **Ecosystem Starter Templates**: [https://github.com/use-ink/ink](https://github.com/use-ink/ink)\n- **Block Explorer & State Verifier**: **Subscan / Polkadot.js Apps**\n- **Native Testnet Environment**: **Westend / Rococo / Substrate Node**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "content": "# Module 2: Substrate & ink! Toolchain: cargo-module & Swanky Suite\n### Polkadot Ecosystem Track | Developer Academy\n\nSet up cargo-module, WebAssembly (Wasm) target toolchains, Substrate Node, and Polkadot.js Apps developer interface.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polkadot.\n2. **Toolchain Proficiency**: Master cargo-module, Substrate & Swanky for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Rust & ink! code on Wasm & pallet-modules adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Westend / Rococo / Substrate Node** and verify artifacts on **Subscan / Polkadot.js Apps**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/paritytech/polkadot-sdk](https://github.com/paritytech/polkadot-sdk)\n- **Ecosystem Starter Templates**: [https://github.com/use-ink/ink](https://github.com/use-ink/ink)\n- **Block Explorer & State Verifier**: **Subscan / Polkadot.js Apps**\n- **Native Testnet Environment**: **Westend / Rococo / Substrate Node**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
     "quiz": [
       {
-        "question": "Which CLI tool is the official compiler and packaging suite for ink! WebAssembly smart contracts?",
+        "question": "Which CLI tool is the official compiler and packaging suite for ink! WebAssembly logic modules?",
         "options": [
-          "cargo-contract",
+          "cargo-module",
           "anchor-cli",
           "scarb",
           "truffle"
@@ -1426,19 +1426,19 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "correct_idx": 0
       },
       {
-        "question": "What file bundle is generated by `cargo contract build --release` for deployment?",
+        "question": "What file bundle is generated by `cargo module build --release` for deployment?",
         "options": [
           "A `.contract` bundle containing compiled WebAssembly bytecode and metadata.json ABI.",
-          "A `.sol` text file.",
+          "A system logic file.",
           "A `.wasm` file only without metadata.",
           "A `.zip` image archive."
         ],
         "correct_idx": 0
       },
       {
-        "question": "Which local node environment is specifically designed for testing ink! contracts locally?",
+        "question": "Which local node environment is specifically designed for testing ink! modules locally?",
         "options": [
-          "Substrate Contracts Node (`substrate-contracts-node`)",
+          "Substrate Node (`substrate-node`)",
           "Hardhat Network",
           "Anvil",
           "Geth node"
@@ -1448,9 +1448,9 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "What is Swanky Suite in the Polkadot developer ecosystem?",
         "options": [
-          "An integrated CLI and developer toolkit for creating, compiling, deploying, and testing ink! Wasm smart contracts.",
-          "A DEX trading bot.",
-          "A wallet extension for Chrome.",
+          "An integrated CLI and developer toolkit for creating, compiling, deploying, and testing ink! Wasm logic modules.",
+          "An automated liquidity execution bot.",
+          "A developer key extension for Chrome.",
           "A Discord community bot."
         ],
         "correct_idx": 0
@@ -1466,19 +1466,19 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "correct_idx": 0
       },
       {
-        "question": "Which testnets are standard for deploying and testing Substrate and ink! contracts before mainnet?",
+        "question": "Which testnets are standard for deploying and testing Substrate and ink! modules before mainnet?",
         "options": [
           "Westend (Relay Chain testnet), Rococo (Parachain testnet), and Paseo testnet.",
           "Sepolia EVM testnet.",
           "Solana Devnet.",
-          "Bitcoin Regtest."
+          "Legacy Mainframe Regtest."
         ],
         "correct_idx": 0
       }
     ],
     "exercise": {
       "instruction": "Write a Rust & ink! code snippet for Module 2. The code must contain the keywords 'cargoContract' and 'ink'.",
-      "template": "// Polkadot Module 2: Substrate & ink! Toolchain: cargo-contract & Swanky Suite\n// Language: Rust & ink!\n// Write implementation below:\n",
+      "template": "// Polkadot Module 2: Substrate & ink! Toolchain: cargo-module & Swanky Suite\n// Language: Rust & ink!\n// Write implementation below:\n",
       "required_keywords": [
         "cargoContract",
         "ink"
@@ -1488,15 +1488,15 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
   "polkadot-3": {
     "id": "polkadot-3",
     "level_id": 3,
-    "title": "Module 3: ink! Smart Contracts: Messages, Storage & Events",
+    "title": "Module 3: ink! Logic Modules: Messages, Storage & Events",
     "duration": "21 mins",
     "xp": 250,
-    "content": "# Module 3: ink! Smart Contracts: Messages, Storage & Events\n### Polkadot Ecosystem Track | Developer Academy\n\nWrite idiomatic Rust ink! contracts: #[ink(storage)], ink::storage::Mapping, payable messages, and custom error types.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polkadot.\n2. **Toolchain Proficiency**: Master cargo-contract, Substrate & Swanky for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Rust & ink! code on Wasm & pallet-contracts adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Westend / Rococo / Substrate Node** and verify artifacts on **Subscan / Polkadot.js Apps**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/paritytech/polkadot-sdk](https://github.com/paritytech/polkadot-sdk)\n- **Ecosystem Starter Templates**: [https://github.com/use-ink/ink](https://github.com/use-ink/ink)\n- **Block Explorer & State Verifier**: **Subscan / Polkadot.js Apps**\n- **Native Testnet Environment**: **Westend / Rococo / Substrate Node**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "content": "# Module 3: ink! Logic Modules: Messages, Storage & Events\n### Polkadot Ecosystem Track | Developer Academy\n\nWrite idiomatic Rust ink! modules: #[ink(storage)], ink::storage::Mapping, payable messages, and custom error types.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polkadot.\n2. **Toolchain Proficiency**: Master cargo-module, Substrate & Swanky for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Rust & ink! code on Wasm & pallet-modules adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Westend / Rococo / Substrate Node** and verify artifacts on **Subscan / Polkadot.js Apps**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/paritytech/polkadot-sdk](https://github.com/paritytech/polkadot-sdk)\n- **Ecosystem Starter Templates**: [https://github.com/use-ink/ink](https://github.com/use-ink/ink)\n- **Block Explorer & State Verifier**: **Subscan / Polkadot.js Apps**\n- **Native Testnet Environment**: **Westend / Rococo / Substrate Node**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
     "quiz": [
       {
         "question": "What is ink! in the Polkadot / Substrate ecosystem?",
         "options": [
-          "An embedded domain-specific language (eDSL) based on Rust that compiles smart contracts to WebAssembly for `pallet-contracts`.",
+          "An embedded domain-specific language (eDSL) based on Rust that compiles logic modules to WebAssembly for `pallet-modules`.",
           "A visual drag-and-drop programming language.",
           "A private sidechain.",
           "A graphic design tool."
@@ -1504,7 +1504,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "correct_idx": 0
       },
       {
-        "question": "Which attribute macro marks the root persistent storage struct in an ink! contract?",
+        "question": "Which attribute macro marks the root persistent storage struct in an ink! module?",
         "options": [
           "#[ink(storage)]",
           "#[storage]",
@@ -1526,7 +1526,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "What is the difference between `#[ink(constructor)]` and `#[ink(message)]` in ink!?",
         "options": [
-          "`constructor` initializes contract state at instantiation, while `message` defines callable external methods.",
+          "`constructor` initializes module state at instantiation, while `message` defines callable external methods.",
           "`constructor` executes on every transaction.",
           "`message` only runs during compilation.",
           "Both macros are identical."
@@ -1534,7 +1534,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "correct_idx": 0
       },
       {
-        "question": "How are value-receiving functions marked in ink! smart contracts?",
+        "question": "How are value-receiving functions marked in ink! logic modules?",
         "options": [
           "#[ink(message, payable)]",
           "#[payable]",
@@ -1556,7 +1556,7 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
     ],
     "exercise": {
       "instruction": "Write a Rust & ink! code snippet for Module 3. The code must contain the keywords 'inkContract' and 'storage'.",
-      "template": "// Polkadot Module 3: ink! Smart Contracts: Messages, Storage & Events\n// Language: Rust & ink!\n// Write implementation below:\n",
+      "template": "// Polkadot Module 3: ink! Logic Modules: Messages, Storage & Events\n// Language: Rust & ink!\n// Write implementation below:\n",
       "required_keywords": [
         "inkContract",
         "storage"
@@ -1566,17 +1566,17 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
   "polkadot-4": {
     "id": "polkadot-4",
     "level_id": 4,
-    "title": "Module 4: Full-Stack Polkadot DApps & Polkadot.js API Integration",
+    "title": "Module 4: Full-Stack Polkadot application & Polkadot.js API Integration",
     "duration": "24 mins",
     "xp": 300,
-    "content": "# Module 4: Full-Stack Polkadot DApps & Polkadot.js API Integration\n### Polkadot Ecosystem Track | Developer Academy\n\nBuild responsive Web3 frontends with @polkadot/api, @polkadot/api-contract, SubWallet/Talisman, and Weight V2 gas estimation.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polkadot.\n2. **Toolchain Proficiency**: Master cargo-contract, Substrate & Swanky for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Rust & ink! code on Wasm & pallet-contracts adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Westend / Rococo / Substrate Node** and verify artifacts on **Subscan / Polkadot.js Apps**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/paritytech/polkadot-sdk](https://github.com/paritytech/polkadot-sdk)\n- **Ecosystem Starter Templates**: [https://github.com/use-ink/ink](https://github.com/use-ink/ink)\n- **Block Explorer & State Verifier**: **Subscan / Polkadot.js Apps**\n- **Native Testnet Environment**: **Westend / Rococo / Substrate Node**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "content": "# Module 4: Full-Stack Polkadot application & Polkadot.js API Integration\n### Polkadot Ecosystem Track | Developer Academy\n\nBuild responsive Distributed Systems frontends with @polkadot/api, @polkadot/api-module, Subdeveloper key/Talisman, and Weight V2 gas estimation.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polkadot.\n2. **Toolchain Proficiency**: Master cargo-module, Substrate & Swanky for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Rust & ink! code on Wasm & pallet-modules adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Westend / Rococo / Substrate Node** and verify artifacts on **Subscan / Polkadot.js Apps**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/paritytech/polkadot-sdk](https://github.com/paritytech/polkadot-sdk)\n- **Ecosystem Starter Templates**: [https://github.com/use-ink/ink](https://github.com/use-ink/ink)\n- **Block Explorer & State Verifier**: **Subscan / Polkadot.js Apps**\n- **Native Testnet Environment**: **Westend / Rococo / Substrate Node**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
     "quiz": [
       {
-        "question": "Which JavaScript/TypeScript API libraries connect frontends to Polkadot parachains and ink! contracts?",
+        "question": "Which JavaScript/TypeScript API libraries connect frontends to Polkadot parachains and ink! modules?",
         "options": [
-          "@polkadot/api and @polkadot/api-contract",
+          "@polkadot/api and @polkadot/api-module",
           "ethers.js v6",
-          "web3.py",
+          "distributed systems.py",
           "starknet.js"
         ],
         "correct_idx": 0
@@ -1592,22 +1592,22 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "correct_idx": 0
       },
       {
-        "question": "Which multi-chain browser wallets provide native support for Polkadot, Kusama, and ink! parachains?",
+        "question": "Which multi-chain developer key provide native support for Polkadot, Kusama, and ink! parachains?",
         "options": [
-          "SubWallet, Talisman, and Polkadot.js extension",
-          "MetaMask only",
-          "Phantom only",
-          "Coinbase Wallet only"
+          "Subdeveloper key, Talisman, and Polkadot.js extension",
+          "Authorized signer only",
+          "Local keyring only",
+          "Coinbase developer key only"
         ],
         "correct_idx": 0
       },
       {
-        "question": "How do developers instantiate a typed contract instance using @polkadot/api-contract?",
+        "question": "How do developers instantiate a typed module instance using @polkadot/api-module?",
         "options": [
-          "const contract = new ContractPromise(api, metadataAbi, contractAddress);",
-          "const contract = new Web3Contract(abi);",
-          "const contract = loadContract();",
-          "const contract = api.get();"
+          "const module = new ModulePromise(api, metadataAbi, moduleAddress);",
+          "const module = new DistributedSystemsModule(abi);",
+          "const module = loadModule();",
+          "const module = api.get();"
         ],
         "correct_idx": 0
       },
@@ -1622,9 +1622,9 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "correct_idx": 0
       },
       {
-        "question": "How does a frontend DApp estimate gas/weight before executing an ink! state-modifying message?",
+        "question": "How does a frontend application estimate gas/weight before executing an ink! state-modifying message?",
         "options": [
-          "By performing a dry-run via `contract.query.<method>()` to obtain the predicted gasRequired and storageDeposit.",
+          "By performing a dry-run via `module.query.<method>()` to obtain the predicted gasRequired and storageDeposit.",
           "By asking the user to type a random number.",
           "By guessing 100,000 gas.",
           "By submitting an unmetered transaction."
@@ -1633,11 +1633,11 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       }
     ],
     "exercise": {
-      "instruction": "Write a Rust & ink! code snippet for Module 4. The code must contain the keywords 'PolkadotAPI' and 'SubWallet'.",
-      "template": "// Polkadot Module 4: Full-Stack Polkadot DApps & Polkadot.js API Integration\n// Language: Rust & ink!\n// Write implementation below:\n",
+      "instruction": "Write a Rust & ink! code snippet for Module 4. The code must contain the keywords 'PolkadotAPI' and 'Subdeveloper key'.",
+      "template": "// Polkadot Module 4: Full-Stack Polkadot application & Polkadot.js API Integration\n// Language: Rust & ink!\n// Write implementation below:\n",
       "required_keywords": [
         "PolkadotAPI",
-        "SubWallet"
+        "Subdeveloper key"
       ]
     }
   },
@@ -1647,22 +1647,22 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
     "title": "Module 5: Polkadot / Substrate Deployment Challenge & Verification",
     "duration": "27 mins",
     "xp": 350,
-    "content": "# Module 5: Polkadot / Substrate Deployment Challenge & Verification\n### Polkadot Ecosystem Track | Developer Academy\n\nHands-on Deployment Challenge: Compile your ink! contract to Wasm, instantiate on Polkadot testnet / Substrate Contracts Node, and verify on Subscan.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polkadot.\n2. **Toolchain Proficiency**: Master cargo-contract, Substrate & Swanky for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Rust & ink! code on Wasm & pallet-contracts adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Westend / Rococo / Substrate Node** and verify artifacts on **Subscan / Polkadot.js Apps**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/paritytech/polkadot-sdk](https://github.com/paritytech/polkadot-sdk)\n- **Ecosystem Starter Templates**: [https://github.com/use-ink/ink](https://github.com/use-ink/ink)\n- **Block Explorer & State Verifier**: **Subscan / Polkadot.js Apps**\n- **Native Testnet Environment**: **Westend / Rococo / Substrate Node**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "content": "# Module 5: Polkadot / Substrate Deployment Challenge & Verification\n### Polkadot Ecosystem Track | Developer Academy\n\nHands-on Deployment Challenge: Compile your ink! module to Wasm, instantiate on Polkadot testnet / Substrate Node, and verify on Subscan.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polkadot.\n2. **Toolchain Proficiency**: Master cargo-module, Substrate & Swanky for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Rust & ink! code on Wasm & pallet-modules adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Westend / Rococo / Substrate Node** and verify artifacts on **Subscan / Polkadot.js Apps**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/paritytech/polkadot-sdk](https://github.com/paritytech/polkadot-sdk)\n- **Ecosystem Starter Templates**: [https://github.com/use-ink/ink](https://github.com/use-ink/ink)\n- **Block Explorer & State Verifier**: **Subscan / Polkadot.js Apps**\n- **Native Testnet Environment**: **Westend / Rococo / Substrate Node**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
     "quiz": [
       {
-        "question": "Which command compiles an ink! contract into optimized release WebAssembly bytecode?",
+        "question": "Which command compiles an ink! module into optimized release WebAssembly bytecode?",
         "options": [
-          "cargo contract build --release",
+          "cargo module build --release",
           "cargo build",
           "npm run build",
-          "solc --release"
+          "logic-compiler --release"
         ],
         "correct_idx": 0
       },
       {
-        "question": "What is the difference between code upload (`upload_code`) and contract instantiation (`instantiate_with_code`) in `pallet-contracts`?",
+        "question": "What is the difference between code upload (`upload_code`) and module instantiation (`instantiate_with_code`) in `pallet-modules`?",
         "options": [
-          "`upload_code` stores the Wasm bytecode once and returns a CodeHash, allowing multiple contract instances to share the same code cheaply.",
+          "`upload_code` stores the Wasm bytecode once and returns a CodeHash, allowing multiple module instances to share the same code cheaply.",
           "`upload_code` executes all functions immediately.",
           "`instantiate` deletes the bytecode after deployment.",
           "There is no difference."
@@ -1670,19 +1670,19 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "correct_idx": 0
       },
       {
-        "question": "What is the purpose of the `salt` parameter during ink! contract instantiation?",
+        "question": "What is the purpose of the `salt` parameter during ink! module instantiation?",
         "options": [
-          "It ensures unique, deterministic contract address generation even when instantiating the same CodeHash multiple times.",
-          "It encrypts the contract bytecode.",
+          "It ensures unique, deterministic module address generation even when instantiating the same CodeHash multiple times.",
+          "It encrypts the module bytecode.",
           "It sets the admin password.",
           "It calculates validator tips."
         ],
         "correct_idx": 0
       },
       {
-        "question": "Where can developers and Web3 Foundation grant evaluators inspect verified Polkadot/Kusama contract deployments?",
+        "question": "Where can developers and Distributed Systems Foundation grant evaluators inspect verified Polkadot/Kusama module deployments?",
         "options": [
-          "Subscan (subscan.io) or Polkadot.js Apps Contract tab.",
+          "Subscan (subscan.io) or Polkadot.js Apps Module tab.",
           "Etherscan.",
           "Solscan.",
           "Basescan."
@@ -1692,20 +1692,20 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "What verified artifact proves successful completion of the Polkadot / Substrate Deployment Challenge?",
         "options": [
-          "A confirmed Extrinsic Block Hash, deployed Contract Account Address, and verified Wasm metadata on-chain.",
+          "A confirmed Extrinsic Block Hash, deployed Module Account Address, and verified Wasm metadata on-chain.",
           "A text file on your computer.",
-          "A printed PDF with no blockchain hash.",
+          "A printed PDF with no distributed system hash.",
           "A screenshot of a local folder."
         ],
         "correct_idx": 0
       },
       {
-        "question": "Why do Web3 Foundation and Decentralized Futures grant committees prioritize live testnet deployments?",
+        "question": "Why do Distributed Systems Foundation and Decentralized Futures grant committees prioritize live testnet deployments?",
         "options": [
-          "It provides immutable on-chain proof of working Rust Wasm smart contracts, technical proficiency, and ecosystem impact.",
+          "It provides immutable on-chain proof of working Rust Wasm logic modules, technical proficiency, and ecosystem impact.",
           "It automatically guarantees token allocations.",
           "It eliminates the need for software engineering.",
-          "It waives all future blockchain transactions."
+          "It waives all future distributed system transactions."
         ],
         "correct_idx": 0
       }
@@ -1736,15 +1736,15 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
           "title": "Module 1: Aptos Architecture, MoveVM & Block-STM Parallel Engine",
           "duration": "15 mins",
           "xp": 150,
-          "content": "# Module 1: Aptos Architecture, MoveVM & Block-STM Parallel Engine\n### Aptos Ecosystem Track | Developer Academy\n\nMaster Aptos Layer-1 architecture, MoveVM bytecode verification, resource safety, and Block-STM optimistic parallel transaction execution.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Aptos.\n2. **Toolchain Proficiency**: Master Aptos CLI & Move SDK for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Move code on MoveVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Aptos Testnet / Devnet** and verify artifacts on **Aptos Explorer**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/aptos-labs/aptos-core](https://github.com/aptos-labs/aptos-core)\n- **Ecosystem Starter Templates**: [https://github.com/aptos-labs/aptos-developer-docs](https://github.com/aptos-labs/aptos-developer-docs)\n- **Block Explorer & State Verifier**: **Aptos Explorer**\n- **Native Testnet Environment**: **Aptos Testnet / Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "content": "# Module 1: Aptos Architecture, MoveVM & Block-STM Parallel Engine\n### Aptos Ecosystem Track | Developer Academy\n\nMaster Aptos Layer-1 architecture, MoveVM bytecode verification, resource safety, and Block-STM optimistic parallel transaction execution.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Aptos.\n2. **Toolchain Proficiency**: Master Aptos CLI & Move SDK for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Move code on MoveVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Aptos Testnet / Devnet** and verify artifacts on **Aptos Explorer**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/aptos-labs/aptos-core](https://github.com/aptos-labs/aptos-core)\n- **Ecosystem Starter Templates**: [https://github.com/aptos-labs/aptos-developer-docs](https://github.com/aptos-labs/aptos-developer-docs)\n- **Block Explorer & State Verifier**: **Aptos Explorer**\n- **Native Testnet Environment**: **Aptos Testnet / Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
           "quiz": [
             {
               "question": "What is the primary innovation of Aptos's Block-STM parallel execution engine?",
               "options": [
                 "It executes transactions optimistically in parallel and validates dependencies concurrently, achieving over 100k TPS without sharding.",
                 "It executes transactions one by one in single-threaded order.",
-                "It disables smart contract state changes.",
-                "It replaces blockchain with centralized SQL."
+                "It disables logic module state changes.",
+                "It replaces distributed system with centralized SQL."
               ],
               "correct_idx": 0
             },
@@ -1752,7 +1752,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "question": "How does Move's linear type system protect digital assets compared to EVM?",
               "options": [
                 "Move treats assets as scarce Resources that can never be copied, duplicated, or silently discarded.",
-                "Move allows infinite token cloning.",
+                "Move allows infinite balance duplication.",
                 "Move stores all balances in a single public array.",
                 "Move requires no signature verification."
               ],
@@ -1762,7 +1762,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "question": "What is a Resource Account in Aptos?",
               "options": [
                 "An autonomous account used by developers to manage modules, publish packages, and control state without a direct private key.",
-                "A standard user wallet with 12 seed words.",
+                "A standard user credential with 12 seed words.",
                 "A temporary testnet faucet account.",
                 "A bank savings account."
               ],
@@ -1782,19 +1782,19 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "question": "What role does the Move Bytecode Verifier play before execution?",
               "options": [
                 "It rigorously verifies type safety, memory bounds, and resource linearity before any code can run on-chain.",
-                "It translates Move to Solidity.",
-                "It mines APT tokens.",
+                "It translates Move to Object-Oriented Logic.",
+                "It mines unverified transactions.",
                 "It formats code indentation."
               ],
               "correct_idx": 0
             },
             {
-              "question": "Why are reentrancy attacks virtually impossible in native Move smart contracts?",
+              "question": "Why are reentrancy attacks virtually impossible in native Move logic modules?",
               "options": [
                 "Move enforces strict resource borrow semantics and does not permit uncontrolled dynamic call dispatch loops.",
-                "Move contracts have no external functions.",
-                "Move disables token transfers.",
-                "Move contracts do not use state."
+                "Move modules have no external functions.",
+                "Move disables balance transfers.",
+                "Move modules do not use state."
               ],
               "correct_idx": 0
             }
@@ -1821,7 +1821,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
           "title": "Module 2: Aptos Toolchain, Aptos CLI & Move.toml Environment Setup",
           "duration": "18 mins",
           "xp": 200,
-          "content": "# Module 2: Aptos Toolchain, Aptos CLI & Move.toml Environment Setup\n### Aptos Ecosystem Track | Developer Academy\n\nConfigure the official Aptos CLI toolchain, local testnet faucets, Move.toml package dependencies, and automated unit testing.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Aptos.\n2. **Toolchain Proficiency**: Master Aptos CLI & Move SDK for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Move code on MoveVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Aptos Testnet / Devnet** and verify artifacts on **Aptos Explorer**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/aptos-labs/aptos-core](https://github.com/aptos-labs/aptos-core)\n- **Ecosystem Starter Templates**: [https://github.com/aptos-labs/aptos-developer-docs](https://github.com/aptos-labs/aptos-developer-docs)\n- **Block Explorer & State Verifier**: **Aptos Explorer**\n- **Native Testnet Environment**: **Aptos Testnet / Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "content": "# Module 2: Aptos Toolchain, Aptos CLI & Move.toml Environment Setup\n### Aptos Ecosystem Track | Developer Academy\n\nConfigure the official Aptos CLI toolchain, local testnet faucets, Move.toml package dependencies, and automated unit testing.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Aptos.\n2. **Toolchain Proficiency**: Master Aptos CLI & Move SDK for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Move code on MoveVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Aptos Testnet / Devnet** and verify artifacts on **Aptos Explorer**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/aptos-labs/aptos-core](https://github.com/aptos-labs/aptos-core)\n- **Ecosystem Starter Templates**: [https://github.com/aptos-labs/aptos-developer-docs](https://github.com/aptos-labs/aptos-developer-docs)\n- **Block Explorer & State Verifier**: **Aptos Explorer**\n- **Native Testnet Environment**: **Aptos Testnet / Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
           "quiz": [
             {
               "question": "Which command initializes a new Aptos developer profile and generates testnet keypairs?",
@@ -1857,7 +1857,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "question": "How do developers fund their testnet account using the Aptos CLI?",
               "options": [
                 "aptos account fund-with-faucet --account default",
-                "aptos buy tokens --credit-card",
+                "aptos account create --faucet",
                 "aptos mine --blocks 100",
                 "aptos transfer from master"
               ],
@@ -1869,7 +1869,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
                 "They decouple source code from hardcoded addresses, allowing seamless deployment to dynamic account addresses.",
                 "They create DNS records.",
                 "They encrypt GitHub commits.",
-                "They rename user wallets."
+                "They rename user credential."
               ],
               "correct_idx": 0
             },
@@ -1897,16 +1897,16 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
     },
     {
       "level_id": 3,
-      "title": "Level 3: Move Smart Contracts: Resources, Structs & Abilities",
+      "title": "Level 3: Move Logic Modules: Resources, Structs & Abilities",
       "total_lessons": 1,
       "lessons": [
         {
           "id": "aptos-3",
           "level_id": 3,
-          "title": "Module 3: Move Smart Contracts: Resources, Structs & Abilities",
+          "title": "Module 3: Move Logic Modules: Resources, Structs & Abilities",
           "duration": "21 mins",
           "xp": 250,
-          "content": "# Module 3: Move Smart Contracts: Resources, Structs & Abilities\n### Aptos Ecosystem Track | Developer Academy\n\nWrite production Move modules featuring the four abilities (key, store, copy, drop), global storage access, and Fungible Assets.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Aptos.\n2. **Toolchain Proficiency**: Master Aptos CLI & Move SDK for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Move code on MoveVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Aptos Testnet / Devnet** and verify artifacts on **Aptos Explorer**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/aptos-labs/aptos-core](https://github.com/aptos-labs/aptos-core)\n- **Ecosystem Starter Templates**: [https://github.com/aptos-labs/aptos-developer-docs](https://github.com/aptos-labs/aptos-developer-docs)\n- **Block Explorer & State Verifier**: **Aptos Explorer**\n- **Native Testnet Environment**: **Aptos Testnet / Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "content": "# Module 3: Move Logic Modules: Resources, Structs & Abilities\n### Aptos Ecosystem Track | Developer Academy\n\nWrite production Move modules featuring the four abilities (key, store, copy, drop), global storage access, and Fungible Assets.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Aptos.\n2. **Toolchain Proficiency**: Master Aptos CLI & Move SDK for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Move code on MoveVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Aptos Testnet / Devnet** and verify artifacts on **Aptos Explorer**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/aptos-labs/aptos-core](https://github.com/aptos-labs/aptos-core)\n- **Ecosystem Starter Templates**: [https://github.com/aptos-labs/aptos-developer-docs](https://github.com/aptos-labs/aptos-developer-docs)\n- **Block Explorer & State Verifier**: **Aptos Explorer**\n- **Native Testnet Environment**: **Aptos Testnet / Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
           "quiz": [
             {
               "question": "What are the four core abilities in the Move programming language?",
@@ -1943,7 +1943,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "options": [
                 "`copy` allows value duplicating, while `drop` allows values to be popped/destroyed when leaving scope.",
                 "`copy` destroys resources and `drop` clones them.",
-                "`copy` is for NFTs and `drop` is for tokens.",
+                "`copy` is for state records and `drop` is for disposable values.",
                 "Both abilities do the exact same thing."
               ],
               "correct_idx": 0
@@ -1951,10 +1951,10 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "How does the Aptos Fungible Asset (FA) standard improve upon legacy Coin modules?",
               "options": [
-                "It provides a unified, object-based standard for fungible tokens with native metadata, royalties, and deposit hooks.",
+                "It provides a unified, object-based standard for fungible state records with native metadata, royalties, and deposit hooks.",
                 "It requires 50% more gas.",
-                "It prevents token transfers entirely.",
-                "It only works on Bitcoin."
+                "It prevents balance transfers entirely.",
+                "It only works on Legacy Mainframe."
               ],
               "correct_idx": 0
             },
@@ -1971,7 +1971,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
           ],
           "exercise": {
             "instruction": "Write a Move code snippet for Module 3. The code must contain the keywords 'Resource' and 'abilities'.",
-            "template": "// Aptos Module 3: Move Smart Contracts: Resources, Structs & Abilities\n// Language: Move\n// Write implementation below:\n",
+            "template": "// Aptos Module 3: Move Logic Modules: Resources, Structs & Abilities\n// Language: Move\n// Write implementation below:\n",
             "required_keywords": [
               "Resource",
               "abilities"
@@ -1982,22 +1982,22 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
     },
     {
       "level_id": 4,
-      "title": "Level 4: Full-Stack Aptos DApps & TypeScript SDK Integration",
+      "title": "Level 4: Full-Stack Aptos application & TypeScript SDK Integration",
       "total_lessons": 1,
       "lessons": [
         {
           "id": "aptos-4",
           "level_id": 4,
-          "title": "Module 4: Full-Stack Aptos DApps & TypeScript SDK Integration",
+          "title": "Module 4: Full-Stack Aptos application & TypeScript SDK Integration",
           "duration": "24 mins",
           "xp": 300,
-          "content": "# Module 4: Full-Stack Aptos DApps & TypeScript SDK Integration\n### Aptos Ecosystem Track | Developer Academy\n\nConnect Web3 frontends with the @aptos-labs/ts-sdk, integrate Petra/Pontem wallets, and execute entry function payloads.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Aptos.\n2. **Toolchain Proficiency**: Master Aptos CLI & Move SDK for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Move code on MoveVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Aptos Testnet / Devnet** and verify artifacts on **Aptos Explorer**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/aptos-labs/aptos-core](https://github.com/aptos-labs/aptos-core)\n- **Ecosystem Starter Templates**: [https://github.com/aptos-labs/aptos-developer-docs](https://github.com/aptos-labs/aptos-developer-docs)\n- **Block Explorer & State Verifier**: **Aptos Explorer**\n- **Native Testnet Environment**: **Aptos Testnet / Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "content": "# Module 4: Full-Stack Aptos application & TypeScript SDK Integration\n### Aptos Ecosystem Track | Developer Academy\n\nConnect Distributed Systems frontends with the @aptos-labs/ts-sdk, integrate Petra/Pontem developer key, and execute entry function payloads.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Aptos.\n2. **Toolchain Proficiency**: Master Aptos CLI & Move SDK for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Move code on MoveVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Aptos Testnet / Devnet** and verify artifacts on **Aptos Explorer**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/aptos-labs/aptos-core](https://github.com/aptos-labs/aptos-core)\n- **Ecosystem Starter Templates**: [https://github.com/aptos-labs/aptos-developer-docs](https://github.com/aptos-labs/aptos-developer-docs)\n- **Block Explorer & State Verifier**: **Aptos Explorer**\n- **Native Testnet Environment**: **Aptos Testnet / Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
           "quiz": [
             {
-              "question": "Which official package is used to build modern Web3 frontends and scripts on Aptos?",
+              "question": "Which official package is used to build modern Distributed Systems frontends and scripts on Aptos?",
               "options": [
                 "@aptos-labs/ts-sdk",
-                "web3.js legacy",
+                "distributed systems.js legacy",
                 "ethers v4",
                 "aptos-php-client"
               ],
@@ -2006,7 +2006,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "What is an `entry` function in an Aptos Move module?",
               "options": [
-                "A public entrypoint function that can be called directly by external transactions signed by user wallets.",
+                "A public entrypoint function that can be called directly by external transactions signed by user credential.",
                 "A private helper function for internal recursion.",
                 "The constructor function that only runs once at genesis.",
                 "A compiler configuration macro."
@@ -2014,7 +2014,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "correct_idx": 0
             },
             {
-              "question": "How does a frontend DApp request Petra Wallet to sign and broadcast a Move transaction?",
+              "question": "How does a frontend application request Petra developer key to sign and broadcast a Move transaction?",
               "options": [
                 "window.aptos.signAndSubmitTransaction({ payload: { function: '0x1::...::transfer', typeArguments: [], functionArguments: [recipient, amount] } })",
                 "window.alert('sign transfer')",
@@ -2024,7 +2024,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "correct_idx": 0
             },
             {
-              "question": "What API does the Aptos Indexer provide for lightning-fast historical queries and token balances?",
+              "question": "What API does the Aptos Indexer provide for lightning-fast historical queries and account balances?",
               "options": [
                 "GraphQL API endpoint with real-time subscriptions.",
                 "SOAP XML endpoints.",
@@ -2056,7 +2056,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
           ],
           "exercise": {
             "instruction": "Write a Move code snippet for Module 4. The code must contain the keywords 'AptosSDK' and 'TypeScript'.",
-            "template": "// Aptos Module 4: Full-Stack Aptos DApps & TypeScript SDK Integration\n// Language: Move\n// Write implementation below:\n",
+            "template": "// Aptos Module 4: Full-Stack Aptos application & TypeScript SDK Integration\n// Language: Move\n// Write implementation below:\n",
             "required_keywords": [
               "AptosSDK",
               "TypeScript"
@@ -2076,7 +2076,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
           "title": "Module 5: Aptos Testnet Deployment Challenge & Verification",
           "duration": "27 mins",
           "xp": 350,
-          "content": "# Module 5: Aptos Testnet Deployment Challenge & Verification\n### Aptos Ecosystem Track | Developer Academy\n\nHands-on Deployment Challenge: Compile your Move package, publish to Aptos Testnet, verify bytecode on Aptos Explorer, and complete certification.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Aptos.\n2. **Toolchain Proficiency**: Master Aptos CLI & Move SDK for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Move code on MoveVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Aptos Testnet / Devnet** and verify artifacts on **Aptos Explorer**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/aptos-labs/aptos-core](https://github.com/aptos-labs/aptos-core)\n- **Ecosystem Starter Templates**: [https://github.com/aptos-labs/aptos-developer-docs](https://github.com/aptos-labs/aptos-developer-docs)\n- **Block Explorer & State Verifier**: **Aptos Explorer**\n- **Native Testnet Environment**: **Aptos Testnet / Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "content": "# Module 5: Aptos Testnet Deployment Challenge & Verification\n### Aptos Ecosystem Track | Developer Academy\n\nHands-on Deployment Challenge: Compile your Move package, publish to Aptos Testnet, verify bytecode on Aptos Explorer, and complete certification.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Aptos.\n2. **Toolchain Proficiency**: Master Aptos CLI & Move SDK for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Move code on MoveVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Aptos Testnet / Devnet** and verify artifacts on **Aptos Explorer**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/aptos-labs/aptos-core](https://github.com/aptos-labs/aptos-core)\n- **Ecosystem Starter Templates**: [https://github.com/aptos-labs/aptos-developer-docs](https://github.com/aptos-labs/aptos-developer-docs)\n- **Block Explorer & State Verifier**: **Aptos Explorer**\n- **Native Testnet Environment**: **Aptos Testnet / Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
           "quiz": [
             {
               "question": "Which Aptos CLI command publishes a compiled Move module to Aptos Testnet?",
@@ -2165,7 +2165,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
           "title": "Module 1: Starknet Architecture, CairoVM & STARK Validity Proofs",
           "duration": "15 mins",
           "xp": 150,
-          "content": "# Module 1: Starknet Architecture, CairoVM & STARK Validity Proofs\n### Starknet Ecosystem Track | Developer Academy\n\nExplore Starknet ZK-Rollup architecture, STARK validity proofs, CairoVM execution, and native Account Abstraction.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Starknet.\n2. **Toolchain Proficiency**: Master Scarb, Starkli & Snforge for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Cairo code on CairoVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Starknet Sepolia** and verify artifacts on **Starkscan / Voyager**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/starkware-libs/cairo](https://github.com/starkware-libs/cairo)\n- **Ecosystem Starter Templates**: [https://github.com/OpenZeppelin/cairo-contracts](https://github.com/OpenZeppelin/cairo-contracts)\n- **Block Explorer & State Verifier**: **Starkscan / Voyager**\n- **Native Testnet Environment**: **Starknet Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "content": "# Module 1: Starknet Architecture, CairoVM & STARK Validity Proofs\n### Starknet Ecosystem Track | Developer Academy\n\nExplore Starknet ZK-Rollup architecture, STARK validity proofs, CairoVM execution, and native Account Abstraction.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Starknet.\n2. **Toolchain Proficiency**: Master Scarb, Starkli & Snforge for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Cairo code on CairoVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Starknet Sepolia** and verify artifacts on **Starkscan / Voyager**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/starkware-libs/cairo](https://github.com/starkware-libs/cairo)\n- **Ecosystem Starter Templates**: [https://github.com/OpenZeppelin/cairo-modules](https://github.com/OpenZeppelin/cairo-modules)\n- **Block Explorer & State Verifier**: **Starkscan / Voyager**\n- **Native Testnet Environment**: **Starknet Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
           "quiz": [
             {
               "question": "What is the primary scaling mechanism of Starknet as a Layer-2 ZK-Rollup?",
@@ -2173,7 +2173,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
                 "It executes thousands of transactions off-chain, bundles them into a single STARK validity proof, and verifies it on Ethereum L1.",
                 "It runs sidechains with separate consensus and no L1 security.",
                 "It deletes historical transactions every 30 days.",
-                "It uses centralized web servers without cryptography."
+                "It uses centralized web servers without asymmetric verification."
               ],
               "correct_idx": 0
             },
@@ -2183,17 +2183,17 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
                 "STARKs require no trusted setup ceremony and are transparent and post-quantum secure.",
                 "STARKs require toxic waste ceremonies.",
                 "STARKs are slower to verify.",
-                "STARKs only work on Bitcoin."
+                "STARKs only work on Legacy Mainframe."
               ],
               "correct_idx": 0
             },
             {
               "question": "What does Native Account Abstraction mean on Starknet?",
               "options": [
-                "All accounts are smart contracts with custom validation (`__validate__`) and execution (`__execute__`) logic \u2014 there are no EOAs.",
+                "All accounts are logic modules with custom validation (`__validate__`) and execution (`__execute__`) logic \u2014 there are no EOAs.",
                 "Accounts are managed by centralized email servers.",
                 "Users have no private keys.",
-                "Contracts cannot hold balances."
+                "Modules cannot hold balances."
               ],
               "correct_idx": 0
             },
@@ -2250,7 +2250,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
           "title": "Module 2: Cairo 2.0 Tooling: Scarb, Starkli & Snforge Environment",
           "duration": "18 mins",
           "xp": 200,
-          "content": "# Module 2: Cairo 2.0 Tooling: Scarb, Starkli & Snforge Environment\n### Starknet Ecosystem Track | Developer Academy\n\nSet up Scarb package manager, Starkli CLI account management, and Snforge testing framework for Starknet Sepolia.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Starknet.\n2. **Toolchain Proficiency**: Master Scarb, Starkli & Snforge for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Cairo code on CairoVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Starknet Sepolia** and verify artifacts on **Starkscan / Voyager**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/starkware-libs/cairo](https://github.com/starkware-libs/cairo)\n- **Ecosystem Starter Templates**: [https://github.com/OpenZeppelin/cairo-contracts](https://github.com/OpenZeppelin/cairo-contracts)\n- **Block Explorer & State Verifier**: **Starkscan / Voyager**\n- **Native Testnet Environment**: **Starknet Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "content": "# Module 2: Cairo 2.0 Tooling: Scarb, Starkli & Snforge Environment\n### Starknet Ecosystem Track | Developer Academy\n\nSet up Scarb package manager, Starkli CLI account management, and Snforge testing framework for Starknet Sepolia.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Starknet.\n2. **Toolchain Proficiency**: Master Scarb, Starkli & Snforge for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Cairo code on CairoVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Starknet Sepolia** and verify artifacts on **Starkscan / Voyager**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/starkware-libs/cairo](https://github.com/starkware-libs/cairo)\n- **Ecosystem Starter Templates**: [https://github.com/OpenZeppelin/cairo-modules](https://github.com/OpenZeppelin/cairo-modules)\n- **Block Explorer & State Verifier**: **Starkscan / Voyager**\n- **Native Testnet Environment**: **Starknet Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
           "quiz": [
             {
               "question": "Which official build tool and package manager is used for Cairo and Starknet projects?",
@@ -2263,7 +2263,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "correct_idx": 0
             },
             {
-              "question": "What command-line tool is used for declaring class hashes and deploying contract instances on Starknet?",
+              "question": "What command-line tool is used for declaring class hashes and deploying module instances on Starknet?",
               "options": [
                 "starkli",
                 "hardhat",
@@ -2275,7 +2275,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "Why are Starknet deployments split into two distinct steps (`declare` and `deploy`)?",
               "options": [
-                "`declare` registers the immutable contract class code and computes the class hash once, while `deploy` instantiates individual contract instances.",
+                "`declare` registers the immutable module class code and computes the class hash once, while `deploy` instantiates individual module instances.",
                 "Because the compiler cannot run in one step.",
                 "To charge double gas fees.",
                 "To verify user identity."
@@ -2283,7 +2283,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "correct_idx": 0
             },
             {
-              "question": "Which testing framework provides blazing-fast unit tests and cheatcodes for Cairo contracts?",
+              "question": "Which testing framework provides blazing-fast unit tests and cheatcodes for Cairo modules?",
               "options": [
                 "snforge (Starknet Foundry)",
                 "Mocha/Chai",
@@ -2303,7 +2303,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "correct_idx": 0
             },
             {
-              "question": "Which testnet is the primary network for Starknet contract testing and grant verifications?",
+              "question": "Which testnet is the primary network for Starknet module testing and grant verifications?",
               "options": [
                 "Starknet Sepolia",
                 "Goerli (deprecated)",
@@ -2326,29 +2326,29 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
     },
     {
       "level_id": 3,
-      "title": "Level 3: Cairo Smart Contracts: Storage, Components & Events",
+      "title": "Level 3: Cairo Logic Modules: Storage, Components & Events",
       "total_lessons": 1,
       "lessons": [
         {
           "id": "starknet-3",
           "level_id": 3,
-          "title": "Module 3: Cairo Smart Contracts: Storage, Components & Events",
+          "title": "Module 3: Cairo Logic Modules: Storage, Components & Events",
           "duration": "21 mins",
           "xp": 250,
-          "content": "# Module 3: Cairo Smart Contracts: Storage, Components & Events\n### Starknet Ecosystem Track | Developer Academy\n\nWrite secure Cairo 2.0 contracts using #[starknet::contract], storage mappings, Cairo components, and events.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Starknet.\n2. **Toolchain Proficiency**: Master Scarb, Starkli & Snforge for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Cairo code on CairoVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Starknet Sepolia** and verify artifacts on **Starkscan / Voyager**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/starkware-libs/cairo](https://github.com/starkware-libs/cairo)\n- **Ecosystem Starter Templates**: [https://github.com/OpenZeppelin/cairo-contracts](https://github.com/OpenZeppelin/cairo-contracts)\n- **Block Explorer & State Verifier**: **Starkscan / Voyager**\n- **Native Testnet Environment**: **Starknet Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "content": "# Module 3: Cairo Logic Modules: Storage, Components & Events\n### Starknet Ecosystem Track | Developer Academy\n\nWrite secure Cairo 2.0 modules using #[starknet::contract], storage mappings, Cairo components, and events.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Starknet.\n2. **Toolchain Proficiency**: Master Scarb, Starkli & Snforge for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Cairo code on CairoVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Starknet Sepolia** and verify artifacts on **Starkscan / Voyager**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/starkware-libs/cairo](https://github.com/starkware-libs/cairo)\n- **Ecosystem Starter Templates**: [https://github.com/OpenZeppelin/cairo-modules](https://github.com/OpenZeppelin/cairo-modules)\n- **Block Explorer & State Verifier**: **Starkscan / Voyager**\n- **Native Testnet Environment**: **Starknet Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
           "quiz": [
             {
-              "question": "Which attribute macro marks a module as a deployable Starknet smart contract in Cairo 2.0?",
+              "question": "Which attribute macro marks a module as a deployable Starknet logic module in Cairo 2.0?",
               "options": [
                 "#[starknet::contract]",
                 "#[contract]",
-                "#[solidity::contract]",
+                "#[object-oriented logic::contract]",
                 "#[program]"
               ],
               "correct_idx": 0
             },
             {
-              "question": "Where is contract persistent state declared in a Cairo smart contract?",
+              "question": "Where is module persistent state declared in a Cairo logic module?",
               "options": [
                 "Inside the `#[storage]` struct definition.",
                 "In global memory variables.",
@@ -2358,12 +2358,12 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "correct_idx": 0
             },
             {
-              "question": "How do Cairo Components replace Solidity-style contract inheritance?",
+              "question": "How do Cairo Components replace Object-Oriented Logic-style module inheritance?",
               "options": [
-                "Components are modular, composable contract logic packages (like OpenZeppelin ERC20) that can be embedded into any contract state.",
+                "Components are modular, composable module logic packages (like OpenZeppelin standard ledger modules) that can be embedded into any module state.",
                 "Components are CSS UI widgets.",
                 "Components replace RPC endpoints.",
-                "Components delete contract storage."
+                "Components delete module storage."
               ],
               "correct_idx": 0
             },
@@ -2378,7 +2378,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "correct_idx": 0
             },
             {
-              "question": "How are events declared and emitted in Cairo smart contracts?",
+              "question": "How are events declared and emitted in Cairo logic modules?",
               "options": [
                 "Declared inside an `#[event]` enum and emitted via `self.emit(EventName { ... })`.",
                 "By printing to console with `println!()`.",
@@ -2388,7 +2388,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "correct_idx": 0
             },
             {
-              "question": "What access control pattern is standard in Cairo OpenZeppelin contracts?",
+              "question": "What access control pattern is standard in Cairo OpenZeppelin modules?",
               "options": [
                 "Ownable Component (`#[abi(embed_v0)] impl OwnableImpl`) and AccessControl Component.",
                 "Hardcoding admin private key in storage.",
@@ -2400,7 +2400,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
           ],
           "exercise": {
             "instruction": "Write a Cairo code snippet for Module 3. The code must contain the keywords 'starknet' and 'contract'.",
-            "template": "// Starknet Module 3: Cairo Smart Contracts: Storage, Components & Events\n// Language: Cairo\n// Write implementation below:\n",
+            "template": "// Starknet Module 3: Cairo Logic Modules: Storage, Components & Events\n// Language: Cairo\n// Write implementation below:\n",
             "required_keywords": [
               "starknet",
               "contract",
@@ -2412,22 +2412,22 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
     },
     {
       "level_id": 4,
-      "title": "Level 4: Full-Stack Starknet DApps & Starknet.js Integration",
+      "title": "Level 4: Full-Stack Starknet application & Starknet.js Integration",
       "total_lessons": 1,
       "lessons": [
         {
           "id": "starknet-4",
           "level_id": 4,
-          "title": "Module 4: Full-Stack Starknet DApps & Starknet.js Integration",
+          "title": "Module 4: Full-Stack Starknet application & Starknet.js Integration",
           "duration": "24 mins",
           "xp": 300,
-          "content": "# Module 4: Full-Stack Starknet DApps & Starknet.js Integration\n### Starknet Ecosystem Track | Developer Academy\n\nBuild full-stack DApps with Starknet.js v6, connect ArgentX & Braavos wallets, and leverage Account Abstraction multicalls.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Starknet.\n2. **Toolchain Proficiency**: Master Scarb, Starkli & Snforge for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Cairo code on CairoVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Starknet Sepolia** and verify artifacts on **Starkscan / Voyager**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/starkware-libs/cairo](https://github.com/starkware-libs/cairo)\n- **Ecosystem Starter Templates**: [https://github.com/OpenZeppelin/cairo-contracts](https://github.com/OpenZeppelin/cairo-contracts)\n- **Block Explorer & State Verifier**: **Starkscan / Voyager**\n- **Native Testnet Environment**: **Starknet Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "content": "# Module 4: Full-Stack Starknet application & Starknet.js Integration\n### Starknet Ecosystem Track | Developer Academy\n\nBuild full-stack application with Starknet.js v6, connect ArgentX & Braavos developer key, and leverage Account Abstraction multicalls.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Starknet.\n2. **Toolchain Proficiency**: Master Scarb, Starkli & Snforge for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Cairo code on CairoVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Starknet Sepolia** and verify artifacts on **Starkscan / Voyager**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/starkware-libs/cairo](https://github.com/starkware-libs/cairo)\n- **Ecosystem Starter Templates**: [https://github.com/OpenZeppelin/cairo-modules](https://github.com/OpenZeppelin/cairo-modules)\n- **Block Explorer & State Verifier**: **Starkscan / Voyager**\n- **Native Testnet Environment**: **Starknet Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
           "quiz": [
             {
-              "question": "Which JavaScript/TypeScript SDK is the industry standard for Starknet DApps?",
+              "question": "Which JavaScript/TypeScript SDK is the industry standard for Starknet application?",
               "options": [
                 "starknet.js (v6)",
-                "web3.js",
+                "distributed systems.js",
                 "ethers.js v5",
                 "viem EVM"
               ],
@@ -2438,25 +2438,25 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "options": [
                 "Multicalls \u2014 users can approve tokens AND execute a swap in a single atomic transaction signature.",
                 "Transactions require no internet connection.",
-                "Gas is refunded in Bitcoin.",
-                "Wallets have no passcodes."
+                "Gas is refunded in Legacy Mainframe.",
+                "developer key have no passcodes."
               ],
               "correct_idx": 0
             },
             {
-              "question": "Which popular Web3 smart contract wallets are native to Starknet?",
+              "question": "Which popular Distributed Systems logic module developer key are native to Starknet?",
               "options": [
-                "Argent X and Braavos",
-                "MetaMask only",
-                "Phantom only",
-                "Coinbase Wallet extension only"
+                "Starknet CLI and Native Keyring",
+                "Authorized signer only",
+                "Local keyring only",
+                "Hardware key module only"
               ],
               "correct_idx": 0
             },
             {
               "question": "What is a Paymaster on Starknet?",
               "options": [
-                "A smart contract that sponsors transaction gas fees or allows users to pay gas in alternative ERC-20 tokens (like USDC or STRK).",
+                "A logic module that sponsors transaction gas fees or allows users to pay gas in alternative Asset Standard tokens (like Network Credits or USDC).",
                 "A payroll employee.",
                 "A hardware mining machine.",
                 "A block explorer advertisement."
@@ -2464,9 +2464,9 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "correct_idx": 0
             },
             {
-              "question": "How do developers query read-only contract state using Starknet.js?",
+              "question": "How do developers query read-only module state using Starknet.js?",
               "options": [
-                "Using `myContract.call('get_balance', [userAddress])` without submitting a transaction.",
+                "Using `myModule.call('get_balance', [userAddress])` without submitting a transaction.",
                 "By broadcasting a signed transaction that pays gas.",
                 "By querying an SQL database.",
                 "By restarting the RPC node."
@@ -2474,7 +2474,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "correct_idx": 0
             },
             {
-              "question": "What RPC method retrieves filtered contract events directly from Starknet RPC nodes?",
+              "question": "What RPC method retrieves filtered module events directly from Starknet RPC nodes?",
               "options": [
                 "starknet_getEvents",
                 "eth_getLogs",
@@ -2486,7 +2486,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
           ],
           "exercise": {
             "instruction": "Write a Cairo code snippet for Module 4. The code must contain the keywords 'StarknetJS' and 'ArgentX'.",
-            "template": "// Starknet Module 4: Full-Stack Starknet DApps & Starknet.js Integration\n// Language: Cairo\n// Write implementation below:\n",
+            "template": "// Starknet Module 4: Full-Stack Starknet application & Starknet.js Integration\n// Language: Cairo\n// Write implementation below:\n",
             "required_keywords": [
               "StarknetJS",
               "ArgentX"
@@ -2506,13 +2506,13 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
           "title": "Module 5: Starknet Sepolia Deployment Challenge & ZK Verification",
           "duration": "27 mins",
           "xp": 350,
-          "content": "# Module 5: Starknet Sepolia Deployment Challenge & ZK Verification\n### Starknet Ecosystem Track | Developer Academy\n\nHands-on Deployment Challenge: Build with Scarb, declare your class hash, deploy to Starknet Sepolia, and verify on Starkscan.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Starknet.\n2. **Toolchain Proficiency**: Master Scarb, Starkli & Snforge for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Cairo code on CairoVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Starknet Sepolia** and verify artifacts on **Starkscan / Voyager**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/starkware-libs/cairo](https://github.com/starkware-libs/cairo)\n- **Ecosystem Starter Templates**: [https://github.com/OpenZeppelin/cairo-contracts](https://github.com/OpenZeppelin/cairo-contracts)\n- **Block Explorer & State Verifier**: **Starkscan / Voyager**\n- **Native Testnet Environment**: **Starknet Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "content": "# Module 5: Starknet Sepolia Deployment Challenge & ZK Verification\n### Starknet Ecosystem Track | Developer Academy\n\nHands-on Deployment Challenge: Build with Scarb, declare your class hash, deploy to Starknet Sepolia, and verify on Starkscan.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Starknet.\n2. **Toolchain Proficiency**: Master Scarb, Starkli & Snforge for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Cairo code on CairoVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Starknet Sepolia** and verify artifacts on **Starkscan / Voyager**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/starkware-libs/cairo](https://github.com/starkware-libs/cairo)\n- **Ecosystem Starter Templates**: [https://github.com/OpenZeppelin/cairo-modules](https://github.com/OpenZeppelin/cairo-modules)\n- **Block Explorer & State Verifier**: **Starkscan / Voyager**\n- **Native Testnet Environment**: **Starknet Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
           "quiz": [
             {
-              "question": "Which command declares a compiled Cairo contract class hash to Starknet Sepolia?",
+              "question": "Which command declares a compiled Cairo module class hash to Starknet Sepolia?",
               "options": [
-                "starkli declare target/dev/my_contract.contract_class.json --network sepolia",
-                "starkli upload contract",
+                "starkli declare target/dev/my_module.module_class.json --network sepolia",
+                "starkli upload module",
                 "scarb push mainnet",
                 "npm run declare"
               ],
@@ -2522,14 +2522,14 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "question": "Which command instantiates and deploys a declared class hash with constructor arguments?",
               "options": [
                 "starkli deploy <CLASS_HASH> <CONSTRUCTOR_ARGS> --network sepolia",
-                "starkli create contract",
+                "starkli create module",
                 "forge create",
                 "cargo deploy"
               ],
               "correct_idx": 0
             },
             {
-              "question": "Where can developers and grant evaluators verify deployed Cairo contracts on Starknet Sepolia?",
+              "question": "Where can developers and grant evaluators verify deployed Cairo modules on Starknet Sepolia?",
               "options": [
                 "Starkscan (sepolia.starkscan.co) or Voyager (sepolia.voyager.online).",
                 "Etherscan mainnet.",
@@ -2539,10 +2539,10 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "correct_idx": 0
             },
             {
-              "question": "What role does the Universal Deployer Contract (UDC) play on Starknet?",
+              "question": "What role does the Universal Deployer Module (UDM) play on Starknet?",
               "options": [
-                "It standardizes deterministic contract address deployment using salt and caller addresses across the network.",
-                "It burns unused STRK tokens.",
+                "It standardizes deterministic module address deployment using salt and caller addresses across the network.",
+                "It burns unused transaction execution credits.",
                 "It manages user seed phrases.",
                 "It routes DNS traffic."
               ],
@@ -2551,7 +2551,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "What verification artifact confirms successful completion of the Starknet Deployment Challenge?",
               "options": [
-                "A confirmed transaction hash on Starknet Sepolia with verified contract class and initial storage state.",
+                "A confirmed transaction hash on Starknet Sepolia with verified module class and initial storage state.",
                 "A local terminal log screenshot.",
                 "A paper certificate.",
                 "A GitHub commit with no deployment."
@@ -2561,7 +2561,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "Why is completing this deployment challenge critical for Starknet Foundation grant reviewers?",
               "options": [
-                "It provides immutable on-chain proof of working Cairo smart contract deployments and real Layer-2 builder impact.",
+                "It provides immutable on-chain proof of working Cairo logic module deployments and real Layer-2 builder impact.",
                 "It guarantees immediate grant funding without review.",
                 "It eliminates the need for code review.",
                 "It waives all future gas fees."
@@ -2595,12 +2595,12 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
           "title": "Module 1: Solana Architecture, Sealevel Runtime & Proof of History",
           "duration": "15 mins",
           "xp": 150,
-          "content": "# Module 1: Solana Architecture, Sealevel Runtime & Proof of History\n### Solana Ecosystem Track | Developer Academy\n\nMaster Solana high-throughput architecture: Proof of History (PoH), Sealevel parallel execution, and the Account model.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Solana.\n2. **Toolchain Proficiency**: Master Anchor Framework & Solana CLI for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Rust & Anchor code on Sealevel adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Solana Devnet** and verify artifacts on **Solana Explorer / Solscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/coral-xyz/anchor](https://github.com/coral-xyz/anchor)\n- **Ecosystem Starter Templates**: [https://github.com/solana-labs/solana-program-library](https://github.com/solana-labs/solana-program-library)\n- **Block Explorer & State Verifier**: **Solana Explorer / Solscan**\n- **Native Testnet Environment**: **Solana Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "content": "# Module 1: Solana Architecture, Sealevel Runtime & Proof of History\n### Solana Ecosystem Track | Developer Academy\n\nMaster Solana high-throughput architecture: Proof of History (PoH), Sealevel parallel execution, and the Account model.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Solana.\n2. **Toolchain Proficiency**: Master Anchor Framework & Solana CLI for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Rust & Anchor code on Sealevel adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Solana Devnet** and verify artifacts on **Solana Explorer / Solscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/coral-xyz/anchor](https://github.com/coral-xyz/anchor)\n- **Ecosystem Starter Templates**: [https://github.com/solana-labs/solana-program-library](https://github.com/solana-labs/solana-program-library)\n- **Block Explorer & State Verifier**: **Solana Explorer / Solscan**\n- **Native Testnet Environment**: **Solana Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
           "quiz": [
             {
               "question": "What is Proof of History (PoH) in Solana architecture?",
               "options": [
-                "A verifiable cryptographic delay function (VDF) that creates a decentralized clock before consensus, enabling parallel processing.",
+                "A verifiable asymmetric verification delay function (VDF) that creates a decentralized clock before consensus, enabling parallel processing.",
                 "A Proof of Work mining algorithm.",
                 "A database backup system.",
                 "A KYC identity verification standard."
@@ -2608,7 +2608,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "correct_idx": 0
             },
             {
-              "question": "How does the Sealevel parallel smart contract runtime achieve massive throughput?",
+              "question": "How does the Sealevel parallel logic module runtime achieve massive throughput?",
               "options": [
                 "By reading and writing to non-overlapping accounts concurrently across multiple CPU threads and GPU cores.",
                 "By executing all transactions on a single thread.",
@@ -2643,7 +2643,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
                 "A mempool-less transaction forwarding protocol that pushes transactions to upcoming leaders before block generation.",
                 "A cross-chain bridge to Ethereum.",
                 "An ocean current monitoring system.",
-                "A cold storage hardware wallet."
+                "A cold storage hardware developer key."
               ],
               "correct_idx": 0
             },
@@ -2652,7 +2652,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "options": [
                 "Transactions must explicitly declare all accounts they intend to read and write in advance.",
                 "Transactions are paused when two users click send.",
-                "Global locks on the entire blockchain state.",
+                "Global locks on the entire distributed system state.",
                 "Transactions run only at midnight."
               ],
               "correct_idx": 0
@@ -2680,10 +2680,10 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
           "title": "Module 2: Solana Toolchain, Anchor Framework & Local Validator",
           "duration": "18 mins",
           "xp": 200,
-          "content": "# Module 2: Solana Toolchain, Anchor Framework & Local Validator\n### Solana Ecosystem Track | Developer Academy\n\nConfigure Solana CLI, Anchor framework, Anchor.toml, solana-test-validator, and Devnet airdrop funding.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Solana.\n2. **Toolchain Proficiency**: Master Anchor Framework & Solana CLI for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Rust & Anchor code on Sealevel adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Solana Devnet** and verify artifacts on **Solana Explorer / Solscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/coral-xyz/anchor](https://github.com/coral-xyz/anchor)\n- **Ecosystem Starter Templates**: [https://github.com/solana-labs/solana-program-library](https://github.com/solana-labs/solana-program-library)\n- **Block Explorer & State Verifier**: **Solana Explorer / Solscan**\n- **Native Testnet Environment**: **Solana Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "content": "# Module 2: Solana Toolchain, Anchor Framework & Local Validator\n### Solana Ecosystem Track | Developer Academy\n\nConfigure Solana CLI, Anchor framework, Anchor.toml, solana-test-validator, and Devnet airdrop funding.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Solana.\n2. **Toolchain Proficiency**: Master Anchor Framework & Solana CLI for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Rust & Anchor code on Sealevel adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Solana Devnet** and verify artifacts on **Solana Explorer / Solscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/coral-xyz/anchor](https://github.com/coral-xyz/anchor)\n- **Ecosystem Starter Templates**: [https://github.com/solana-labs/solana-program-library](https://github.com/solana-labs/solana-program-library)\n- **Block Explorer & State Verifier**: **Solana Explorer / Solscan**\n- **Native Testnet Environment**: **Solana Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
           "quiz": [
             {
-              "question": "Which framework is the industry standard for writing secure, idiomatic Solana smart contracts in Rust?",
+              "question": "Which framework is the industry standard for writing secure, idiomatic Solana logic modules in Rust?",
               "options": [
                 "Anchor Framework",
                 "Hardhat",
@@ -2723,7 +2723,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "correct_idx": 0
             },
             {
-              "question": "How do you request 2 free SOL on Solana Devnet for contract deployment testing?",
+              "question": "How do you request testnet execution credits on Solana Devnet for module deployment testing?",
               "options": [
                 "solana airdrop 2 --url devnet",
                 "solana buy 2 devnet",
@@ -2756,22 +2756,22 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
     },
     {
       "level_id": 3,
-      "title": "Level 3: Anchor Smart Contracts: Accounts, PDAs & Instructions",
+      "title": "Level 3: Anchor Logic Modules: Accounts, PDAs & Instructions",
       "total_lessons": 1,
       "lessons": [
         {
           "id": "solana-3",
           "level_id": 3,
-          "title": "Module 3: Anchor Smart Contracts: Accounts, PDAs & Instructions",
+          "title": "Module 3: Anchor Logic Modules: Accounts, PDAs & Instructions",
           "duration": "21 mins",
           "xp": 250,
-          "content": "# Module 3: Anchor Smart Contracts: Accounts, PDAs & Instructions\n### Solana Ecosystem Track | Developer Academy\n\nImplement Anchor programs with #[derive(Accounts)], Program Derived Addresses (PDAs), and account validation constraints.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Solana.\n2. **Toolchain Proficiency**: Master Anchor Framework & Solana CLI for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Rust & Anchor code on Sealevel adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Solana Devnet** and verify artifacts on **Solana Explorer / Solscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/coral-xyz/anchor](https://github.com/coral-xyz/anchor)\n- **Ecosystem Starter Templates**: [https://github.com/solana-labs/solana-program-library](https://github.com/solana-labs/solana-program-library)\n- **Block Explorer & State Verifier**: **Solana Explorer / Solscan**\n- **Native Testnet Environment**: **Solana Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "content": "# Module 3: Anchor Logic Modules: Accounts, PDAs & Instructions\n### Solana Ecosystem Track | Developer Academy\n\nImplement Anchor programs with #[derive(Accounts)], Program Derived Addresses (PDAs), and account validation constraints.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Solana.\n2. **Toolchain Proficiency**: Master Anchor Framework & Solana CLI for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Rust & Anchor code on Sealevel adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Solana Devnet** and verify artifacts on **Solana Explorer / Solscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/coral-xyz/anchor](https://github.com/coral-xyz/anchor)\n- **Ecosystem Starter Templates**: [https://github.com/solana-labs/solana-program-library](https://github.com/solana-labs/solana-program-library)\n- **Block Explorer & State Verifier**: **Solana Explorer / Solscan**\n- **Native Testnet Environment**: **Solana Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
           "quiz": [
             {
               "question": "What is a Program Derived Address (PDA) in Solana?",
               "options": [
                 "An account address deterministically derived from program ID and seed bytes that has no private key, controlled solely by the program.",
-                "A standard user wallet address.",
+                "A standard user credential address.",
                 "A random number generated by miners.",
                 "A temporary session token."
               ],
@@ -2800,7 +2800,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "What is a Cross-Program Invocation (CPI) on Solana?",
               "options": [
-                "A direct on-chain call from one Solana program to another (e.g. calling the SPL Token program to transfer tokens).",
+                "A direct on-chain call from one Solana program to another (e.g. calling the Token program to update balances).",
                 "An API call from frontend to backend.",
                 "A database query.",
                 "An off-chain bridge."
@@ -2813,15 +2813,15 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
                 "Through declarative account constraints like `#[account(signer)]` and `#[account(mut, has_one = authority)]`.",
                 "By disabling multi-user transactions.",
                 "By encrypting all account data with passwords.",
-                "By running contracts in read-only mode."
+                "By running modules in read-only mode."
               ],
               "correct_idx": 0
             },
             {
-              "question": "What standard token library is used for fungible and non-fungible tokens on Solana?",
+              "question": "What standard token library is used for state records and digital credentials on Solana?",
               "options": [
                 "SPL Token (Solana Program Library) and Token-2022 Extensions.",
-                "ERC-20 standard.",
+                "Asset Standard standard.",
                 "Move Coin module.",
                 "Cairo token component."
               ],
@@ -2830,7 +2830,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
           ],
           "exercise": {
             "instruction": "Write a Rust & Anchor code snippet for Module 3. The code must contain the keywords 'PDA' and 'AnchorProgram'.",
-            "template": "// Solana Module 3: Anchor Smart Contracts: Accounts, PDAs & Instructions\n// Language: Rust & Anchor\n// Write implementation below:\n",
+            "template": "// Solana Module 3: Anchor Logic Modules: Accounts, PDAs & Instructions\n// Language: Rust & Anchor\n// Write implementation below:\n",
             "required_keywords": [
               "PDA",
               "AnchorProgram"
@@ -2841,22 +2841,22 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
     },
     {
       "level_id": 4,
-      "title": "Level 4: Full-Stack Solana DApps & @solana/web3.js Integration",
+      "title": "Level 4: Full-Stack Solana application & @solana/distributed systems.js Integration",
       "total_lessons": 1,
       "lessons": [
         {
           "id": "solana-4",
           "level_id": 4,
-          "title": "Module 4: Full-Stack Solana DApps & @solana/web3.js Integration",
+          "title": "Module 4: Full-Stack Solana application & @solana/distributed systems.js Integration",
           "duration": "24 mins",
           "xp": 300,
-          "content": "# Module 4: Full-Stack Solana DApps & @solana/web3.js Integration\n### Solana Ecosystem Track | Developer Academy\n\nBuild responsive Solana DApps with @solana/web3.js, @coral-xyz/anchor, Phantom wallet adapter, and versioned transactions.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Solana.\n2. **Toolchain Proficiency**: Master Anchor Framework & Solana CLI for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Rust & Anchor code on Sealevel adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Solana Devnet** and verify artifacts on **Solana Explorer / Solscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/coral-xyz/anchor](https://github.com/coral-xyz/anchor)\n- **Ecosystem Starter Templates**: [https://github.com/solana-labs/solana-program-library](https://github.com/solana-labs/solana-program-library)\n- **Block Explorer & State Verifier**: **Solana Explorer / Solscan**\n- **Native Testnet Environment**: **Solana Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "content": "# Module 4: Full-Stack Solana application & @solana/distributed systems.js Integration\n### Solana Ecosystem Track | Developer Academy\n\nBuild responsive Solana application with @solana/distributed systems.js, @coral-xyz/anchor, Phantom developer key adapter, and versioned transactions.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Solana.\n2. **Toolchain Proficiency**: Master Anchor Framework & Solana CLI for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Rust & Anchor code on Sealevel adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Solana Devnet** and verify artifacts on **Solana Explorer / Solscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/coral-xyz/anchor](https://github.com/coral-xyz/anchor)\n- **Ecosystem Starter Templates**: [https://github.com/solana-labs/solana-program-library](https://github.com/solana-labs/solana-program-library)\n- **Block Explorer & State Verifier**: **Solana Explorer / Solscan**\n- **Native Testnet Environment**: **Solana Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
           "quiz": [
             {
               "question": "Which JavaScript libraries are used to build interactive full-stack Solana web applications?",
               "options": [
-                "@solana/web3.js, @coral-xyz/anchor, and @solana/wallet-adapter-react",
-                "web3.py",
+                "@solana/distributed systems.js, @coral-xyz/anchor, and @solana/developer key-adapter-react",
+                "distributed systems.py",
                 "ethers v5",
                 "starknet.js"
               ],
@@ -2876,7 +2876,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "question": "How do you initialize a typed Anchor Program client in TypeScript?",
               "options": [
                 "const program = new Program(IDL, programId, provider);",
-                "const program = new Contract(abi, address);",
+                "const program = new LogicProgram(abi, address);",
                 "const program = loadProgram('solana');",
                 "const program = fetchProgram(rpc);"
               ],
@@ -2893,12 +2893,12 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "correct_idx": 0
             },
             {
-              "question": "Which popular browser extension wallets are standard across the Solana ecosystem?",
+              "question": "Which popular browser extension developer key are standard across the Solana ecosystem?",
               "options": [
                 "Phantom and Solflare",
                 "ArgentX only",
-                "SubWallet only",
-                "MetaMask only"
+                "Subdeveloper key only",
+                "Authorized signer only"
               ],
               "correct_idx": 0
             },
@@ -2907,17 +2907,17 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "options": [
                 "Using dedicated RPC providers (Helius, Triton, QuickNode) and implementing retry backoffs.",
                 "By closing the user's browser.",
-                "By removing wallet connections.",
+                "By removing developer key connections.",
                 "By deploying private testnets."
               ],
               "correct_idx": 0
             }
           ],
           "exercise": {
-            "instruction": "Write a Rust & Anchor code snippet for Module 4. The code must contain the keywords 'SolanaWeb3' and 'Phantom'.",
-            "template": "// Solana Module 4: Full-Stack Solana DApps & @solana/web3.js Integration\n// Language: Rust & Anchor\n// Write implementation below:\n",
+            "instruction": "Write a Rust & Anchor code snippet for Module 4. The code must contain the keywords 'SolanaDistributed Systems' and 'Phantom'.",
+            "template": "// Solana Module 4: Full-Stack Solana application & @solana/distributed systems.js Integration\n// Language: Rust & Anchor\n// Write implementation below:\n",
             "required_keywords": [
-              "SolanaWeb3",
+              "SolanaDistributed Systems",
               "Phantom"
             ]
           }
@@ -2935,13 +2935,13 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
           "title": "Module 5: Solana Devnet Deployment Challenge & Verification",
           "duration": "27 mins",
           "xp": 350,
-          "content": "# Module 5: Solana Devnet Deployment Challenge & Verification\n### Solana Ecosystem Track | Developer Academy\n\nHands-on Deployment Challenge: Build your Anchor program, deploy bytecode to Solana Devnet, publish IDL, and verify on Solscan.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Solana.\n2. **Toolchain Proficiency**: Master Anchor Framework & Solana CLI for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Rust & Anchor code on Sealevel adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Solana Devnet** and verify artifacts on **Solana Explorer / Solscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/coral-xyz/anchor](https://github.com/coral-xyz/anchor)\n- **Ecosystem Starter Templates**: [https://github.com/solana-labs/solana-program-library](https://github.com/solana-labs/solana-program-library)\n- **Block Explorer & State Verifier**: **Solana Explorer / Solscan**\n- **Native Testnet Environment**: **Solana Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "content": "# Module 5: Solana Devnet Deployment Challenge & Verification\n### Solana Ecosystem Track | Developer Academy\n\nHands-on Deployment Challenge: Build your Anchor program, deploy bytecode to Solana Devnet, publish IDL, and verify on Solscan.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Solana.\n2. **Toolchain Proficiency**: Master Anchor Framework & Solana CLI for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Rust & Anchor code on Sealevel adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Solana Devnet** and verify artifacts on **Solana Explorer / Solscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/coral-xyz/anchor](https://github.com/coral-xyz/anchor)\n- **Ecosystem Starter Templates**: [https://github.com/solana-labs/solana-program-library](https://github.com/solana-labs/solana-program-library)\n- **Block Explorer & State Verifier**: **Solana Explorer / Solscan**\n- **Native Testnet Environment**: **Solana Devnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
           "quiz": [
             {
               "question": "Which command deploys a compiled Solana program binary to Devnet?",
               "options": [
                 "solana program deploy target/deploy/my_program.so --url devnet",
-                "solana upload contract",
+                "solana upload program",
                 "anchor publish",
                 "npm run deploy:devnet"
               ],
@@ -2971,7 +2971,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "question": "What keypair authority is required to execute future program upgrades on Solana?",
               "options": [
                 "The Upgrade Authority keypair configured during initial program deployment.",
-                "Any random user wallet.",
+                "Any random user credential.",
                 "The validator leader.",
                 "A cloud API token."
               ],
@@ -3024,15 +3024,15 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
           "title": "Module 1: Polkadot Architecture, Shared Security & XCM Cross-Chain Protocol",
           "duration": "15 mins",
           "xp": 150,
-          "content": "# Module 1: Polkadot Architecture, Shared Security & XCM Cross-Chain Protocol\n### Polkadot Ecosystem Track | Developer Academy\n\nUnderstand Polkadot Relay Chain & Parachains, Nominated Proof of Stake (NPoS), Shared Security, and Cross-Consensus Messaging (XCM).\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polkadot.\n2. **Toolchain Proficiency**: Master cargo-contract, Substrate & Swanky for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Rust & ink! code on Wasm & pallet-contracts adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Westend / Rococo / Substrate Node** and verify artifacts on **Subscan / Polkadot.js Apps**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/paritytech/polkadot-sdk](https://github.com/paritytech/polkadot-sdk)\n- **Ecosystem Starter Templates**: [https://github.com/use-ink/ink](https://github.com/use-ink/ink)\n- **Block Explorer & State Verifier**: **Subscan / Polkadot.js Apps**\n- **Native Testnet Environment**: **Westend / Rococo / Substrate Node**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "content": "# Module 1: Polkadot Architecture, Shared Security & XCM Cross-Chain Protocol\n### Polkadot Ecosystem Track | Developer Academy\n\nUnderstand Polkadot Relay Chain & Parachains, Nominated Proof of Stake (NPoS), Shared Security, and Cross-Consensus Messaging (XCM).\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polkadot.\n2. **Toolchain Proficiency**: Master cargo-module, Substrate & Swanky for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Rust & ink! code on Wasm & pallet-modules adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Westend / Rococo / Substrate Node** and verify artifacts on **Subscan / Polkadot.js Apps**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/paritytech/polkadot-sdk](https://github.com/paritytech/polkadot-sdk)\n- **Ecosystem Starter Templates**: [https://github.com/use-ink/ink](https://github.com/use-ink/ink)\n- **Block Explorer & State Verifier**: **Subscan / Polkadot.js Apps**\n- **Native Testnet Environment**: **Westend / Rococo / Substrate Node**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
           "quiz": [
             {
               "question": "What is the primary role of the Polkadot Relay Chain in the multi-chain ecosystem?",
               "options": [
                 "It coordinates shared security, consensus, and trust-free cross-chain messaging (XCM) across all connected parachains.",
-                "It executes individual smart contracts directly on the relay chain.",
+                "It executes individual logic modules directly on the relay chain.",
                 "It hosts user frontends on decentralized servers.",
-                "It mines Bitcoin blocks."
+                "It mines Legacy Mainframe blocks."
               ],
               "correct_idx": 0
             },
@@ -3049,7 +3049,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "What is XCM (Cross-Consensus Messaging) in Polkadot?",
               "options": [
-                "A standardized, language-agnostic message format for trust-free interoperability between parachains, smart contracts, and relay chains.",
+                "A standardized, language-agnostic message format for trust-free interoperability between parachains, logic modules, and relay chains.",
                 "An email newsletter for token holders.",
                 "A WebSocket protocol for browser notifications.",
                 "A compiler optimizer for C++."
@@ -3079,9 +3079,9 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "What is the Substrate framework in Polkadot ecosystem development?",
               "options": [
-                "A modular, extensible Rust framework for building custom, sovereign blockchains and execution runtimes (FRAME pallets).",
+                "A modular, extensible Rust framework for building custom, sovereign distributed systems and execution runtimes (FRAME pallets).",
                 "A React CSS framework.",
-                "A hardware wallet manufacturing kit.",
+                "A hardware developer key manufacturing kit.",
                 "A database query language."
               ],
               "correct_idx": 0
@@ -3100,21 +3100,21 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
     },
     {
       "level_id": 2,
-      "title": "Level 2: Substrate & ink! Toolchain: cargo-contract & Swanky Suite",
+      "title": "Level 2: Substrate & ink! Toolchain: cargo-module & Swanky Suite",
       "total_lessons": 1,
       "lessons": [
         {
           "id": "polkadot-2",
           "level_id": 2,
-          "title": "Module 2: Substrate & ink! Toolchain: cargo-contract & Swanky Suite",
+          "title": "Module 2: Substrate & ink! Toolchain: cargo-module & Swanky Suite",
           "duration": "18 mins",
           "xp": 200,
-          "content": "# Module 2: Substrate & ink! Toolchain: cargo-contract & Swanky Suite\n### Polkadot Ecosystem Track | Developer Academy\n\nSet up cargo-contract, WebAssembly (Wasm) target toolchains, Substrate Contracts Node, and Polkadot.js Apps developer interface.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polkadot.\n2. **Toolchain Proficiency**: Master cargo-contract, Substrate & Swanky for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Rust & ink! code on Wasm & pallet-contracts adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Westend / Rococo / Substrate Node** and verify artifacts on **Subscan / Polkadot.js Apps**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/paritytech/polkadot-sdk](https://github.com/paritytech/polkadot-sdk)\n- **Ecosystem Starter Templates**: [https://github.com/use-ink/ink](https://github.com/use-ink/ink)\n- **Block Explorer & State Verifier**: **Subscan / Polkadot.js Apps**\n- **Native Testnet Environment**: **Westend / Rococo / Substrate Node**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "content": "# Module 2: Substrate & ink! Toolchain: cargo-module & Swanky Suite\n### Polkadot Ecosystem Track | Developer Academy\n\nSet up cargo-module, WebAssembly (Wasm) target toolchains, Substrate Node, and Polkadot.js Apps developer interface.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polkadot.\n2. **Toolchain Proficiency**: Master cargo-module, Substrate & Swanky for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Rust & ink! code on Wasm & pallet-modules adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Westend / Rococo / Substrate Node** and verify artifacts on **Subscan / Polkadot.js Apps**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/paritytech/polkadot-sdk](https://github.com/paritytech/polkadot-sdk)\n- **Ecosystem Starter Templates**: [https://github.com/use-ink/ink](https://github.com/use-ink/ink)\n- **Block Explorer & State Verifier**: **Subscan / Polkadot.js Apps**\n- **Native Testnet Environment**: **Westend / Rococo / Substrate Node**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
           "quiz": [
             {
-              "question": "Which CLI tool is the official compiler and packaging suite for ink! WebAssembly smart contracts?",
+              "question": "Which CLI tool is the official compiler and packaging suite for ink! WebAssembly logic modules?",
               "options": [
-                "cargo-contract",
+                "cargo-module",
                 "anchor-cli",
                 "scarb",
                 "truffle"
@@ -3122,19 +3122,19 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "correct_idx": 0
             },
             {
-              "question": "What file bundle is generated by `cargo contract build --release` for deployment?",
+              "question": "What file bundle is generated by `cargo module build --release` for deployment?",
               "options": [
                 "A `.contract` bundle containing compiled WebAssembly bytecode and metadata.json ABI.",
-                "A `.sol` text file.",
+                "A system logic file.",
                 "A `.wasm` file only without metadata.",
                 "A `.zip` image archive."
               ],
               "correct_idx": 0
             },
             {
-              "question": "Which local node environment is specifically designed for testing ink! contracts locally?",
+              "question": "Which local node environment is specifically designed for testing ink! modules locally?",
               "options": [
-                "Substrate Contracts Node (`substrate-contracts-node`)",
+                "Substrate Node (`substrate-node`)",
                 "Hardhat Network",
                 "Anvil",
                 "Geth node"
@@ -3144,9 +3144,9 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "What is Swanky Suite in the Polkadot developer ecosystem?",
               "options": [
-                "An integrated CLI and developer toolkit for creating, compiling, deploying, and testing ink! Wasm smart contracts.",
-                "A DEX trading bot.",
-                "A wallet extension for Chrome.",
+                "An integrated CLI and developer toolkit for creating, compiling, deploying, and testing ink! Wasm logic modules.",
+                "An automated liquidity execution bot.",
+                "A developer key extension for Chrome.",
                 "A Discord community bot."
               ],
               "correct_idx": 0
@@ -3162,19 +3162,19 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "correct_idx": 0
             },
             {
-              "question": "Which testnets are standard for deploying and testing Substrate and ink! contracts before mainnet?",
+              "question": "Which testnets are standard for deploying and testing Substrate and ink! modules before mainnet?",
               "options": [
                 "Westend (Relay Chain testnet), Rococo (Parachain testnet), and Paseo testnet.",
                 "Sepolia EVM testnet.",
                 "Solana Devnet.",
-                "Bitcoin Regtest."
+                "Legacy Mainframe Regtest."
               ],
               "correct_idx": 0
             }
           ],
           "exercise": {
             "instruction": "Write a Rust & ink! code snippet for Module 2. The code must contain the keywords 'cargoContract' and 'ink'.",
-            "template": "// Polkadot Module 2: Substrate & ink! Toolchain: cargo-contract & Swanky Suite\n// Language: Rust & ink!\n// Write implementation below:\n",
+            "template": "// Polkadot Module 2: Substrate & ink! Toolchain: cargo-module & Swanky Suite\n// Language: Rust & ink!\n// Write implementation below:\n",
             "required_keywords": [
               "cargoContract",
               "ink"
@@ -3185,21 +3185,21 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
     },
     {
       "level_id": 3,
-      "title": "Level 3: ink! Smart Contracts: Messages, Storage & Events",
+      "title": "Level 3: ink! Logic Modules: Messages, Storage & Events",
       "total_lessons": 1,
       "lessons": [
         {
           "id": "polkadot-3",
           "level_id": 3,
-          "title": "Module 3: ink! Smart Contracts: Messages, Storage & Events",
+          "title": "Module 3: ink! Logic Modules: Messages, Storage & Events",
           "duration": "21 mins",
           "xp": 250,
-          "content": "# Module 3: ink! Smart Contracts: Messages, Storage & Events\n### Polkadot Ecosystem Track | Developer Academy\n\nWrite idiomatic Rust ink! contracts: #[ink(storage)], ink::storage::Mapping, payable messages, and custom error types.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polkadot.\n2. **Toolchain Proficiency**: Master cargo-contract, Substrate & Swanky for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Rust & ink! code on Wasm & pallet-contracts adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Westend / Rococo / Substrate Node** and verify artifacts on **Subscan / Polkadot.js Apps**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/paritytech/polkadot-sdk](https://github.com/paritytech/polkadot-sdk)\n- **Ecosystem Starter Templates**: [https://github.com/use-ink/ink](https://github.com/use-ink/ink)\n- **Block Explorer & State Verifier**: **Subscan / Polkadot.js Apps**\n- **Native Testnet Environment**: **Westend / Rococo / Substrate Node**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "content": "# Module 3: ink! Logic Modules: Messages, Storage & Events\n### Polkadot Ecosystem Track | Developer Academy\n\nWrite idiomatic Rust ink! modules: #[ink(storage)], ink::storage::Mapping, payable messages, and custom error types.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polkadot.\n2. **Toolchain Proficiency**: Master cargo-module, Substrate & Swanky for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Rust & ink! code on Wasm & pallet-modules adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Westend / Rococo / Substrate Node** and verify artifacts on **Subscan / Polkadot.js Apps**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/paritytech/polkadot-sdk](https://github.com/paritytech/polkadot-sdk)\n- **Ecosystem Starter Templates**: [https://github.com/use-ink/ink](https://github.com/use-ink/ink)\n- **Block Explorer & State Verifier**: **Subscan / Polkadot.js Apps**\n- **Native Testnet Environment**: **Westend / Rococo / Substrate Node**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
           "quiz": [
             {
               "question": "What is ink! in the Polkadot / Substrate ecosystem?",
               "options": [
-                "An embedded domain-specific language (eDSL) based on Rust that compiles smart contracts to WebAssembly for `pallet-contracts`.",
+                "An embedded domain-specific language (eDSL) based on Rust that compiles logic modules to WebAssembly for `pallet-modules`.",
                 "A visual drag-and-drop programming language.",
                 "A private sidechain.",
                 "A graphic design tool."
@@ -3207,7 +3207,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "correct_idx": 0
             },
             {
-              "question": "Which attribute macro marks the root persistent storage struct in an ink! contract?",
+              "question": "Which attribute macro marks the root persistent storage struct in an ink! module?",
               "options": [
                 "#[ink(storage)]",
                 "#[storage]",
@@ -3229,7 +3229,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "What is the difference between `#[ink(constructor)]` and `#[ink(message)]` in ink!?",
               "options": [
-                "`constructor` initializes contract state at instantiation, while `message` defines callable external methods.",
+                "`constructor` initializes module state at instantiation, while `message` defines callable external methods.",
                 "`constructor` executes on every transaction.",
                 "`message` only runs during compilation.",
                 "Both macros are identical."
@@ -3237,7 +3237,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "correct_idx": 0
             },
             {
-              "question": "How are value-receiving functions marked in ink! smart contracts?",
+              "question": "How are value-receiving functions marked in ink! logic modules?",
               "options": [
                 "#[ink(message, payable)]",
                 "#[payable]",
@@ -3259,7 +3259,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
           ],
           "exercise": {
             "instruction": "Write a Rust & ink! code snippet for Module 3. The code must contain the keywords 'inkContract' and 'storage'.",
-            "template": "// Polkadot Module 3: ink! Smart Contracts: Messages, Storage & Events\n// Language: Rust & ink!\n// Write implementation below:\n",
+            "template": "// Polkadot Module 3: ink! Logic Modules: Messages, Storage & Events\n// Language: Rust & ink!\n// Write implementation below:\n",
             "required_keywords": [
               "inkContract",
               "storage"
@@ -3270,23 +3270,23 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
     },
     {
       "level_id": 4,
-      "title": "Level 4: Full-Stack Polkadot DApps & Polkadot.js API Integration",
+      "title": "Level 4: Full-Stack Polkadot application & Polkadot.js API Integration",
       "total_lessons": 1,
       "lessons": [
         {
           "id": "polkadot-4",
           "level_id": 4,
-          "title": "Module 4: Full-Stack Polkadot DApps & Polkadot.js API Integration",
+          "title": "Module 4: Full-Stack Polkadot application & Polkadot.js API Integration",
           "duration": "24 mins",
           "xp": 300,
-          "content": "# Module 4: Full-Stack Polkadot DApps & Polkadot.js API Integration\n### Polkadot Ecosystem Track | Developer Academy\n\nBuild responsive Web3 frontends with @polkadot/api, @polkadot/api-contract, SubWallet/Talisman, and Weight V2 gas estimation.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polkadot.\n2. **Toolchain Proficiency**: Master cargo-contract, Substrate & Swanky for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Rust & ink! code on Wasm & pallet-contracts adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Westend / Rococo / Substrate Node** and verify artifacts on **Subscan / Polkadot.js Apps**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/paritytech/polkadot-sdk](https://github.com/paritytech/polkadot-sdk)\n- **Ecosystem Starter Templates**: [https://github.com/use-ink/ink](https://github.com/use-ink/ink)\n- **Block Explorer & State Verifier**: **Subscan / Polkadot.js Apps**\n- **Native Testnet Environment**: **Westend / Rococo / Substrate Node**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "content": "# Module 4: Full-Stack Polkadot application & Polkadot.js API Integration\n### Polkadot Ecosystem Track | Developer Academy\n\nBuild responsive Distributed Systems frontends with @polkadot/api, @polkadot/api-module, Subdeveloper key/Talisman, and Weight V2 gas estimation.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polkadot.\n2. **Toolchain Proficiency**: Master cargo-module, Substrate & Swanky for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Rust & ink! code on Wasm & pallet-modules adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Westend / Rococo / Substrate Node** and verify artifacts on **Subscan / Polkadot.js Apps**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/paritytech/polkadot-sdk](https://github.com/paritytech/polkadot-sdk)\n- **Ecosystem Starter Templates**: [https://github.com/use-ink/ink](https://github.com/use-ink/ink)\n- **Block Explorer & State Verifier**: **Subscan / Polkadot.js Apps**\n- **Native Testnet Environment**: **Westend / Rococo / Substrate Node**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
           "quiz": [
             {
-              "question": "Which JavaScript/TypeScript API libraries connect frontends to Polkadot parachains and ink! contracts?",
+              "question": "Which JavaScript/TypeScript API libraries connect frontends to Polkadot parachains and ink! modules?",
               "options": [
-                "@polkadot/api and @polkadot/api-contract",
+                "@polkadot/api and @polkadot/api-module",
                 "ethers.js v6",
-                "web3.py",
+                "distributed systems.py",
                 "starknet.js"
               ],
               "correct_idx": 0
@@ -3302,22 +3302,22 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "correct_idx": 0
             },
             {
-              "question": "Which multi-chain browser wallets provide native support for Polkadot, Kusama, and ink! parachains?",
+              "question": "Which multi-chain developer key provide native support for Polkadot, Kusama, and ink! parachains?",
               "options": [
-                "SubWallet, Talisman, and Polkadot.js extension",
-                "MetaMask only",
-                "Phantom only",
-                "Coinbase Wallet only"
+                "Subdeveloper key, Talisman, and Polkadot.js extension",
+                "Authorized signer only",
+                "Local keyring only",
+                "Coinbase developer key only"
               ],
               "correct_idx": 0
             },
             {
-              "question": "How do developers instantiate a typed contract instance using @polkadot/api-contract?",
+              "question": "How do developers instantiate a typed module instance using @polkadot/api-module?",
               "options": [
-                "const contract = new ContractPromise(api, metadataAbi, contractAddress);",
-                "const contract = new Web3Contract(abi);",
-                "const contract = loadContract();",
-                "const contract = api.get();"
+                "const module = new ModulePromise(api, metadataAbi, moduleAddress);",
+                "const module = new DistributedSystemsModule(abi);",
+                "const module = loadModule();",
+                "const module = api.get();"
               ],
               "correct_idx": 0
             },
@@ -3332,9 +3332,9 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "correct_idx": 0
             },
             {
-              "question": "How does a frontend DApp estimate gas/weight before executing an ink! state-modifying message?",
+              "question": "How does a frontend application estimate gas/weight before executing an ink! state-modifying message?",
               "options": [
-                "By performing a dry-run via `contract.query.<method>()` to obtain the predicted gasRequired and storageDeposit.",
+                "By performing a dry-run via `module.query.<method>()` to obtain the predicted gasRequired and storageDeposit.",
                 "By asking the user to type a random number.",
                 "By guessing 100,000 gas.",
                 "By submitting an unmetered transaction."
@@ -3343,11 +3343,11 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             }
           ],
           "exercise": {
-            "instruction": "Write a Rust & ink! code snippet for Module 4. The code must contain the keywords 'PolkadotAPI' and 'SubWallet'.",
-            "template": "// Polkadot Module 4: Full-Stack Polkadot DApps & Polkadot.js API Integration\n// Language: Rust & ink!\n// Write implementation below:\n",
+            "instruction": "Write a Rust & ink! code snippet for Module 4. The code must contain the keywords 'PolkadotAPI' and 'Subdeveloper key'.",
+            "template": "// Polkadot Module 4: Full-Stack Polkadot application & Polkadot.js API Integration\n// Language: Rust & ink!\n// Write implementation below:\n",
             "required_keywords": [
               "PolkadotAPI",
-              "SubWallet"
+              "Subdeveloper key"
             ]
           }
         }
@@ -3364,22 +3364,22 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
           "title": "Module 5: Polkadot / Substrate Deployment Challenge & Verification",
           "duration": "27 mins",
           "xp": 350,
-          "content": "# Module 5: Polkadot / Substrate Deployment Challenge & Verification\n### Polkadot Ecosystem Track | Developer Academy\n\nHands-on Deployment Challenge: Compile your ink! contract to Wasm, instantiate on Polkadot testnet / Substrate Contracts Node, and verify on Subscan.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polkadot.\n2. **Toolchain Proficiency**: Master cargo-contract, Substrate & Swanky for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Rust & ink! code on Wasm & pallet-contracts adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Westend / Rococo / Substrate Node** and verify artifacts on **Subscan / Polkadot.js Apps**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/paritytech/polkadot-sdk](https://github.com/paritytech/polkadot-sdk)\n- **Ecosystem Starter Templates**: [https://github.com/use-ink/ink](https://github.com/use-ink/ink)\n- **Block Explorer & State Verifier**: **Subscan / Polkadot.js Apps**\n- **Native Testnet Environment**: **Westend / Rococo / Substrate Node**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "content": "# Module 5: Polkadot / Substrate Deployment Challenge & Verification\n### Polkadot Ecosystem Track | Developer Academy\n\nHands-on Deployment Challenge: Compile your ink! module to Wasm, instantiate on Polkadot testnet / Substrate Node, and verify on Subscan.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polkadot.\n2. **Toolchain Proficiency**: Master cargo-module, Substrate & Swanky for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Rust & ink! code on Wasm & pallet-modules adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Westend / Rococo / Substrate Node** and verify artifacts on **Subscan / Polkadot.js Apps**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/paritytech/polkadot-sdk](https://github.com/paritytech/polkadot-sdk)\n- **Ecosystem Starter Templates**: [https://github.com/use-ink/ink](https://github.com/use-ink/ink)\n- **Block Explorer & State Verifier**: **Subscan / Polkadot.js Apps**\n- **Native Testnet Environment**: **Westend / Rococo / Substrate Node**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
           "quiz": [
             {
-              "question": "Which command compiles an ink! contract into optimized release WebAssembly bytecode?",
+              "question": "Which command compiles an ink! module into optimized release WebAssembly bytecode?",
               "options": [
-                "cargo contract build --release",
+                "cargo module build --release",
                 "cargo build",
                 "npm run build",
-                "solc --release"
+                "logic-compiler --release"
               ],
               "correct_idx": 0
             },
             {
-              "question": "What is the difference between code upload (`upload_code`) and contract instantiation (`instantiate_with_code`) in `pallet-contracts`?",
+              "question": "What is the difference between code upload (`upload_code`) and module instantiation (`instantiate_with_code`) in `pallet-modules`?",
               "options": [
-                "`upload_code` stores the Wasm bytecode once and returns a CodeHash, allowing multiple contract instances to share the same code cheaply.",
+                "`upload_code` stores the Wasm bytecode once and returns a CodeHash, allowing multiple module instances to share the same code cheaply.",
                 "`upload_code` executes all functions immediately.",
                 "`instantiate` deletes the bytecode after deployment.",
                 "There is no difference."
@@ -3387,19 +3387,19 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "correct_idx": 0
             },
             {
-              "question": "What is the purpose of the `salt` parameter during ink! contract instantiation?",
+              "question": "What is the purpose of the `salt` parameter during ink! module instantiation?",
               "options": [
-                "It ensures unique, deterministic contract address generation even when instantiating the same CodeHash multiple times.",
-                "It encrypts the contract bytecode.",
+                "It ensures unique, deterministic module address generation even when instantiating the same CodeHash multiple times.",
+                "It encrypts the module bytecode.",
                 "It sets the admin password.",
                 "It calculates validator tips."
               ],
               "correct_idx": 0
             },
             {
-              "question": "Where can developers and Web3 Foundation grant evaluators inspect verified Polkadot/Kusama contract deployments?",
+              "question": "Where can developers and Distributed Systems Foundation grant evaluators inspect verified Polkadot/Kusama module deployments?",
               "options": [
-                "Subscan (subscan.io) or Polkadot.js Apps Contract tab.",
+                "Subscan (subscan.io) or Polkadot.js Apps Module tab.",
                 "Etherscan.",
                 "Solscan.",
                 "Basescan."
@@ -3409,20 +3409,20 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "What verified artifact proves successful completion of the Polkadot / Substrate Deployment Challenge?",
               "options": [
-                "A confirmed Extrinsic Block Hash, deployed Contract Account Address, and verified Wasm metadata on-chain.",
+                "A confirmed Extrinsic Block Hash, deployed Module Account Address, and verified Wasm metadata on-chain.",
                 "A text file on your computer.",
-                "A printed PDF with no blockchain hash.",
+                "A printed PDF with no distributed system hash.",
                 "A screenshot of a local folder."
               ],
               "correct_idx": 0
             },
             {
-              "question": "Why do Web3 Foundation and Decentralized Futures grant committees prioritize live testnet deployments?",
+              "question": "Why do Distributed Systems Foundation and Decentralized Futures grant committees prioritize live testnet deployments?",
               "options": [
-                "It provides immutable on-chain proof of working Rust Wasm smart contracts, technical proficiency, and ecosystem impact.",
+                "It provides immutable on-chain proof of working Rust Wasm logic modules, technical proficiency, and ecosystem impact.",
                 "It automatically guarantees token allocations.",
                 "It eliminates the need for software engineering.",
-                "It waives all future blockchain transactions."
+                "It waives all future distributed system transactions."
               ],
               "correct_idx": 0
             }
@@ -3453,15 +3453,15 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
           "title": "Module 1: Polkadot Architecture, Shared Security & XCM Cross-Chain Protocol",
           "duration": "15 mins",
           "xp": 150,
-          "content": "# Module 1: Polkadot Architecture, Shared Security & XCM Cross-Chain Protocol\n### Polkadot Ecosystem Track | Developer Academy\n\nUnderstand Polkadot Relay Chain & Parachains, Nominated Proof of Stake (NPoS), Shared Security, and Cross-Consensus Messaging (XCM).\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polkadot.\n2. **Toolchain Proficiency**: Master cargo-contract, Substrate & Swanky for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Rust & ink! code on Wasm & pallet-contracts adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Westend / Rococo / Substrate Node** and verify artifacts on **Subscan / Polkadot.js Apps**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/paritytech/polkadot-sdk](https://github.com/paritytech/polkadot-sdk)\n- **Ecosystem Starter Templates**: [https://github.com/use-ink/ink](https://github.com/use-ink/ink)\n- **Block Explorer & State Verifier**: **Subscan / Polkadot.js Apps**\n- **Native Testnet Environment**: **Westend / Rococo / Substrate Node**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "content": "# Module 1: Polkadot Architecture, Shared Security & XCM Cross-Chain Protocol\n### Polkadot Ecosystem Track | Developer Academy\n\nUnderstand Polkadot Relay Chain & Parachains, Nominated Proof of Stake (NPoS), Shared Security, and Cross-Consensus Messaging (XCM).\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polkadot.\n2. **Toolchain Proficiency**: Master cargo-module, Substrate & Swanky for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Rust & ink! code on Wasm & pallet-modules adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Westend / Rococo / Substrate Node** and verify artifacts on **Subscan / Polkadot.js Apps**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/paritytech/polkadot-sdk](https://github.com/paritytech/polkadot-sdk)\n- **Ecosystem Starter Templates**: [https://github.com/use-ink/ink](https://github.com/use-ink/ink)\n- **Block Explorer & State Verifier**: **Subscan / Polkadot.js Apps**\n- **Native Testnet Environment**: **Westend / Rococo / Substrate Node**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
           "quiz": [
             {
               "question": "What is the primary role of the Polkadot Relay Chain in the multi-chain ecosystem?",
               "options": [
                 "It coordinates shared security, consensus, and trust-free cross-chain messaging (XCM) across all connected parachains.",
-                "It executes individual smart contracts directly on the relay chain.",
+                "It executes individual logic modules directly on the relay chain.",
                 "It hosts user frontends on decentralized servers.",
-                "It mines Bitcoin blocks."
+                "It mines Legacy Mainframe blocks."
               ],
               "correct_idx": 0
             },
@@ -3478,7 +3478,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "What is XCM (Cross-Consensus Messaging) in Polkadot?",
               "options": [
-                "A standardized, language-agnostic message format for trust-free interoperability between parachains, smart contracts, and relay chains.",
+                "A standardized, language-agnostic message format for trust-free interoperability between parachains, logic modules, and relay chains.",
                 "An email newsletter for token holders.",
                 "A WebSocket protocol for browser notifications.",
                 "A compiler optimizer for C++."
@@ -3508,9 +3508,9 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "What is the Substrate framework in Polkadot ecosystem development?",
               "options": [
-                "A modular, extensible Rust framework for building custom, sovereign blockchains and execution runtimes (FRAME pallets).",
+                "A modular, extensible Rust framework for building custom, sovereign distributed systems and execution runtimes (FRAME pallets).",
                 "A React CSS framework.",
-                "A hardware wallet manufacturing kit.",
+                "A hardware developer key manufacturing kit.",
                 "A database query language."
               ],
               "correct_idx": 0
@@ -3529,21 +3529,21 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
     },
     {
       "level_id": 2,
-      "title": "Level 2: Substrate & ink! Toolchain: cargo-contract & Swanky Suite",
+      "title": "Level 2: Substrate & ink! Toolchain: cargo-module & Swanky Suite",
       "total_lessons": 1,
       "lessons": [
         {
           "id": "polkadot-2",
           "level_id": 2,
-          "title": "Module 2: Substrate & ink! Toolchain: cargo-contract & Swanky Suite",
+          "title": "Module 2: Substrate & ink! Toolchain: cargo-module & Swanky Suite",
           "duration": "18 mins",
           "xp": 200,
-          "content": "# Module 2: Substrate & ink! Toolchain: cargo-contract & Swanky Suite\n### Polkadot Ecosystem Track | Developer Academy\n\nSet up cargo-contract, WebAssembly (Wasm) target toolchains, Substrate Contracts Node, and Polkadot.js Apps developer interface.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polkadot.\n2. **Toolchain Proficiency**: Master cargo-contract, Substrate & Swanky for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Rust & ink! code on Wasm & pallet-contracts adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Westend / Rococo / Substrate Node** and verify artifacts on **Subscan / Polkadot.js Apps**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/paritytech/polkadot-sdk](https://github.com/paritytech/polkadot-sdk)\n- **Ecosystem Starter Templates**: [https://github.com/use-ink/ink](https://github.com/use-ink/ink)\n- **Block Explorer & State Verifier**: **Subscan / Polkadot.js Apps**\n- **Native Testnet Environment**: **Westend / Rococo / Substrate Node**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "content": "# Module 2: Substrate & ink! Toolchain: cargo-module & Swanky Suite\n### Polkadot Ecosystem Track | Developer Academy\n\nSet up cargo-module, WebAssembly (Wasm) target toolchains, Substrate Node, and Polkadot.js Apps developer interface.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polkadot.\n2. **Toolchain Proficiency**: Master cargo-module, Substrate & Swanky for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Rust & ink! code on Wasm & pallet-modules adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Westend / Rococo / Substrate Node** and verify artifacts on **Subscan / Polkadot.js Apps**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/paritytech/polkadot-sdk](https://github.com/paritytech/polkadot-sdk)\n- **Ecosystem Starter Templates**: [https://github.com/use-ink/ink](https://github.com/use-ink/ink)\n- **Block Explorer & State Verifier**: **Subscan / Polkadot.js Apps**\n- **Native Testnet Environment**: **Westend / Rococo / Substrate Node**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
           "quiz": [
             {
-              "question": "Which CLI tool is the official compiler and packaging suite for ink! WebAssembly smart contracts?",
+              "question": "Which CLI tool is the official compiler and packaging suite for ink! WebAssembly logic modules?",
               "options": [
-                "cargo-contract",
+                "cargo-module",
                 "anchor-cli",
                 "scarb",
                 "truffle"
@@ -3551,19 +3551,19 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "correct_idx": 0
             },
             {
-              "question": "What file bundle is generated by `cargo contract build --release` for deployment?",
+              "question": "What file bundle is generated by `cargo module build --release` for deployment?",
               "options": [
                 "A `.contract` bundle containing compiled WebAssembly bytecode and metadata.json ABI.",
-                "A `.sol` text file.",
+                "A system logic file.",
                 "A `.wasm` file only without metadata.",
                 "A `.zip` image archive."
               ],
               "correct_idx": 0
             },
             {
-              "question": "Which local node environment is specifically designed for testing ink! contracts locally?",
+              "question": "Which local node environment is specifically designed for testing ink! modules locally?",
               "options": [
-                "Substrate Contracts Node (`substrate-contracts-node`)",
+                "Substrate Node (`substrate-node`)",
                 "Hardhat Network",
                 "Anvil",
                 "Geth node"
@@ -3573,9 +3573,9 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "What is Swanky Suite in the Polkadot developer ecosystem?",
               "options": [
-                "An integrated CLI and developer toolkit for creating, compiling, deploying, and testing ink! Wasm smart contracts.",
-                "A DEX trading bot.",
-                "A wallet extension for Chrome.",
+                "An integrated CLI and developer toolkit for creating, compiling, deploying, and testing ink! Wasm logic modules.",
+                "An automated liquidity execution bot.",
+                "A developer key extension for Chrome.",
                 "A Discord community bot."
               ],
               "correct_idx": 0
@@ -3591,19 +3591,19 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "correct_idx": 0
             },
             {
-              "question": "Which testnets are standard for deploying and testing Substrate and ink! contracts before mainnet?",
+              "question": "Which testnets are standard for deploying and testing Substrate and ink! modules before mainnet?",
               "options": [
                 "Westend (Relay Chain testnet), Rococo (Parachain testnet), and Paseo testnet.",
                 "Sepolia EVM testnet.",
                 "Solana Devnet.",
-                "Bitcoin Regtest."
+                "Legacy Mainframe Regtest."
               ],
               "correct_idx": 0
             }
           ],
           "exercise": {
             "instruction": "Write a Rust & ink! code snippet for Module 2. The code must contain the keywords 'cargoContract' and 'ink'.",
-            "template": "// Polkadot Module 2: Substrate & ink! Toolchain: cargo-contract & Swanky Suite\n// Language: Rust & ink!\n// Write implementation below:\n",
+            "template": "// Polkadot Module 2: Substrate & ink! Toolchain: cargo-module & Swanky Suite\n// Language: Rust & ink!\n// Write implementation below:\n",
             "required_keywords": [
               "cargoContract",
               "ink"
@@ -3614,21 +3614,21 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
     },
     {
       "level_id": 3,
-      "title": "Level 3: ink! Smart Contracts: Messages, Storage & Events",
+      "title": "Level 3: ink! Logic Modules: Messages, Storage & Events",
       "total_lessons": 1,
       "lessons": [
         {
           "id": "polkadot-3",
           "level_id": 3,
-          "title": "Module 3: ink! Smart Contracts: Messages, Storage & Events",
+          "title": "Module 3: ink! Logic Modules: Messages, Storage & Events",
           "duration": "21 mins",
           "xp": 250,
-          "content": "# Module 3: ink! Smart Contracts: Messages, Storage & Events\n### Polkadot Ecosystem Track | Developer Academy\n\nWrite idiomatic Rust ink! contracts: #[ink(storage)], ink::storage::Mapping, payable messages, and custom error types.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polkadot.\n2. **Toolchain Proficiency**: Master cargo-contract, Substrate & Swanky for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Rust & ink! code on Wasm & pallet-contracts adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Westend / Rococo / Substrate Node** and verify artifacts on **Subscan / Polkadot.js Apps**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/paritytech/polkadot-sdk](https://github.com/paritytech/polkadot-sdk)\n- **Ecosystem Starter Templates**: [https://github.com/use-ink/ink](https://github.com/use-ink/ink)\n- **Block Explorer & State Verifier**: **Subscan / Polkadot.js Apps**\n- **Native Testnet Environment**: **Westend / Rococo / Substrate Node**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "content": "# Module 3: ink! Logic Modules: Messages, Storage & Events\n### Polkadot Ecosystem Track | Developer Academy\n\nWrite idiomatic Rust ink! modules: #[ink(storage)], ink::storage::Mapping, payable messages, and custom error types.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polkadot.\n2. **Toolchain Proficiency**: Master cargo-module, Substrate & Swanky for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Rust & ink! code on Wasm & pallet-modules adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Westend / Rococo / Substrate Node** and verify artifacts on **Subscan / Polkadot.js Apps**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/paritytech/polkadot-sdk](https://github.com/paritytech/polkadot-sdk)\n- **Ecosystem Starter Templates**: [https://github.com/use-ink/ink](https://github.com/use-ink/ink)\n- **Block Explorer & State Verifier**: **Subscan / Polkadot.js Apps**\n- **Native Testnet Environment**: **Westend / Rococo / Substrate Node**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
           "quiz": [
             {
               "question": "What is ink! in the Polkadot / Substrate ecosystem?",
               "options": [
-                "An embedded domain-specific language (eDSL) based on Rust that compiles smart contracts to WebAssembly for `pallet-contracts`.",
+                "An embedded domain-specific language (eDSL) based on Rust that compiles logic modules to WebAssembly for `pallet-modules`.",
                 "A visual drag-and-drop programming language.",
                 "A private sidechain.",
                 "A graphic design tool."
@@ -3636,7 +3636,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "correct_idx": 0
             },
             {
-              "question": "Which attribute macro marks the root persistent storage struct in an ink! contract?",
+              "question": "Which attribute macro marks the root persistent storage struct in an ink! module?",
               "options": [
                 "#[ink(storage)]",
                 "#[storage]",
@@ -3658,7 +3658,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "What is the difference between `#[ink(constructor)]` and `#[ink(message)]` in ink!?",
               "options": [
-                "`constructor` initializes contract state at instantiation, while `message` defines callable external methods.",
+                "`constructor` initializes module state at instantiation, while `message` defines callable external methods.",
                 "`constructor` executes on every transaction.",
                 "`message` only runs during compilation.",
                 "Both macros are identical."
@@ -3666,7 +3666,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "correct_idx": 0
             },
             {
-              "question": "How are value-receiving functions marked in ink! smart contracts?",
+              "question": "How are value-receiving functions marked in ink! logic modules?",
               "options": [
                 "#[ink(message, payable)]",
                 "#[payable]",
@@ -3688,7 +3688,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
           ],
           "exercise": {
             "instruction": "Write a Rust & ink! code snippet for Module 3. The code must contain the keywords 'inkContract' and 'storage'.",
-            "template": "// Polkadot Module 3: ink! Smart Contracts: Messages, Storage & Events\n// Language: Rust & ink!\n// Write implementation below:\n",
+            "template": "// Polkadot Module 3: ink! Logic Modules: Messages, Storage & Events\n// Language: Rust & ink!\n// Write implementation below:\n",
             "required_keywords": [
               "inkContract",
               "storage"
@@ -3699,23 +3699,23 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
     },
     {
       "level_id": 4,
-      "title": "Level 4: Full-Stack Polkadot DApps & Polkadot.js API Integration",
+      "title": "Level 4: Full-Stack Polkadot application & Polkadot.js API Integration",
       "total_lessons": 1,
       "lessons": [
         {
           "id": "polkadot-4",
           "level_id": 4,
-          "title": "Module 4: Full-Stack Polkadot DApps & Polkadot.js API Integration",
+          "title": "Module 4: Full-Stack Polkadot application & Polkadot.js API Integration",
           "duration": "24 mins",
           "xp": 300,
-          "content": "# Module 4: Full-Stack Polkadot DApps & Polkadot.js API Integration\n### Polkadot Ecosystem Track | Developer Academy\n\nBuild responsive Web3 frontends with @polkadot/api, @polkadot/api-contract, SubWallet/Talisman, and Weight V2 gas estimation.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polkadot.\n2. **Toolchain Proficiency**: Master cargo-contract, Substrate & Swanky for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Rust & ink! code on Wasm & pallet-contracts adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Westend / Rococo / Substrate Node** and verify artifacts on **Subscan / Polkadot.js Apps**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/paritytech/polkadot-sdk](https://github.com/paritytech/polkadot-sdk)\n- **Ecosystem Starter Templates**: [https://github.com/use-ink/ink](https://github.com/use-ink/ink)\n- **Block Explorer & State Verifier**: **Subscan / Polkadot.js Apps**\n- **Native Testnet Environment**: **Westend / Rococo / Substrate Node**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "content": "# Module 4: Full-Stack Polkadot application & Polkadot.js API Integration\n### Polkadot Ecosystem Track | Developer Academy\n\nBuild responsive Distributed Systems frontends with @polkadot/api, @polkadot/api-module, Subdeveloper key/Talisman, and Weight V2 gas estimation.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polkadot.\n2. **Toolchain Proficiency**: Master cargo-module, Substrate & Swanky for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Rust & ink! code on Wasm & pallet-modules adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Westend / Rococo / Substrate Node** and verify artifacts on **Subscan / Polkadot.js Apps**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/paritytech/polkadot-sdk](https://github.com/paritytech/polkadot-sdk)\n- **Ecosystem Starter Templates**: [https://github.com/use-ink/ink](https://github.com/use-ink/ink)\n- **Block Explorer & State Verifier**: **Subscan / Polkadot.js Apps**\n- **Native Testnet Environment**: **Westend / Rococo / Substrate Node**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
           "quiz": [
             {
-              "question": "Which JavaScript/TypeScript API libraries connect frontends to Polkadot parachains and ink! contracts?",
+              "question": "Which JavaScript/TypeScript API libraries connect frontends to Polkadot parachains and ink! modules?",
               "options": [
-                "@polkadot/api and @polkadot/api-contract",
+                "@polkadot/api and @polkadot/api-module",
                 "ethers.js v6",
-                "web3.py",
+                "distributed systems.py",
                 "starknet.js"
               ],
               "correct_idx": 0
@@ -3731,22 +3731,22 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "correct_idx": 0
             },
             {
-              "question": "Which multi-chain browser wallets provide native support for Polkadot, Kusama, and ink! parachains?",
+              "question": "Which multi-chain developer key provide native support for Polkadot, Kusama, and ink! parachains?",
               "options": [
-                "SubWallet, Talisman, and Polkadot.js extension",
-                "MetaMask only",
-                "Phantom only",
-                "Coinbase Wallet only"
+                "Subdeveloper key, Talisman, and Polkadot.js extension",
+                "Authorized signer only",
+                "Local keyring only",
+                "Coinbase developer key only"
               ],
               "correct_idx": 0
             },
             {
-              "question": "How do developers instantiate a typed contract instance using @polkadot/api-contract?",
+              "question": "How do developers instantiate a typed module instance using @polkadot/api-module?",
               "options": [
-                "const contract = new ContractPromise(api, metadataAbi, contractAddress);",
-                "const contract = new Web3Contract(abi);",
-                "const contract = loadContract();",
-                "const contract = api.get();"
+                "const module = new ModulePromise(api, metadataAbi, moduleAddress);",
+                "const module = new DistributedSystemsModule(abi);",
+                "const module = loadModule();",
+                "const module = api.get();"
               ],
               "correct_idx": 0
             },
@@ -3761,9 +3761,9 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "correct_idx": 0
             },
             {
-              "question": "How does a frontend DApp estimate gas/weight before executing an ink! state-modifying message?",
+              "question": "How does a frontend application estimate gas/weight before executing an ink! state-modifying message?",
               "options": [
-                "By performing a dry-run via `contract.query.<method>()` to obtain the predicted gasRequired and storageDeposit.",
+                "By performing a dry-run via `module.query.<method>()` to obtain the predicted gasRequired and storageDeposit.",
                 "By asking the user to type a random number.",
                 "By guessing 100,000 gas.",
                 "By submitting an unmetered transaction."
@@ -3772,11 +3772,11 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             }
           ],
           "exercise": {
-            "instruction": "Write a Rust & ink! code snippet for Module 4. The code must contain the keywords 'PolkadotAPI' and 'SubWallet'.",
-            "template": "// Polkadot Module 4: Full-Stack Polkadot DApps & Polkadot.js API Integration\n// Language: Rust & ink!\n// Write implementation below:\n",
+            "instruction": "Write a Rust & ink! code snippet for Module 4. The code must contain the keywords 'PolkadotAPI' and 'Subdeveloper key'.",
+            "template": "// Polkadot Module 4: Full-Stack Polkadot application & Polkadot.js API Integration\n// Language: Rust & ink!\n// Write implementation below:\n",
             "required_keywords": [
               "PolkadotAPI",
-              "SubWallet"
+              "Subdeveloper key"
             ]
           }
         }
@@ -3793,22 +3793,22 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
           "title": "Module 5: Polkadot / Substrate Deployment Challenge & Verification",
           "duration": "27 mins",
           "xp": 350,
-          "content": "# Module 5: Polkadot / Substrate Deployment Challenge & Verification\n### Polkadot Ecosystem Track | Developer Academy\n\nHands-on Deployment Challenge: Compile your ink! contract to Wasm, instantiate on Polkadot testnet / Substrate Contracts Node, and verify on Subscan.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polkadot.\n2. **Toolchain Proficiency**: Master cargo-contract, Substrate & Swanky for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Rust & ink! code on Wasm & pallet-contracts adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Westend / Rococo / Substrate Node** and verify artifacts on **Subscan / Polkadot.js Apps**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/paritytech/polkadot-sdk](https://github.com/paritytech/polkadot-sdk)\n- **Ecosystem Starter Templates**: [https://github.com/use-ink/ink](https://github.com/use-ink/ink)\n- **Block Explorer & State Verifier**: **Subscan / Polkadot.js Apps**\n- **Native Testnet Environment**: **Westend / Rococo / Substrate Node**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "content": "# Module 5: Polkadot / Substrate Deployment Challenge & Verification\n### Polkadot Ecosystem Track | Developer Academy\n\nHands-on Deployment Challenge: Compile your ink! module to Wasm, instantiate on Polkadot testnet / Substrate Node, and verify on Subscan.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polkadot.\n2. **Toolchain Proficiency**: Master cargo-module, Substrate & Swanky for compiling, building, testing, and debugging.\n3. **Logic Module / Program Mastery**: Write idiomatic Rust & ink! code on Wasm & pallet-modules adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Westend / Rococo / Substrate Node** and verify artifacts on **Subscan / Polkadot.js Apps**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/paritytech/polkadot-sdk](https://github.com/paritytech/polkadot-sdk)\n- **Ecosystem Starter Templates**: [https://github.com/use-ink/ink](https://github.com/use-ink/ink)\n- **Block Explorer & State Verifier**: **Subscan / Polkadot.js Apps**\n- **Native Testnet Environment**: **Westend / Rococo / Substrate Node**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
           "quiz": [
             {
-              "question": "Which command compiles an ink! contract into optimized release WebAssembly bytecode?",
+              "question": "Which command compiles an ink! module into optimized release WebAssembly bytecode?",
               "options": [
-                "cargo contract build --release",
+                "cargo module build --release",
                 "cargo build",
                 "npm run build",
-                "solc --release"
+                "logic-compiler --release"
               ],
               "correct_idx": 0
             },
             {
-              "question": "What is the difference between code upload (`upload_code`) and contract instantiation (`instantiate_with_code`) in `pallet-contracts`?",
+              "question": "What is the difference between code upload (`upload_code`) and module instantiation (`instantiate_with_code`) in `pallet-modules`?",
               "options": [
-                "`upload_code` stores the Wasm bytecode once and returns a CodeHash, allowing multiple contract instances to share the same code cheaply.",
+                "`upload_code` stores the Wasm bytecode once and returns a CodeHash, allowing multiple module instances to share the same code cheaply.",
                 "`upload_code` executes all functions immediately.",
                 "`instantiate` deletes the bytecode after deployment.",
                 "There is no difference."
@@ -3816,19 +3816,19 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "correct_idx": 0
             },
             {
-              "question": "What is the purpose of the `salt` parameter during ink! contract instantiation?",
+              "question": "What is the purpose of the `salt` parameter during ink! module instantiation?",
               "options": [
-                "It ensures unique, deterministic contract address generation even when instantiating the same CodeHash multiple times.",
-                "It encrypts the contract bytecode.",
+                "It ensures unique, deterministic module address generation even when instantiating the same CodeHash multiple times.",
+                "It encrypts the module bytecode.",
                 "It sets the admin password.",
                 "It calculates validator tips."
               ],
               "correct_idx": 0
             },
             {
-              "question": "Where can developers and Web3 Foundation grant evaluators inspect verified Polkadot/Kusama contract deployments?",
+              "question": "Where can developers and Distributed Systems Foundation grant evaluators inspect verified Polkadot/Kusama module deployments?",
               "options": [
-                "Subscan (subscan.io) or Polkadot.js Apps Contract tab.",
+                "Subscan (subscan.io) or Polkadot.js Apps Module tab.",
                 "Etherscan.",
                 "Solscan.",
                 "Basescan."
@@ -3838,20 +3838,20 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "What verified artifact proves successful completion of the Polkadot / Substrate Deployment Challenge?",
               "options": [
-                "A confirmed Extrinsic Block Hash, deployed Contract Account Address, and verified Wasm metadata on-chain.",
+                "A confirmed Extrinsic Block Hash, deployed Module Account Address, and verified Wasm metadata on-chain.",
                 "A text file on your computer.",
-                "A printed PDF with no blockchain hash.",
+                "A printed PDF with no distributed system hash.",
                 "A screenshot of a local folder."
               ],
               "correct_idx": 0
             },
             {
-              "question": "Why do Web3 Foundation and Decentralized Futures grant committees prioritize live testnet deployments?",
+              "question": "Why do Distributed Systems Foundation and Decentralized Futures grant committees prioritize live testnet deployments?",
               "options": [
-                "It provides immutable on-chain proof of working Rust Wasm smart contracts, technical proficiency, and ecosystem impact.",
+                "It provides immutable on-chain proof of working Rust Wasm logic modules, technical proficiency, and ecosystem impact.",
                 "It automatically guarantees token allocations.",
                 "It eliminates the need for software engineering.",
-                "It waives all future blockchain transactions."
+                "It waives all future distributed system transactions."
               ],
               "correct_idx": 0
             }
@@ -3873,21 +3873,21 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
   "fullstack": [
     {
       "level_id": 1,
-      "title": "Level 1: Full-Stack Web3 Architecture & RPC Provider Topologies",
+      "title": "Level 1: Full-Stack Distributed Systems Architecture & RPC Provider Topologies",
       "total_lessons": 1,
       "lessons": [
         {
           "id": "fullstack-1",
           "level_id": 1,
-          "title": "Module 1: Full-Stack Web3 Architecture & RPC Provider Topologies",
+          "title": "Module 1: Full-Stack Distributed Systems Architecture & RPC Provider Topologies",
           "duration": "15 mins",
           "xp": 150,
-          "content": "# Module 1: Full-Stack Web3 Architecture & RPC Provider Topologies\n### Full Stack Blockchain Developer Track | Developer Academy\n\nMaster end-to-end decentralized application architecture: client-side wallet connections (EIP-1193), JSON-RPC node infrastructure (Alchemy/Infura/QuickNode), multi-chain fallback providers, and CORS/WebSocket rate limiting.\n",
+          "content": "# Module 1: Full-Stack Distributed Systems Architecture & RPC Provider Topologies\n### Full Stack Distributed System Developer Track | Developer Academy\n\nMaster end-to-end decentralized application architecture: client-side developer key connections (EIP-1193), JSON-RPC node infrastructure (Alchemy/Infura/QuickNode), multi-chain fallback providers, and CORS/WebSocket rate limiting.\n",
           "quiz": [
             {
-              "question": "What is the primary role of an RPC provider (like Infura or Alchemy) in full-stack Web3 architecture?",
+              "question": "What is the primary role of an RPC provider (like Infura or Alchemy) in full-stack Distributed Systems architecture?",
               "options": [
-                "To serve as a JSON-RPC gateway allowing web frontends to read blockchain state and broadcast signed transactions without running local archive nodes.",
+                "To serve as a JSON-RPC gateway allowing web frontends to read distributed system state and broadcast signed transactions without running local archive nodes.",
                 "To custody user private keys on centralized servers.",
                 "To compile TypeScript code into WebAssembly.",
                 "To replace decentralized consensus with SQL queries."
@@ -3895,7 +3895,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "correct_idx": 0
             },
             {
-              "question": "What standard interface defines how browser wallet extensions communicate with Web3 frontends?",
+              "question": "What standard interface defines how developer key extensions communicate with Distributed Systems frontends?",
               "options": [
                 "EIP-1193 JavaScript Ethereum Provider API (window.ethereum).",
                 "OAuth 2.0 PKCE protocol.",
@@ -3906,8 +3906,8 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             }
           ],
           "exercise": {
-            "instruction": "Configure a Web3 provider setup script containing the keywords 'provider' and 'rpc'.",
-            "template": "// Full-Stack Web3 Module 1: Provider Setup\n",
+            "instruction": "Configure a Distributed Systems provider setup script containing the keywords 'provider' and 'rpc'.",
+            "template": "// Full-Stack Distributed Systems Module 1: Provider Setup\n",
             "required_keywords": ["provider", "rpc"]
           }
         }
@@ -3915,31 +3915,31 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
     },
     {
       "level_id": 2,
-      "title": "Level 2: Smart Contract Interaction Hooks with Viem, Wagmi v2 & React Query",
+      "title": "Level 2: Logic Module Interaction Hooks with Viem, Wagmi v2 & React Query",
       "total_lessons": 1,
       "lessons": [
         {
           "id": "fullstack-2",
           "level_id": 2,
-          "title": "Module 2: Smart Contract Interaction Hooks with Viem, Wagmi v2 & React Query",
+          "title": "Module 2: Logic Module Interaction Hooks with Viem, Wagmi v2 & React Query",
           "duration": "18 mins",
           "xp": 200,
-          "content": "# Module 2: Smart Contract Interaction Hooks with Viem, Wagmi v2 & React Query\n### Full Stack Blockchain Developer Track | Developer Academy\n\nBuild reactive Web3 interfaces with Wagmi v2 and Viem: type-safe contract reads, write simulation (simulateContract), TanStack React Query cache invalidation, and custom hooks.\n",
+          "content": "# Module 2: Logic Module Interaction Hooks with Viem, Wagmi v2 & React Query\n### Full Stack Distributed System Developer Track | Developer Academy\n\nBuild reactive Distributed Systems interfaces with Wagmi v2 and Viem: type-safe module reads, write simulation (simulateModule), TanStack React Query cache invalidation, and custom hooks.\n",
           "quiz": [
             {
-              "question": "What makes Viem more performant and developer-friendly than legacy Web3 libraries?",
+              "question": "What makes Viem more performant and developer-friendly than legacy Distributed Systems libraries?",
               "options": [
-                "It is modular, lightweight, tree-shakeable, and provides end-to-end TypeScript type inference directly from Contract ABIs.",
-                "It eliminates the need for Solidity compilation.",
-                "It runs contracts entirely inside SQLite.",
+                "It is modular, lightweight, tree-shakeable, and provides end-to-end TypeScript type inference directly from Module ABIs.",
+                "It eliminates the need for Object-Oriented Logic compilation.",
+                "It runs modules entirely inside SQLite.",
                 "It does not require network connections."
               ],
               "correct_idx": 0
             }
           ],
           "exercise": {
-            "instruction": "Implement a contract read/write hook using Wagmi and Viem. Must include 'wagmi' and 'viem'.",
-            "template": "// Full-Stack Web3 Module 2: Wagmi & Viem Hooks\n",
+            "instruction": "Implement a module read/write hook using Wagmi and Viem. Must include 'wagmi' and 'viem'.",
+            "template": "// Full-Stack Distributed Systems Module 2: Wagmi & Viem Hooks\n",
             "required_keywords": ["wagmi", "viem"]
           }
         }
@@ -3956,22 +3956,22 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
           "title": "Module 3: Decentralized Indexing & Storage: The Graph, Subgraphs & IPFS",
           "duration": "21 mins",
           "xp": 250,
-          "content": "# Module 3: Decentralized Indexing & Storage: The Graph, Subgraphs & IPFS\n### Full Stack Blockchain Developer Track | Developer Academy\n\nArchitect scalable decentralized backends: writing AssemblyScript mappings for The Graph subgraphs, querying indexed blockchain entities via GraphQL, and pinning decentralized metadata with IPFS / Filecoin.\n",
+          "content": "# Module 3: Decentralized Indexing & Storage: The Graph, Subgraphs & IPFS\n### Full Stack Distributed System Developer Track | Developer Academy\n\nArchitect scalable decentralized backends: writing AssemblyScript mappings for The Graph subgraphs, querying indexed distributed system entities via GraphQL, and pinning decentralized metadata with IPFS / Filecoin.\n",
           "quiz": [
             {
-              "question": "Why are indexing protocols like The Graph necessary for production full-stack Web3 applications?",
+              "question": "Why are indexing protocols like The Graph necessary for production full-stack Distributed Systems applications?",
               "options": [
                 "Standard RPC nodes only support basic key-value lookups; subgraphs index event logs into relational GraphQL databases for complex queries and filtering.",
-                "Because blockchains cannot execute smart contracts without subgraphs.",
+                "Because distributed systems cannot execute logic modules without subgraphs.",
                 "To replace all frontend React components with server-rendered HTML.",
-                "To encrypt all user wallet balances."
+                "To encrypt all user credential balances."
               ],
               "correct_idx": 0
             }
           ],
           "exercise": {
             "instruction": "Declare a Subgraph indexing entity schema with IPFS metadata resolution. Must include 'subgraph' and 'ipfs'.",
-            "template": "// Full-Stack Web3 Module 3: Subgraph & IPFS\n",
+            "template": "// Full-Stack Distributed Systems Module 3: Subgraph & IPFS\n",
             "required_keywords": ["subgraph", "ipfs"]
           }
         }
@@ -3979,31 +3979,31 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
     },
     {
       "level_id": 4,
-      "title": "Level 4: Modern Account Abstraction: ERC-4337, Paymasters & Smart Sessions",
+      "title": "Level 4: Modern Account Abstraction: Account Abstraction Standard, Paymasters & Smart Sessions",
       "total_lessons": 1,
       "lessons": [
         {
           "id": "fullstack-4",
           "level_id": 4,
-          "title": "Module 4: Modern Account Abstraction: ERC-4337, Paymasters & Smart Sessions",
+          "title": "Module 4: Modern Account Abstraction: Account Abstraction Standard, Paymasters & Smart Sessions",
           "duration": "24 mins",
           "xp": 300,
-          "content": "# Module 4: Modern Account Abstraction: ERC-4337, Paymasters & Smart Sessions\n### Full Stack Blockchain Developer Track | Developer Academy\n\nImplement next-generation Web3 UX: UserOperations, Bundlers, EntryPoint contract architecture, Gasless Paymasters (sponsoring transactions), and passkey/session-key authentication with Coinbase Smart Wallet / Biconomy.\n",
+          "content": "# Module 4: Modern Account Abstraction: Account Abstraction Standard, Paymasters & Smart Sessions\n### Full Stack Distributed System Developer Track | Developer Academy\n\nImplement next-generation Distributed Systems UX: UserOperations, Bundlers, EntryPoint module architecture, Gasless Paymasters (sponsoring transactions), and passkey/session-key authentication with Coinbase Smart developer key / Biconomy.\n",
           "quiz": [
             {
-              "question": "What is the primary breakthrough of ERC-4337 Account Abstraction?",
+              "question": "What is the primary breakthrough of Account Abstraction Standard Account Abstraction?",
               "options": [
-                "It enables smart contract wallets with custom verification logic, gas sponsorship, and batching without requiring Ethereum protocol consensus changes.",
-                "It removes private key cryptography from Web3 entirely.",
+                "It enables logic module developer key with custom verification logic, gas sponsorship, and batching without requiring Ethereum protocol consensus changes.",
+                "It removes private key asymmetric verification from Distributed Systems entirely.",
                 "It replaces gas fees with monthly credit card subscriptions.",
-                "It turns all smart contracts into ERC-20 tokens."
+                "It turns all logic modules into Asset Standard tokens."
               ],
               "correct_idx": 0
             }
           ],
           "exercise": {
-            "instruction": "Write an ERC-4337 Paymaster validation snippet. Must contain 'ERC4337' and 'paymaster'.",
-            "template": "// Full-Stack Web3 Module 4: ERC-4337 Paymaster\n",
+            "instruction": "Write an Account Abstraction Standard Paymaster validation snippet. Must contain 'ERC4337' and 'paymaster'.",
+            "template": "// Full-Stack Distributed Systems Module 4: Account Abstraction Standard Paymaster\n",
             "required_keywords": ["ERC4337", "paymaster"]
           }
         }
@@ -4011,23 +4011,23 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
     },
     {
       "level_id": 5,
-      "title": "Level 5: Full-Stack DApp Production Deployment & Multi-Chain Verification Challenge",
+      "title": "Level 5: Full-Stack application Production Deployment & Multi-Chain Verification Challenge",
       "total_lessons": 1,
       "lessons": [
         {
           "id": "fullstack-5",
           "level_id": 5,
-          "title": "Module 5: Full-Stack DApp Production Deployment & Multi-Chain Verification Challenge",
+          "title": "Module 5: Full-Stack application Production Deployment & Multi-Chain Verification Challenge",
           "duration": "27 mins",
           "xp": 350,
-          "content": "# Module 5: Full-Stack DApp Production Deployment & Multi-Chain Verification Challenge\n### Full Stack Blockchain Developer Track | Developer Academy\n\nHands-on Deployment Challenge: Compile your full-stack DApp smart contracts, deploy to Arbitrum/Base/OP Sepolia testnets, integrate frontend ABI & Wagmi provider configuration, and verify on-chain artifacts.\n",
+          "content": "# Module 5: Full-Stack application Production Deployment & Multi-Chain Verification Challenge\n### Full Stack Distributed System Developer Track | Developer Academy\n\nHands-on Deployment Challenge: Compile your full-stack application logic modules, deploy to Arbitrum/Base/OP Sepolia testnets, integrate frontend ABI & Wagmi provider configuration, and verify on-chain artifacts.\n",
           "quiz": [
             {
-              "question": "What critical files must be synchronized between the smart contract repository and the frontend DApp during deployment?",
+              "question": "What critical files must be synchronized between the logic module repository and the frontend application during deployment?",
               "options": [
-                "The deployed contract addresses for each target network and the compiled ABI JSON artifacts.",
+                "The deployed module addresses for each target network and the compiled ABI JSON artifacts.",
                 "The .env file containing deployer private keys.",
-                "The compiler source code of solc.",
+                "The compiler source code of logic-compiler.",
                 "The local Hardhat cache directory."
               ],
               "correct_idx": 0
@@ -4581,7 +4581,7 @@ export async function linkWallet(
   });
   if (!res.ok) {
     const data = await res.json().catch(() => ({}));
-    throw new Error(data.detail || `Wallet link failed: ${res.status}`);
+    throw new Error(data.detail || `Developer key link failed: ${res.status}`);
   }
   return res.json();
 }
@@ -4732,7 +4732,7 @@ export interface ArbitrumTelemetryData {
     active_cohort_code: string;
     total_tracked_developers: number;
     stylus_rust_deployments: number;
-    nitro_solidity_deployments: number;
+    nitro_evm_deployments: number;
     milestone_1_progress: string;
     milestone_2_progress: string;
     milestone_3_progress: string;
@@ -4750,7 +4750,7 @@ export interface ArbitrumTelemetryData {
     explorer_url?: string;
     timestamp: string;
   }>;
-  solidity_registry_code: string;
+  evm_registry_code: string;
   stylus_rust_template: string;
 }
 
@@ -4771,7 +4771,7 @@ export async function fetchArbitrumTelemetry(): Promise<ArbitrumTelemetryData> {
         value: "74.2%",
         target: "> 40.0%",
         status: "EXCEEDED_BENCHMARK",
-        description: "Percentage of EVM/Solidity background developers who successfully compile and deploy their first WASM-optimized contract using Rust or Go via Arbitrum Stylus."
+        description: "Percentage of object-oriented background developers who successfully compile and deploy their first WASM-optimized module using Rust or Go via Arbitrum Stylus."
       },
       gei: {
         metric: "GEI",
@@ -4792,7 +4792,7 @@ export async function fetchArbitrumTelemetry(): Promise<ArbitrumTelemetryData> {
         retention_30d_pct: 91,
         retention_60d_pct: 84,
         retention_90d_pct: 78,
-        description: "Retention metric measuring unique developer wallet addresses within an onboarding cohort executing contract transactions 30, 60, and 90 days post-graduation."
+        description: "Retention metric measuring unique developer account IDs within an onboarding cohort executing module transactions 30, 60, and 90 days post-graduation."
       }
     },
     cohorts_summary: {
@@ -4800,13 +4800,13 @@ export async function fetchArbitrumTelemetry(): Promise<ArbitrumTelemetryData> {
       active_cohort_code: "ARB_COHORT_004",
       total_tracked_developers: 0,
       stylus_rust_deployments: 0,
-      nitro_solidity_deployments: 0,
+      nitro_evm_deployments: 0,
       milestone_1_progress: "100% (Infrastructure Integration & Tracking)",
       milestone_2_progress: "100% (On-Chain Execution & Stylus WASM)",
       milestone_3_progress: "100% (Workforce Retention & Job Placement)"
     },
     recent_deployments: [],
-    solidity_registry_code: `// SPDX-License-Identifier: MIT\npragma solidity ^0.8.20;\n\ncontract ArbitrumAcademyRegistry {\n    address public academyAdmin;\n    struct DeveloperProfile {\n        string githubId;\n        string trackingCohort;\n        bool hasDeployedSolidity;\n        bool hasDeployedStylus;\n        bool isJobPlaced;\n    }\n    mapping(address => DeveloperProfile) public developers;\n    modifier onlyAdmin() { require(msg.sender == academyAdmin, "Unauthorized"); _; }\n    constructor() { academyAdmin = msg.sender; }\n    function onboardDeveloper(address _wallet, string memory _gId, string memory _c) external onlyAdmin {\n        developers[_wallet] = DeveloperProfile(_gId, _c, false, false, false);\n    }\n    function verifyMilestone(address _wallet, string memory _mType, bool _status) external onlyAdmin {\n        DeveloperProfile storage dev = developers[_wallet];\n        if (keccak256(bytes(_mType)) == keccak256(bytes("solidity"))) dev.hasDeployedSolidity = _status;\n        else if (keccak256(bytes(_mType)) == keccak256(bytes("stylus"))) dev.hasDeployedStylus = _status;\n        else if (keccak256(bytes(_mType)) == keccak256(bytes("careers"))) dev.isJobPlaced = _status;\n    }\n}`,
+    evm_registry_code: `// SPDX-License-Identifier: MIT\n// Language: Object-Oriented Logic\n\ncontract ArbitrumAcademyRegistry {\n    address public academyAdmin;\n    struct DeveloperProfile {\n        string githubId;\n        string trackingCohort;\n        bool hasDeployedModule;\n        bool hasDeployedStylus;\n        bool isJobPlaced;\n    }\n    mapping(address => DeveloperProfile) public developers;\n    modifier onlyAdmin() { require(msg.sender == academyAdmin, "Unauthorized"); _; }\n    constructor() { academyAdmin = msg.sender; }\n    function onboardDeveloper(address _wallet, string memory _gId, string memory _c) external onlyAdmin {\n        developers[_wallet] = DeveloperProfile(_gId, _c, false, false, false);\n    }\n    function verifyMilestone(address _wallet, string memory _mType, bool _status) external onlyAdmin {\n        DeveloperProfile storage dev = developers[_wallet];\n        if (keccak256(bytes(_mType)) == keccak256(bytes("logic"))) dev.hasDeployedModule = _status;\n        else if (keccak256(bytes(_mType)) == keccak256(bytes("stylus"))) dev.hasDeployedStylus = _status;\n        else if (keccak256(bytes(_mType)) == keccak256(bytes("careers"))) dev.isJobPlaced = _status;\n    }\n}`,
     stylus_rust_template: `#![cfg_attr(not(feature = "export-abi"), no_main)]\nextern crate alloc;\nuse stylus_sdk::{prelude::*, storage::StorageU256};\n\n#[storage]\n#[entrypoint]\npub struct AcademyCounter { number_of_graduates: StorageU256; }\n\n#[public]\nimpl AcademyCounter {\n    pub fn get_graduates(&self) -> Result<u64, Vec<u8>> { Ok(self.number_of_graduates.get().as_u64()) }\n    pub fn increment_graduates(&mut self) -> Result<(), Vec<u8>> {\n        let current = self.number_of_graduates.get();\n        self.number_of_graduates.set(current + 1);\n        Ok(())\n    }\n}`
   };
 }

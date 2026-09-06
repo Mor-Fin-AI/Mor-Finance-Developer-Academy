@@ -107,9 +107,9 @@ const ECOSYSTEMS = [
     badge: 'Universal Distributed Systems Foundation',
     desc: 'Core Distributed Systems Principles: P2P Network Topologies, Cryptographic Hashing, Transactions, Consensus Models, System Logic Engines & Distributed Architecture.',
     architecture: 'P2P Networks, Hashing (SHA256, Keccak256), Key Pairs, Consensus Mechanisms (PoW, PoS)',
-    tooling: 'Solidity, Rust, Software SDKs, Testing Frameworks, Foundry, and MOR Developer Toolkits',
+    tooling: 'Object-Oriented Logic, Rust, Software SDKs, Testing Frameworks, Foundry, and MOR Developer Toolkits',
     p1_name: 'OpenZeppelin Core System Architectures',
-    p1_repo: 'https://github.com/OpenZeppelin/openzeppelin-contracts',
+    p1_repo: 'https://github.com/OpenZeppelin',
     p2_name: 'Distributed Systems Full-Stack Kit',
     p2_repo: 'https://github.com/scaffold-eth/scaffold-eth-2'
   },
@@ -119,9 +119,9 @@ const ECOSYSTEMS = [
     badge: 'Layer 1 Settlement & Execution Engine Standard',
     desc: 'Dedicated Distributed Architecture Developer Onboarding Path: Gas Execution Model, Object-Oriented Syntax Engines, Testing Frameworks, and Account Abstraction.',
     architecture: 'Ethereum Virtual Machine (EVM), Gasper Proof-of-Stake Consensus, Execution & Consensus Client Specs',
-    tooling: 'Solidity (^0.8.20), Hardhat, Foundry, Ethers.js, Viem, and OpenZeppelin Contracts',
+    tooling: 'Object-Oriented Logic (^0.8.20), Hardhat, Foundry, Client SDKs, and OpenZeppelin Architecture Libraries',
     p1_name: 'OpenZeppelin Architecture Library',
-    p1_repo: 'https://github.com/OpenZeppelin/openzeppelin-contracts',
+    p1_repo: 'https://github.com/OpenZeppelin',
     p2_name: 'Full-Stack Architecture Starter Kit',
     p2_repo: 'https://github.com/scaffold-eth/scaffold-eth-2'
   },
@@ -131,7 +131,7 @@ const ECOSYSTEMS = [
     badge: 'High-Scale Execution Engine & Stylus Rust',
     desc: 'Dedicated Arbitrum Developer Onboarding Path: Arbitrum Nitro Execution Engine, Stylus Wasm (Rust & C++), Arbitrum Orbit L3 Chains, and Offchain Labs Developer Tooling.',
     architecture: 'Nitro Execution Engine, Arbitrum Virtual Machine (AVM), Orbit L3 Configs, and Stylus Wasm Host I/O',
-    tooling: 'Rust (Stylus SDK), Solidity, Arbitrum Nitro Testnet RPCs, Foundry, and Offchain Labs CLI',
+    tooling: 'Rust (Stylus SDK), Object-Oriented Logic, Arbitrum Nitro Testnet RPCs, Foundry, and Offchain Labs CLI',
     p1_name: 'Stylus Rust Hello World Repo',
     p1_repo: 'https://github.com/OffchainLabs/stylus-hello-world',
     p2_name: 'Arbitrum Tutorials Codebase',
@@ -143,7 +143,7 @@ const ECOSYSTEMS = [
     badge: 'Modular Superchain & Cross-Domain Rollup',
     desc: 'Dedicated Optimism Developer Onboarding Path: OP Stack Modular Infrastructure, Bedrock Execution Layer, Superchain Inter-Process Messaging, and Public Goods Funding.',
     architecture: 'OP Stack Rollup Spec, Bedrock Sequencer Architecture, Cross-Domain Messenger (L1 <-> L2)',
-    tooling: 'Solidity, OP Stack Devnet CLI, Foundry, Wagmi, and Optimism Ecosystem SDKs',
+    tooling: 'Object-Oriented Logic, OP Stack Devnet CLI, Foundry, Client SDKs, and Optimism Ecosystem SDKs',
     p1_name: 'OP Cross-Domain Messenger Tutorial',
     p1_repo: 'https://github.com/ethereum-optimism/optimism-tutorial',
     p2_name: 'OP Superchain Ecosystem Templates',
@@ -155,7 +155,7 @@ const ECOSYSTEMS = [
     badge: 'Modular PoS & Validity-Proof Systems',
     desc: 'Dedicated Polygon Developer Onboarding Path: Polygon PoS Architecture, Polygon CDK (Chain Development Kit), Plonky2 zero-knowledge proofs, and validium integration.',
     architecture: 'Polygon PoS Architecture, Polygon CDK Validium & ZK-Rollup Spec, Plonky2 Verifiers',
-    tooling: 'Solidity, Polygon CDK CLI, Kurtosis CDK Package, Hardhat, and Foundry',
+    tooling: 'Object-Oriented Logic, Polygon CDK CLI, Kurtosis CDK Package, Hardhat, and Foundry',
     p1_name: 'Polygon CDK Core Node Repository',
     p1_repo: 'https://github.com/0xPolygon/cdk',
     p2_name: 'Polygon Kurtosis CDK Devnet Package',
@@ -167,7 +167,7 @@ const ECOSYSTEMS = [
     badge: 'High-Performance L2 & Modern App Standard',
     desc: 'Dedicated Base Developer Onboarding Path: Base Layer-2 OP Stack Node, Developer Key SDK, OnchainKit React Components, and Gasless Paymasters.',
     architecture: 'Base OP Stack Layer-2 Execution Layer, Account Abstraction & Session Logic',
-    tooling: 'Solidity (^0.8.20), Component Libraries, Starter Kits, Foundry, and MOR Finance APIs',
+    tooling: 'Object-Oriented Logic (^0.8.20), Component Libraries, Starter Kits, Foundry, and MOR Finance APIs',
     p1_name: 'Client React & TS SDK',
     p1_repo: 'https://github.com/coinbase/onchainkit',
     p2_name: 'Modern Web Architecture Starter Kit',
@@ -183,7 +183,7 @@ const ECOSYSTEMS = [
     p1_name: 'Coral XYZ Anchor Framework Rust Kit',
     p1_repo: 'https://github.com/coral-xyz/anchor',
     p2_name: 'Next.js Distributed Application Scaffold',
-    p2_repo: 'https://github.com/solana-developers/solana-dapp-next'
+    p2_repo: 'https://github.com/solana-developers/solana-app-next'
   },
   {
     id: 'avalanche',
@@ -191,7 +191,7 @@ const ECOSYSTEMS = [
     badge: 'Multi-Subnet Architecture & Teleporter Messaging',
     desc: 'Dedicated Avalanche Developer Onboarding Path: Avalanche Snow Consensus Engine, Primary Network Subnets, Custom Virtual Machines, and Teleporter Warp Messaging.',
     architecture: 'Snow Consensus Protocol, Primary Network Subnets, Avalanche Warp Messaging (AWM) Teleporter',
-    tooling: 'Solidity, Avalanche CLI, Teleporter SDK, Hardhat, and Ethers.js',
+    tooling: 'Object-Oriented Logic, Avalanche CLI, Teleporter SDK, Hardhat, and Client SDKs',
     p1_name: 'Ava Labs Starter Kit',
     p1_repo: 'https://github.com/ava-labs/avalanche-starter-kit',
     p2_name: 'Teleporter Cross-Subnet Kit',
@@ -207,7 +207,7 @@ const ECOSYSTEMS = [
     p1_name: 'Starknet Cairo Core Repo',
     p1_repo: 'https://github.com/starkware-libs/cairo',
     p2_name: 'OpenZeppelin Cairo System Components',
-    p2_repo: 'https://github.com/OpenZeppelin/cairo-contracts'
+    p2_repo: 'https://github.com/OpenZeppelin'
   },
   {
     id: 'aptos',
@@ -227,7 +227,7 @@ const ECOSYSTEMS = [
     badge: 'Modular Relay Frameworks & ink! Rust',
     desc: 'Dedicated Polkadot & Substrate Developer Onboarding Path: Relay Frameworks & App Chains, Substrate Framework, ink! Rust Logic Engines, and Multi-Runtime Deployment.',
     architecture: 'Relay Chain & Parachain Shared Security, Substrate FRAME Architecture, XCM Interoperability',
-    tooling: 'Rust, Substrate Framework, cargo-contract, ink! SDK, Polkadot-JS API, and Chopsticks',
+    tooling: 'Rust, Substrate Framework, cargo-module, ink! SDK, Polkadot-JS API, and Chopsticks',
     p1_name: 'Parity Substrate Framework',
     p1_repo: 'https://github.com/paritytech/substrate',
     p2_name: 'use-ink ink! Software Logic Engine',
@@ -305,9 +305,7 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
   const currentOverallPct = totalLessonsInTrack > 0 ? Math.round((completedLessonsInTrack / totalLessonsInTrack) * 100) : 0;
   const trackLevelCount = effectiveProgress.levels.length || 5;
 
-  const activeTrackDisplayName = isLoggedIn
-    ? activeTrackId
-    : activeTrackId === 'solana'
+  const activeTrackDisplayName = activeTrackId === 'solana'
     ? 'High-Performance Engine'
     : (SYLLABUS_COMPLIANCE_MAP[activeTrackId] || activeTrackId);
 
@@ -316,10 +314,10 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
       {/* Hero */}
       <div className="roadmap__hero">
         <h2 className="roadmap__hero-title">
-          {isLoggedIn ? 'Your Web3' : 'Your Distributed Systems'} <span className="gradient-text">Learning Journey</span>
+          Your Distributed Systems <span className="gradient-text">Learning Journey</span>
         </h2>
         <p className="roadmap__hero-desc">
-          {trackLevelCount} progressive {trackLevelCount === 1 ? 'module' : 'modules'} covering {isLoggedIn ? selectedEco.name : (SYLLABUS_COMPLIANCE_MAP[selectedEco.id] || selectedEco.name)} fundamentals, architecture, logic protocols, testing, and verified deployment.
+          {trackLevelCount} progressive {trackLevelCount === 1 ? 'module' : 'modules'} covering {SYLLABUS_COMPLIANCE_MAP[selectedEco.id] || selectedEco.name} fundamentals, architecture, logic protocols, testing, and verified deployment.
         </p>
         <div className="roadmap__hero-stats">
           <div className="roadmap__hero-stat">
@@ -346,7 +344,7 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
         <div className="track-switcher__header">
           <div>
             <h3 className="track-switcher__title">
-              {isLoggedIn ? 'Active Ecosystem Learning Track' : 'Active Architecture Learning Track'}
+              Active Architecture Learning Track
             </h3>
             <p className="track-switcher__subtitle">
               Select an architecture track to customize your curriculum. Currently active: <strong style={{ color: 'var(--clr-primary-light)', textTransform: 'capitalize' }}>{activeTrackDisplayName}</strong>
@@ -357,7 +355,7 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
         <div className="track-switcher__grid">
           {ECOSYSTEMS.map((eco) => {
             const isActive = eco.id === activeTrackId;
-            const cardLabel = isLoggedIn ? eco.name : (SYLLABUS_COMPLIANCE_MAP[eco.id] || eco.name);
+            const cardLabel = SYLLABUS_COMPLIANCE_MAP[eco.id] || eco.name;
 
             return (
               <button
@@ -393,16 +391,10 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
               <div className="track-overview__title" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '1.2rem', fontWeight: 800, color: '#fff', flexWrap: 'wrap' }}>
                 <span style={{ display: 'inline-flex', alignItems: 'center' }}>{CHAIN_LOGOS[selectedEco.id]}</span>
                 <span>
-                  {isLoggedIn
-                    ? `Dedicated ${selectedEco.name} Learning Path`
-                    : selectedEco.id === 'solana'
-                    ? 'Dedicated High-Performance Learning Path'
-                    : `Dedicated ${SYLLABUS_COMPLIANCE_MAP[selectedEco.id] || selectedEco.name} Learning Path`}
+                  Dedicated {SYLLABUS_COMPLIANCE_MAP[selectedEco.id] || selectedEco.name} Learning Path
                 </span>
                 <span className="badge badge--primary" style={{ fontSize: '0.65rem', padding: '3px 8px', marginLeft: 'auto' }}>
-                  {isLoggedIn
-                    ? selectedEco.badge
-                    : selectedEco.id === 'solana'
+                  {selectedEco.id === 'solana'
                     ? 'High-Throughput Parallel Systems Engine'
                     : selectedEco.badge}
                 </span>
@@ -422,17 +414,13 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
               <div style={{ background: 'rgba(59, 130, 246, 0.05)', border: '1px solid rgba(59, 130, 246, 0.2)', padding: '12px 16px', borderRadius: '12px' }}>
                 <span style={{ fontSize: '0.7rem', fontWeight: 800, textTransform: 'uppercase', color: '#60a5fa', letterSpacing: '0.05em', display: 'block', marginBottom: '4px' }}>⚙️ Dedicated Architecture & Consensus</span>
                 <span style={{ fontSize: '0.8rem', color: '#e2e8f0', lineHeight: '1.4' }}>
-                  {isLoggedIn
-                    ? selectedEco.architecture
-                    : sanitizeComplianceText(selectedEco.architecture, false)}
+                  {sanitizeComplianceText(selectedEco.architecture)}
                 </span>
               </div>
               <div style={{ background: 'rgba(168, 85, 247, 0.05)', border: '1px solid rgba(168, 85, 247, 0.2)', padding: '12px 16px', borderRadius: '12px' }}>
                 <span style={{ fontSize: '0.7rem', fontWeight: 800, textTransform: 'uppercase', color: '#c084fc', letterSpacing: '0.05em', display: 'block', marginBottom: '4px' }}>🛠️ Dedicated Developer Tooling Chain</span>
                 <span style={{ fontSize: '0.8rem', color: '#e2e8f0', lineHeight: '1.4' }}>
-                  {isLoggedIn
-                    ? selectedEco.tooling
-                    : sanitizeComplianceText(selectedEco.tooling, false)}
+                  {sanitizeComplianceText(selectedEco.tooling)}
                 </span>
               </div>
             </div>
@@ -443,9 +431,7 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
                 <div>
                   <h5 className="multichain-card__title">5 Dedicated Learning Modules</h5>
                   <p className="multichain-card__sub">
-                    {isLoggedIn
-                      ? `${selectedEco.name} Architecture, Tooling, Smart Contracts, Full-Stack SDK & Testnet Deployment`
-                      : `${activeTrackDisplayName} Architecture, Tooling, System Logic Protocols, Cloud SDK & Deployment`}
+                    {`${activeTrackDisplayName} Architecture, Tooling, System Logic Protocols, Cloud SDK & Deployment`}
                   </p>
                 </div>
               </div>
@@ -461,9 +447,7 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
                 <div>
                   <h5 className="multichain-card__title">5 Live Coding & Deployment Challenges</h5>
                   <p className="multichain-card__sub">
-                    {isLoggedIn
-                      ? `${selectedEco.name} Smart Contract Execution, Verification & Live Testnet Deployment`
-                      : `${activeTrackDisplayName} System Logic Execution, Verification & Sandbox Deployment`}
+                    {`${activeTrackDisplayName} System Logic Execution, Verification & Sandbox Deployment`}
                   </p>
                 </div>
               </div>
@@ -472,9 +456,7 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
                 <div>
                   <h5 className="multichain-card__title">1 Verified Ecosystem Certificate</h5>
                   <p className="multichain-card__sub">
-                    {isLoggedIn
-                      ? `Verifiable Credential matching official ${selectedEco.name} Grant Benchmark Standards`
-                      : `Verifiable Credential matching official ${activeTrackDisplayName} Benchmark Standards`}
+                    {`Verifiable Credential matching official ${activeTrackDisplayName} Benchmark Standards`}
                   </p>
                 </div>
               </div>
@@ -482,7 +464,7 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
                 <span className="multichain-card__icon">🛠️</span>
                 <div>
                   <h5 className="multichain-card__title">Official Starter Projects & GitHub Repos</h5>
-                  <p className="multichain-card__sub">Bespoke starter codebases for {isLoggedIn ? selectedEco.name : activeTrackDisplayName}:</p>
+                  <p className="multichain-card__sub">Bespoke starter codebases for {activeTrackDisplayName}:</p>
                   <div style={{ display: 'flex', gap: '6px', marginTop: '6px', flexWrap: 'wrap' }}>
                     <a href={isLoggedIn ? selectedEco.p1_repo : 'https://github.com'} target="_blank" rel="noopener noreferrer" className="multichain-repo-btn">
                       🐱 {selectedEco.p1_name} ↗
@@ -510,7 +492,10 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
         {effectiveProgress.levels.map((level, idx) => (
           <LevelCard
             key={level.level_id}
-            level={level}
+            level={{
+              ...level,
+              title: sanitizeComplianceText(level.title)
+            }}
             isLast={idx === effectiveProgress.levels.length - 1}
             onSelect={() => onSelectLevel(level.level_id)}
           />
@@ -525,8 +510,8 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
         </p>
         <div className="build-mor__grid">
           {[
-            { title: isLoggedIn ? 'Smart Contracts' : 'Logic Architectures', icon: '📝' },
-            { title: isLoggedIn ? 'dApps Frameworks' : 'Application Frameworks', icon: '🌐' },
+            { title: 'Logic Architectures', icon: '📝' },
+            { title: 'Application Frameworks', icon: '🌐' },
             { title: 'Developer Toolkits', icon: '🛠️' },
           ].map((item) => (
             <div key={item.title} className="build-mor__card">

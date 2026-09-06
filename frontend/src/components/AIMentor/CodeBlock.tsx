@@ -14,14 +14,15 @@ hljs.registerLanguage('typescript', typescript);
 hljs.registerLanguage('python', python);
 hljs.registerLanguage('bash', bash);
 hljs.registerLanguage('sh', bash);
-hljs.registerLanguage('solidity', javascript); // closest available highlighting
+hljs.registerLanguage('logic', javascript);
+hljs.registerLanguage('sol', javascript);
 
 interface CodeBlockProps {
   code: string;
   language?: string;
 }
 
-export const CodeBlock: React.FC<CodeBlockProps> = ({ code, language = 'solidity' }) => {
+export const CodeBlock: React.FC<CodeBlockProps> = ({ code, language = 'typescript' }) => {
   const codeRef  = useRef<HTMLElement>(null);
   const [copied, setCopied] = useState(false);
 

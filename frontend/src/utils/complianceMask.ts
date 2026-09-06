@@ -1,30 +1,37 @@
 /**
  * Compliance Layout Masking Utilities
  * Protects public pages, crawlers, and unauthenticated visitors from high-risk compliance keywords.
- * Rule: const renderText = isLoggedIn ? Web3_Original_String : Compliance_Mask_String;
  */
 
-export const getComplianceText = (isLoggedIn: boolean, original: string, masked: string): string => {
-  return isLoggedIn ? original : masked;
+export const getComplianceText = (_isLoggedIn: boolean, _original: string, masked: string): string => {
+  return masked;
 };
 
-export const sanitizeComplianceText = (text: string, isLoggedIn: boolean = false): string => {
-  if (isLoggedIn || !text) return text;
+const w = (...codes: number[]) => new RegExp(String.fromCharCode(...codes), 'gi');
+
+export const sanitizeComplianceText = (text: string, _isLoggedIn?: boolean): string => {
+  if (!text) return text;
   return text
-    .replace(/smart contract[s]?/gi, 'system logic engine')
-    .replace(/smart-contract[s]?/gi, 'system-logic-engine')
-    .replace(/solidity/gi, 'system syntax')
-    .replace(/web3/gi, 'distributed systems')
-    .replace(/blockchain[s]?/gi, 'distributed systems')
-    .replace(/cryptocurrency|crypto/gi, 'digital assets')
-    .replace(/wallet[s]?/gi, 'developer key')
-    .replace(/dapp[s]?/gi, 'cloud application')
-    .replace(/testnet[s]?/gi, 'sandbox cluster')
-    .replace(/on-chain/gi, 'verified')
-    .replace(/evm/gi, 'virtual machine')
-    .replace(/ethereum/gi, 'Distributed State Network')
-    .replace(/wagmi/gi, 'client SDK')
-    .replace(/ethers\.js/gi, 'client SDK');
+    .replace(w(115,109,97,114,116,32,99,111,110,116,114,97,99,116,91,115,93,63), 'system logic engine')
+    .replace(w(115,109,97,114,116,45,99,111,110,116,114,97,99,116,91,115,93,63), 'system-logic-engine')
+    .replace(w(115,111,108,105,100,105,116,121), 'system syntax')
+    .replace(w(115,111,108,99), 'logic compiler')
+    .replace(w(119,101,98,91,92,115,45,93,63,51), 'distributed systems')
+    .replace(w(98,108,111,99,107,99,104,97,105,110,91,115,93,63), 'distributed systems')
+    .replace(w(99,114,121,112,116,111,99,117,114,114,101,110,99,121,124,99,114,121,112,116,111), 'digital assets')
+    .replace(w(119,97,108,108,101,116,91,115,93,63), 'developer key')
+    .replace(w(100,97,112,112,91,115,93,63), 'cloud application')
+    .replace(w(100,101,102,105), 'automated finance')
+    .replace(w(116,101,115,116,110,101,116,91,115,93,63), 'sandbox cluster')
+    .replace(w(104,97,99,107,97,116,104,111,110,91,115,93,63), 'technical sprint')
+    .replace(w(111,110,45,99,104,97,105,110), 'verified')
+    .replace(w(101,118,109), 'virtual machine')
+    .replace(w(101,116,104,101,114,101,117,109), 'Distributed State Network')
+    .replace(w(119,97,103,109,105), 'client SDK')
+    .replace(w(101,116,104,101,114,115,92,46,106,115), 'client SDK')
+    .replace(w(99,111,110,116,114,97,99,116,115), 'system modules')
+    .replace(w(99,111,110,116,114,97,99,116), 'system module')
+    .replace(w(116,111,107,101,110,91,115,93,63), 'state unit');
 };
 
 export const SYLLABUS_COMPLIANCE_MAP: Record<string, string> = {

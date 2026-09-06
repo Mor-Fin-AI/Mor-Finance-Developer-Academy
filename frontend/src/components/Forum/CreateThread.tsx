@@ -50,8 +50,8 @@ export const CreateThread: React.FC<CreateThreadProps> = ({
           <div className="category-select-grid">
             {[
               { id: 'Question', label: '❓ Question', desc: 'Ask a technical query or request code review' },
-              { id: 'Discussion', label: '💬 Discussion', desc: 'Discuss Web3 trends, ideas, or architectural patterns' },
-              { id: 'Showcase', label: '🚀 Showcase', desc: 'Share your completed project, dApp, or smart contract' },
+              { id: 'Discussion', label: '💬 Discussion', desc: 'Discuss distributed systems trends, ideas, or architectural patterns' },
+              { id: 'Showcase', label: '🚀 Showcase', desc: 'Share your completed project, application, or logic engine' },
               { id: 'Help', label: '🚨 Help', desc: 'Get assistance with compiling errors, setups, or bugs' },
               { id: 'Announcement', label: '📢 Announcement', desc: 'Broadcast platform updates, releases, or news' }
             ].map((cat) => (
@@ -84,7 +84,7 @@ export const CreateThread: React.FC<CreateThreadProps> = ({
           <label className="form-label">Tags (comma-separated)</label>
           <input
             type="text"
-            placeholder="e.g. solidity, gas, defi"
+            placeholder="e.g. architecture, performance, APIs"
             value={newTags}
             onChange={(e) => setNewTags(e.target.value)}
             className="form-input"

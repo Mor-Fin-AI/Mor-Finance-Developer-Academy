@@ -22,7 +22,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onLogout,
   isOpen,
   onClose,
-  isLoggedIn = Boolean(authType && userId),
+  isLoggedIn = false,
 }) => {
   const navItems = [
     { id: 'about' as NavPage, label: 'About Us', icon: '🏛️', description: 'Mission & Software Architecture' },
@@ -181,7 +181,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             )}
           </div>
           <div style={{ fontSize: '0.62rem', color: 'var(--clr-text-muted)', textAlign: 'center', marginTop: '12px', padding: '0 4px', lineHeight: '1.4' }}>
-            © 2026 Morfinance AI. 66 Paul Street, London, EC2A 4NA. All rights reserved. | {isLoggedIn ? 'AI-Powered Web3 Developer Academy' : 'Enterprise EdTech & Software Architecture Academy'}
+            © 2026 Morfinance AI. 66 Paul Street, London, EC2A 4NA. All rights reserved. | {isLoggedIn ? 'Advanced Software Architecture & Systems Academy' : 'Enterprise EdTech & Distributed Systems Academy'}
           </div>
         </div>
       </aside>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { fetchArbitrumTelemetry, fetchCohortAnalytics } from '../../api/client';
-import { getStoredDeployments, subscribeDeployments } from '../../services/web3Deployer';
+import { getStoredDeployments, subscribeDeployments } from '../../services/liveDeployer';
 import './AnalyticsPage.css';
 
 interface DeveloperActivityItem {
@@ -22,7 +22,7 @@ export const AnalyticsPage: React.FC = () => {
   const [activityRoleFilter, setActivityRoleFilter] = useState<string>('All');
   const [activityTrackFilter, setActivityTrackFilter] = useState<string>('All');
   const [activitySearch, setActivitySearch] = useState<string>('');
-  const [arbTab, setArbTab] = useState<'telemetry' | 'deployments' | 'stylus' | 'base' | 'optimism' | 'solidity'>('telemetry');
+  const [arbTab, setArbTab] = useState<'telemetry' | 'deployments' | 'stylus' | 'base' | 'optimism' | 'evm_logic'>('telemetry');
   const [deploymentNetworkFilter, setDeploymentNetworkFilter] = useState<string>('All');
   const [localDeploymentsCount, setLocalDeploymentsCount] = useState<number>(() => getStoredDeployments().length);
 
@@ -98,7 +98,7 @@ export const AnalyticsPage: React.FC = () => {
             Ecosystem Developer Cohort Analytics
           </h1>
           <p className="analytics-page__subtitle">
-            Live empirical learning activity, verified course completions, and testnet contract deployments.
+            Live empirical learning activity, verified course completions, and live module deployments.
           </p>
         </div>
 
@@ -123,7 +123,7 @@ export const AnalyticsPage: React.FC = () => {
           <span className="kpi-card__icon">🌱</span>
           <div className="kpi-card__content">
             <span className="kpi-card__val">Core Fundamentals</span>
-            <span className="kpi-card__lbl">Solidity &amp; EVM Nitro</span>
+            <span className="kpi-card__lbl">Object-Oriented Logic &amp; EVM Nitro</span>
             <span className="kpi-card__sub">Interactive Sandbox Labs</span>
           </div>
         </div>
@@ -279,8 +279,8 @@ export const AnalyticsPage: React.FC = () => {
           <div className="tier-breakdown-bar-container">
             {/* Multi-segment Progress Bar */}
             <div className="multi-segment-bar">
-              <div className="segment segment--beginner" style={{ width: '33.3%' }} title="Beginners: Core Solidity & Web3 Basics" />
-              <div className="segment segment--intermediate" style={{ width: '33.3%' }} title="Intermediates: DeFi AMMs, Tokens & Paymasters" />
+              <div className="segment segment--beginner" style={{ width: '33.3%' }} title="Beginners: Core Logic & Distributed Basics" />
+              <div className="segment segment--intermediate" style={{ width: '33.3%' }} title="Intermediates: Automated Finance & Paymasters" />
               <div className="segment segment--advanced" style={{ width: '33.4%' }} title="Advanced: Stylus Wasm, ZK Proofs & Audits" />
             </div>
 
@@ -290,7 +290,7 @@ export const AnalyticsPage: React.FC = () => {
                 <div className="legend-dot dot--beginner" />
                 <div className="legend-info">
                   <span className="legend-name">Beginner Tier</span>
-                  <span className="legend-desc">Core Solidity, EVM Nitro &amp; Web3 Basics</span>
+                  <span className="legend-desc">Core Object-Oriented Logic, EVM Nitro &amp; Distributed Basics</span>
                 </div>
               </div>
 
@@ -298,7 +298,7 @@ export const AnalyticsPage: React.FC = () => {
                 <div className="legend-dot dot--intermediate" />
                 <div className="legend-info">
                   <span className="legend-name">Intermediate Tier</span>
-                  <span className="legend-desc">DeFi AMMs, ERC Standards &amp; Paymasters</span>
+                  <span className="legend-desc">Automated Finance, Protocol Standards &amp; Paymasters</span>
                 </div>
               </div>
 
@@ -343,7 +343,7 @@ export const AnalyticsPage: React.FC = () => {
               <span className="arbitrum-kpi-lbl">Stylus Migration Velocity (SMV)</span>
             </div>
             <p className="arbitrum-kpi-desc">
-              Percentage of developers transitioning from Solidity into WASM-optimized Rust contracts on Arbitrum Stylus.
+              Percentage of developers transitioning from high-level logic into WASM-optimized Rust modules on Arbitrum Stylus.
             </p>
           </div>
 
@@ -371,7 +371,7 @@ export const AnalyticsPage: React.FC = () => {
               <span className="arbitrum-kpi-lbl">Cohort Code Vitality (CCV)</span>
             </div>
             <p className="arbitrum-kpi-desc">
-              Longitudinal tracking measuring developer active contract execution 30, 60, and 90 days post-onboarding.
+              Longitudinal tracking measuring developer active software module execution 30, 60, and 90 days post-onboarding.
             </p>
           </div>
         </div>
@@ -409,10 +409,10 @@ export const AnalyticsPage: React.FC = () => {
             🔴 Optimism Superchain
           </button>
           <button
-            className={`arbitrum-tab-btn ${arbTab === 'solidity' ? 'active' : ''}`}
-            onClick={() => setArbTab('solidity')}
+            className={`arbitrum-tab-btn ${arbTab === 'evm_logic' ? 'active' : ''}`}
+            onClick={() => setArbTab('evm_logic')}
           >
-            📜 EVM Solidity Registry
+            📜 EVM Logic Registry
           </button>
         </div>
 
@@ -440,7 +440,7 @@ export const AnalyticsPage: React.FC = () => {
                   <span className="step-icon">✅</span>
                   <div>
                     <strong>Milestone 3: Soulbound DID Credential Registry</strong>
-                    <p>On-chain Arbitrum &amp; Base credential registry contracts ready for testnet minting.</p>
+                    <p>On-chain Arbitrum &amp; Base credential registry modules ready for testnet minting.</p>
                   </div>
                 </div>
               </div>
@@ -509,7 +509,7 @@ export const AnalyticsPage: React.FC = () => {
                       <span style={{ fontSize: '1.5rem', display: 'block', marginBottom: '8px' }}>📡</span>
                       <h4 style={{ margin: '0 0 6px 0', color: '#fff', fontSize: '0.95rem' }}>Live Telemetry Tracking Stream Active</h4>
                       <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--clr-text-secondary)', maxWidth: '520px', marginInline: 'auto' }}>
-                        Student contract compilations and testnet deployments from the <strong>Code Sandbox IDE</strong> and <strong>Developer Academy</strong> are recorded live to the telemetry registry.
+                        Student software module compilations and system deployments from the <strong>Code Sandbox IDE</strong> and <strong>Developer Academy</strong> are recorded live to the telemetry registry.
                       </p>
                     </div>
                   );
@@ -523,7 +523,7 @@ export const AnalyticsPage: React.FC = () => {
                         <th>Network</th>
                         <th>Cohort ID</th>
                         <th>Environment</th>
-                        <th>Contract / Artifact</th>
+                        <th>Module / Artifact</th>
                         <th>Gas Used</th>
                         <th>Explorer</th>
                         <th>Status</th>
@@ -611,15 +611,15 @@ impl AcademyCounter {
         {arbTab === 'base' && (
           <div>
             <div style={{ marginBottom: '10px', fontSize: '0.8rem', color: 'var(--clr-text-secondary)' }}>
-              <strong>Base Gasless Paymaster &amp; Account Abstraction (Base Sepolia / Chain ID: 84532)</strong>: ERC-4337 gas sponsorship paymaster optimized for Coinbase Smart Wallet frictionless student onboarding.
+              <strong>Base Gasless Paymaster &amp; Account Abstraction (Base Sepolia / Chain ID: 84532)</strong>: Execution sponsorship paymaster optimized for frictionless student onboarding.
             </div>
             <pre className="arbitrum-code-block">
               {arbTelemetry?.base_paymaster_template || `// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+// Language: Object-Oriented Logic
 
 /**
  * @title BaseGaslessPaymaster
- * @notice ERC-4337 compliant gas sponsorship paymaster optimized for Base Sepolia & Coinbase Smart Wallet.
+ * @notice Execution sponsorship paymaster optimized for Base Sepolia.
  */
 contract BaseGaslessPaymaster {
     address public immutable owner;
@@ -672,11 +672,11 @@ contract BaseGaslessPaymaster {
             </div>
             <pre className="arbitrum-code-block">
               {arbTelemetry?.optimism_superchain_template || `// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+// Language: Object-Oriented Logic
 
 /**
  * @title OptimismCrossDomainBridge
- * @notice Cross-L2 message transmitter communicating via the Optimism Superchain Messenger.
+ * @notice Cross-domain message transmitter communicating via the Optimism Superchain Messenger.
  */
 interface ICrossDomainMessenger {
     function sendMessage(address _target, bytes calldata _message, uint32 _gasLimit) external payable;
@@ -723,14 +723,14 @@ contract OptimismCrossDomainBridge {
           </div>
         )}
 
-        {arbTab === 'solidity' && (
+        {arbTab === 'evm_logic' && (
           <div>
             <div style={{ marginBottom: '10px', fontSize: '0.8rem', color: 'var(--clr-text-secondary)' }}>
-              <strong>Arbitrum Academy On-Chain Registry (Arbitrum Sepolia)</strong>: Student grant milestone recording contract storing credential verification flags.
+              <strong>Arbitrum Academy Registry (Arbitrum Sepolia)</strong>: Student grant milestone recording module storing credential verification flags.
             </div>
             <pre className="arbitrum-code-block">
-              {arbTelemetry?.solidity_registry_code || `// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+              {arbTelemetry?.evm_registry_code || `// SPDX-License-Identifier: MIT
+// Language: Object-Oriented Logic
 
 contract ArbitrumAcademyRegistry {
     address public academyAdmin;
@@ -738,7 +738,7 @@ contract ArbitrumAcademyRegistry {
     struct DeveloperProfile {
         string githubId;
         string trackingCohort;
-        bool hasDeployedSolidity;
+        bool hasDeployedModule;
         bool hasDeployedStylus;
         bool isJobPlaced;
     }
@@ -764,7 +764,7 @@ contract ArbitrumAcademyRegistry {
 
     function verifyMilestone(address _wallet, string memory _mType, bool _status) external onlyAdmin {
         DeveloperProfile storage dev = developers[_wallet];
-        if (keccak256(bytes(_mType)) == keccak256(bytes("solidity"))) dev.hasDeployedSolidity = _status;
+        if (keccak256(bytes(_mType)) == keccak256(bytes("logic"))) dev.hasDeployedModule = _status;
         else if (keccak256(bytes(_mType)) == keccak256(bytes("stylus"))) dev.hasDeployedStylus = _status;
         else if (keccak256(bytes(_mType)) == keccak256(bytes("careers"))) dev.isJobPlaced = _status;
         emit MilestoneVerified(_wallet, _mType, _status);
@@ -792,9 +792,9 @@ contract ArbitrumAcademyRegistry {
                 { chain: 'Arbitrum', icon: '🔵', count: 0, deployments: 0, color: '#3b82f6', pct: 0, standard: 'Nitro & Stylus Wasm Deployments' },
                 { chain: 'Solana', icon: '🟠', count: 0, deployments: 0, color: '#f59e0b', pct: 0, standard: 'Anchor & Devnet Deployments' },
                 { chain: 'Polygon', icon: '🟣', count: 0, deployments: 0, color: '#8247e5', pct: 0, standard: 'zkEVM & Validium Deployments' },
-                { chain: 'Base', icon: '🔷', count: 0, deployments: 0, color: '#0052ff', pct: 0, standard: 'Smart Wallet & Paymaster Deployments' },
+                { chain: 'Base', icon: '🔷', count: 0, deployments: 0, color: '#0052ff', pct: 0, standard: 'Enterprise Paymaster Deployments' },
                 { chain: 'Optimism', icon: '🔴', count: 0, deployments: 0, color: '#ef4444', pct: 0, standard: 'OP Stack & Superchain Deployments' },
-                { chain: 'Ethereum', icon: '💎', count: 0, deployments: 0, color: '#627eea', pct: 0, standard: 'Solidity & Sepolia Deployments' },
+                { chain: 'Ethereum', icon: '💎', count: 0, deployments: 0, color: '#627eea', pct: 0, standard: 'Logic Engine Deployments' },
                 { chain: 'Polkadot', icon: '🟣', count: 0, deployments: 0, color: '#a855f7', pct: 0, standard: 'ink! Wasm & Substrate Deployments' },
                 { chain: 'Aptos', icon: '⚡', count: 0, deployments: 0, color: '#06b6d4', pct: 0, standard: 'Move & Testnet Module Publishing' },
                 { chain: 'Starknet', icon: '✨', count: 0, deployments: 0, color: '#ec4899', pct: 0, standard: 'Cairo 2.0 & Sepolia ZK Deployments' }

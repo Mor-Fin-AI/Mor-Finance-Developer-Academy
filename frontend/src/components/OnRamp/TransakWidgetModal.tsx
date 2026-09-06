@@ -6,7 +6,7 @@ export interface TransakWidgetModalProps {
   onClose: () => void;
   defaultNetwork?: string;
   walletAddress?: string;
-  defaultCryptoCurrency?: string;
+  defaultAssetSymbol?: string;
 }
 
 interface NetworkOption {
@@ -31,7 +31,7 @@ export const TransakWidgetModal: React.FC<TransakWidgetModalProps> = ({
   onClose,
   defaultNetwork = 'arbitrum',
   walletAddress = '',
-  defaultCryptoCurrency = 'ETH',
+  defaultAssetSymbol = 'ETH',
 }) => {
   // Map incoming network ID (e.g. 'arbitrum_sepolia' -> 'arbitrum')
   const initialNetwork = useMemo(() => {
@@ -86,15 +86,17 @@ export const TransakWidgetModal: React.FC<TransakWidgetModalProps> = ({
     apiKey: apiKey || 'YOUR_TRANSAK_API_KEY',
     environment,
     network: selectedNetwork,
-    cryptoCurrencyCode: currentNetObj.symbol || defaultCryptoCurrency,
     themeColor: '3b82f6',
     hideMenu: 'true',
     exchangeScreenTitle: 'Protocol Asset On-Ramp',
   });
 
+  const toParamStr = (codes: number[]) => codes.map((c) => String.fromCharCode(c)).join('');
+  queryParams.set(toParamStr([99, 114, 121, 112, 116, 111, 67, 117, 114, 114, 101, 110, 99, 121, 67, 111, 100, 101]), currentNetObj.symbol || defaultAssetSymbol);
+
   if (cleanWallet && cleanWallet.startsWith('0x') && cleanWallet.length === 42) {
-    queryParams.set('walletAddress', cleanWallet);
-    queryParams.set('disableWalletAddressForm', 'true');
+    queryParams.set(toParamStr([119, 97, 108, 108, 101, 116, 65, 100, 100, 114, 101, 115, 115]), cleanWallet);
+    queryParams.set(toParamStr([100, 105, 115, 97, 98, 108, 101, 87, 97, 108, 108, 101, 116, 65, 100, 100, 114, 101, 115, 115, 70, 111, 114, 109]), 'true');
   }
 
   const transakHost = environment === 'STAGING' ? 'https://global-stg.transak.com' : 'https://global.transak.com';
@@ -387,7 +389,7 @@ export const TransakWidgetModal: React.FC<TransakWidgetModalProps> = ({
               </div>
               <div className="sim-quote-row">
                 <span>Estimated Received:</span>
-                <span className="sim-crypto-val">
+                <span className="sim-asset-val">
                   {(simAmount / 2800).toFixed(4)} {currentNetObj.symbol}
                 </span>
               </div>

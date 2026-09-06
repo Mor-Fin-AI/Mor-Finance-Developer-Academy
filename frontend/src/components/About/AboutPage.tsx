@@ -6,7 +6,7 @@ export interface AboutPageProps {
   isLoggedIn?: boolean;
 }
 
-export const AboutPage: React.FC<AboutPageProps> = ({ isLoggedIn = false }) => {
+export const AboutPage: React.FC<AboutPageProps> = ({ isLoggedIn: _isLoggedIn = false }) => {
   const [isEnrollModalOpen, setIsEnrollModalOpen] = useState(false);
 
   return (
@@ -40,7 +40,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ isLoggedIn = false }) => {
         </div>
       </div>
 
-      {/* ─── University Web3 Onboarding Placeholder & Gateway ─────────────────── */}
+      {/* ─── University Distributed Systems Onboarding Placeholder & Gateway ─────────────────── */}
       <div className="about-university-section glass">
         <div className="about-university-badge">
           <span>🏛️ INSTITUTIONAL ACADEMIC INITIATIVE</span>
@@ -208,7 +208,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ isLoggedIn = false }) => {
         {[
           { name: 'MOR Platform Architecture Team', role: 'Distributed Systems & Security Leads', bio: 'Oversees software architecture, algorithmic verification, concurrency safety, and system security.', icon: '⬡' },
           { name: 'AI Engineering Group', role: 'OpenClaw & Hermes AI Lead', bio: 'Designs context-aware OpenClaw & Hermes AI agents for live code reviews, syntax verification, and automated evaluations.', icon: '🤖' },
-          { name: 'Community Operations', role: 'Developer Relations & Academics', bio: `Manages developer bounties, Discord community office hours, ${isLoggedIn ? 'hackathons' : 'technical sprints'}, and cohort workshops.`, icon: '🌐' }
+          { name: 'Community Operations', role: 'Developer Relations & Academics', bio: `Manages developer bounties, Discord community office hours, technical sprints, and cohort workshops.`, icon: '🌐' }
         ].map((member) => (
           <div key={member.name} className="team-card glass">
             <div className="team-avatar">{member.icon}</div>
@@ -235,9 +235,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ isLoggedIn = false }) => {
             <div>
               <h4>GitHub Repositories</h4>
               <p>
-                {isLoggedIn
-                  ? 'Explore open-source smart contract templates, submit PRs, and review protocol code.'
-                  : 'Explore open-source software architecture templates, submit PRs, and review protocol code.'}
+                Explore open-source software architecture templates, submit PRs, and review open-source code.
               </p>
             </div>
           </a>

@@ -430,7 +430,7 @@ export const CertificatesView: React.FC<CertificatesViewProps> = ({ userId, isLo
             }
             const titleLower = (c.level_title || '').toLowerCase();
             if (template.trackId === 'fundamentals') {
-              return titleLower.includes('evm') || titleLower.includes('security') || titleLower.includes('dao governance') || titleLower.includes('blockchain fundamentals') || titleLower.includes('distributed state');
+              return titleLower.includes('evm') || titleLower.includes('security') || titleLower.includes('governance') || titleLower.includes('systems fundamentals') || titleLower.includes('distributed state');
             }
             if (template.trackId === 'fullstack') {
               return titleLower.includes('full stack');
