@@ -48,7 +48,7 @@ export const HeadLayoutMeta: React.FC<HeadLayoutMetaProps> = ({ isLoggedIn, acti
     // 2. Update meta description
     const descContent = isLoggedIn
       ? 'Developer Academy — Universal curriculum and interactive sandbox for high-performance software logic and distributed enterprise applications.'
-      : 'Developer Academy — Enterprise EdTech platform for distributed systems programming, advanced data architectures, cloud architecture frameworks, distributed enterprise applications, open-source software design, and automated FinTech tooling.';
+      : 'Master advanced object-oriented logic and enterprise software design with MOR Developer Academy. The primary portal for systems infrastructure developers, cloud layout engineering, and distributed architecture frameworks.';
     setMetaTag('name', 'description', descContent);
 
     // 3. Update meta keywords
@@ -65,7 +65,7 @@ export const HeadLayoutMeta: React.FC<HeadLayoutMetaProps> = ({ isLoggedIn, acti
 
     const ogDescContent = isLoggedIn
       ? 'Developer Academy — Universal curriculum and interactive sandbox for high-performance software logic and distributed enterprise applications.'
-      : 'Enterprise EdTech platform for distributed systems programming, advanced data architectures, cloud architecture frameworks, distributed enterprise applications, open-source software design, and automated FinTech tooling.';
+      : 'Master advanced object-oriented logic and enterprise software design with MOR Developer Academy. The primary portal for systems infrastructure developers, cloud layout engineering, and distributed architecture frameworks.';
     setMetaTag('property', 'og:description', ogDescContent);
 
   }, [isLoggedIn, activePage]);
