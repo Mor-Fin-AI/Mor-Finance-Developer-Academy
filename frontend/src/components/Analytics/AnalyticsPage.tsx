@@ -131,8 +131,8 @@ export const AnalyticsPage: React.FC = () => {
         <div className="analytics-kpi-card kpi-card--purple">
           <span className="kpi-card__icon">⚡</span>
           <div className="kpi-card__content">
-            <span className="kpi-card__val">DApps &amp; Protocols</span>
-            <span className="kpi-card__lbl">Smart Contract Architecture</span>
+            <span className="kpi-card__val">Applications &amp; Protocols</span>
+            <span className="kpi-card__lbl">Logic Engine Architecture</span>
             <span className="kpi-card__sub">Security &amp; Best Practices</span>
           </div>
         </div>
@@ -195,10 +195,10 @@ export const AnalyticsPage: React.FC = () => {
           <div className="metrics-guide-card">
             <div className="metrics-guide-card__header">
               <span className="metrics-guide-card__icon">📜</span>
-              <span className="metrics-guide-card__name">Testnet Deployments</span>
+              <span className="metrics-guide-card__name">Sandbox Deployments</span>
             </div>
             <p className="metrics-guide-card__desc">
-              Smart contract deployments and compiler builds executed to live testnets (Arbitrum, Solana, Polygon, Base, Aptos, Starknet).
+              System module deployments and compiler builds executed to live sandbox environments (Arbitrum, Solana, Polygon, Base, Aptos, Starknet).
             </p>
           </div>
 
@@ -252,7 +252,7 @@ export const AnalyticsPage: React.FC = () => {
               <text x="65" y="168" fill="var(--clr-text-muted)" fontSize="11" fontWeight="700" textAnchor="middle">Phase 1</text>
 
               <circle cx="185" cy="95" r="6" fill="#3b82f6" stroke="#fff" strokeWidth="2" />
-              <text x="185" y="80" fill="#60a5fa" fontSize="12" fontWeight="800" textAnchor="middle">Smart Contracts</text>
+              <text x="185" y="80" fill="#60a5fa" fontSize="12" fontWeight="800" textAnchor="middle">Logic Engines</text>
               <text x="185" y="168" fill="var(--clr-text-muted)" fontSize="11" fontWeight="700" textAnchor="middle">Phase 2</text>
 
               <circle cx="305" cy="60" r="6" fill="#ec4899" stroke="#fff" strokeWidth="2" />
@@ -578,14 +578,14 @@ export const AnalyticsPage: React.FC = () => {
         {arbTab === 'stylus' && (
           <div>
             <div style={{ marginBottom: '10px', fontSize: '0.8rem', color: 'var(--clr-text-secondary)' }}>
-              <strong>Arbitrum Stylus WASM (Arbitrum Sepolia)</strong>: High-efficiency Rust smart contract running in the Stylus execution environment with up to 84.6x gas savings.
+              <strong>Arbitrum Stylus WASM (Arbitrum Sepolia)</strong>: High-efficiency Rust module running in the Stylus execution environment with up to 84.6x computational efficiency.
             </div>
             <pre className="arbitrum-code-block">
               {arbTelemetry?.stylus_rust_template || `#![cfg_attr(not(feature = "export-abi"), no_main)]
 extern crate alloc;
 use stylus_sdk::{prelude::*, storage::StorageU256};
 
-/// WASM-Compliant Arbitrum Stylus Smart Contract
+/// WASM-Compliant Arbitrum Stylus System Module
 #[storage]
 #[entrypoint]
 pub struct AcademyCounter {
@@ -779,10 +779,10 @@ contract ArbitrumAcademyRegistry {
       <div className="analytics-chart-panel glass" style={{ marginBottom: '24px' }}>
         <div className="analytics-chart-header">
           <div>
-            <h3 className="analytics-chart-title">🌐 Ecosystem Track Standards &amp; Testnet Deployments</h3>
-            <span className="analytics-chart-subtitle">Verified student smart contract deployments and curriculum tracks across target grant chains</span>
+            <h3 className="analytics-chart-title">🌐 Architecture Track Standards &amp; Sandbox Deployments</h3>
+            <span className="analytics-chart-subtitle">Verified student software module deployments and curriculum tracks across target infrastructure environments</span>
           </div>
-          <span className="analytics-chart-pill">Multi-Chain Standards</span>
+          <span className="analytics-chart-pill">System Architecture Standards</span>
         </div>
 
         <div className="ecosystem-bars-grid">

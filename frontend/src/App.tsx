@@ -441,20 +441,20 @@ export default function App() {
     const win = window as any;
     let address = "";
     let signature = "mock_signature";
-    let message = `Link wallet to Developer Academy`;
+    let message = `Link Developer Key to Developer Academy`;
 
     if (win.ethereum) {
       try {
         setLoading(true);
         const accounts = await win.ethereum.request({ method: 'eth_requestAccounts' });
         address = accounts[0];
-        message = `Welcome to Developer Academy!\n\nSign this message to link this wallet address to your profile.\nNonce: ${Math.floor(Math.random() * 1000000)}`;
+        message = `Welcome to Developer Academy!\n\nSign this message to link this Developer Key to your profile.\nNonce: ${Math.floor(Math.random() * 1000000)}`;
         signature = await win.ethereum.request({
           method: 'personal_sign',
           params: [message, address],
         });
       } catch (err) {
-        console.error("Link wallet signature failed, attempting mock link:", err);
+        console.error("Link Developer Key signature failed, attempting mock link:", err);
       } finally {
         setLoading(false);
       }
@@ -477,10 +477,10 @@ export default function App() {
       const { linkWallet } = await import('./api/client');
       const resProgress = await linkWallet(userId, address, message, signature);
       setProgress(resProgress);
-      alert(`Wallet ${address} linked successfully!`);
+      alert(`Developer Key ${address} linked successfully!`);
     } catch (err: any) {
       console.error(err);
-      alert(err.message || "Failed to link wallet to GitHub profile.");
+      alert(err.message || "Failed to link Developer Key to GitHub profile.");
     } finally {
       setLoading(false);
     }
@@ -687,7 +687,7 @@ export default function App() {
           <Route path="/certificates" element={<CertificatesView userId={userId} isLoggedIn={isLoggedIn} />} />
           <Route path="/subscriptions" element={<SubscriptionPlans isLoggedIn={isLoggedIn} />} />
           <Route path="/subscribe" element={<SubscriptionPlans isLoggedIn={isLoggedIn} />} />
-          <Route path="/about" element={<AboutPage />} />
+          <Route path="/about" element={<AboutPage isLoggedIn={isLoggedIn} />} />
           <Route path="*" element={<Navigate to={isLoggedIn ? "/academy" : "/"} replace />} />
         </Routes>
         

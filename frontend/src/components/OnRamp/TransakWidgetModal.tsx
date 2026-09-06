@@ -77,12 +77,13 @@ export const TransakWidgetModal: React.FC<TransakWidgetModalProps> = ({
 
   const currentNetObj = SUPPORTED_ONRAMP_NETWORKS.find(n => n.transakNetwork === selectedNetwork) || SUPPORTED_ONRAMP_NETWORKS[0];
 
-  const apiKey = (import.meta.env.VITE_TRANSAK_API_KEY as string) || '4f810b14-876b-4e0d-b8d4-d368e7b92644';
-  const environment = (import.meta.env.VITE_TRANSAK_ENV as string) || 'PRODUCTION';
+  // Environment variables
+  const apiKey = ((import.meta.env.VITE_TRANSAK_API_KEY as string) || '').trim();
+  const environment = ((import.meta.env.VITE_TRANSAK_ENV as string) || 'STAGING').trim().toUpperCase();
 
   // Build Transak URL
   const queryParams = new URLSearchParams({
-    apiKey,
+    apiKey: apiKey || 'YOUR_TRANSAK_API_KEY',
     environment,
     network: selectedNetwork,
     cryptoCurrencyCode: currentNetObj.symbol || defaultCryptoCurrency,
@@ -101,6 +102,10 @@ export const TransakWidgetModal: React.FC<TransakWidgetModalProps> = ({
 
   // Direct secure popup launcher (bypasses iframe X-Frame-Options and prevents extension stream crashes)
   const handleOpenSecurePopup = () => {
+    if (!apiKey) {
+      alert("Transak API Key is not set. Please add VITE_TRANSAK_API_KEY in your frontend/.env file to connect live.");
+      return;
+    }
     const width = 500;
     const height = 750;
     const left = window.screenX + (window.outerWidth - width) / 2;
@@ -257,6 +262,43 @@ export const TransakWidgetModal: React.FC<TransakWidgetModalProps> = ({
                     <span style={{ color: '#10b981', fontWeight: 600 }}>100% Non-Custodial (Direct to Key)</span>
                   </div>
                 </div>
+
+                {!apiKey && (
+                  <div style={{
+                    margin: '14px 0',
+                    padding: '12px 16px',
+                    borderRadius: '10px',
+                    background: 'rgba(234, 179, 8, 0.1)',
+                    border: '1px solid rgba(234, 179, 8, 0.3)',
+                    fontSize: '0.82rem',
+                    color: '#fef08a',
+                    lineHeight: '1.5',
+                    textAlign: 'left'
+                  }}>
+                    <div style={{ fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px' }}>
+                      <span>⚠️</span> Transak Partner API Key Required in .env
+                    </div>
+                    <p style={{ margin: '0 0 8px 0', color: '#cbd5e1', fontSize: '0.78rem' }}>
+                      To open the live Transak checkout, set <code>VITE_TRANSAK_API_KEY</code> in <code>frontend/.env</code>. In the meantime, use the <strong>Simulator</strong> tab to test testnet funding.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => setActiveTab('simulator')}
+                      style={{
+                        background: 'rgba(59, 130, 246, 0.25)',
+                        border: '1px solid rgba(59, 130, 246, 0.5)',
+                        color: '#93c5fd',
+                        borderRadius: '6px',
+                        padding: '4px 10px',
+                        fontSize: '0.75rem',
+                        cursor: 'pointer',
+                        fontWeight: 600
+                      }}
+                    >
+                      🧪 Use Testnet Simulator (Instant Gas)
+                    </button>
+                  </div>
+                )}
 
                 <button
                   className="btn btn--primary gateway-main-cta-btn"

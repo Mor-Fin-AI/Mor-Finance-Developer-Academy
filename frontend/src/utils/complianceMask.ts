@@ -8,6 +8,25 @@ export const getComplianceText = (isLoggedIn: boolean, original: string, masked:
   return isLoggedIn ? original : masked;
 };
 
+export const sanitizeComplianceText = (text: string, isLoggedIn: boolean = false): string => {
+  if (isLoggedIn || !text) return text;
+  return text
+    .replace(/smart contract[s]?/gi, 'system logic engine')
+    .replace(/smart-contract[s]?/gi, 'system-logic-engine')
+    .replace(/solidity/gi, 'system syntax')
+    .replace(/web3/gi, 'distributed systems')
+    .replace(/blockchain[s]?/gi, 'distributed systems')
+    .replace(/cryptocurrency|crypto/gi, 'digital assets')
+    .replace(/wallet[s]?/gi, 'developer key')
+    .replace(/dapp[s]?/gi, 'cloud application')
+    .replace(/testnet[s]?/gi, 'sandbox cluster')
+    .replace(/on-chain/gi, 'verified')
+    .replace(/evm/gi, 'virtual machine')
+    .replace(/ethereum/gi, 'Distributed State Network')
+    .replace(/wagmi/gi, 'client SDK')
+    .replace(/ethers\.js/gi, 'client SDK');
+};
+
 export const SYLLABUS_COMPLIANCE_MAP: Record<string, string> = {
   fundamentals: 'Fundamentals',
   ethereum: 'Distributed State Engines',

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { executeMultiChainCompiler } from '../../services/sandboxCompiler';
 import type { CompilationResult } from '../../types';
 import { streamMentorChat } from '../../api/client';
@@ -608,7 +608,7 @@ export interface PlaygroundViewProps {
   isLoggedIn?: boolean;
 }
 
-export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = true }) => {
+export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = false }) => {
   const [selectedLangId, setSelectedLangId] = useState<string>('solidity');
   const activePreset = LANGUAGE_PRESETS.find((p) => p.id === selectedLangId) || LANGUAGE_PRESETS[0];
 
@@ -630,6 +630,17 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = tru
   const [deployedContracts, setDeployedContracts] = useState<DeployedContractRecord[]>(() => {
     return getStoredDeployments();
   });
+
+  const displayedDeployments = useMemo(() => {
+    if (isLoggedIn) return deployedContracts;
+    return deployedContracts.map((dep) => ({
+      ...dep,
+      contractName: dep.contractName.replace(/SecureVault/g, 'SecureMemoryManager').replace(/BaseGaslessPaymaster/g, 'GaslessBatchProcessor').replace(/OptimismCrossDomainBridge/g, 'CrossDomainRouter'),
+      language: 'System Logic',
+      networkName: dep.networkName.replace(/Sepolia/g, 'Cluster'),
+      explorerUrl: 'https://github.com',
+    }));
+  }, [deployedContracts, isLoggedIn]);
 
   useEffect(() => {
     const unsubscribe = subscribeDeployments((deps) => {
@@ -681,7 +692,7 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = tru
   const handleSelectLanguage = (langId: string) => {
     setSelectedLangId(langId);
     const preset = LANGUAGE_PRESETS.find((p) => p.id === langId) || LANGUAGE_PRESETS[0];
-    setCode(preset.templates[0].code);
+    setCode(isLoggedIn ? preset.templates[0].code : LOGGED_OUT_SANDBOX_BOILERPLATE);
     setCompilationResult(null);
     setAiAnalysis('');
     if (langId === 'base') setSelectedTestnetId('base_sepolia');
@@ -691,6 +702,10 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = tru
   };
 
   const handleSelectTemplate = (templateCode: string) => {
+    if (!isLoggedIn) {
+      setCode(LOGGED_OUT_SANDBOX_BOILERPLATE);
+      return;
+    }
     setCode(templateCode);
     setCompilationResult(null);
   };
@@ -742,10 +757,10 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = tru
     if (deploying || !code.trim()) return;
     setDeploying(true);
     setActiveConsoleTab('console');
-    setDeployStepMessage('Compiling smart contract...');
+    setDeployStepMessage('Compiling software module...');
 
     try {
-      // 1. Compile smart contract first to get valid bytecode & ABI
+      // 1. Compile software module first to get valid bytecode & schema
       setCompiling(true);
       const compileRes = await executeMultiChainCompiler(activePreset.id, code);
       setCompiling(false);
@@ -753,7 +768,7 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = tru
 
       if (!compileRes.success) {
         throw new Error(
-          compileRes.syntaxErrors?.[0] || 'Smart contract compilation failed. Please resolve compiler errors before deploying.'
+          compileRes.syntaxErrors?.[0] || 'Module compilation failed. Please resolve compiler errors before deploying.'
         );
       }
 
@@ -872,7 +887,7 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = tru
 • RPC Endpoint:        ${activeTestnet.rpcUrl}
 • Contract Name:       ${contractName}
 • Total Deployed:      ${updatedDeployments.length} Contracts Recorded (Count +1)
-• Signer Account:      ${deployerAddress} ${isLiveWalletDeploy ? '(Cryptographically Signed via Web3 Wallet)' : '(Simulated)'}
+• Signer Account:      ${deployerAddress} ${isLiveWalletDeploy ? '(Cryptographically Signed via Developer Key)' : '(Simulated)'}
 • Contract Address:    ${contractAddress}
 • Transaction Hash:    ${txHash}
 • Block Number:        #${blockNumber.toLocaleString()}
@@ -917,7 +932,7 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = tru
     try {
       let fullText = '';
       for await (const _ of streamMentorChat(
-        `Please review this ${activePreset.lang} smart contract. Check for security vulnerabilities, compiler compatibility, and give concise optimization suggestions.`,
+        `Please review this ${activePreset.lang} software architecture. Check for security vulnerabilities, compiler compatibility, and give concise optimization suggestions.`,
         code,
         (delta) => {
           fullText += delta;
@@ -938,7 +953,7 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = tru
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = activePreset.fileName;
+    link.download = activePreset.fileName === 'Vault.sol' ? 'Logic.js' : activePreset.fileName;
     link.click();
     URL.revokeObjectURL(url);
   };
@@ -954,24 +969,22 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = tru
       <div className="sandbox-header glass">
         <div className="sandbox-header-info">
           <div className="sandbox-header-tag">
-            <span>💻 MULTI-CHAIN CODE SANDBOX</span>
+            <span>💻 MULTI-RUNTIME CODE SANDBOX</span>
             <span>•</span>
-            <span>{isLoggedIn ? 'UNIVERSAL WEB3 COMPILER' : 'UNIVERSAL SOFTWARE LOGIC COMPILER'}</span>
+            <span>UNIVERSAL SOFTWARE LOGIC COMPILER</span>
           </div>
           <h1 className="sandbox-header-title">
-            {isLoggedIn ? 'Interactive Smart Contract Playground' : 'Interactive Software Architecture Playground'}
+            Interactive Software Architecture Playground
           </h1>
           <p className="sandbox-header-subtitle">
-            {isLoggedIn
-              ? 'Write, compile, test, and analyze smart contracts across Solidity, Rust (Anchor & Stylus), Move, Cairo 2.0, and ink! Wasm with real Web3 toolchains and AI Mentor assistance.'
-              : 'Write, compile, test, and analyze object-oriented software architecture and system logic engines across high-performance execution environments.'}
+            Write, compile, test, and analyze object-oriented software architecture and system logic engines across high-performance execution environments.
           </p>
         </div>
 
         <div className="sandbox-header-actions">
           <div
             className="sandbox-deployed-stat-badge"
-            title="Total verified smart contracts deployed to live testnets"
+            title="Total verified software modules deployed to live environments"
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -986,11 +999,13 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = tru
             <span style={{ fontSize: '1.25rem' }}>🚀</span>
             <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.15 }}>
               <span style={{ fontSize: '1.1rem', fontWeight: 800, color: '#93c5fd' }}>{deployedContracts.length}</span>
-              <span style={{ fontSize: '0.65rem', color: 'var(--clr-text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>Contracts Deployed</span>
+              <span style={{ fontSize: '0.65rem', color: 'var(--clr-text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>
+                System Modules Deployed
+              </span>
             </div>
           </div>
           <button className="btn btn--secondary" onClick={handleDownloadCode} title="Download source file">
-            💾 Export {activePreset.fileName}
+            💾 Export Logic.js
           </button>
           <button className="btn btn--secondary" onClick={handleCopyCode} title="Copy code to clipboard">
             📋 Copy Code
@@ -1001,20 +1016,16 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = tru
       {/* Language Tabs Bar */}
       <div className="sandbox-lang-bar glass">
         {LANGUAGE_PRESETS.map((preset) => {
-          const btnName = isLoggedIn
-            ? preset.lang
-            : preset.id === 'solidity'
+          const btnName = preset.id === 'solidity'
             ? 'Object-Oriented Logic'
             : preset.id === 'solana'
             ? 'System-Level'
             : preset.lang;
-          const btnChain = isLoggedIn
-            ? preset.chain.split('/')[0].trim()
-            : preset.id === 'solidity'
+          const btnChain = preset.id === 'solidity'
             ? 'Engine'
             : preset.id === 'solana'
             ? 'Infrastructure Compiler'
-            : 'Runtime';
+            : preset.chain.split('/')[0].trim();
 
           return (
             <button
@@ -1058,13 +1069,13 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = tru
                 }}
               >
                 {LANGUAGE_PRESETS.map((p) => {
-                  const label = isLoggedIn
-                    ? `${p.icon} ${p.lang} (${p.chain.split('/')[0].trim()})`
+                  const label = !isLoggedIn
+                    ? `${p.icon} Logic Engine (${p.id === 'solana' ? 'High Throughput' : p.id === 'solidity' ? 'Standard' : p.lang})`
                     : p.id === 'solidity'
                     ? `${p.icon} Active Syntax Environment`
                     : p.id === 'solana'
                     ? `${p.icon} System Infrastructure Compiler`
-                    : `${p.icon} ${p.lang} Architecture`;
+                    : `${p.icon} ${p.lang} (${p.chain.split('/')[0].trim()})`;
 
                   return (
                     <option key={p.id} value={p.id} style={{ background: '#090a14', color: '#fff' }}>
@@ -1073,8 +1084,8 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = tru
                   );
                 })}
               </select>
-              <span className="editor-filename">{activePreset.fileName}</span>
-              <span className="editor-target-env">{activePreset.targetEnv}</span>
+              <span className="editor-filename">{isLoggedIn ? activePreset.fileName : 'Logic.js'}</span>
+              <span className="editor-target-env">{isLoggedIn ? activePreset.targetEnv : 'Secure Logic Environment'}</span>
             </div>
 
             {/* Boilerplate & Template selector */}
@@ -1084,7 +1095,8 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = tru
                 let displayName = t.name;
                 if (!isLoggedIn) {
                   if (t.name.includes('Secure Vault')) displayName = 'Secure Memory Buffer Pattern';
-                  if (t.name.includes('ERC-20')) displayName = 'Standard Account Ledger Format';
+                  else if (t.name.includes('ERC-20')) displayName = 'Standard Account Ledger Format';
+                  else displayName = 'System Logic Template';
                 }
 
                 return (
@@ -1092,7 +1104,7 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = tru
                     key={idx}
                     className="template-pill-btn"
                     onClick={() => handleSelectTemplate(t.code)}
-                    title={t.description}
+                    title={isLoggedIn ? t.description : 'Standard system architecture template'}
                   >
                     ⚡ {displayName}
                   </button>
@@ -1100,7 +1112,7 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = tru
               })}
               <button
                 className="template-pill-btn"
-                onClick={() => handleSelectTemplate(`// Write your custom ${activePreset.lang} code here\n\n`)}
+                onClick={() => handleSelectTemplate(isLoggedIn ? `// Write your custom ${activePreset.lang} code here\n\n` : '// Write system logic here\n\n')}
                 title="Clear editor to blank canvas"
                 style={{ opacity: 0.8 }}
               >
@@ -1115,14 +1127,14 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = tru
             value={code}
             onChange={(e) => setCode(e.target.value)}
             spellCheck={false}
-            placeholder={`// Write ${activePreset.lang} code here...`}
+            placeholder={isLoggedIn ? `// Write ${activePreset.lang} code here...` : '// Write application logic code here...'}
           />
 
           {/* Editor Footer Action Bar */}
           <div className="editor-footer-bar">
             <div className="compiler-spec-badge">
               <span>{activePreset.icon}</span>
-              <span>{activePreset.compiler}</span>
+              <span>{isLoggedIn ? activePreset.compiler : 'Enterprise Syntax Engine v2.4 (Nitro)'}</span>
             </div>
 
             <div className="editor-footer-buttons">
@@ -1240,7 +1252,7 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = tru
                     className="btn btn--primary btn--sm btn-deploy-testnet"
                     onClick={handleDeployToTestnet}
                     disabled={deploying || compiling || !code.trim()}
-                    title={`Deploy smart contract to ${activeTestnet.name} (prompts wallet signature)`}
+                    title={`Deploy software module to ${activeTestnet.name} (prompts developer key signature)`}
                   >
                     {deploying ? (deployStepMessage || '⏳ Deploying...') : `🚀 Sign & Deploy (${activeTestnet.name.split(' ')[0]})`}
                   </button>
@@ -1264,7 +1276,7 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = tru
                 disabled={compiling || !code.trim()}
                 style={{ backgroundColor: '#2563eb' }}
               >
-                {compiling ? '⏳ Compiling...' : `🚀 Compile & Verify (${activePreset.lang})`}
+                {compiling ? '⏳ Compiling...' : `🚀 Compile & Verify (${isLoggedIn ? activePreset.lang : 'Logic'})`}
               </button>
             </div>
           </div>
@@ -1290,13 +1302,13 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = tru
               className={`output-tab-btn ${activeConsoleTab === 'abi' ? 'active' : ''}`}
               onClick={() => setActiveConsoleTab('abi')}
             >
-              📜 ABI / IDL Schema
+              📜 {isLoggedIn ? 'ABI / IDL Schema' : 'Interface Schema'}
             </button>
             <button
               className={`output-tab-btn ${activeConsoleTab === 'deployments' ? 'active' : ''}`}
               onClick={() => setActiveConsoleTab('deployments')}
             >
-              📡 Testnet Deployments ({deployedContracts.length})
+              📡 {isLoggedIn ? `Testnet Deployments (${deployedContracts.length})` : `System Deployments (${deployedContracts.length})`}
             </button>
           </div>
 
@@ -1312,7 +1324,7 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = tru
 
               <pre className="terminal-logs">
                 {compiling ? (
-                  `⏳ Loading ${activePreset.lang} compiler...\n   Running compiler diagnostics...`
+                  `⏳ Loading ${isLoggedIn ? activePreset.lang : 'Logic'} compiler...\n   Running compiler diagnostics...`
                 ) : compilationResult ? (
                   compilationResult.stdout || (compilationResult.syntaxErrors && compilationResult.syntaxErrors.length > 0 ? `❌ Compilation failed:\n\n${compilationResult.syntaxErrors.join('\n\n')}` : 'Compilation finished.')
                 ) : (
@@ -1363,14 +1375,16 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = tru
                   )}
                   {compilationResult.artifacts.bytecode && (
                     <div className="artifact-item">
-                      <span className="artifact-label">📦 EVM Bytecode:</span>
+                      <span className="artifact-label">📦 {isLoggedIn ? 'EVM Bytecode:' : 'Runtime Bytecode:'}</span>
                       <pre className="artifact-code">{compilationResult.artifacts.bytecode}</pre>
                     </div>
                   )}
                 </div>
               ) : (
                 <div className="empty-state-text">
-                  Compile your contract to generate verified on-chain bytecode, Sierra hashes, and Wasm binaries.
+                  {isLoggedIn
+                    ? 'Compile your contract to generate verified on-chain bytecode, Sierra hashes, and Wasm binaries.'
+                    : 'Compile your software module to generate verified execution artifacts, binary schemas, and runtime bytecode.'}
                 </div>
               )}
             </div>
@@ -1385,7 +1399,7 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = tru
                 </pre>
               ) : (
                 <div className="empty-state-text">
-                  Compile your smart contract to inspect the generated ABI or Anchor IDL interface.
+                  Compile your software module to inspect the generated interface schema.
                 </div>
               )}
             </div>
@@ -1396,32 +1410,34 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = tru
             <div className="output-deployments-body">
               <div className="deployments-tab-header">
                 <div className="deployments-tab-title">
-                  <span className="title-text">📡 Verified EVM Testnet Deployments</span>
-                  <span className="deployments-count-badge">{deployedContracts.length} Recorded</span>
+                  <span className="title-text">📡 Verified System Sandbox Deployments</span>
+                  <span className="deployments-count-badge">{displayedDeployments.length} Recorded</span>
                 </div>
-                {deployedContracts.length > 0 && (
+                {displayedDeployments.length > 0 && (
                   <button
                     className="btn-clear-deployments"
                     onClick={() => {
-                      if (window.confirm("Reset testnet deployment history to initial verified state?")) {
+                      if (window.confirm(isLoggedIn ? "Reset testnet deployment history to initial verified state?" : "Reset deployment history?")) {
                         setDeployedContracts(INITIAL_DEPLOYMENTS);
                         localStorage.removeItem('mor_deployed_contracts');
                       }
                     }}
-                    title="Reset to default grant testnet deployments"
+                    title={isLoggedIn ? "Reset to default grant testnet deployments" : "Reset deployment history"}
                   >
                     Reset List
                   </button>
                 )}
               </div>
 
-              {deployedContracts.length === 0 ? (
+              {displayedDeployments.length === 0 ? (
                 <div className="empty-state-text">
-                  No contracts deployed yet. Select an EVM chain, write your Solidity code, and click <strong>🚀 Deploy to Testnet</strong> to broadcast your contract to Arbitrum Sepolia, Base Sepolia, OP Sepolia, or Ethereum Sepolia.
+                  {isLoggedIn
+                    ? <>No contracts deployed yet. Select an EVM chain, write your Solidity code, and click <strong>🚀 Deploy to Testnet</strong> to broadcast your contract to Arbitrum Sepolia, Base Sepolia, OP Sepolia, or Ethereum Sepolia.</>
+                    : <>No modules verified yet. Select an execution environment, test your system logic, and verify your software architecture in the live sandbox environment.</>}
                 </div>
               ) : (
                 <div className="deployments-list">
-                  {deployedContracts.map((dep) => (
+                  {displayedDeployments.map((dep) => (
                     <div key={dep.id} className="deployment-card">
                       <div className="deployment-card-header">
                         <div className="deployment-network-badge">
@@ -1430,58 +1446,58 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = tru
                           <span className="net-chain-id">Chain ID: {dep.chainId}</span>
                         </div>
                         <div className="deployment-badges">
-                          <span className="status-badge-verified">✅ Verified On-Chain</span>
+                          <span className="status-badge-verified">{isLoggedIn ? '✅ Verified On-Chain' : '✅ Verified Logic Engine'}</span>
                           <span className="deployment-time">{dep.timestamp}</span>
                         </div>
                       </div>
 
                       <div className="deployment-card-row">
-                        <span className="dep-row-label">Contract:</span>
+                        <span className="dep-row-label">{isLoggedIn ? 'Contract:' : 'Module:'}</span>
                         <span className="dep-contract-name">{dep.contractName}</span>
-                        <span className="dep-lang-tag">({dep.language})</span>
+                        <span className="dep-lang-tag">({isLoggedIn ? dep.language : 'System Logic'})</span>
                       </div>
 
                       <div className="deployment-card-row">
-                        <span className="dep-row-label">Address:</span>
+                        <span className="dep-row-label">{isLoggedIn ? 'Address:' : 'Module ID:'}</span>
                         <code className="dep-address">{dep.contractAddress}</code>
                         <button
                           className="dep-copy-btn"
                           onClick={() => {
                             navigator.clipboard.writeText(dep.contractAddress);
-                            alert("Contract address copied!");
+                            alert(isLoggedIn ? "Contract address copied!" : "Module ID copied!");
                           }}
-                          title="Copy Contract Address"
+                          title={isLoggedIn ? "Copy Contract Address" : "Copy Module ID"}
                         >
                           📋
                         </button>
                         <a
-                          href={`${dep.explorerUrl}/address/${dep.contractAddress}`}
+                          href={isLoggedIn ? `${dep.explorerUrl}/address/${dep.contractAddress}` : 'https://github.com'}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="dep-explorer-link"
-                          title="View on Block Explorer"
+                          title={isLoggedIn ? "View on Block Explorer" : "View Architecture Telemetry"}
                         >
-                          🔍 Explorer
+                          🔍 {isLoggedIn ? 'Explorer' : 'Telemetry'}
                         </a>
                       </div>
 
                       <div className="deployment-card-row">
-                        <span className="dep-row-label">Tx Hash:</span>
+                        <span className="dep-row-label">{isLoggedIn ? 'Tx Hash:' : 'Verification ID:'}</span>
                         <code className="dep-tx-hash">{dep.txHash.slice(0, 18)}...{dep.txHash.slice(-8)}</code>
                         <a
-                          href={`${dep.explorerUrl}/tx/${dep.txHash}`}
+                          href={isLoggedIn ? `${dep.explorerUrl}/tx/${dep.txHash}` : 'https://github.com'}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="dep-tx-link"
-                          title="View Transaction on Block Explorer"
+                          title={isLoggedIn ? "View Transaction on Block Explorer" : "View Verification Receipt"}
                         >
-                          🧾 Tx Receipt
+                          🧾 {isLoggedIn ? 'Tx Receipt' : 'Receipt'}
                         </a>
                       </div>
 
                       <div className="deployment-card-footer">
-                        <span className="dep-meta-stat">⚡ <strong>{dep.gasUsed.toLocaleString()}</strong> Gas</span>
-                        <span className="dep-meta-stat">📦 Block <strong>#{dep.blockNumber.toLocaleString()}</strong></span>
+                        <span className="dep-meta-stat">⚡ <strong>{dep.gasUsed.toLocaleString()}</strong> {isLoggedIn ? 'Gas' : 'Compute Units'}</span>
+                        <span className="dep-meta-stat">📦 {isLoggedIn ? 'Block' : 'Epoch'} <strong>#{dep.blockNumber.toLocaleString()}</strong></span>
                         <span className="dep-meta-telemetry">📡 Logged to Grant Telemetry</span>
                       </div>
                     </div>

@@ -21,16 +21,16 @@ interface HeaderProps {
 }
 
 const PAGE_META: Record<NavPage, { title: string; subtitle: string }> = {
-  academy:      { title: 'Developer Academy',  subtitle: 'Distributed ledger programming & algorithmic design' },
-  roadmap:      { title: 'Developer Academy',  subtitle: 'Distributed ledger programming & algorithmic design' },
+  academy:      { title: 'Developer Academy',  subtitle: 'Distributed systems programming & algorithmic design' },
+  roadmap:      { title: 'Developer Academy',  subtitle: 'Distributed systems programming & algorithmic design' },
   dashboard:    { title: 'My Dashboard',       subtitle: 'Track your learning progress & software metrics' },
   analytics:    { title: 'Cohort Analytics',   subtitle: 'Ecosystem Developer Cohort Activity (May–August 2026)' },
-  sandbox:      { title: 'Multi-Runtime Sandbox', subtitle: 'Universal IDE: Write, compile, and debug Rust, Move, Cairo & distributed systems' },
+  sandbox:      { title: 'Multi-Runtime Sandbox', subtitle: 'Universal IDE: Write, compile, and debug system logic engines & distributed software' },
   forum:        { title: 'Community Forum',    subtitle: 'Ask questions, share knowledge, and help others' },
-  hackathons:   { title: 'Developer Hackathons', subtitle: 'Build, innovate, and solve real-world challenges' },
+  hackathons:   { title: 'Technical Sprints',  subtitle: 'Build, innovate, and solve real-world challenges' },
   careers:      { title: 'Career Dashboard',   subtitle: 'Software engineering roles, internships & research grants' },
   mentor:       { title: 'AI Mentor Workspace',subtitle: 'Get real-time code reviews and support' },
-  certificates: { title: 'My Certificates',    subtitle: 'View and export your verified achievements' },
+  certificates: { title: 'System Credentials', subtitle: 'View and export your verified achievements' },
   subscriptions: { title: 'Subscription Plans', subtitle: 'Choose a subscription plan to unlock premium mentorship and credentials' },
   about:        { title: 'About the Academy',  subtitle: 'Why the Academy exists and how it supports open source' },
 };

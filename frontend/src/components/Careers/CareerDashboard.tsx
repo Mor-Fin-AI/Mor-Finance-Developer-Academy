@@ -204,20 +204,28 @@ const STARTUP_IDEAS: StartupIdea[] = [
 const getOpportunityCards = (isLoggedIn: boolean) => [
   {
     id: 'gitcoin',
-    name: 'Gitcoin Grants & Bounties',
-    badge: 'Grants, Bounties & Hackathons',
-    desc: 'The leading quadratic funding and bounty network for open-source developers. Earn developer bounties, fund public goods, and compete in global hackathon rounds.',
-    tags: ['Quadratic Grants', 'Code Bounties', 'Hackathons', 'Public Goods'],
+    name: isLoggedIn ? 'Gitcoin Grants & Bounties' : 'Open Innovation & Project Sprints',
+    badge: isLoggedIn ? 'Grants, Bounties & Hackathons' : 'Developer Sprints & Technical Bounties',
+    desc: isLoggedIn
+      ? 'The leading quadratic funding and bounty network for open-source developers. Earn developer bounties, fund public goods, and compete in global hackathon rounds.'
+      : 'Ongoing technical funding for modular system runtimes, automated compliance scripting, advanced developer tooling, network data bridges, and parallel system scaling infrastructure.',
+    tags: isLoggedIn
+      ? ['Quadratic Grants', 'Code Bounties', 'Hackathons', 'Public Goods']
+      : ['Enterprise Tech Foundation', 'Modular Systems', 'Advanced Systems Code', 'Corporate Tech Grants'],
     url: 'https://gitcoin.co',
-    actionText: 'Explore Gitcoin ↗',
+    actionText: isLoggedIn ? 'Explore Gitcoin ↗' : 'Apply for Innovation Funding ↗',
     icon: '🌿'
   },
   {
     id: 'solana-hackathons',
-    name: 'Solana Hackathons & Radar Bounties',
-    badge: 'High-Throughput L1 Bounties',
-    desc: 'Participate in global Solana Foundation hackathons with millions in prize pools and seed funding for top DeFi, payments, and consumer Web3 applications.',
-    tags: ['Solana', 'Anchor Framework', 'Seed Rounds', 'Hackathons'],
+    name: isLoggedIn ? 'Solana Hackathons & Radar Bounties' : 'High-Performance Computing Sprints',
+    badge: isLoggedIn ? 'High-Throughput L1 Bounties' : 'High-Throughput Distributed Systems',
+    desc: isLoggedIn
+      ? 'Participate in global Solana Foundation hackathons with millions in prize pools and seed funding for top DeFi, payments, and consumer Web3 applications.'
+      : 'Ongoing technical funding for modular system runtimes, automated compliance scripting, advanced developer tooling, network data bridges, and parallel system scaling infrastructure.',
+    tags: isLoggedIn
+      ? ['Solana', 'Anchor Framework', 'Seed Rounds', 'Hackathons']
+      : ['Enterprise Tech Foundation', 'Modular Systems', 'Advanced Systems Code', 'Corporate Tech Grants'],
     url: 'https://solana.com/hackathon',
     actionText: isLoggedIn ? 'View Solana Hackathons ↗' : 'View High-Performance Computing Sprints ↗',
     icon: '☀️'
@@ -232,7 +240,7 @@ const getOpportunityCards = (isLoggedIn: boolean) => [
     tags: isLoggedIn
       ? ['Web3 Foundation', 'Substrate', 'ink! Rust', 'Ecosystem Grants']
       : ['Enterprise Tech Foundation', 'Modular Systems', 'Advanced Systems Code', 'Corporate Tech Grants'],
-    url: 'https://web3.foundation/grants/',
+    url: isLoggedIn ? 'https://web3.foundation/grants/' : 'https://github.com/topics/grants',
     actionText: isLoggedIn ? 'Apply for Polkadot Grants ↗' : 'Apply for Innovation Funding ↗',
     icon: '🟣'
   },
@@ -240,60 +248,120 @@ const getOpportunityCards = (isLoggedIn: boolean) => [
     id: 'starknet-ecosystem',
     name: isLoggedIn ? 'Starknet Foundation Grants & Hub' : 'Advanced Systems Foundation & Hub',
     badge: isLoggedIn ? 'ZK-Rollup Builder Grants' : 'Privacy-Preserving Engineering Grants',
-    desc: 'Direct grants and builder seed funding for Cairo developers building scalable dApps, Account Abstraction infrastructure, and DeFi protocols on Starknet.',
-    tags: ['Starknet', 'Cairo', 'ZK-Rollups', 'Builder Grants'],
+    desc: isLoggedIn
+      ? 'Direct grants and builder seed funding for Cairo developers building scalable dApps, Account Abstraction infrastructure, and DeFi protocols on Starknet.'
+      : 'Ongoing technical funding for modular system runtimes, automated compliance scripting, advanced developer tooling, network data bridges, and parallel system scaling infrastructure.',
+    tags: isLoggedIn
+      ? ['Starknet', 'Cairo', 'ZK-Rollups', 'Builder Grants']
+      : ['Enterprise Tech Foundation', 'Modular Systems', 'Advanced Systems Code', 'Corporate Tech Grants'],
     url: 'https://www.starknet.io/ecosystem/',
-    actionText: 'Explore Starknet Grants ↗',
+    actionText: isLoggedIn ? 'Explore Starknet Grants ↗' : 'Apply for Innovation Funding ↗',
     icon: '✨'
   },
   {
     id: 'aptos-ecosystem',
-    name: 'Aptos Foundation Grants & Accelerators',
-    badge: 'Move Ecosystem Fund',
-    desc: 'Milestone-based financial grants, technical mentorship, and go-to-market acceleration for developers building Move smart contracts on Aptos.',
-    tags: ['Aptos', 'MoveVM', 'Block-STM', 'Foundation Grants'],
+    name: isLoggedIn ? 'Aptos Foundation Grants & Accelerators' : 'Enterprise Systems Grants & Accelerators',
+    badge: isLoggedIn ? 'Move Ecosystem Fund' : 'Enterprise Tech Foundation',
+    desc: isLoggedIn
+      ? 'Milestone-based financial grants, technical mentorship, and go-to-market acceleration for developers building Move smart contracts on Aptos.'
+      : 'Ongoing technical funding for modular system runtimes, automated compliance scripting, advanced developer tooling, network data bridges, and parallel system scaling infrastructure.',
+    tags: isLoggedIn
+      ? ['Aptos', 'MoveVM', 'Block-STM', 'Foundation Grants']
+      : ['Enterprise Tech Foundation', 'Modular Systems', 'Advanced Systems Code', 'Corporate Tech Grants'],
     url: 'https://aptosfoundation.org/grants',
-    actionText: 'Explore Aptos Grants ↗',
+    actionText: isLoggedIn ? 'Explore Aptos Grants ↗' : 'Apply for Innovation Funding ↗',
     icon: '⚡'
   }
 ];
 
-const FREELANCE_LINKS = [
+const getFreelanceLinks = (isLoggedIn: boolean) => [
   {
-    name: 'Web3.Career Freelance Jobs',
+    name: isLoggedIn ? 'Web3.Career Freelance Jobs' : 'Tech Freelance Portal',
     badge: 'Direct Freelance Feed',
-    desc: 'Browse hundreds of vetted contract, part-time, and freelance smart contract developer roles across top Web3 protocols.',
-    url: 'https://web3.career/freelance-jobs',
+    desc: isLoggedIn
+      ? 'Browse hundreds of vetted contract, part-time, and freelance smart contract developer roles across top Web3 protocols.'
+      : 'Browse hundreds of vetted contract, part-time, and freelance software engineering roles across top enterprise projects.',
+    url: isLoggedIn ? 'https://web3.career/freelance-jobs' : 'https://wellfound.com/jobs',
     icon: '💼'
   },
   {
-    name: 'CryptoJobsList',
-    badge: 'Top Web3 Job Board',
-    desc: 'The original and most popular Web3 job board with bounties, contractor opportunities, and developer positions.',
-    url: 'https://cryptojobslist.com',
+    name: isLoggedIn ? 'CryptoJobsList' : 'TechJobsList',
+    badge: isLoggedIn ? 'Top Web3 Job Board' : 'Top Tech Job Board',
+    desc: isLoggedIn
+      ? 'The original and most popular Web3 job board with bounties, contractor opportunities, and developer positions.'
+      : 'Popular tech job board with technical bounties, contractor opportunities, and developer positions.',
+    url: isLoggedIn ? 'https://cryptojobslist.com' : 'https://github.com/topics/careers',
     icon: '🌐'
   },
   {
-    name: 'Cryptocurrency Jobs',
-    badge: 'Leading Startups & Protocols',
-    desc: 'Curated blockchain jobs at industry-leading crypto startups, venture studios, and decentralized organizations.',
-    url: 'https://cryptocurrencyjobs.co',
-    icon: '🪙'
+    name: isLoggedIn ? 'Cryptocurrency Jobs' : 'Distributed Systems Jobs',
+    badge: isLoggedIn ? 'Leading Startups & Protocols' : 'Leading Tech Startups & Platforms',
+    desc: isLoggedIn
+      ? 'Curated blockchain jobs at industry-leading crypto startups, venture studios, and decentralized organizations.'
+      : 'Curated engineering jobs at industry-leading tech startups, engineering studios, and modern organizations.',
+    url: isLoggedIn ? 'https://cryptocurrencyjobs.co' : 'https://remoteok.com',
+    icon: '💻'
   },
   {
     name: 'Wellfound (AngelList Talent)',
     badge: 'Tech & Seed Startups',
-    desc: 'Connect directly with founders at thousands of high-growth tech startups and venture-backed Web3 teams.',
+    desc: 'Connect directly with founders at thousands of high-growth tech startups and venture teams.',
     url: 'https://wellfound.com',
     icon: '🚀'
   }
 ];
 
+const sanitizeJobForCompliance = (job: JobListing, isLoggedIn: boolean): JobListing => {
+  if (isLoggedIn) return job;
+  const sanitizeStr = (s: string) =>
+    s
+      .replace(/wallet[s]?/gi, 'Security Module')
+      .replace(/web3/gi, 'Enterprise')
+      .replace(/blockchain/gi, 'Distributed Systems')
+      .replace(/solidity/gi, 'Logic Engine')
+      .replace(/smart contract[s]?/gi, 'Software Architecture')
+      .replace(/defi/gi, 'Automated Finance')
+      .replace(/crypto/gi, 'Digital Assets');
+
+  return {
+    ...job,
+    title: sanitizeStr(job.title || ''),
+    company: sanitizeStr(job.company || ''),
+    skills: (job.skills || []).map(sanitizeStr),
+  };
+};
+
+const getStartupIdeas = (isLoggedIn: boolean): StartupIdea[] => {
+  if (isLoggedIn) return STARTUP_IDEAS;
+  return STARTUP_IDEAS.map((idea) => {
+    const sanitizeStr = (s: string) =>
+      s
+        .replace(/wallet[s]?/gi, 'Vault')
+        .replace(/web3/gi, 'Enterprise')
+        .replace(/blockchain/gi, 'Distributed Systems')
+        .replace(/solidity/gi, 'Logic Engine')
+        .replace(/smart contract[s]?/gi, 'Software Architecture')
+        .replace(/defi/gi, 'Automated Finance')
+        .replace(/crypto/gi, 'Digital Assets')
+        .replace(/on-chain/gi, 'verified')
+        .replace(/nft/gi, 'Digital Badge')
+        .replace(/dao/gi, 'Cooperative');
+
+    return {
+      ...idea,
+      name: sanitizeStr(idea.name),
+      category: sanitizeStr(idea.category),
+      description: sanitizeStr(idea.description),
+      tags: idea.tags.map(sanitizeStr),
+    };
+  });
+};
+
 export interface CareerDashboardProps {
   isLoggedIn?: boolean;
 }
 
-export const CareerDashboard: React.FC<CareerDashboardProps> = ({ isLoggedIn = true }) => {
+export const CareerDashboard: React.FC<CareerDashboardProps> = ({ isLoggedIn = false }) => {
   // Main view filter: default to 'jobs'
   const [viewFilter, setViewFilter] = useState<MainViewFilter>('jobs');
 
@@ -367,14 +435,18 @@ export const CareerDashboard: React.FC<CareerDashboardProps> = ({ isLoggedIn = t
     'All',
     'AI & Productivity',
     'Identity & Credentials',
-    'Governance & DAOs',
-    'DeFi & Financial Inclusion',
-    'RWA & Commerce',
+    isLoggedIn ? 'Governance & DAOs' : 'Organization & Governance',
+    isLoggedIn ? 'DeFi & Financial Inclusion' : 'Automated Financial Systems',
+    isLoggedIn ? 'RWA & Commerce' : 'Asset Digitization & Commerce',
     'Crowdfunding & Grants'
   ];
 
-  const filteredIdeas = STARTUP_IDEAS.filter((idea) => {
-    const matchesCat = ideaCategory === 'all' || idea.category === ideaCategory;
+  const filteredIdeas = getStartupIdeas(isLoggedIn).filter((idea) => {
+    const matchesCat = ideaCategory === 'all' ||
+      idea.category.toLowerCase() === ideaCategory.toLowerCase() ||
+      (ideaCategory.includes('Governance') && idea.category.toLowerCase().includes('governance')) ||
+      (ideaCategory.includes('Financial') && idea.category.toLowerCase().includes('finance')) ||
+      (ideaCategory.includes('Commerce') && idea.category.toLowerCase().includes('commerce'));
     const matchesSearch = !searchQuery.trim() ||
       idea.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       idea.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -458,8 +530,12 @@ export const CareerDashboard: React.FC<CareerDashboardProps> = ({ isLoggedIn = t
               type="text"
               placeholder={
                 viewFilter === 'ideas'
-                  ? 'Search 24 startup ideas (e.g. AI Coach, DAO, SACCO, Supply Chain)...'
-                  : 'Search by role, tech stack, company, or keyword (e.g. Solidity, Rust, React, Remote)...'
+                  ? (isLoggedIn
+                    ? 'Search 24 startup ideas (e.g. AI Coach, DAO, SACCO, Supply Chain)...'
+                    : 'Search 24 startup blueprints (e.g. AI Coach, Architecture, Logistics)...')
+                  : (isLoggedIn
+                    ? 'Search by role, tech stack, company, or keyword (e.g. Solidity, Rust, React, Remote)...'
+                    : 'Search by role, tech stack, company, or keyword (e.g. Logic Engine, Architecture, React, Remote)...')
               }
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -570,16 +646,18 @@ export const CareerDashboard: React.FC<CareerDashboardProps> = ({ isLoggedIn = t
           ) : (
             <>
               <div className="jobs-grid">
-                {jobs.map((job, idx) => (
-                  <div
-                    key={job.id && job.id !== 'None' ? job.id : `job-${idx}`}
-                    className={`job-card glass ${job.is_internship ? 'job-card--intern' : ''}`}
-                  >
-                    <div className="job-card__header">
-                      <div className="job-company-badge">
-                        <span className="company-icon">{job.is_internship ? '🎓' : '🏢'}</span>
-                        <span className="company-name">{job.company || 'Web3 Company'}</span>
-                      </div>
+                {jobs.map((rawJob, idx) => {
+                  const job = sanitizeJobForCompliance(rawJob, isLoggedIn);
+                  return (
+                    <div
+                      key={job.id && job.id !== 'None' ? job.id : `job-${idx}`}
+                      className={`job-card glass ${job.is_internship ? 'job-card--intern' : ''}`}
+                    >
+                      <div className="job-card__header">
+                        <div className="job-company-badge">
+                          <span className="company-icon">{job.is_internship ? '🎓' : '🏢'}</span>
+                          <span className="company-name">{job.company || (isLoggedIn ? 'Web3 Company' : 'Tech Company')}</span>
+                        </div>
                       {job.remote ? (
                         <span className="badge badge--success">🌍 Remote</span>
                       ) : (
@@ -616,7 +694,8 @@ export const CareerDashboard: React.FC<CareerDashboardProps> = ({ isLoggedIn = t
                       </a>
                     </div>
                   </div>
-                ))}
+                );
+              })}
               </div>
 
               {/* Pagination Controls */}
@@ -743,7 +822,7 @@ export const CareerDashboard: React.FC<CareerDashboardProps> = ({ isLoggedIn = t
       {viewFilter === 'freelance' && (
         <div className="career-results-section animate-fade-in">
           <div className="freelance-grid">
-            {FREELANCE_LINKS.map((link, idx) => (
+            {getFreelanceLinks(isLoggedIn).map((link, idx) => (
               <div key={idx} className="freelance-card glass">
                 <div className="freelance-card__header">
                   <span className="freelance-icon">{link.icon}</span>

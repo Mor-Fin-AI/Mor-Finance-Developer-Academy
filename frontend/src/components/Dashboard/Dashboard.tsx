@@ -53,9 +53,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
 
   // Reference props to satisfy TypeScript unused variable checks
   useEffect(() => {
-    if (userId && token && onProgressUpdate) {
-      console.log("Analytics dashboard active for:", userId);
-    }
+    // Props active for user analytics
   }, [userId, token, onProgressUpdate]);
 
   if (loading) {

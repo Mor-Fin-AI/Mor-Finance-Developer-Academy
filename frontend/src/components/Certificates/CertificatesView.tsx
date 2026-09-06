@@ -27,108 +27,108 @@ const CHAIN_CREDENTIALS: ChainCredentialTemplate[] = [
   {
     id: 'cert-aptos',
     trackId: 'aptos',
-    chainName: 'Aptos Move',
-    title: 'Aptos Move Certified Developer',
-    grantStandard: 'Aptos Foundation Grant Benchmark Standard',
+    chainName: 'Safe Memory Execution',
+    title: 'Safe Memory Architecture Certified Engineer',
+    grantStandard: 'Enterprise Technical Benchmark Standard',
     icon: '⚡',
     color: '#06b6d4',
     level_id: 5,
     requiredLessonIds: ['aptos-1', 'aptos-2', 'aptos-3', 'aptos-4', 'aptos-5'],
     requirements: [
       '5 Complete Learning Modules (Modules 1–5)',
-      '30 Move & Block-STM Quiz Questions (100% Passing)',
-      'Aptos Testnet Move Deployment Challenge',
-      'Verified On-Chain Module Bytecode & Explorer Class'
+      '30 Concurrency & Memory Logic Quiz Questions (100% Passing)',
+      'Sandbox Memory Execution Verification Challenge',
+      'Verified Logic Engine Bytecode & Architecture Class'
     ]
   },
   {
     id: 'cert-starknet',
     trackId: 'starknet',
-    chainName: 'Starknet Cairo',
-    title: 'Starknet Cairo & ZK Certified Developer',
-    grantStandard: 'Starknet Foundation Grant Benchmark Standard',
+    chainName: 'Validity-Proof Scaling',
+    title: 'Validity-Proof Scaling Certified Engineer',
+    grantStandard: 'Enterprise Technical Benchmark Standard',
     icon: '✨',
     color: '#ec4899',
     level_id: 5,
     requiredLessonIds: ['starknet-1', 'starknet-2', 'starknet-3', 'starknet-4', 'starknet-5'],
     requirements: [
       '5 Complete Learning Modules (Modules 1–5)',
-      '30 Cairo & STARK Quiz Questions (100% Passing)',
-      'Starknet Sepolia Cairo Deployment Challenge',
-      'Verified Class Hash & Account Abstraction'
+      '30 STARK & Validity Quiz Questions (100% Passing)',
+      'Sandbox Validity-Proof Verification Challenge',
+      'Verified Class Hash & Execution Logic'
     ]
   },
   {
     id: 'cert-solana',
     trackId: 'solana',
-    chainName: 'Solana Anchor',
-    title: 'Solana Anchor Certified Developer',
-    grantStandard: 'Solana Superteam & Foundation Grant Standard',
+    chainName: 'High-Throughput Clusters',
+    title: 'High-Throughput Parallel Systems Certified Architect',
+    grantStandard: 'Enterprise Technical Benchmark Standard',
     icon: '☀️',
     color: '#f59e0b',
     level_id: 5,
     requiredLessonIds: ['solana-1', 'solana-2', 'solana-3', 'solana-4', 'solana-5'],
     requirements: [
       '5 Complete Learning Modules (Modules 1–5)',
-      '30 Anchor & Sealevel Quiz Questions (100% Passing)',
-      'Solana Devnet Anchor Deployment Challenge',
-      'Verified IDL & Program Derived Addresses'
+      '30 Sealevel & Concurrency Quiz Questions (100% Passing)',
+      'Sandbox High-Throughput Deployment Challenge',
+      'Verified Schema & Programmatically Derived Storage Addresses'
     ]
   },
   {
     id: 'cert-polkadot',
     trackId: 'polkadot',
-    chainName: 'Polkadot / Substrate',
-    title: 'Polkadot & Substrate Certified Developer',
-    grantStandard: 'Web3 Foundation Grant Benchmark Standard',
+    chainName: 'Modular Relay Frameworks',
+    title: 'Modular Relay Frameworks Certified Architect',
+    grantStandard: 'Enterprise Technical Benchmark Standard',
     icon: '🟣',
     color: '#a855f7',
     level_id: 5,
     requiredLessonIds: ['polkadot-1', 'polkadot-2', 'polkadot-3', 'polkadot-4', 'polkadot-5'],
     requirements: [
       '5 Complete Learning Modules (Modules 1–5)',
-      '30 ink! & Substrate Quiz Questions (100% Passing)',
-      'Polkadot Wasm Deployment Challenge',
-      'Verified ink! Metadata & Extrinsic Hash'
+      '30 Modular Logic & Runtime Quiz Questions (100% Passing)',
+      'Modular Wasm Logic Verification Challenge',
+      'Verified Runtime Metadata & Execution Hash'
     ]
   },
   {
     id: 'cert-ethereum',
     trackId: 'fundamentals',
-    chainName: 'Ethereum & EVMs',
-    title: 'EVM Smart Contract Security Specialist',
-    grantStandard: 'Ethereum Foundation & L2 Builder Standard',
+    chainName: 'Distributed State Engines',
+    title: 'Distributed State & Logic Architecture Specialist',
+    grantStandard: 'Enterprise Technical Benchmark Standard',
     icon: '🛡️',
     color: '#3b82f6',
     level_id: 5,
     requiredLessonIds: ['1-1', '1-2', '2-1', '2-2', '3-1', '3-2', '4-1', '5-1'],
     requirements: [
       '5 Complete Core Learning Levels (Levels 1–5)',
-      '30 Solidity & Security Quiz Questions (100% Passing)',
-      'Sepolia / Base Testnet Deployment Challenge',
-      'Verified Source Code on Etherscan'
+      '30 Architecture & System Security Quiz Questions (100% Passing)',
+      'Sandbox Logic Deployment Challenge',
+      'Verified Source Architecture & Execution Trace'
     ]
   },
   {
     id: 'cert-fullstack',
     trackId: 'fullstack',
-    chainName: 'Full Stack Web3',
-    title: 'Full Stack Blockchain Developer',
-    grantStandard: 'Full Stack Web3 Engineering Benchmark Standard',
+    chainName: 'Full Stack Modern Cloud',
+    title: 'Full Stack Distributed Systems Architect',
+    grantStandard: 'Enterprise Technical Benchmark Standard',
     icon: '🚀',
     color: '#10b981',
     level_id: 5,
     requiredLessonIds: ['fullstack-1', 'fullstack-2', 'fullstack-3', 'fullstack-4', 'fullstack-5'],
     requirements: [
       '5 Complete Learning Modules (End-to-End)',
-      'Full Stack Architecture & Indexing Quizzes (100% Passing)',
-      'Multi-Chain Testnet Full Stack DApp Challenge',
-      'Verified On-Chain Contract & Live Frontend UI'
+      'Full Stack Architecture & Cloud Indexing Quizzes (100% Passing)',
+      'Distributed Cloud Full-Stack Application Challenge',
+      'Verified Logic Service & Live Frontend UI'
     ]
   }
 ];
 
-export const CertificatesView: React.FC<CertificatesViewProps> = ({ userId, isLoggedIn = true }) => {
+export const CertificatesView: React.FC<CertificatesViewProps> = ({ userId, isLoggedIn: _isLoggedIn = false }) => {
   const navigate = useNavigate();
   const [certs, setCerts] = useState<Certificate[]>([]);
   const [userProgress, setUserProgress] = useState<UserProgress | null>(null);
@@ -324,7 +324,7 @@ export const CertificatesView: React.FC<CertificatesViewProps> = ({ userId, isLo
               <div>
                 <span class="header-label">Developer Academy Verified Credential</span>
                 <h2 class="title">${cert.level_title}</h2>
-                <div class="standard-label">✓ ${cert.grantStandard || 'Verified Protocol Grant Benchmark Standard'}</div>
+                <div class="standard-label">✓ ${cert.grantStandard || 'Enterprise Technical Benchmark Standard'}</div>
               </div>
               <div class="badge">🛡️</div>
             </div>
@@ -340,12 +340,12 @@ export const CertificatesView: React.FC<CertificatesViewProps> = ({ userId, isLo
                 <span class="val" style="font-size: 16px;">${dateStr}</span>
               </div>
               <div class="meta-col">
-                <span class="lbl">Ecosystem Verification ID:</span>
+                <span class="lbl">Verification Credential ID:</span>
                 <span class="val val--id">${cert.certificate_id}</span>
               </div>
               <div class="meta-col">
-                <span class="lbl">On-Chain Testnet Status:</span>
-                <span class="val" style="font-size: 15px; color: #34d399;">✓ Verified Deployed</span>
+                <span class="lbl">System Sandbox Status:</span>
+                <span class="val" style="font-size: 15px; color: #34d399;">✓ Verified & Conferred</span>
               </div>
             </div>
           </div>
@@ -364,7 +364,7 @@ export const CertificatesView: React.FC<CertificatesViewProps> = ({ userId, isLo
   };
 
   const handleShare = (title: string, certId: string) => {
-    const text = `I just earned my verified Developer Academy Certificate in "${title}"! 🚀 Verified for on-chain testnet deployment and grant readiness. ID: ${certId} #Web3 #DeveloperAcademy`;
+    const text = `I just earned my verified Developer Academy Certificate in "${title}"! 🚀 Verified for high-performance software architecture and enterprise readiness. ID: ${certId} #SoftwareEngineering #DeveloperAcademy`;
     const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
     window.open(url, '_blank');
   };
@@ -387,31 +387,25 @@ export const CertificatesView: React.FC<CertificatesViewProps> = ({ userId, isLo
       {/* Header Banner */}
       <div className="certs-header glass">
         <div className="certs-badge">
-          {isLoggedIn ? '🏆 Multi-Chain Developer Standards' : '🏆 DISTRIBUTED INFRASTRUCTURE SYSTEM STANDARDS'}
+          🏆 DISTRIBUTED INFRASTRUCTURE SYSTEM STANDARDS
         </div>
         <h1 className="certs-title">
-          {isLoggedIn ? (
-            <>Ecosystem <span className="gradient-text">Credentials & Certificates</span></>
-          ) : (
-            <>System Architecture <span className="gradient-text">Credentials & Certifications</span></>
-          )}
+          System Architecture <span className="gradient-text">Credentials & Certifications</span>
         </h1>
         <p className="certs-subtitle">
-          {isLoggedIn
-            ? 'Verifiable credentials earned by completing learning modules, passing comprehensive quiz evaluations, and deploying verified smart contracts to live testnets across Aptos, Starknet, Solana, Polkadot, Full Stack Web3, and EVM chains.'
-            : 'Verifiable credentials earned by completing learning modules, passing comprehensive quiz evaluations, and deploying verified logic protocols to production-ready sandbox testing environments across modern object-oriented database layers, high-throughput cloud clusters, and modular backend networks.'}
+          Verifiable credentials earned by completing learning modules, passing comprehensive quiz evaluations, and deploying verified logic protocols to production-ready sandbox testing environments across modern object-oriented database layers, high-throughput cloud clusters, and modular backend networks.
         </p>
 
         {/* Chain Filter Tabs */}
         <div className="certs-filter-bar">
           {[
-            { id: 'all', label: 'All Ecosystems' },
-            { id: 'fundamentals', label: '🛡️ Ethereum EVM' },
-            { id: 'fullstack', label: '🚀 Full Stack Web3' },
-            { id: 'starknet', label: '✨ Starknet Cairo' },
-            { id: 'aptos', label: '⚡ Aptos Move' },
-            { id: 'solana', label: '☀️ Solana Anchor' },
-            { id: 'polkadot', label: '🟣 Polkadot ink!' }
+            { id: 'all', label: 'All Architectures' },
+            { id: 'fundamentals', label: '🛡️ Distributed State Engines' },
+            { id: 'fullstack', label: '🚀 Full Stack Modern Cloud' },
+            { id: 'starknet', label: '✨ Validity-Proof Scaling' },
+            { id: 'aptos', label: '⚡ Safe Memory Execution' },
+            { id: 'solana', label: '☀️ High-Throughput Clusters' },
+            { id: 'polkadot', label: '🟣 Modular Relay Frameworks' }
           ].map((item) => (
             <button
               key={item.id}
@@ -436,13 +430,13 @@ export const CertificatesView: React.FC<CertificatesViewProps> = ({ userId, isLo
             }
             const titleLower = (c.level_title || '').toLowerCase();
             if (template.trackId === 'fundamentals') {
-              return titleLower.includes('evm') || titleLower.includes('security') || titleLower.includes('dao governance') || titleLower.includes('blockchain fundamentals');
+              return titleLower.includes('evm') || titleLower.includes('security') || titleLower.includes('dao governance') || titleLower.includes('blockchain fundamentals') || titleLower.includes('distributed state');
             }
             if (template.trackId === 'fullstack') {
               return titleLower.includes('full stack');
             }
             if (template.trackId === 'polkadot') {
-              return titleLower.includes('polkadot') || titleLower.includes('substrate');
+              return titleLower.includes('polkadot') || titleLower.includes('substrate') || titleLower.includes('modular relay');
             }
             return titleLower.includes(template.trackId);
           });
@@ -457,6 +451,9 @@ export const CertificatesView: React.FC<CertificatesViewProps> = ({ userId, isLo
           // 3. Official conferral check: ONLY conferred if certificate earned or all track modules completed!
           const isConferred = Boolean(userEarnedCert || allModulesDone);
           const displayCertId = userEarnedCert?.certificate_id || (isConferred ? `${template.id}-${userId.slice(0, 8)}` : null);
+
+          const displayTitle = template.title;
+          const displayStandard = template.grantStandard;
 
           return (
             <div
@@ -473,13 +470,13 @@ export const CertificatesView: React.FC<CertificatesViewProps> = ({ userId, isLo
                     ? '🏆 Course 100% Completed & Conferred'
                     : `🔒 ${completedCount} of ${totalCount} Modules Completed (${Math.round((completedCount / totalCount) * 100)}%)`}
                 </span>
-                <h3 className="cert-card__title">{template.title}</h3>
-                <span className="cert-card__standard">{template.grantStandard}</span>
+                <h3 className="cert-card__title">{displayTitle}</h3>
+                <span className="cert-card__standard">{displayStandard}</span>
               </div>
 
               {/* Requirements Checklist */}
               <div className="cert-card__requirements">
-                <span className="cert-card__lbl">Grant Standard Checklist:</span>
+                <span className="cert-card__lbl">Technical Standard Checklist:</span>
                 <ul>
                   {template.requirements.map((req, idx) => {
                     let isReqMet = false;
@@ -496,7 +493,7 @@ export const CertificatesView: React.FC<CertificatesViewProps> = ({ userId, isLo
                       } else if (idx === 2) {
                         const deploymentLessonId = template.requiredLessonIds[totalCount - 1];
                         isReqMet = completedIds.includes(deploymentLessonId);
-                        customReqText = isReqMet ? req : `Testnet Deployment Challenge (Module ${totalCount} Required)`;
+                        customReqText = isReqMet ? req : `Sandbox Verification Challenge (Module ${totalCount} Required)`;
                       } else {
                         isReqMet = false;
                         customReqText = `Awaiting 100% Course Completion & Verification`;
@@ -570,7 +567,7 @@ export const CertificatesView: React.FC<CertificatesViewProps> = ({ userId, isLo
                     <button
                       className="btn btn--outline cert-action-btn cert-action-btn--locked"
                       disabled
-                      title="Complete all course modules and the testnet deployment challenge to confer this credential."
+                      title="Complete all course modules and the sandbox verification challenge to confer this credential."
                     >
                       🔒 Credential Locked (Finish Course)
                     </button>

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import type { UserProgress } from '../../types';
 import { LevelCard } from './LevelCard';
 import { postActiveTrack } from '../../api/client';
-import { SYLLABUS_COMPLIANCE_MAP } from '../../utils/complianceMask';
+import { SYLLABUS_COMPLIANCE_MAP, sanitizeComplianceText } from '../../utils/complianceMask';
 import './RoadmapView.css';
 
 interface RoadmapViewProps {
@@ -104,31 +104,31 @@ const ECOSYSTEMS = [
   {
     id: 'fundamentals',
     name: 'Fundamentals',
-    badge: 'Universal Web3 Foundation',
-    desc: 'Core Blockchain & Web3 Principles: P2P Network Topologies, Cryptographic Hashing, Transactions, Consensus Models, Smart Contracts & Multi-Chain Architecture.',
+    badge: 'Universal Distributed Systems Foundation',
+    desc: 'Core Distributed Systems Principles: P2P Network Topologies, Cryptographic Hashing, Transactions, Consensus Models, System Logic Engines & Distributed Architecture.',
     architecture: 'P2P Networks, Hashing (SHA256, Keccak256), Key Pairs, Consensus Mechanisms (PoW, PoS)',
-    tooling: 'Solidity, Rust, Web3.js, Ethers.js, Hardhat, Foundry, and MOR Developer Toolkits',
-    p1_name: 'OpenZeppelin Core Contracts Repository',
+    tooling: 'Solidity, Rust, Software SDKs, Testing Frameworks, Foundry, and MOR Developer Toolkits',
+    p1_name: 'OpenZeppelin Core System Architectures',
     p1_repo: 'https://github.com/OpenZeppelin/openzeppelin-contracts',
-    p2_name: 'Scaffold-ETH 2 Multi-Chain DApp Kit',
+    p2_name: 'Distributed Systems Full-Stack Kit',
     p2_repo: 'https://github.com/scaffold-eth/scaffold-eth-2'
   },
   {
     id: 'ethereum',
     name: 'Ethereum',
-    badge: 'Layer 1 Settlement & EVM Standard',
-    desc: 'Dedicated Ethereum Developer Onboarding Path: EVM Gas Execution Model, Solidity (^0.8.20), Hardhat, Foundry, OpenZeppelin Smart Contracts, and Account Abstraction.',
+    badge: 'Layer 1 Settlement & Execution Engine Standard',
+    desc: 'Dedicated Distributed Architecture Developer Onboarding Path: Gas Execution Model, Object-Oriented Syntax Engines, Testing Frameworks, and Account Abstraction.',
     architecture: 'Ethereum Virtual Machine (EVM), Gasper Proof-of-Stake Consensus, Execution & Consensus Client Specs',
     tooling: 'Solidity (^0.8.20), Hardhat, Foundry, Ethers.js, Viem, and OpenZeppelin Contracts',
-    p1_name: 'OpenZeppelin Contracts Library',
+    p1_name: 'OpenZeppelin Architecture Library',
     p1_repo: 'https://github.com/OpenZeppelin/openzeppelin-contracts',
-    p2_name: 'Scaffold-ETH 2 Full-Stack Kit',
+    p2_name: 'Full-Stack Architecture Starter Kit',
     p2_repo: 'https://github.com/scaffold-eth/scaffold-eth-2'
   },
   {
     id: 'arbitrum',
     name: 'Arbitrum',
-    badge: 'Layer 2 Optimistic Rollup & Stylus Rust',
+    badge: 'High-Scale Execution Engine & Stylus Rust',
     desc: 'Dedicated Arbitrum Developer Onboarding Path: Arbitrum Nitro Execution Engine, Stylus Wasm (Rust & C++), Arbitrum Orbit L3 Chains, and Offchain Labs Developer Tooling.',
     architecture: 'Nitro Execution Engine, Arbitrum Virtual Machine (AVM), Orbit L3 Configs, and Stylus Wasm Host I/O',
     tooling: 'Rust (Stylus SDK), Solidity, Arbitrum Nitro Testnet RPCs, Foundry, and Offchain Labs CLI',
@@ -140,8 +140,8 @@ const ECOSYSTEMS = [
   {
     id: 'optimism',
     name: 'Optimism',
-    badge: 'OP Stack Superchain & Cross-Domain Rollup',
-    desc: 'Dedicated Optimism Developer Onboarding Path: OP Stack Modular Infrastructure, Bedrock Execution Layer, Superchain Inter-Rollup Messaging, and Retroactive Public Goods Funding.',
+    badge: 'Modular Superchain & Cross-Domain Rollup',
+    desc: 'Dedicated Optimism Developer Onboarding Path: OP Stack Modular Infrastructure, Bedrock Execution Layer, Superchain Inter-Process Messaging, and Public Goods Funding.',
     architecture: 'OP Stack Rollup Spec, Bedrock Sequencer Architecture, Cross-Domain Messenger (L1 <-> L2)',
     tooling: 'Solidity, OP Stack Devnet CLI, Foundry, Wagmi, and Optimism Ecosystem SDKs',
     p1_name: 'OP Cross-Domain Messenger Tutorial',
@@ -152,8 +152,8 @@ const ECOSYSTEMS = [
   {
     id: 'polygon',
     name: 'Polygon',
-    badge: 'Polygon PoS, CDK & zkEVM Rollup',
-    desc: 'Dedicated Polygon Developer Onboarding Path: Polygon PoS Architecture, Polygon CDK (Chain Development Kit), Plonky2 zero-knowledge proofs, and zkEVM rollup integration.',
+    badge: 'Modular PoS & Validity-Proof Systems',
+    desc: 'Dedicated Polygon Developer Onboarding Path: Polygon PoS Architecture, Polygon CDK (Chain Development Kit), Plonky2 zero-knowledge proofs, and validium integration.',
     architecture: 'Polygon PoS Architecture, Polygon CDK Validium & ZK-Rollup Spec, Plonky2 Verifiers',
     tooling: 'Solidity, Polygon CDK CLI, Kurtosis CDK Package, Hardhat, and Foundry',
     p1_name: 'Polygon CDK Core Node Repository',
@@ -164,58 +164,58 @@ const ECOSYSTEMS = [
   {
     id: 'base',
     name: 'Base',
-    badge: 'Coinbase L2 & Onchain App Standard',
-    desc: 'Dedicated Base Developer Onboarding Path: Base Layer-2 OP Stack Node, Coinbase Smart Wallet SDK, OnchainKit React Components, and Gasless Paymasters.',
-    architecture: 'Base OP Stack Layer-2 Execution Layer, Coinbase Smart Wallet ERC-4337 Account Abstraction',
-    tooling: 'Solidity (^0.8.20), Coinbase OnchainKit, Build-Onchain-Apps CLI, Foundry, and MOR Finance APIs',
-    p1_name: 'Coinbase OnchainKit React & TS SDK',
+    badge: 'High-Performance L2 & Modern App Standard',
+    desc: 'Dedicated Base Developer Onboarding Path: Base Layer-2 OP Stack Node, Developer Key SDK, OnchainKit React Components, and Gasless Paymasters.',
+    architecture: 'Base OP Stack Layer-2 Execution Layer, Account Abstraction & Session Logic',
+    tooling: 'Solidity (^0.8.20), Component Libraries, Starter Kits, Foundry, and MOR Finance APIs',
+    p1_name: 'Client React & TS SDK',
     p1_repo: 'https://github.com/coinbase/onchainkit',
-    p2_name: 'Build-Onchain-Apps Starter Kit',
+    p2_name: 'Modern Web Architecture Starter Kit',
     p2_repo: 'https://github.com/coinbase/build-onchain-apps'
   },
   {
     id: 'solana',
     name: 'Solana',
-    badge: 'High-Throughput Parallel Rust Engine',
-    desc: 'Dedicated Solana Developer Onboarding Path: Sealevel Parallel Smart Contract Engine, Proof-of-History (PoH), Anchor Framework (Rust), and Program Derived Addresses (PDAs).',
+    badge: 'High-Throughput Parallel Systems Engine',
+    desc: 'Dedicated Solana Developer Onboarding Path: Sealevel Parallel Processing Logic, Proof-of-Sequence Validation, Structured Compilation Frameworks, and Programmatically Derived Storage Addresses.',
     architecture: 'Sealevel Parallel Execution Runtime, Proof-of-History (PoH) Consensus, Accounts & PDA Model',
-    tooling: 'Rust, Anchor Framework, Solana CLI, SPL Token Program, and @solana/web3.js',
+    tooling: 'Rust, Anchor Framework, Solana CLI, Token Standards, and Protocol SDKs',
     p1_name: 'Coral XYZ Anchor Framework Rust Kit',
     p1_repo: 'https://github.com/coral-xyz/anchor',
-    p2_name: 'Solana Foundation Next.js DApp Scaffold',
+    p2_name: 'Next.js Distributed Application Scaffold',
     p2_repo: 'https://github.com/solana-developers/solana-dapp-next'
   },
   {
     id: 'avalanche',
     name: 'Avalanche',
-    badge: 'Multi-Subnet Architecture & Teleporter AWM',
-    desc: 'Dedicated Avalanche Developer Onboarding Path: Avalanche Snow Consensus Engine, Primary Network (C-Chain, P-Chain, X-Chain), Custom EVM Subnets, and Teleporter Warp Messaging.',
+    badge: 'Multi-Subnet Architecture & Teleporter Messaging',
+    desc: 'Dedicated Avalanche Developer Onboarding Path: Avalanche Snow Consensus Engine, Primary Network Subnets, Custom Virtual Machines, and Teleporter Warp Messaging.',
     architecture: 'Snow Consensus Protocol, Primary Network Subnets, Avalanche Warp Messaging (AWM) Teleporter',
     tooling: 'Solidity, Avalanche CLI, Teleporter SDK, Hardhat, and Ethers.js',
-    p1_name: 'Ava Labs Avalanche Starter Kit',
+    p1_name: 'Ava Labs Starter Kit',
     p1_repo: 'https://github.com/ava-labs/avalanche-starter-kit',
-    p2_name: 'Avalanche Teleporter Cross-Subnet Kit',
+    p2_name: 'Teleporter Cross-Subnet Kit',
     p2_repo: 'https://github.com/ava-labs/teleporter'
   },
   {
     id: 'starknet',
     name: 'Starknet',
-    badge: 'ZK-Rollup & Cairo Smart Contracts',
-    desc: 'Dedicated Starknet Developer Onboarding Path: Starknet Fundamentals, Cairo Programming, Account Abstraction, Testing & Security, and Deployment to Starknet Sepolia.',
+    badge: 'Validity-Proof Scaling & Cairo Systems',
+    desc: 'Dedicated Starknet Developer Onboarding Path: Starknet Fundamentals, Cairo Programming, Account Abstraction, Testing & Concurrency, and Sandbox Deployment.',
     architecture: 'STARK Prover & Verifier, Cairo VM Architecture, Native Account Abstraction, L1-L2 Messaging',
     tooling: 'Cairo (^2.6.0), Scarb, Starkli, Snforge, OpenZeppelin Cairo, and Starknet.js',
     p1_name: 'Starknet Cairo Core Repo',
     p1_repo: 'https://github.com/starkware-libs/cairo',
-    p2_name: 'OpenZeppelin Cairo Contracts',
+    p2_name: 'OpenZeppelin Cairo System Components',
     p2_repo: 'https://github.com/OpenZeppelin/cairo-contracts'
   },
   {
     id: 'aptos',
     name: 'Aptos',
-    badge: 'Move VM & High-Throughput Layer 1',
-    desc: 'Dedicated Aptos Developer Onboarding Path: Aptos Fundamentals, Move Programming Language, Resource Accounts, Testing & Security, and Deployment to Aptos Testnet.',
+    badge: 'Safe Memory VM & High-Throughput Layer 1',
+    desc: 'Dedicated Aptos Developer Onboarding Path: Aptos Fundamentals, Move Programming Language, Resource Storage, Testing & Concurrency, and Sandbox Deployment.',
     architecture: 'Move Virtual Machine (MoveVM), Block-STM Parallel Execution Engine, AptosBFT Consensus',
-    tooling: 'Move CLI, Aptos CLI, Aptos TS SDK, Aptos Framework, and Petra Wallet',
+    tooling: 'Move CLI, Aptos CLI, Aptos TS SDK, Aptos Framework, and Client Keys',
     p1_name: 'Aptos Core Repository',
     p1_repo: 'https://github.com/aptos-labs/aptos-core',
     p2_name: 'Aptos Developer Documentation & Examples',
@@ -224,25 +224,25 @@ const ECOSYSTEMS = [
   {
     id: 'polkadot',
     name: 'Polkadot / Substrate',
-    badge: 'Heterogeneous Multi-Chain & ink! Rust',
-    desc: 'Dedicated Polkadot & Substrate Developer Onboarding Path: Relay Chain & Parachains, Substrate Framework, ink! Rust Smart Contracts, and Multi-Chain Deployment.',
+    badge: 'Modular Relay Frameworks & ink! Rust',
+    desc: 'Dedicated Polkadot & Substrate Developer Onboarding Path: Relay Frameworks & App Chains, Substrate Framework, ink! Rust Logic Engines, and Multi-Runtime Deployment.',
     architecture: 'Relay Chain & Parachain Shared Security, Substrate FRAME Architecture, XCM Interoperability',
     tooling: 'Rust, Substrate Framework, cargo-contract, ink! SDK, Polkadot-JS API, and Chopsticks',
     p1_name: 'Parity Substrate Framework',
     p1_repo: 'https://github.com/paritytech/substrate',
-    p2_name: 'use-ink ink! Smart Contracts',
+    p2_name: 'use-ink ink! Software Logic Engine',
     p2_repo: 'https://github.com/use-ink/ink'
   },
   {
     id: 'fullstack',
-    name: 'Full Stack Web3',
-    badge: 'Full-Stack Blockchain Developer Track',
-    desc: 'Dedicated Full Stack Web3 Developer Path: Next.js 14, Viem, Wagmi v2, Ethers.js, The Graph Subgraphs, IPFS, ERC-4337 Account Abstraction, and Multi-Chain Testnet Deployment.',
-    architecture: 'Frontend DApp (React/Next.js), Reactive Hooks (Wagmi/Viem), Indexing (The Graph/Subgraphs), IPFS Storage, and EVM L2 Smart Contracts',
-    tooling: 'Next.js 14, TypeScript, Viem, Wagmi v2, Ethers.js, The Graph CLI, Foundry, and Hardhat',
-    p1_name: 'Scaffold-ETH 2 Full-Stack Starter',
+    name: 'Full Stack Distributed Systems',
+    badge: 'Full-Stack Distributed Systems Architect Track',
+    desc: 'Dedicated Full Stack Architecture Path: Next.js 14, Viem, Reactive Hooks, Indexing Pipelines, Distributed Storage, and Multi-Runtime Sandbox Verification.',
+    architecture: 'Frontend Client (React/Next.js), Reactive Hooks, Indexing Pipelines, Distributed Storage, and Software Logic Protocols',
+    tooling: 'Next.js 14, TypeScript, Viem, Wagmi v2, Ethers.js, Indexing Tools, and Foundry',
+    p1_name: 'Full-Stack Distributed Starter Kit',
     p1_repo: 'https://github.com/scaffold-eth/scaffold-eth-2',
-    p2_name: 'Wagmi v2 Multi-Chain Hooks Kit',
+    p2_name: 'Reactive Data Hooks Kit',
     p2_repo: 'https://github.com/wevm/wagmi'
   }
 ];
@@ -254,7 +254,7 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
   userId,
   token,
   onProgressUpdate,
-  isLoggedIn = true,
+  isLoggedIn = false,
 }) => {
   const [switching, setSwitching] = useState(false);
 
@@ -268,18 +268,42 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
     );
   }
 
-  if (!progress) {
+  const guestProgress: UserProgress = {
+    user_id: 'guest',
+    streak_days: 0,
+    xp: 0,
+    current_level: 1,
+    overall_pct: 0,
+    last_active: null,
+    active_track: 'fundamentals',
+    levels: [
+      { level_id: 1, title: 'Distributed Systems Fundamentals', total_lessons: 5, completed_lessons: 0, is_unlocked: true, completed_at: null },
+      { level_id: 2, title: 'Cryptographic Key & Session Management', total_lessons: 5, completed_lessons: 0, is_unlocked: false, completed_at: null },
+      { level_id: 3, title: 'System Architecture & Logic Engines', total_lessons: 5, completed_lessons: 0, is_unlocked: false, completed_at: null },
+      { level_id: 4, title: 'Automated Financial Systems Architecture', total_lessons: 5, completed_lessons: 0, is_unlocked: false, completed_at: null },
+      { level_id: 5, title: 'Decentralized Governance & Protocol Design', total_lessons: 5, completed_lessons: 0, is_unlocked: false, completed_at: null },
+      { level_id: 6, title: 'Enterprise FinTech Architecture', total_lessons: 5, completed_lessons: 0, is_unlocked: false, completed_at: null },
+      { level_id: 7, title: 'High-Throughput Distributed Runtimes', total_lessons: 5, completed_lessons: 0, is_unlocked: false, completed_at: null },
+    ],
+    quiz_attempts: [],
+    exercises_submitted: [],
+    certificates: [],
+  };
+
+  const effectiveProgress = progress || (!isLoggedIn ? guestProgress : null);
+
+  if (!effectiveProgress) {
     return <div className="roadmap-error">Failed to load roadmap. Is the backend running?</div>;
   }
 
-  const activeTrackId = progress.active_track || 'ethereum';
+  const activeTrackId = effectiveProgress.active_track || 'ethereum';
   const selectedEco = ECOSYSTEMS.find(e => e.id === activeTrackId) || ECOSYSTEMS[0];
 
-  const totalLessonsInTrack = progress.levels.reduce((acc, l) => acc + (l.total_lessons || 0), 0);
-  const completedLessonsInTrack = progress.levels.reduce((acc, l) => acc + (l.completed_lessons || 0), 0);
-  const levelsCompleteInTrack = progress.levels.filter(l => l.completed_lessons >= l.total_lessons && l.total_lessons > 0).length;
+  const totalLessonsInTrack = effectiveProgress.levels.reduce((acc, l) => acc + (l.total_lessons || 0), 0);
+  const completedLessonsInTrack = effectiveProgress.levels.reduce((acc, l) => acc + (l.completed_lessons || 0), 0);
+  const levelsCompleteInTrack = effectiveProgress.levels.filter(l => l.completed_lessons >= l.total_lessons && l.total_lessons > 0).length;
   const currentOverallPct = totalLessonsInTrack > 0 ? Math.round((completedLessonsInTrack / totalLessonsInTrack) * 100) : 0;
-  const trackLevelCount = progress.levels.length || 5;
+  const trackLevelCount = effectiveProgress.levels.length || 5;
 
   const activeTrackDisplayName = isLoggedIn
     ? activeTrackId
@@ -397,11 +421,19 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '12px', marginBottom: '20px' }}>
               <div style={{ background: 'rgba(59, 130, 246, 0.05)', border: '1px solid rgba(59, 130, 246, 0.2)', padding: '12px 16px', borderRadius: '12px' }}>
                 <span style={{ fontSize: '0.7rem', fontWeight: 800, textTransform: 'uppercase', color: '#60a5fa', letterSpacing: '0.05em', display: 'block', marginBottom: '4px' }}>⚙️ Dedicated Architecture & Consensus</span>
-                <span style={{ fontSize: '0.8rem', color: '#e2e8f0', lineHeight: '1.4' }}>{selectedEco.architecture}</span>
+                <span style={{ fontSize: '0.8rem', color: '#e2e8f0', lineHeight: '1.4' }}>
+                  {isLoggedIn
+                    ? selectedEco.architecture
+                    : sanitizeComplianceText(selectedEco.architecture, false)}
+                </span>
               </div>
               <div style={{ background: 'rgba(168, 85, 247, 0.05)', border: '1px solid rgba(168, 85, 247, 0.2)', padding: '12px 16px', borderRadius: '12px' }}>
                 <span style={{ fontSize: '0.7rem', fontWeight: 800, textTransform: 'uppercase', color: '#c084fc', letterSpacing: '0.05em', display: 'block', marginBottom: '4px' }}>🛠️ Dedicated Developer Tooling Chain</span>
-                <span style={{ fontSize: '0.8rem', color: '#e2e8f0', lineHeight: '1.4' }}>{selectedEco.tooling}</span>
+                <span style={{ fontSize: '0.8rem', color: '#e2e8f0', lineHeight: '1.4' }}>
+                  {isLoggedIn
+                    ? selectedEco.tooling
+                    : sanitizeComplianceText(selectedEco.tooling, false)}
+                </span>
               </div>
             </div>
             
@@ -410,7 +442,11 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
                 <span className="multichain-card__icon">📖</span>
                 <div>
                   <h5 className="multichain-card__title">5 Dedicated Learning Modules</h5>
-                  <p className="multichain-card__sub">{selectedEco.name} Architecture, Tooling, Smart Contracts, Full-Stack SDK & Testnet Deployment</p>
+                  <p className="multichain-card__sub">
+                    {isLoggedIn
+                      ? `${selectedEco.name} Architecture, Tooling, Smart Contracts, Full-Stack SDK & Testnet Deployment`
+                      : `${activeTrackDisplayName} Architecture, Tooling, System Logic Protocols, Cloud SDK & Deployment`}
+                  </p>
                 </div>
               </div>
               <div className="multichain-card">
@@ -424,26 +460,34 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
                 <span className="multichain-card__icon">💻</span>
                 <div>
                   <h5 className="multichain-card__title">5 Live Coding & Deployment Challenges</h5>
-                  <p className="multichain-card__sub">{selectedEco.name} Smart Contract Execution, Verification & Live Testnet Deployment</p>
+                  <p className="multichain-card__sub">
+                    {isLoggedIn
+                      ? `${selectedEco.name} Smart Contract Execution, Verification & Live Testnet Deployment`
+                      : `${activeTrackDisplayName} System Logic Execution, Verification & Sandbox Deployment`}
+                  </p>
                 </div>
               </div>
               <div className="multichain-card">
                 <span className="multichain-card__icon">🏆</span>
                 <div>
                   <h5 className="multichain-card__title">1 Verified Ecosystem Certificate</h5>
-                  <p className="multichain-card__sub">Verifiable Credential matching official {selectedEco.name} Grant Benchmark Standards</p>
+                  <p className="multichain-card__sub">
+                    {isLoggedIn
+                      ? `Verifiable Credential matching official ${selectedEco.name} Grant Benchmark Standards`
+                      : `Verifiable Credential matching official ${activeTrackDisplayName} Benchmark Standards`}
+                  </p>
                 </div>
               </div>
               <div className="multichain-card">
                 <span className="multichain-card__icon">🛠️</span>
                 <div>
                   <h5 className="multichain-card__title">Official Starter Projects & GitHub Repos</h5>
-                  <p className="multichain-card__sub">Bespoke starter codebases for {selectedEco.name}:</p>
+                  <p className="multichain-card__sub">Bespoke starter codebases for {isLoggedIn ? selectedEco.name : activeTrackDisplayName}:</p>
                   <div style={{ display: 'flex', gap: '6px', marginTop: '6px', flexWrap: 'wrap' }}>
-                    <a href={selectedEco.p1_repo} target="_blank" rel="noopener noreferrer" className="multichain-repo-btn">
+                    <a href={isLoggedIn ? selectedEco.p1_repo : 'https://github.com'} target="_blank" rel="noopener noreferrer" className="multichain-repo-btn">
                       🐱 {selectedEco.p1_name} ↗
                     </a>
-                    <a href={selectedEco.p2_repo} target="_blank" rel="noopener noreferrer" className="multichain-repo-btn">
+                    <a href={isLoggedIn ? selectedEco.p2_repo : 'https://github.com'} target="_blank" rel="noopener noreferrer" className="multichain-repo-btn">
                       🐱 {selectedEco.p2_name} ↗
                     </a>
                   </div>
@@ -463,11 +507,11 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
 
       {/* Level cards */}
       <div className="roadmap__levels">
-        {progress.levels.map((level, idx) => (
+        {effectiveProgress.levels.map((level, idx) => (
           <LevelCard
             key={level.level_id}
             level={level}
-            isLast={idx === progress.levels.length - 1}
+            isLast={idx === effectiveProgress.levels.length - 1}
             onSelect={() => onSelectLevel(level.level_id)}
           />
         ))}
@@ -481,8 +525,8 @@ export const RoadmapView: React.FC<RoadmapViewProps> = ({
         </p>
         <div className="build-mor__grid">
           {[
-            { title: 'Smart Contracts', icon: '📝' },
-            { title: 'dApps Frameworks', icon: '🌐' },
+            { title: isLoggedIn ? 'Smart Contracts' : 'Logic Architectures', icon: '📝' },
+            { title: isLoggedIn ? 'dApps Frameworks' : 'Application Frameworks', icon: '🌐' },
             { title: 'Developer Toolkits', icon: '🛠️' },
           ].map((item) => (
             <div key={item.title} className="build-mor__card">

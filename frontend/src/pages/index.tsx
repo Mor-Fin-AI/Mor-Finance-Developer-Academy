@@ -44,13 +44,13 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ progress, loading,
 interface MentorPageProps { currentLevel?: number; userId: string; }
 export const MentorPage: React.FC<MentorPageProps> = ({ currentLevel = 1, userId }) => {
   const LEVEL_TITLES: Record<number, string> = {
-    1: 'Level 1 — Blockchain Fundamentals',
-    2: 'Level 2 — Wallet Development',
-    3: 'Level 3 — Smart Contract Development',
-    4: 'Level 4 — DeFi Fundamentals',
-    5: 'Level 5 — DAO Governance',
-    6: 'Level 6 — MOR Finance Protocols',
-    7: 'Level 7 — Ecosystem Learning Track',
+    1: 'Level 1 — Distributed Systems Fundamentals',
+    2: 'Level 2 — Cryptographic Key & Session Management',
+    3: 'Level 3 — System Architecture & Logic Engines',
+    4: 'Level 4 — Automated Financial Systems Architecture',
+    5: 'Level 5 — Decentralized Governance & Protocol Design',
+    6: 'Level 6 — Enterprise FinTech Architecture',
+    7: 'Level 7 — High-Throughput Distributed Runtimes',
   };
   return (
     <ChatInterface mentorContext={LEVEL_TITLES[currentLevel] ?? 'General Curriculum'} userId={userId} />

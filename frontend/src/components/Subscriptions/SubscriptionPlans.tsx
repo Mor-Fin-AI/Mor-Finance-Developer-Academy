@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './SubscriptionPlans.css';
 
-export const SubscriptionPlans: React.FC<{ isLoggedIn?: boolean }> = ({ isLoggedIn = true }) => {
+export const SubscriptionPlans: React.FC<{ isLoggedIn?: boolean }> = ({ isLoggedIn = false }) => {
   const [activePlan, setActivePlan] = useState<string>('Free');
   const plans = [
     {
@@ -54,9 +54,9 @@ export const SubscriptionPlans: React.FC<{ isLoggedIn?: boolean }> = ({ isLogged
       ],
       features: [
         'Everything in Basic',
-        isLoggedIn ? 'Solidity • Rust • Go' : '✓ Advanced Object-Oriented Languages (Engine Frameworks)',
-        isLoggedIn ? '7 Multi-Chains' : '✓ 7 Distributed Infrastructure Environments',
-        isLoggedIn ? 'DAO Development' : '✓ Automated Organization Engineering',
+        isLoggedIn ? 'Solidity • Rust • Go' : 'Advanced Object-Oriented Languages (Engine Frameworks)',
+        isLoggedIn ? '7 Multi-Chains' : '7 Distributed Infrastructure Environments',
+        isLoggedIn ? 'DAO Development' : 'Automated Organization Engineering',
         'Real Projects & Case Studies',
         'Career & Freelance Resources',
         'Portfolio & Resume Guidance'
@@ -118,16 +118,16 @@ export const SubscriptionPlans: React.FC<{ isLoggedIn?: boolean }> = ({ isLogged
   ];
 
   const ecosystems = [
-    { name: 'Ethereum', icon: '🟢' },
-    { name: 'Base', icon: '🔷' },
-    { name: 'Optimism', icon: '🔴' },
-    { name: 'Arbitrum', icon: '🔵' },
-    { name: 'Polygon', icon: '🟣' },
-    { name: 'Solana', icon: '🟠' },
-    { name: 'Avalanche', icon: '🔺' },
-    { name: 'Starknet', icon: '⭐' },
-    { name: 'Aptos', icon: '🟢' },
-    { name: 'Polkadot', icon: '🟣' }
+    { name: isLoggedIn ? 'Ethereum' : 'Distributed State Engines', icon: '🟢' },
+    { name: isLoggedIn ? 'Base' : 'Core Database Frameworks', icon: '🔷' },
+    { name: isLoggedIn ? 'Optimism' : 'Fault-Proof Systems', icon: '🔴' },
+    { name: isLoggedIn ? 'Arbitrum' : 'High-Scale Execution Layers', icon: '🔵' },
+    { name: isLoggedIn ? 'Polygon' : 'Parallel Protocol Chains', icon: '🟣' },
+    { name: isLoggedIn ? 'Solana' : 'High-Throughput Clusters', icon: '🟠' },
+    { name: isLoggedIn ? 'Avalanche' : 'Consensus Network Routing', icon: '🔺' },
+    { name: isLoggedIn ? 'Starknet' : 'Validity-Proof Scaling', icon: '⭐' },
+    { name: isLoggedIn ? 'Aptos' : 'Safe Memory Execution', icon: '🟢' },
+    { name: isLoggedIn ? 'Polkadot' : 'Modular Relay Frameworks', icon: '🟣' }
   ];
 
   return (
@@ -176,7 +176,7 @@ export const SubscriptionPlans: React.FC<{ isLoggedIn?: boolean }> = ({ isLogged
 
             <ul className="plan-card__features">
               {plan.features.map((feature, idx) => {
-                const isChains = feature === '7 Multi-Chains';
+                const isChains = feature === '7 Multi-Chains' || feature === '7 Distributed Infrastructure Environments';
                 return (
                   <li key={idx} className="plan-card__feature">
                     <span className="plan-card__feature-check">✓</span>
@@ -232,7 +232,7 @@ export const SubscriptionPlans: React.FC<{ isLoggedIn?: boolean }> = ({ isLogged
           <span className="partners-footer__powered-logo">⬡ MOR FINANCE</span>
         </div>
         <div className="partners-footer__ecosystems">
-          <span className="partners-footer__label">Ecosystem Partners:</span>
+          <span className="partners-footer__label">{isLoggedIn ? 'Ecosystem Partners:' : 'Infrastructure Frameworks:'}</span>
           <div className="partners-footer__list">
             {ecosystems.map((eco) => (
               <span key={eco.name}>{eco.icon} {eco.name}</span>

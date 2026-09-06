@@ -25,15 +25,15 @@ export const Sidebar: React.FC<SidebarProps> = ({
   isLoggedIn = Boolean(authType && userId),
 }) => {
   const navItems = [
-    { id: 'about' as NavPage, label: 'About Us', icon: '🏛️', description: isLoggedIn ? 'Mission & University Web3' : 'Mission & University Architecture' },
-    { id: 'academy' as NavPage, label: 'Developer Academy', icon: '🎓', description: isLoggedIn ? 'Multi-chain curriculum' : 'Distributed architecture curriculum' },
+    { id: 'about' as NavPage, label: 'About Us', icon: '🏛️', description: 'Mission & Software Architecture' },
+    { id: 'academy' as NavPage, label: 'Developer Academy', icon: '🎓', description: 'Distributed Systems Curriculum' },
     { id: 'dashboard' as NavPage, label: 'My Dashboard', icon: '📊', description: 'Progress & XP' },
     { id: 'sandbox' as NavPage, label: 'Code Sandbox IDE', icon: '💻', description: 'Write & compile 6 languages' },
     { id: 'mentor' as NavPage, label: 'AI Mentor (OpenClaw)', icon: '🤖', description: 'Real-time compiler assistance' },
     { id: 'forum' as NavPage, label: 'Community Forum', icon: '💬', description: 'Connect & discuss' },
-    { id: 'hackathons' as NavPage, label: isLoggedIn ? 'Web3 Hackathons' : 'Tech Sprints & Grants', icon: '⚔️', description: 'Build & innovate' },
-    { id: 'careers' as NavPage, label: isLoggedIn ? 'Career Dashboard' : 'Tech Career Portal', icon: '💼', description: isLoggedIn ? 'Jobs, Internships & Grants' : 'Roles, Sprints & Grants' },
-    { id: 'certificates' as NavPage, label: isLoggedIn ? 'My Certificates' : 'System Credentials', icon: '🏆', description: isLoggedIn ? 'Earned credentials' : 'Standard benchmarks' },
+    { id: 'hackathons' as NavPage, label: 'Tech Sprints & Grants', icon: '⚔️', description: 'Build & innovate' },
+    { id: 'careers' as NavPage, label: 'Tech Career Portal', icon: '💼', description: 'Roles, Sprints & Grants' },
+    { id: 'certificates' as NavPage, label: 'System Credentials', icon: '🏆', description: 'Standard benchmarks' },
     { id: 'subscriptions' as NavPage, label: 'Subscription Plans', icon: '💎', description: 'Unlock premium features' },
   ];
 
@@ -42,7 +42,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       return userId.replace('gh-', '').slice(0, 2).toUpperCase();
     }
     if (authType === 'wallet') {
-      return 'W3';
+      return 'DK';
     }
     return 'DA';
   };
@@ -63,7 +63,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   const getFormattedRole = () => {
     if (authType === 'github') return 'GitHub Learner';
-    if (authType === 'wallet') return isLoggedIn ? 'Web3 Architect' : 'System Architect';
+    if (authType === 'wallet') return 'System Architect';
     return 'Junior Dev';
   };
 
