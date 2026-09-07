@@ -673,11 +673,12 @@ export default function App() {
             )
           } />
           <Route path="/hackathons" element={
-            isLoggedIn ? (
-              <HackathonsView userId={userId} onProgressUpdate={handleProgressUpdate} token={jwtToken || ''} />
-            ) : (
-              <Navigate to="/" replace />
-            )
+            <HackathonsView
+              userId={userId || ''}
+              onProgressUpdate={handleProgressUpdate}
+              token={jwtToken || ''}
+              isLoggedIn={isLoggedIn}
+            />
           } />
           <Route path="/careers" element={<CareerDashboard isLoggedIn={isLoggedIn} />} />
           <Route path="/career" element={<CareerDashboard isLoggedIn={isLoggedIn} />} />

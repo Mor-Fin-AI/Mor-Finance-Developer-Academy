@@ -127,14 +127,14 @@ const ECOSYSTEMS = [
   },
   {
     id: 'arbitrum',
-    name: 'Arbitrum',
+    name: 'High-Scale Execution Layers',
     badge: 'High-Scale Execution Engine & Stylus Rust',
-    desc: 'Dedicated Arbitrum Developer Onboarding Path: Arbitrum Nitro Execution Engine, Stylus Wasm (Rust & C++), Arbitrum Orbit L3 Chains, and Offchain Labs Developer Tooling.',
-    architecture: 'Nitro Execution Engine, Arbitrum Virtual Machine (AVM), Orbit L3 Configs, and Stylus Wasm Host I/O',
-    tooling: 'Rust (Stylus SDK), EVM Language, Arbitrum Nitro Testnet RPCs, Foundry, and Offchain Labs CLI',
+    desc: 'Dedicated High-Scale Developer Onboarding Path: High-Performance Execution Engine, Stylus Wasm (Rust & C++), Modular Execution Tier-3 Systems, and Developer Tooling.',
+    architecture: 'Nitro Execution Engine, High-Performance Virtual Machine, Modular Tier-3 Configs, and Stylus Wasm Host I/O',
+    tooling: 'Rust (Stylus SDK), EVM Language, Execution Engine Testnet RPCs, Foundry, and Developer CLI',
     p1_name: 'Stylus Rust Hello World Repo',
     p1_repo: 'https://github.com/OffchainLabs/stylus-hello-world',
-    p2_name: 'Arbitrum Tutorials Codebase',
+    p2_name: 'Modular Architecture Tutorials Codebase',
     p2_repo: 'https://github.com/OffchainLabs/arbitrum-tutorials'
   },
   {

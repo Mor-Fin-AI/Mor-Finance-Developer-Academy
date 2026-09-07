@@ -1,19 +1,26 @@
 import React, { useState, useEffect, useRef } from 'react';
 import type { Hackathon, UserProgress } from '../../types';
 import { fetchHackathons, postHackathonRegister, postHackathonSubmit } from '../../api/client';
+import { sanitizeHackathonForCompliance, sanitizeComplianceText } from '../../utils/complianceMask';
 import './HackathonsView.css';
 
 interface HackathonsViewProps {
   userId: string;
   onProgressUpdate: (updatedProgress: UserProgress) => void;
   token: string;
+  isLoggedIn?: boolean;
 }
 
 type HackathonSubPage = 'list' | 'detail' | 'submission';
 type HackathonTab = 'all' | 'upcoming' | 'ongoing' | 'completed';
 type DetailTab = 'overview' | 'rules' | 'tracks' | 'timeline';
 
-export const HackathonsView: React.FC<HackathonsViewProps> = ({ userId, onProgressUpdate, token }) => {
+export const HackathonsView: React.FC<HackathonsViewProps> = ({
+  userId,
+  onProgressUpdate,
+  token,
+  isLoggedIn = false,
+}) => {
   const [subPage, setSubPage] = useState<HackathonSubPage>('list');
   const [activeTab, setActiveTab] = useState<HackathonTab>('all');
   const [activeDetailTab, setActiveDetailTab] = useState<DetailTab>('overview');
@@ -47,21 +54,27 @@ export const HackathonsView: React.FC<HackathonsViewProps> = ({ userId, onProgre
       3
     )
       .then((res) => {
-        setHackathons(res.hackathons);
+        const sanitized = (res.hackathons || []).map((h) =>
+          sanitizeHackathonForCompliance(h, isLoggedIn)
+        );
+        setHackathons(sanitized);
         setTotalHackCount(res.total_count);
       })
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
-  }, [userId, subPage, activeTab, currentHackPage]);
+  }, [userId, subPage, activeTab, currentHackPage, isLoggedIn]);
 
   const handleSelectHack = (hack: Hackathon) => {
-    setSelectedHack(hack);
+    setSelectedHack(sanitizeHackathonForCompliance(hack, isLoggedIn));
     setActiveDetailTab('overview');
     setSubPage('detail');
   };
 
   const handleRegister = async (e: React.MouseEvent, hackId: string) => {
     e.stopPropagation();
+    if (!isLoggedIn || !token || !userId) {
+      return;
+    }
     try {
       setLoading(true);
       const updatedProgress = await postHackathonRegister(hackId, userId, token);
@@ -73,11 +86,14 @@ export const HackathonsView: React.FC<HackathonsViewProps> = ({ userId, onProgre
         currentHackPage,
         3
       );
-      setHackathons(res.hackathons);
+      const sanitized = (res.hackathons || []).map((h) =>
+        sanitizeHackathonForCompliance(h, isLoggedIn)
+      );
+      setHackathons(sanitized);
       setTotalHackCount(res.total_count);
       // Update selected
       const freshHack = res.hackathons.find(h => h.hackathon_id === hackId);
-      if (freshHack) setSelectedHack(freshHack);
+      if (freshHack) setSelectedHack(sanitizeHackathonForCompliance(freshHack, isLoggedIn));
     } catch (err) {
       console.error(err);
     } finally {
@@ -339,7 +355,7 @@ export const HackathonsView: React.FC<HackathonsViewProps> = ({ userId, onProgre
               return (
                 <div className="submission-detail-card">
                   <div className="submission-detail-card__header">
-                    <h4 className="submission-detail-card__title">{projTitle}</h4>
+                    <h4 className="submission-detail-card__title">{sanitizeComplianceText(projTitle, isLoggedIn)}</h4>
                     <span className="submission-detail-card__badge" style={{
                       color: hasSubmitted ? 'var(--clr-warning)' : 'var(--clr-success)',
                       background: hasSubmitted ? 'rgba(245, 158, 11, 0.1)' : 'rgba(16, 185, 129, 0.1)',
