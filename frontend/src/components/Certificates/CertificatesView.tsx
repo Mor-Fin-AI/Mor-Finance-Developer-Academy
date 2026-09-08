@@ -439,7 +439,7 @@ export const CertificatesView: React.FC<CertificatesViewProps> = ({ userId, isLo
                   <div className="credential-icon-wrap" style={{ borderColor: template.color }}>
                     <span className="credential-icon">{template.icon}</span>
                   </div>
-                  <div>
+                  <div className="credential-header-info">
                     <span className="credential-chain-name">{template.chainName}</span>
                     <h3 className="credential-title">{template.title}</h3>
                   </div>
