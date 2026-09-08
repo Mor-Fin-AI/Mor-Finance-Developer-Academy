@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import type { Hackathon, UserProgress } from '../../types';
 import { fetchHackathons, postHackathonRegister, postHackathonSubmit } from '../../api/client';
-import { sanitizeHackathonForCompliance, sanitizeComplianceText } from '../../utils/complianceMask';
 import './HackathonsView.css';
 
 interface HackathonsViewProps {
@@ -19,7 +18,7 @@ export const HackathonsView: React.FC<HackathonsViewProps> = ({
   userId,
   onProgressUpdate,
   token,
-  isLoggedIn = false,
+  isLoggedIn: _isLoggedIn = true,
 }) => {
   const [subPage, setSubPage] = useState<HackathonSubPage>('list');
   const [activeTab, setActiveTab] = useState<HackathonTab>('all');
@@ -54,25 +53,22 @@ export const HackathonsView: React.FC<HackathonsViewProps> = ({
       3
     )
       .then((res) => {
-        const sanitized = (res.hackathons || []).map((h) =>
-          sanitizeHackathonForCompliance(h, isLoggedIn)
-        );
-        setHackathons(sanitized);
+        setHackathons(res.hackathons || []);
         setTotalHackCount(res.total_count);
       })
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
-  }, [userId, subPage, activeTab, currentHackPage, isLoggedIn]);
+  }, [userId, subPage, activeTab, currentHackPage]);
 
   const handleSelectHack = (hack: Hackathon) => {
-    setSelectedHack(sanitizeHackathonForCompliance(hack, isLoggedIn));
+    setSelectedHack(hack);
     setActiveDetailTab('overview');
     setSubPage('detail');
   };
 
   const handleRegister = async (e: React.MouseEvent, hackId: string) => {
     e.stopPropagation();
-    if (!isLoggedIn || !token || !userId) {
+    if (!token || !userId) {
       return;
     }
     try {
@@ -86,14 +82,11 @@ export const HackathonsView: React.FC<HackathonsViewProps> = ({
         currentHackPage,
         3
       );
-      const sanitized = (res.hackathons || []).map((h) =>
-        sanitizeHackathonForCompliance(h, isLoggedIn)
-      );
-      setHackathons(sanitized);
+      setHackathons(res.hackathons || []);
       setTotalHackCount(res.total_count);
       // Update selected
       const freshHack = res.hackathons.find(h => h.hackathon_id === hackId);
-      if (freshHack) setSelectedHack(sanitizeHackathonForCompliance(freshHack, isLoggedIn));
+      if (freshHack) setSelectedHack(freshHack);
     } catch (err) {
       console.error(err);
     } finally {
@@ -167,15 +160,15 @@ export const HackathonsView: React.FC<HackathonsViewProps> = ({
         <div className="hacks-full-width">
           {/* Header */}
           <div className="hacks-header">
-            <h2 className="hacks-title">Technical Sprints</h2>
-            <p className="hacks-subtitle">Join MOR technical sprints to solve real distributed systems challenges.</p>
+            <h2 className="hacks-title">Web3 Hackathons &amp; Grants</h2>
+            <p className="hacks-subtitle">Join official MOR hackathons to build real Web3 projects, win bounties, and shape the decentralized future.</p>
           </div>
 
           {/* Promo Banner */}
           <div className="hacks-promo-banner glass">
             <h3 className="hacks-promo-banner__title">Build. Innovate. Compete.</h3>
             <p className="hacks-promo-banner__desc">
-              Join MOR technical sprints to solve real distributed systems challenges, earn credentials, and shape the future of high-scale software infrastructure.
+              Join MOR hackathons to solve real Web3 challenges, win grants and bounties, earn credentials, and shape the future of decentralized finance.
             </p>
             <div className="hacks-promo-banner__actions">
               <button
@@ -185,7 +178,7 @@ export const HackathonsView: React.FC<HackathonsViewProps> = ({
                   gridRef.current?.scrollIntoView({ behavior: 'smooth' });
                 }}
               >
-                🚀 Explore Technical Sprints
+                🚀 Explore Hackathons
               </button>
               <button
                 className="btn btn--ghost"
@@ -220,15 +213,15 @@ export const HackathonsView: React.FC<HackathonsViewProps> = ({
             </div>
           </div>
 
-          {/* Active Technical Sprints Grid */}
+          {/* Active Hackathons Grid */}
           {loading ? (
             <div className="hacks-loading">
               <div className="spinner" />
-              <p>Loading technical sprints...</p>
+              <p>Loading hackathons...</p>
             </div>
           ) : filteredHacks.length === 0 ? (
             <div className="hacks-empty glass" style={{ marginBottom: 32 }}>
-              <p>No technical sprints found in this category.</p>
+              <p>No hackathons found in this category.</p>
             </div>
           ) : (() => {
             const totalHackPages = Math.ceil(totalHackCount / 3) || 1;
@@ -312,7 +305,7 @@ export const HackathonsView: React.FC<HackathonsViewProps> = ({
           {/* Submissions & Judging status card */}
           <div className="judging-panel glass animate-fade-in">
             <h3 className="judging-panel__title">
-              <span>🪁</span> My Submissions & Judging Status
+              <span>🪁</span> My Submissions &amp; Judging Status
             </h3>
             
             {(() => {
@@ -325,7 +318,7 @@ export const HackathonsView: React.FC<HackathonsViewProps> = ({
                   <div className="submission-detail-card" style={{ textAlign: 'center', padding: '32px' }}>
                     <h4 className="submission-detail-card__title" style={{ marginBottom: '8px' }}>Get Ready to Build</h4>
                     <p style={{ fontSize: '0.85rem', color: 'var(--clr-text-secondary)', margin: '0 0 16px 0' }}>
-                      You haven't registered for any active technical sprints yet.
+                      You haven't registered for any active hackathons yet.
                     </p>
                     <button 
                       className="btn btn--primary btn--sm" 
@@ -334,7 +327,7 @@ export const HackathonsView: React.FC<HackathonsViewProps> = ({
                         if (firstOngoing) handleSelectHack(firstOngoing);
                       }}
                     >
-                      Explore Active Challenges
+                      Explore Active Hackathons
                     </button>
                   </div>
                 );
@@ -355,7 +348,7 @@ export const HackathonsView: React.FC<HackathonsViewProps> = ({
               return (
                 <div className="submission-detail-card">
                   <div className="submission-detail-card__header">
-                    <h4 className="submission-detail-card__title">{sanitizeComplianceText(projTitle, isLoggedIn)}</h4>
+                    <h4 className="submission-detail-card__title">{projTitle}</h4>
                     <span className="submission-detail-card__badge" style={{
                       color: hasSubmitted ? 'var(--clr-warning)' : 'var(--clr-success)',
                       background: hasSubmitted ? 'rgba(245, 158, 11, 0.1)' : 'rgba(16, 185, 129, 0.1)',
@@ -421,12 +414,12 @@ export const HackathonsView: React.FC<HackathonsViewProps> = ({
           {/* Winners & Recognition Section */}
           <div className="winners-section glass" style={{ padding: 24, borderRadius: 'var(--radius-lg)', border: '1px solid var(--clr-border)' }}>
             <div>
-              <h3 className="winners-section__title">Winners & Recognitions</h3>
+              <h3 className="winners-section__title">Winners &amp; Recognitions</h3>
               <div className="winners-list-mock">
                 {[
-                  { team: 'TechForge Team', place: '1st Place - Systems Innovation', award: 'Gold Credential', medal: '🥇' },
-                  { team: 'Nexus Builders', place: '2nd Place - Systems Innovation', award: 'Silver Credential', medal: '🥈' },
-                  { team: 'CodeWave', place: '3rd Place - Systems Innovation', award: 'Bronze Credential', medal: '🥉' }
+                  { team: 'TechForge Team', place: '1st Place - Multi-Chain Track', award: '$10,000 Bounty', medal: '🥇' },
+                  { team: 'Nexus Builders', place: '2nd Place - DeFi Innovation', award: '$5,000 Bounty', medal: '🥈' },
+                  { team: 'CodeWave', place: '3rd Place - ZK Protocols', award: '$2,500 Bounty', medal: '🥉' }
                 ].map((w, idx) => (
                   <div key={idx} className="winner-card">
                     <div className="winner-card__left">
@@ -458,13 +451,13 @@ export const HackathonsView: React.FC<HackathonsViewProps> = ({
         <div className="hack-detail-container">
           <div className="hack-detail-header-row">
             <button className="btn btn--text back-btn" onClick={() => setSubPage('list')}>
-              ← Back to Technical Sprints
+              ← Back to Hackathons
             </button>
           </div>
 
           <div className="hack-hero-card glass">
             <div className="hack-hero-main">
-              <span className="hack-hero-status">Active Technical Sprint</span>
+              <span className="hack-hero-status">Active Hackathon</span>
               <h1 className="hack-detail-title">{selectedHack.title}</h1>
               <p className="hack-detail-desc">{selectedHack.description}</p>
               
@@ -474,7 +467,7 @@ export const HackathonsView: React.FC<HackathonsViewProps> = ({
                   <span className="hack-val">{selectedHack.ecosystems?.join(', ') || 'Multi-Chain'}</span>
                 </div>
                 <div>
-                  <span className="hack-lbl">Sprint Timeline</span>
+                  <span className="hack-lbl">Hackathon Timeline</span>
                   <span className="hack-val">{selectedHack.start_date} to {selectedHack.end_date}</span>
                 </div>
               </div>
@@ -510,10 +503,10 @@ export const HackathonsView: React.FC<HackathonsViewProps> = ({
             <div className="hack-detail-tab-body">
               {activeDetailTab === 'overview' && (
                 <div>
-                  <h3>About the Technical Sprint</h3>
+                  <h3>About the Hackathon</h3>
                   <p>{selectedHack.description}</p>
                   <h4 style={{marginTop: 20}}>Eligibility</h4>
-                  <p>All developers, designers, and software engineering enthusiasts globally are eligible to participate. Build apps that leverage high-performance distributed technology!</p>
+                  <p>All developers, designers, and Web3 enthusiasts globally are eligible to participate. Build dApps that leverage smart contracts and decentralized technology!</p>
                 </div>
               )}
 
@@ -535,7 +528,7 @@ export const HackathonsView: React.FC<HackathonsViewProps> = ({
                     {selectedHack.tracks.map((track, idx) => (
                       <div key={idx} className="hack-track-card glass">
                         <h4>{track}</h4>
-                        <p>Build solutions targeting the {track} track to be eligible for special category rewards.</p>
+                        <p>Build solutions targeting the {track} track to be eligible for special category bounties.</p>
                       </div>
                     ))}
                   </div>
@@ -575,13 +568,13 @@ export const HackathonsView: React.FC<HackathonsViewProps> = ({
             {/* Form */}
             <form onSubmit={handleSubmission} className="submission-form glass">
               <h3>My Submission</h3>
-              <p className="submission-subtitle">Manage your sprint project submission.</p>
+              <p className="submission-subtitle">Manage your hackathon project submission.</p>
 
               <div className="form-group">
                 <label className="form-label">Project Name</label>
                 <input
                   type="text"
-                  placeholder="e.g. Distributed Cache Manager"
+                  placeholder="e.g. Multi-Chain DeFi Vault"
                   value={projName}
                   onChange={(e) => setProjName(e.target.value)}
                   className="form-input"
@@ -593,7 +586,7 @@ export const HackathonsView: React.FC<HackathonsViewProps> = ({
                 <label className="form-label">Tagline</label>
                 <input
                   type="text"
-                  placeholder="e.g. Optimized high-throughput consensus protocol for MOR ecosystem"
+                  placeholder="e.g. Optimized high-throughput vault protocol for MOR ecosystem"
                   value={projTagline}
                   onChange={(e) => setProjTagline(e.target.value)}
                   className="form-input"
@@ -603,7 +596,7 @@ export const HackathonsView: React.FC<HackathonsViewProps> = ({
               <div className="form-group">
                 <label className="form-label">Description</label>
                 <textarea
-                  placeholder="Describe your project, features, and technical architecture..."
+                  placeholder="Describe your project, features, smart contract architecture..."
                   value={projDesc}
                   onChange={(e) => setProjDesc(e.target.value)}
                   className="form-textarea"

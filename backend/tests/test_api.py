@@ -93,7 +93,7 @@ def test_evm_testnet_deployment_logging():
         assert data["success"] is True
         assert "basescan.org" in data["explorer_url"]
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_certificate_only_issued_on_full_track_completion():
     from src.services.db import complete_lesson_for_user, get_or_create_user, get_collection
     test_uid = "test-learner-starknet-cert-check"

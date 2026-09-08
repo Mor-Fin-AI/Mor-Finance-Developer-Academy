@@ -14,33 +14,33 @@ export const AboutPage: React.FC<AboutPageProps> = ({ isLoggedIn: _isLoggedIn = 
       {/* Header */}
       <div className="about-header">
         <span className="about-badge">ABOUT MOR ACADEMY</span>
-        <h2 className="about-page__title">Empowering the Next Generation of Distributed Systems &amp; Software Engineers</h2>
+        <h2 className="about-page__title">Empowering the Next Generation of Web3 &amp; Smart Contract Engineers</h2>
         <p className="about-page__desc">
-          Building an enterprise developer education platform for Distributed Ledger Programming &amp; Advanced Data Architectures. We bridge structured learning, live AI Mentors, real-world algorithmic compilation, and verified software contributions.
+          Building a global multichain developer academy for Web3 Engineering, Smart Contract Architecture, and Decentralized Finance. We bridge structured curriculum, live AI Mentors, real-world multi-chain compilation, and verified on-chain developer certifications.
         </p>
       </div>
 
       {/* Factual Milestones & Platform Facts */}
       <div className="about-stats-grid">
         <div className="about-stat-card glass">
-          <div className="about-stat-number gradient-text">8+ Runtimes</div>
-          <div className="about-stat-label">Supported Distributed Runtimes</div>
+          <div className="about-stat-number gradient-text">11+ Tracks</div>
+          <div className="about-stat-label">Supported Blockchain Networks</div>
         </div>
         <div className="about-stat-card glass">
           <div className="about-stat-number gradient-text">2026</div>
           <div className="about-stat-label">Academy Launched</div>
         </div>
         <div className="about-stat-card glass">
-          <div className="about-stat-number gradient-text">Multi-Runtime</div>
+          <div className="about-stat-number gradient-text">Multichain</div>
           <div className="about-stat-label">Ecosystem Learning Tracks</div>
         </div>
         <div className="about-stat-card glass">
           <div className="about-stat-number gradient-text">Live</div>
-          <div className="about-stat-label">OpenClaw & Hermes AI Mentors</div>
+          <div className="about-stat-label">OpenClaw &amp; Hermes AI Mentors</div>
         </div>
       </div>
 
-      {/* ─── University Distributed Systems Onboarding Placeholder & Gateway ─────────────────── */}
+      {/* ─── University Web3 Onboarding Placeholder & Gateway ─────────────────── */}
       <div className="about-university-section glass">
         <div className="about-university-badge">
           <span>🏛️ INSTITUTIONAL ACADEMIC INITIATIVE</span>
@@ -48,10 +48,10 @@ export const AboutPage: React.FC<AboutPageProps> = ({ isLoggedIn: _isLoggedIn = 
         <div className="about-university-content">
           <div className="about-university-text">
             <h3 className="about-university-title">
-              University Software Engineering Onboarding Program
+              University Web3 &amp; Software Engineering Onboarding Program
             </h3>
             <p className="about-university-desc">
-              Turnkey academic infrastructure empowering university computer science departments, student developer clubs, and distributed systems research groups. Featuring frictionless 1-click GitHub SSO cohort routing, multi-runtime compiler sandboxes, and automated grant telemetry.
+              Turnkey academic infrastructure empowering university computer science departments, student blockchain clubs, and distributed systems research groups. Featuring frictionless 1-click GitHub SSO cohort routing, multi-chain compiler sandboxes, and automated grant telemetry.
             </p>
           </div>
           <div className="about-university-actions">
@@ -85,18 +85,18 @@ export const AboutPage: React.FC<AboutPageProps> = ({ isLoggedIn: _isLoggedIn = 
           </div>
           <div className="about-uni-feature-card">
             <div className="about-uni-feature-icon">💻</div>
-            <h4>8 Multi-Runtime Sandboxes</h4>
-            <p>Hands-on compilation in Arbitrum Stylus (Rust), Core Database Frameworks, Fault-Proof Systems, Solana, Aptos Move, Starknet, and ink!.</p>
+            <h4>Multi-Chain Smart Contract Sandboxes</h4>
+            <p>Hands-on compilation in Solidity, Arbitrum Stylus (Rust), Base, Optimism, Solana, Aptos Move, Starknet Cairo, and ink!.</p>
           </div>
           <div className="about-uni-feature-card">
             <div className="about-uni-feature-icon">📊</div>
             <h4>Programmatic Grant Telemetry</h4>
-            <p>Real-time tracking of code completion, execution efficiency, and verified project milestones.</p>
+            <p>Real-time tracking of code completion, smart contract deployment, and verified project milestones for foundation grants.</p>
           </div>
           <div className="about-uni-feature-card">
             <div className="about-uni-feature-icon">🏆</div>
             <h4>Verified Developer Credentials</h4>
-            <p>Verifiable digital developer credentials issued directly upon project milestone completion and code verification.</p>
+            <p>Verifiable digital credentials issued directly upon project milestone completion and code verification.</p>
           </div>
         </div>
 
@@ -126,7 +126,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ isLoggedIn: _isLoggedIn = 
           <div className="about-card__icon">🌐</div>
           <h3 className="about-card__title">Open-Source Mission</h3>
           <p className="about-card__text">
-            Building a distributed systems education ecosystem designed to onboard, educate, and certify high-caliber software architects through open-source innovation.
+            Building a multichain Web3 developer education ecosystem designed to onboard, educate, and certify high-caliber smart contract developers through open-source innovation.
           </p>
         </div>
 
@@ -134,15 +134,15 @@ export const AboutPage: React.FC<AboutPageProps> = ({ isLoggedIn: _isLoggedIn = 
           <div className="about-card__icon">🎯</div>
           <h3 className="about-card__title">Current Focus</h3>
           <p className="about-card__text">
-            Developer Academy, AI Mentors (OpenClaw & Hermes), Community Forum, Technical Sprints, and active Open-Source System Contributions.
+            Developer Academy, AI Mentors (OpenClaw &amp; Hermes), Community Forum, Hackathons, and active Open-Source Contributions.
           </p>
         </div>
 
         <div className="about-card glass">
           <div className="about-card__icon">⬡</div>
-          <h3 className="about-card__title">Supported Cloud Environments</h3>
+          <h3 className="about-card__title">Supported Ecosystems</h3>
           <p className="about-card__text">
-            Modern object-oriented database layers, high-scale execution environments, fault-proof networks, parallel processing protocol clusters, high-throughput distributed architectures, and hands-on developer infrastructure testing labs.
+            Ethereum, Arbitrum, Optimism, Base, Polygon, Avalanche, Solana, Starknet, Aptos &amp; Polkadot multi-chain compatibility and hands-on developer labs.
           </p>
         </div>
       </div>
@@ -152,7 +152,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ isLoggedIn: _isLoggedIn = 
       {/* Roadmap & Milestones Timeline */}
       <div className="about-section-header">
         <h3 className="about-section-title">Actual Strategic Roadmap</h3>
-        <p className="about-section-sub">Our official execution timeline for building high-performance distributed enterprise software infrastructure.</p>
+        <p className="about-section-sub">Our official execution timeline for building high-performance multichain Web3 developer infrastructure.</p>
       </div>
 
       <div className="about-roadmap-grid">
@@ -161,7 +161,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ isLoggedIn: _isLoggedIn = 
             phase: '2026 Q1 & Q2',
             status: 'COMPLETED',
             title: 'Full Development of Academy & Developer Onboarding',
-            desc: 'Core platform development, interactive learning tracks, software architecture compiler sandboxes, and developer onboarding workflows.'
+            desc: 'Core platform development, interactive learning tracks, smart contract compiler sandboxes, and developer onboarding workflows.'
           },
           {
             phase: '2026 Q3',
@@ -172,20 +172,20 @@ export const AboutPage: React.FC<AboutPageProps> = ({ isLoggedIn: _isLoggedIn = 
           {
             phase: '2026 Q3',
             status: 'COMPLETED',
-            title: 'Distributed Infrastructure Learning Tracks',
-            desc: 'Dedicated ecosystem learning tracks launched across modern object-oriented database layers, high-scale execution environments, fault-proof networks, parallel processing protocol clusters, high-throughput distributed architectures, and hands-on developer infrastructure testing labs.'
+            title: 'Multi-Chain Learning Tracks',
+            desc: 'Dedicated ecosystem learning tracks launched across Ethereum, Arbitrum, Base, Optimism, Polygon, Solana, Avalanche, Starknet, Aptos, and Polkadot.'
           },
           {
             phase: '2026 Q4',
             status: 'IN PROGRESS',
             title: 'AI-Powered Protocol Services & Developer Tooling',
-            desc: 'Advanced AI code auditing, automated performance optimization, and protocol integration services for enterprise developers.'
+            desc: 'Advanced AI smart contract auditing, automated gas optimization, and protocol integration services for Web3 developers.'
           },
           {
             phase: '2027',
             status: 'UPCOMING',
             title: 'Enterprise Infrastructure & Global Community Expansion',
-            desc: 'Deploying enterprise developer training, cryptographic credential verification, and global distributed software engineering community expansion.'
+            desc: 'Deploying enterprise developer training, cryptographic credential verification, and global Web3 engineering community expansion.'
           }
         ].map((item) => (
           <div key={item.phase + item.title} className={`roadmap-phase-card glass ${item.status.toLowerCase().replace(' ', '-')}`}>
@@ -201,14 +201,14 @@ export const AboutPage: React.FC<AboutPageProps> = ({ isLoggedIn: _isLoggedIn = 
       {/* Core Team & Contributors */}
       <div className="about-section-header">
         <h3 className="about-section-title">Core Contributors &amp; Engineering Team</h3>
-        <p className="about-section-sub">Built by core distributed systems architects, AI researchers, and software engineering educators.</p>
+        <p className="about-section-sub">Built by Web3 protocol architects, AI researchers, and software engineering educators.</p>
       </div>
 
       <div className="about-team-grid">
         {[
-          { name: 'MOR Platform Architecture Team', role: 'Distributed Systems & Security Leads', bio: 'Oversees software architecture, algorithmic verification, concurrency safety, and system security.', icon: '⬡' },
-          { name: 'AI Engineering Group', role: 'OpenClaw & Hermes AI Lead', bio: 'Designs context-aware OpenClaw & Hermes AI agents for live code reviews, syntax verification, and automated evaluations.', icon: '🤖' },
-          { name: 'Community Operations', role: 'Developer Relations & Academics', bio: `Manages developer bounties, Discord community office hours, technical sprints, and cohort workshops.`, icon: '🌐' }
+          { name: 'MOR Platform Architecture Team', role: 'Smart Contract & Protocol Security Leads', bio: 'Oversees smart contract architecture, cryptographic verification, EVM execution, and protocol security.', icon: '⬡' },
+          { name: 'AI Engineering Group', role: 'OpenClaw & Hermes AI Lead', bio: 'Designs context-aware OpenClaw & Hermes AI agents for live code reviews, syntax verification, and automated audits.', icon: '🤖' },
+          { name: 'Community Operations', role: 'Developer Relations & Academics', bio: `Manages developer grant programs, community office hours, hackathons, and cohort workshops.`, icon: '🌐' }
         ].map((member) => (
           <div key={member.name} className="team-card glass">
             <div className="team-avatar">{member.icon}</div>
@@ -235,7 +235,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ isLoggedIn: _isLoggedIn = 
             <div>
               <h4>GitHub Repositories</h4>
               <p>
-                Explore open-source software architecture templates, submit PRs, and review open-source code.
+                Explore open-source smart contract templates, submit PRs, and review open-source code.
               </p>
             </div>
           </a>
@@ -249,7 +249,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ isLoggedIn: _isLoggedIn = 
             <span className="resource-icon">💬</span>
             <div>
               <h4>Discord Community</h4>
-              <p>Connect with fellow builders, attend weekly office hours, and get live help.</p>
+              <p>Connect with fellow Web3 builders, attend weekly office hours, and get live help.</p>
             </div>
           </a>
         </div>
@@ -258,7 +258,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ isLoggedIn: _isLoggedIn = 
       {/* Official Support Emails Section */}
       <div className="about-support-section glass" style={{ marginTop: '32px', padding: '24px', borderRadius: '16px', border: '1px solid rgba(59, 130, 246, 0.3)', background: 'rgba(10, 11, 23, 0.45)' }}>
         <h3 className="about-section-title" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '1.2rem', marginBottom: '8px' }}>
-          <span>✉️</span> Contact & Developer Support
+          <span>✉️</span> Contact &amp; Developer Support
         </h3>
         <p className="about-section-sub" style={{ marginBottom: '16px' }}>
           For inquiries regarding developer certifications, Academy onboarding, technical support, or partnership opportunities, contact our team:
@@ -284,7 +284,7 @@ export const AboutPage: React.FC<AboutPageProps> = ({ isLoggedIn: _isLoggedIn = 
       {/* Company & Registered Office Details */}
       <div className="about-company-section glass" style={{ marginTop: '24px', padding: '24px', borderRadius: '16px', border: '1px solid rgba(168, 85, 247, 0.3)', background: 'rgba(10, 11, 23, 0.45)' }}>
         <h3 className="about-section-title" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '1.2rem', marginBottom: '12px' }}>
-          <span>🏛️</span> Company Details & Registered Office
+          <span>🏛️</span> Company Details &amp; Registered Office
         </h3>
         <div style={{ color: 'var(--clr-text-secondary)', fontSize: '0.92rem', lineHeight: '1.6' }}>
           <strong style={{ color: '#fff', fontSize: '1.05rem', display: 'block', marginBottom: '6px' }}>Morfinance AI</strong>
@@ -299,4 +299,3 @@ export const AboutPage: React.FC<AboutPageProps> = ({ isLoggedIn: _isLoggedIn = 
 };
 
 export default AboutPage;
-

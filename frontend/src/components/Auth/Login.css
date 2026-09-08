@@ -374,3 +374,26 @@
   transform: translateY(-1px);
 }
 
+@media (max-width: 480px) {
+  .login-container {
+    padding: 28px 16px;
+    margin: 16px;
+    max-width: calc(100vw - 32px);
+    box-sizing: border-box;
+  }
+  .login-logo__icon {
+    font-size: 2.4rem;
+  }
+  .login-logo__title {
+    font-size: 1.5rem;
+  }
+  .login-subtitle {
+    font-size: 0.82rem;
+    margin-bottom: 24px;
+  }
+  .login-btn {
+    padding: 12px;
+    font-size: 0.88rem;
+  }
+}
+

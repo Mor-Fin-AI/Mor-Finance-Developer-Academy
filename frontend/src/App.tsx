@@ -328,7 +328,7 @@ export default function App() {
         const address = accounts[0];
         
         // 2. Generate Authentication Message with Nonce
-        const message = `Welcome to Developer Academy!\n\nSign this message to authenticate your developer session.\nNonce: ${Math.floor(Math.random() * 1000000)}`;
+        const message = `Welcome to MOR Developer Academy!\n\nSign this message to authenticate your Web3 session with your Ethereum address.\nNonce: ${Math.floor(Math.random() * 1000000)}`;
         
         // 3. Request Cryptographic Signature
         const signature = await win.ethereum.request({
@@ -348,21 +348,21 @@ export default function App() {
         navigate('/academy');
         return;
       } catch (err: any) {
-        console.error("Developer key signature auth failed:", err);
-        setLoginError(err.message || "Failed to authenticate developer key.");
+        console.error("Wallet signature auth failed:", err);
+        setLoginError(err.message || "Failed to authenticate wallet signature.");
         return;
       } finally {
         setLoading(false);
       }
     }
 
-    // Fallback Mock Login if no cryptographic key provider is present or if user cancels signature
+    // Fallback Mock Login if no Web3 wallet provider is present or if user cancels signature
     const address = prompt(
-      "Enter your Authorized Developer Key Address (PKI / 0x...):",
+      "Enter your Web3 Wallet Address (0x...):",
       "0x" + Array.from({ length: 40 }, () => Math.floor(Math.random() * 16).toString(16)).join("")
     );
     if (!address || !address.trim() || !address.startsWith("0x") || address.length !== 42) {
-      alert("Invalid Developer Key address format.");
+      alert("Invalid Ethereum / Web3 wallet address format.");
       return;
     }
 
@@ -379,7 +379,7 @@ export default function App() {
       navigate('/academy');
     } catch (err: any) {
       console.error(err);
-      setLoginError(err.message || "Failed to authenticate developer key.");
+      setLoginError(err.message || "Failed to authenticate wallet.");
     } finally {
       setLoading(false);
     }
@@ -442,20 +442,20 @@ export default function App() {
     const win = window as any;
     let address = "";
     let signature = "mock_signature";
-    let message = `Link Developer Key to Developer Academy`;
+    let message = `Link Web3 Wallet to MOR Developer Academy`;
 
     if (win.ethereum) {
       try {
         setLoading(true);
         const accounts = await win.ethereum.request({ method: 'eth_requestAccounts' });
         address = accounts[0];
-        message = `Welcome to Developer Academy!\n\nSign this message to link this Developer Key to your profile.\nNonce: ${Math.floor(Math.random() * 1000000)}`;
+        message = `Welcome to MOR Developer Academy!\n\nSign this message to link this Web3 wallet to your student profile.\nNonce: ${Math.floor(Math.random() * 1000000)}`;
         signature = await win.ethereum.request({
           method: 'personal_sign',
           params: [message, address],
         });
       } catch (err) {
-        console.error("Link Developer Key signature failed, attempting mock link:", err);
+        console.error("Link Web3 wallet signature failed, attempting mock link:", err);
       } finally {
         setLoading(false);
       }
@@ -463,11 +463,11 @@ export default function App() {
 
     if (!address) {
       const input = prompt(
-        "Enter Developer Key Address to link (Fallback Mock Mode):",
+        "Enter Web3 Wallet Address to link (Fallback Mock Mode):",
         "0x" + Array.from({ length: 40 }, () => Math.floor(Math.random() * 16).toString(16)).join("")
       );
       if (!input || !input.trim() || !input.startsWith("0x") || input.length !== 42) {
-        alert("Invalid Developer Key address format.");
+        alert("Invalid Ethereum / Web3 wallet address format.");
         return;
       }
       address = input.trim();
@@ -697,7 +697,7 @@ export default function App() {
         </Routes>
         
         <footer className="app-global-footer" style={{ textAlign: 'center', padding: '32px 16px 16px 16px', borderTop: '1px solid rgba(255, 255, 255, 0.06)', fontSize: '0.75rem', color: 'var(--clr-text-muted)', marginTop: '40px' }}>
-          © 2026 Morfinance AI. 66 Paul Street, London, EC2A 4NA. All rights reserved. | Enterprise EdTech & Software Architecture Academy
+          © 2026 Morfinance AI. 66 Paul Street, London, EC2A 4NA. All rights reserved. | Official Web3 Developer Academy
         </footer>
       </main>
     </div>

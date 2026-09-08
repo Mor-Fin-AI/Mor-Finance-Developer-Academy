@@ -22,18 +22,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onLogout,
   isOpen,
   onClose,
-  isLoggedIn = false,
+  isLoggedIn: _isLoggedIn = false,
 }) => {
   const navItems = [
-    { id: 'about' as NavPage, label: 'About Us', icon: '🏛️', description: 'Mission & Software Architecture' },
-    { id: 'academy' as NavPage, label: 'Developer Academy', icon: '🎓', description: 'Distributed Systems Curriculum' },
-    { id: 'dashboard' as NavPage, label: 'My Dashboard', icon: '📊', description: 'Progress & XP' },
-    { id: 'sandbox' as NavPage, label: 'Code Sandbox IDE', icon: '💻', description: 'Write & compile 6 languages' },
-    { id: 'mentor' as NavPage, label: 'AI Mentor (OpenClaw)', icon: '🤖', description: 'Real-time compiler assistance' },
+    { id: 'about' as NavPage, label: 'About Us', icon: '🏛️', description: 'Mission & Web3 Architecture' },
+    { id: 'academy' as NavPage, label: 'Web3 Developer Academy', icon: '🎓', description: 'Multichain Smart Contract Track' },
+    { id: 'dashboard' as NavPage, label: 'My Dashboard', icon: '📊', description: 'Progress, Contracts & XP' },
+    { id: 'sandbox' as NavPage, label: 'Web3 Sandbox IDE', icon: '💻', description: 'Solidity, Rust, Cairo, Move & ink!' },
+    { id: 'mentor' as NavPage, label: 'AI Mentor (OpenClaw)', icon: '🤖', description: 'Real-time smart contract audits' },
     { id: 'forum' as NavPage, label: 'Community Forum', icon: '💬', description: 'Connect & discuss' },
-    { id: 'hackathons' as NavPage, label: 'Tech Sprints & Grants', icon: '⚔️', description: 'Build & innovate' },
-    { id: 'careers' as NavPage, label: 'Tech Career Portal', icon: '💼', description: 'Roles, Sprints & Grants' },
-    { id: 'certificates' as NavPage, label: 'System Credentials', icon: '🏆', description: 'Standard benchmarks' },
+    { id: 'hackathons' as NavPage, label: 'Hackathons & Grants', icon: '⚔️', description: 'Build & win bounties' },
+    { id: 'careers' as NavPage, label: 'Web3 Career Portal', icon: '💼', description: 'Jobs, Bounties & Grants' },
+    { id: 'certificates' as NavPage, label: 'Web3 Credentials', icon: '🏆', description: 'Grant benchmark standards' },
     { id: 'subscriptions' as NavPage, label: 'Subscription Plans', icon: '💎', description: 'Unlock premium features' },
   ];
 
@@ -42,7 +42,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       return userId.replace('gh-', '').slice(0, 2).toUpperCase();
     }
     if (authType === 'wallet') {
-      return 'DK';
+      return '0x';
     }
     return 'DA';
   };
@@ -58,12 +58,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
       }
       return addr;
     }
-    return 'MOR Builder';
+    return 'Web3 Builder';
   };
 
   const getFormattedRole = () => {
     if (authType === 'github') return 'GitHub Learner';
-    if (authType === 'wallet') return 'System Architect';
+    if (authType === 'wallet') return 'Smart Contract Engineer';
     return 'Junior Dev';
   };
 
@@ -92,7 +92,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
           )}
         </div>
         <div className="sidebar__tagline">
-          <span>CODE • FINANCE • BUILD THE FUTURE</span>
+          <span>CODE • CRYPTO • BUILD THE FUTURE</span>
         </div>
 
         {/* Navigation */}
@@ -181,7 +181,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
             )}
           </div>
           <div style={{ fontSize: '0.62rem', color: 'var(--clr-text-muted)', textAlign: 'center', marginTop: '12px', padding: '0 4px', lineHeight: '1.4' }}>
-            © 2026 Morfinance AI. 66 Paul Street, London, EC2A 4NA. All rights reserved. | {isLoggedIn ? 'Advanced Software Architecture & Systems Academy' : 'Enterprise EdTech & Distributed Systems Academy'}
+            © 2026 Morfinance AI. 66 Paul Street, London, EC2A 4NA. All rights reserved. | Official Web3 Developer Academy
           </div>
         </div>
       </aside>

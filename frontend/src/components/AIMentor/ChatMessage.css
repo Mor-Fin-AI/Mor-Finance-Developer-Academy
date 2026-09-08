@@ -72,3 +72,27 @@
 .chat-msg__text-line--empty { height: 0.5em; }
 
 .chat-msg__content strong { font-weight: 700; color: var(--clr-primary-light); }
+
+@media (max-width: 768px) {
+  .chat-msg__bubble {
+    max-width: 90%;
+  }
+  .chat-msg__content {
+    padding: 10px 14px;
+    font-size: 0.84rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .chat-msg {
+    gap: 8px;
+  }
+  .chat-msg__avatar {
+    width: 30px;
+    height: 30px;
+    font-size: 0.95rem;
+  }
+  .chat-msg__bubble {
+    max-width: 94%;
+  }
+}

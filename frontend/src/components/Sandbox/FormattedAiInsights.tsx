@@ -79,7 +79,7 @@ function getSectionMeta(rawTitle: string) {
     return { icon: '🛡️', variant: 'security' as const, badge: 'Security Audit' };
   }
   if (t.includes('compiler') || t.includes('compatib') || t.includes('syntax')) {
-    return { icon: '⚡', variant: 'compiler' as const, badge: 'Runtime & Compiler' };
+    return { icon: '⚡', variant: 'compiler' as const, badge: 'EVM & Compiler' };
   }
   if (t.includes('optim') || t.includes('suggest') || t.includes('gas') || t.includes('recommend')) {
     return { icon: '🚀', variant: 'optimization' as const, badge: 'Optimization Plan' };
@@ -281,7 +281,7 @@ export const FormattedAiInsights: React.FC<FormattedAiInsightsProps> = ({
           <div>
             <div className="ai-insights-title">Hermes / OpenClaw AI Mentor Insights</div>
           </div>
-          <span className="ai-insights-model-tag">Multi-Runtime Logic Review</span>
+          <span className="ai-insights-model-tag">Multi-Chain Smart Contract Review</span>
           {isLoading && (
             <div className="ai-streaming-indicator">
               <span className="ai-pulse-dot" />

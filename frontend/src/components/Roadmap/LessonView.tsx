@@ -15,7 +15,6 @@ import {
   subscribeDeployments,
   type DeployedContractRecord
 } from '../../services/liveDeployer';
-import { sanitizeComplianceText } from '../../utils/complianceMask';
 import './LessonView.css';
 
 interface LessonViewProps {
@@ -50,7 +49,7 @@ export const LessonView: React.FC<LessonViewProps> = ({
   const [askingOpenClaw, setAskingOpenClaw] = useState(false);
   const [consoleLogs, setConsoleLogs] = useState<string[]>([]);
   
-  // Developer Signer & Testnet Deployment State
+  // Web3 Wallet & Testnet Deployment State
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
   const [connectingWallet, setConnectingWallet] = useState(false);
   const [deployingTestnet, setDeployingTestnet] = useState(false);
@@ -67,16 +66,14 @@ export const LessonView: React.FC<LessonViewProps> = ({
     return unsub;
   }, []);
 
-  // Auto-scroll console to bottom
   useEffect(() => {
     if (consoleEndRef.current) {
       consoleEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   }, [consoleLogs]);
 
-  // Load connected account on mount
   useEffect(() => {
-    // Detect already connected developer signer
+    // Detect already connected Web3 wallet
     getConnectedAccount().then((acc) => {
       if (acc) setWalletAddress(acc);
     });
@@ -178,7 +175,7 @@ export const LessonView: React.FC<LessonViewProps> = ({
         trackName: 'Solana',
         lang: 'Rust (Anchor)',
         fileName: 'src/lib.rs',
-        compiler: 'Anchor CLI v0.30.1 / Runtime Logic (Sealevel BPF)',
+        compiler: 'Anchor CLI v0.30.1 / @solana/web3.js (Sealevel BPF)',
         badge: 'Solana & Anchor',
         icon: '🟠',
         sampleArtifact: 'Solana SBF ELF Binary + Anchor IDL JSON'
@@ -189,11 +186,11 @@ export const LessonView: React.FC<LessonViewProps> = ({
         trackId: 'starknet',
         trackName: 'Starknet',
         lang: 'Cairo 2.0',
-        fileName: 'src/module.cairo',
+        fileName: 'src/contract.cairo',
         compiler: 'Scarb v2.6.0 / Cairo 2.0 (CairoVM)',
         badge: 'Starknet & Cairo 2.0',
         icon: '✨',
-        sampleArtifact: 'Sierra Module Class Hash & CASM'
+        sampleArtifact: 'Sierra Contract Class Hash & CASM'
       };
     }
     if (raw.includes('polkadot') || raw.includes('substrate') || raw.includes('ink')) {
@@ -202,19 +199,19 @@ export const LessonView: React.FC<LessonViewProps> = ({
         trackName: 'Polkadot',
         lang: 'Rust (ink! Wasm)',
         fileName: 'lib.rs',
-        compiler: 'cargo-module v4.0.0 / ink! 5.0 (pallet-modules)',
+        compiler: 'cargo-contract v4.0.0 / ink! 5.0 (pallet-contracts)',
         badge: 'Polkadot & Substrate ink!',
         icon: '🟣',
-        sampleArtifact: '.wasm Module Bundle + Metadata Schema'
+        sampleArtifact: '.contract Wasm Bundle + Metadata ABI'
       };
     }
     if (raw.includes('arbitrum') || raw.includes('stylus')) {
       return {
         trackId: 'arbitrum',
         trackName: 'Arbitrum',
-        lang: 'Engine Logic / Stylus Rust',
-        fileName: 'ArbitrumRegistry.js',
-        compiler: 'Execution Runtime v0.8.20 / Stylus SDK v0.6.0',
+        lang: 'Solidity / Stylus Rust',
+        fileName: 'ArbitrumRegistry.sol',
+        compiler: 'solc v0.8.20 / Stylus SDK v0.6.0',
         badge: 'Arbitrum Nitro & Stylus',
         icon: '🔵',
         sampleArtifact: 'Arbitrum Nitro Bytecode / Stylus WASM'
@@ -223,48 +220,48 @@ export const LessonView: React.FC<LessonViewProps> = ({
     if (raw.includes('base')) {
       return {
         trackId: 'base',
-        trackName: 'Core Database Frameworks',
-        lang: 'EVM Language',
-        fileName: 'Paymaster.js',
-        compiler: 'Execution Runtime Compiler v0.8.20',
-        badge: 'Core Database Sandbox',
+        trackName: 'Base',
+        lang: 'Solidity',
+        fileName: 'Paymaster.sol',
+        compiler: 'solc v0.8.20+commit.a1b79de6',
+        badge: 'Base Sepolia',
         icon: '🔷',
-        sampleArtifact: 'Bytecode + Interface Schema'
+        sampleArtifact: 'EVM Bytecode + Contract ABI'
       };
     }
     if (raw.includes('optimism')) {
       return {
         trackId: 'optimism',
-        trackName: 'Fault-Proof Systems',
-        lang: 'EVM Language',
-        fileName: 'Superchain.js',
-        compiler: 'Execution Runtime Compiler v0.8.20',
-        badge: 'Fault-Proof Engine',
+        trackName: 'Optimism',
+        lang: 'Solidity',
+        fileName: 'Superchain.sol',
+        compiler: 'solc v0.8.20+commit.a1b79de6',
+        badge: 'OP Stack Superchain',
         icon: '🔴',
-        sampleArtifact: 'Bytecode + Interface Schema'
+        sampleArtifact: 'EVM Bytecode + Contract ABI'
       };
     }
     if (raw.includes('polygon')) {
       return {
         trackId: 'polygon',
         trackName: 'Polygon',
-        lang: 'EVM Language',
-        fileName: 'zkVault.js',
-        compiler: 'Execution Runtime Compiler v0.8.20',
+        lang: 'Solidity',
+        fileName: 'zkEVMVault.sol',
+        compiler: 'solc v0.8.20+commit.a1b79de6',
         badge: 'Polygon zkEVM',
         icon: '🟣',
-        sampleArtifact: 'zkEVM Bytecode + Interface Schema'
+        sampleArtifact: 'zkEVM Bytecode + Contract ABI'
       };
     }
     return {
       trackId: 'ethereum',
-      trackName: 'EVM Standard',
-      lang: 'EVM Language',
-      fileName: 'LogicModule.js',
-      compiler: 'Execution Runtime Compiler v0.8.20',
-      badge: 'Enterprise Security',
+      trackName: 'Ethereum',
+      lang: 'Solidity',
+      fileName: 'Vault.sol',
+      compiler: 'solc v0.8.20+commit.a1b79de6',
+      badge: 'Ethereum Security',
       icon: '💎',
-      sampleArtifact: 'Logic Engine Bytecode + Interface Schema'
+      sampleArtifact: 'EVM Bytecode + Contract ABI'
     };
   };
 
@@ -351,7 +348,7 @@ export const LessonView: React.FC<LessonViewProps> = ({
       const acc = await connectWallet();
       setWalletAddress(acc);
     } catch (err: any) {
-      alert(`Signer Notice: ${err.message}`);
+      alert(`Wallet Connection Notice: ${err.message}`);
     } finally {
       setConnectingWallet(false);
     }
@@ -365,13 +362,13 @@ export const LessonView: React.FC<LessonViewProps> = ({
 
     setDeployingTestnet(true);
     setConsoleLogs([
-      `🚀 Initiating real cloud sandbox deployment to ${activeTestnet.name}...`,
+      `🚀 Initiating real on-chain smart contract deployment to ${activeTestnet.name}...`,
       `🛠️ Target Network: ${activeTestnet.name} (Chain ID: ${activeTestnet.chainId})`,
-      `📡 Step 1: Compiling module and extracting execution bytecode...`
+      `📡 Step 1: Compiling contract and extracting EVM execution bytecode...`
     ]);
 
     try {
-      // 1. Compile module to get bytecode
+      // 1. Compile contract to get bytecode
       const compileRes = await executeMultiChainCompiler(
         track.trackId.includes('rust') ? 'stylus' : track.trackId,
         code,
@@ -384,7 +381,7 @@ export const LessonView: React.FC<LessonViewProps> = ({
           `❌ Compilation failed before deployment:`,
           ...(compileRes.syntaxErrors || []).map((e) => `   - ${e}`)
         ]);
-        alert("Compilation failed. Please fix module syntax errors before deploying.");
+        alert("Compilation failed. Please fix contract syntax errors before deploying.");
         return;
       }
 
@@ -412,18 +409,18 @@ export const LessonView: React.FC<LessonViewProps> = ({
           }
         } catch (walletErr: any) {
           if (walletErr.message?.includes('USER_CANCELLED')) {
-            setConsoleLogs((prev) => [...prev, `❌ Deployment cancelled: Signature rejected.`]);
+            setConsoleLogs((prev) => [...prev, `❌ Deployment cancelled: Signature rejected in wallet.`]);
             return;
           }
-          console.warn("Signer deployment error in lesson:", walletErr);
+          console.warn("Wallet deployment error in lesson:", walletErr);
           const proceedSim = window.confirm(
-            `Live signer deployment notice: ${walletErr.message}\n\nWould you like to fall back to simulated testnet broadcast?`
+            `Live wallet deployment notice: ${walletErr.message}\n\nWould you like to fall back to simulated testnet broadcast?`
           );
           if (!proceedSim) return;
         }
       } else {
         const proceedSim = window.confirm(
-          `No developer signer detected.\n\nTo sign execution transactions, please configure your developer environment.\n\nWould you like to run a simulated sandbox deployment instead?`
+          `No Web3 browser wallet detected.\n\nTo sign transactions with your wallet, please install MetaMask (https://metamask.io).\n\nWould you like to run a simulated sandbox deployment instead?`
         );
         if (!proceedSim) return;
       }
@@ -493,21 +490,21 @@ export const LessonView: React.FC<LessonViewProps> = ({
       setConsoleLogs((prev) => [
         ...prev,
         `======================================================================`,
-        `📡 ${isLiveWalletDeploy ? 'LIVE CLOUD DEPLOYMENT CONFIRMED' : 'SANDBOX TESTNET BROADCAST'}: ${activeTestnet.name.toUpperCase()}`,
+        `📡 ${isLiveWalletDeploy ? 'LIVE ON-CHAIN DEPLOYMENT CONFIRMED' : 'SANDBOX TESTNET BROADCAST'}: ${activeTestnet.name.toUpperCase()}`,
         `======================================================================`,
         `• Target Network:    ${activeTestnet.name} (Chain ID: ${activeTestnet.chainId})`,
         `• RPC Endpoint:      ${activeTestnet.rpcUrl}`,
-        `• Module Name:       ${contractName}`,
-        `• Total Deployed:    ${updatedDeployments.length} Modules Recorded (Count +1)`,
-        `• Signer Account:    ${deployerAddress} ${isLiveWalletDeploy ? '(Cryptographically Signed via Developer Signer)' : '(Simulated)'}`,
-        `• Module Identifier: ${contractAddress}`,
+        `• Contract Name:     ${contractName}`,
+        `• Total Deployed:    ${updatedDeployments.length} Contracts Recorded (Count +1)`,
+        `• Signer Account:    ${deployerAddress} ${isLiveWalletDeploy ? '(Cryptographically Signed via Web3 Wallet)' : '(Simulated)'}`,
+        `• Contract Address:  ${contractAddress}`,
         `• Transaction Hash:  ${txHash}`,
         `• Block Number:      #${blockNumber?.toLocaleString()}`,
-        `• Execution Units:   ${gasUsed.toLocaleString()} Compute Units`,
-        `• Deployment Status: ${isLiveWalletDeploy ? '✅ CONFIRMED ON CLOUD (Receipt Verified)' : '✅ CONFIRMED (Simulated)'}`,
+        `• Gas Consumed:      ${gasUsed.toLocaleString()} Gas Units`,
+        `• On-Chain Status:   ${isLiveWalletDeploy ? '✅ CONFIRMED ON-CHAIN (Live Block Receipt Verified)' : '✅ CONFIRMED (Simulated)'}`,
         ``,
-        `🔗 Live Explorer Links:`,
-        `  - Module:      ${activeTestnet.explorerUrl}/address/${contractAddress}`,
+        `🔗 Live Block Explorer Links:`,
+        `  - Contract:    ${activeTestnet.explorerUrl}/address/${contractAddress}`,
         `  - Transaction: ${activeTestnet.explorerUrl}/tx/${txHash}`,
         ``,
         `🎉 Module Challenge Completed & Progress Saved! (+100 XP)`,
@@ -517,7 +514,7 @@ export const LessonView: React.FC<LessonViewProps> = ({
     } catch (err: any) {
       console.error("Testnet deploy error in lesson:", err);
       setConsoleLogs((prev) => [...prev, `❌ Deployment failed: ${err.message || 'Unknown error'}`]);
-      alert(`Deployment Notice: ${err.message || 'Failed to deploy module'}`);
+      alert(`Deployment Notice: ${err.message || 'Failed to deploy contract'}`);
     } finally {
       setDeployingTestnet(false);
     }
@@ -532,7 +529,7 @@ export const LessonView: React.FC<LessonViewProps> = ({
     try {
       let fullResponse = "";
       for await (const _ of streamMentorChat(
-        `Please analyze this code for lesson '${lesson.title}'. Identify syntax errors, security vulnerabilities, or logical bugs. Give concise actionable advice.`,
+        `Please analyze this Solidity code for lesson '${lesson.title}'. Identify syntax errors, security vulnerabilities, or logical bugs. Give concise actionable advice.`,
         code || (lesson.exercise ? lesson.exercise.template : ""),
         (delta) => {
           fullResponse += delta;
@@ -651,7 +648,7 @@ export const LessonView: React.FC<LessonViewProps> = ({
           </button>
           <h2 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#fff', margin: '0 0 6px 0' }}>{track.trackName} Engineering</h2>
           <p style={{ fontSize: '0.75rem', color: 'var(--clr-text-secondary)', lineHeight: '1.4', margin: '0 0 12px 0' }}>
-            Master production-ready software logic, protocol security, and open-source engineering across {track.trackName}.
+            Master production-ready smart contracts, protocol security, and open-source engineering across {track.trackName}.
           </p>
           <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.7rem', color: 'var(--clr-text-muted)', marginBottom: '4px', fontWeight: 600 }}>
             <span>Course progress</span>
@@ -670,8 +667,8 @@ export const LessonView: React.FC<LessonViewProps> = ({
             {[
               { title: 'Core Architecture & Environment', checked: true },
               { title: 'Data Types & Access Control', checked: true },
-              { title: sanitizeComplianceText(lesson.title), active: true },
-              { title: 'Sandbox Verification Challenge', locked: true }
+              { title: lesson.title, active: true },
+              { title: 'Testnet Deployment Challenge', locked: true }
             ].map((item, idx) => (
               <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <span style={{
@@ -706,7 +703,7 @@ export const LessonView: React.FC<LessonViewProps> = ({
       <div className="lesson-middle-panel" style={{ display: 'flex', flexDirection: 'column', height: '100%', overflowY: 'auto', padding: '24px', gap: '20px', background: '#030307' }}>
         {/* Breadcrumbs */}
         <div style={{ fontSize: '0.75rem', color: 'var(--clr-text-muted)', fontWeight: 600, wordBreak: 'break-word' }}>
-          Production Distributed Systems Engineering &gt; {track.trackName} &gt; <span style={{ color: 'var(--clr-text-secondary)' }}>{sanitizeComplianceText(lesson.title)}</span>
+          Production Web3 Engineering &gt; {track.trackName} &gt; <span style={{ color: 'var(--clr-text-secondary)' }}>{lesson.title}</span>
         </div>
 
         {/* Tab Selector with Left & Right Floating Scroll Arrows */}
@@ -755,7 +752,7 @@ export const LessonView: React.FC<LessonViewProps> = ({
               <span style={{ fontSize: '0.7rem', padding: '4px 10px', borderRadius: '12px', background: 'rgba(124, 58, 237, 0.1)', color: '#a855f7', fontWeight: 700 }}>{track.badge}</span>
               <span style={{ fontSize: '0.7rem', padding: '4px 10px', borderRadius: '12px', background: 'rgba(245, 158, 11, 0.1)', color: '#f59e0b', fontWeight: 700 }}>18 min • Lab + Quiz</span>
             </div>
-            <h1 className="lesson-title-heading" style={{ fontSize: '1.8rem', fontWeight: 800, color: '#fff', margin: '0 0 10px 0', lineHeight: '1.2' }}>{sanitizeComplianceText(lesson.title)}</h1>
+            <h1 className="lesson-title-heading" style={{ fontSize: '1.8rem', fontWeight: 800, color: '#fff', margin: '0 0 10px 0', lineHeight: '1.2' }}>{lesson.title}</h1>
             <div style={{ fontSize: '0.85rem', color: 'var(--clr-text-secondary)', lineHeight: '1.6', marginBottom: '20px' }}>
               {renderMarkdown(lesson.content)}
             </div>
@@ -868,9 +865,9 @@ export const LessonView: React.FC<LessonViewProps> = ({
                             border: '1px solid rgba(234, 88, 12, 0.35)',
                             color: '#fdba74'
                           }}
-                          title="Connect developer signer for cryptographic verification"
+                          title="Connect MetaMask or Web3 browser wallet for real cryptographic signatures"
                         >
-                          🔑 {connectingWallet ? 'Connecting...' : 'Connect Signer'}
+                          🦊 {connectingWallet ? 'Connecting...' : 'Connect Wallet'}
                         </button>
                       )}
 
@@ -930,7 +927,7 @@ export const LessonView: React.FC<LessonViewProps> = ({
                           gap: '4px',
                           fontWeight: 700
                         }}
-                        title="Total software logic modules you have deployed across all test environments"
+                        title="Total smart contracts you have deployed across all testnets"
                       >
                         📦 {deployedContractsCount} Deployed
                       </span>
@@ -947,7 +944,7 @@ export const LessonView: React.FC<LessonViewProps> = ({
                           border: '1px solid rgba(96, 165, 250, 0.4)',
                           color: '#93c5fd'
                         }}
-                        title="Sign and deploy module to test environment"
+                        title="Sign with Web3 wallet and deploy contract to live testnet"
                       >
                         {deployingTestnet ? '⏳ Signing & Deploying...' : '🚀 Sign & Deploy'}
                       </button>
@@ -1075,12 +1072,12 @@ export const LessonView: React.FC<LessonViewProps> = ({
           <div className="animate-fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
             <h1 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#fff', margin: '0 0 10px 0', lineHeight: '1.2' }}>Further Reading</h1>
             <p style={{ fontSize: '0.85rem', color: 'var(--clr-text-secondary)', lineHeight: '1.5' }}>
-              Check out these verified official resources to expand your mastery of {track.trackName} logic engine development and security architecture.
+              Check out these verified official resources to expand your mastery of {track.trackName} smart contract development and security architecture.
             </p>
             <div className="glass" style={{ padding: '24px', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.06)', background: 'rgba(10, 11, 23, 0.45)', display: 'flex', flexDirection: 'column', gap: '12px' }}>
               {track.trackId === 'aptos' && (
                 <>
-                  <a href="https://aptos.dev" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.85rem', color: '#06b6d4', textDecoration: 'underline' }}>
+                  <a href="https://aptos.dev/network/blockchain/move" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.85rem', color: '#06b6d4', textDecoration: 'underline' }}>
                     🔗 Official Aptos Move Developer Guide
                   </a>
                   <a href="https://github.com/aptos-labs/aptos-core" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.85rem', color: '#06b6d4', textDecoration: 'underline' }}>
@@ -1111,10 +1108,10 @@ export const LessonView: React.FC<LessonViewProps> = ({
               {track.trackId === 'polkadot' && (
                 <>
                   <a href="https://use.ink" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.85rem', color: '#a855f7', textDecoration: 'underline' }}>
-                    🔗 ink! Logic Modules on Polkadot &amp; Substrate
+                    🔗 ink! Smart Contracts on Polkadot &amp; Substrate
                   </a>
                   <a href="https://github.com/paritytech/polkadot-sdk" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.85rem', color: '#a855f7', textDecoration: 'underline' }}>
-                    🔗 Polkadot SDK &amp; pallet-modules Repository
+                    🔗 Polkadot SDK &amp; pallet-contracts Repository
                   </a>
                 </>
               )}
@@ -1130,11 +1127,11 @@ export const LessonView: React.FC<LessonViewProps> = ({
               )}
               {['ethereum', 'base', 'optimism', 'polygon', 'fundamentals'].includes(track.trackId) && (
                 <>
-                  <a href="https://docs.openzeppelin.com" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.85rem', color: '#3b82f6', textDecoration: 'underline' }}>
-                    🔗 OpenZeppelin Architecture &amp; Security Patterns
+                  <a href="https://solidity-by-example.org" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.85rem', color: '#3b82f6', textDecoration: 'underline' }}>
+                    🔗 Solidity by Example: Design &amp; Security Patterns
                   </a>
-                  <a href="https://developer.mozilla.org" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.85rem', color: '#3b82f6', textDecoration: 'underline' }}>
-                    🔗 Modern Software Architecture Documentation
+                  <a href="https://docs.soliditylang.org" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.85rem', color: '#3b82f6', textDecoration: 'underline' }}>
+                    🔗 Official Solidity Documentation
                   </a>
                 </>
               )}

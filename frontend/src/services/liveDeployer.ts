@@ -1,9 +1,9 @@
 /**
- * Real Distributed System Logic Testnet Deployment Service.
- * Connects directly to browser signers (PKI / Key-Pair Auth),
- * switches or adds target execution testnets (Arbitrum Sepolia, Database Sepolia, Fault-Proof Sepolia, Sepolia),
+ * Real Web3 Smart Contract Testnet Deployment Service.
+ * Connects directly to browser Web3 wallets (MetaMask / Rabby / Coinbase / etc.),
+ * switches or adds target EVM testnets (Arbitrum Sepolia, Base Sepolia, Optimism Sepolia, Ethereum Sepolia),
  * requests user cryptographic signature via eth_sendTransaction,
- * and tracks the live testnet receipt to obtain real module addresses.
+ * and tracks the live testnet receipt to obtain real contract addresses.
  */
 
 export interface EVMTestnetConfig {
@@ -38,45 +38,45 @@ export const EVM_TESTNETS: EVMTestnetConfig[] = [
   },
   {
     id: 'base_sepolia',
-    name: 'Database Sepolia',
+    name: 'Base Sepolia',
     chainId: 84532,
     hexChainId: '0x14a34',
-    chainName: 'Core Database Frameworks',
+    chainName: 'Base',
     symbol: 'ETH',
     rpcUrl: 'https://sepolia.base.org',
     explorerUrl: 'https://sepolia.basescan.org',
     faucetUrl: 'https://www.coinbase.com/faucets/base-ethereum-sepolia-faucet',
     icon: '🔵',
-    telemetryNetwork: 'Database Sepolia',
-    execEnv: 'Core Database Execution Layer'
+    telemetryNetwork: 'Base Sepolia',
+    execEnv: 'Base OP Stack Layer-2'
   },
   {
     id: 'optimism_sepolia',
-    name: 'Fault-Proof Sepolia',
+    name: 'Optimism Sepolia',
     chainId: 11155420,
     hexChainId: '0xaa37dc',
-    chainName: 'Fault-Proof Systems',
+    chainName: 'Optimism',
     symbol: 'ETH',
     rpcUrl: 'https://sepolia.optimism.io',
     explorerUrl: 'https://sepolia-optimism.etherscan.io',
     faucetUrl: 'https://faucet.quicknode.com/optimism/sepolia',
     icon: '🔴',
-    telemetryNetwork: 'Fault-Proof Sepolia',
-    execEnv: 'Fault-Proof Superchain'
+    telemetryNetwork: 'Optimism Sepolia',
+    execEnv: 'OP Stack Superchain'
   },
   {
     id: 'ethereum_sepolia',
-    name: 'Sepolia Testnet',
+    name: 'Ethereum Sepolia',
     chainId: 11155111,
     hexChainId: '0xaa36a7',
-    chainName: 'EVM Standard',
+    chainName: 'Ethereum',
     symbol: 'ETH',
     rpcUrl: 'https://rpc.sepolia.org',
     explorerUrl: 'https://sepolia.etherscan.io',
     faucetUrl: 'https://sepoliafaucet.com',
     icon: '🔷',
-    telemetryNetwork: 'Sepolia Testnet',
-    execEnv: 'EVM Execution Environment'
+    telemetryNetwork: 'Ethereum Sepolia',
+    execEnv: 'EVM Gasper PoS'
   }
 ];
 
@@ -113,37 +113,37 @@ export const INITIAL_DEPLOYMENTS: DeployedContractRecord[] = [
     gasUsed: 264820,
     blockNumber: 14892103,
     timestamp: 'Verified',
-    language: 'EVM Language'
+    language: 'Solidity'
   },
   {
     id: 'dep-base-01',
-    contractName: 'DatabaseBatchProcessor',
+    contractName: 'BaseGaslessPaymaster',
     contractAddress: '0x9183428d05ec2c6fe98db2579b69106093ca561b',
     txHash: '0x71b83d95c104e76a94f6c406004bca992e59103e61c92019488b3014c27891ea',
     networkId: 'base_sepolia',
-    networkName: 'Database Sepolia',
+    networkName: 'Base Sepolia',
     networkIcon: '🔷',
     chainId: 84532,
     explorerUrl: 'https://sepolia.basescan.org',
     gasUsed: 198340,
     blockNumber: 14892080,
     timestamp: 'Verified',
-    language: 'EVM Language'
+    language: 'Solidity'
   },
   {
     id: 'dep-op-01',
-    contractName: 'FaultProofCrossDomainRouter',
+    contractName: 'OptimismCrossDomainBridge',
     contractAddress: '0x38e55e0c501726a273b09bb4a9193108c9035274',
     txHash: '0x5c4a7e8014e3b70868f037612f008432a5109403810237910549c690184b29a1',
     networkId: 'optimism_sepolia',
-    networkName: 'Fault-Proof Sepolia',
+    networkName: 'Optimism Sepolia',
     networkIcon: '🔴',
     chainId: 11155420,
     explorerUrl: 'https://sepolia-optimism.etherscan.io',
     gasUsed: 218750,
     blockNumber: 14892015,
     timestamp: 'Verified',
-    language: 'EVM Language'
+    language: 'Solidity'
   }
 ];
 
@@ -218,7 +218,7 @@ export interface DeployOptions {
   onStatus?: (message: string) => void;
 }
 
-/** Check if an EIP-1193 provider exists in the window context */
+/** Check if an Ethereum EIP-1193 provider exists in the window context */
 export function isWalletAvailable(): boolean {
   return typeof window !== 'undefined' && Boolean((window as any).ethereum);
 }
@@ -235,14 +235,14 @@ export async function getConnectedAccount(): Promise<string | null> {
   }
 }
 
-/** Prompt the user to connect their developer signer */
+/** Prompt the user to connect their Web3 wallet (MetaMask / Rabby / Coinbase) */
 export async function connectWallet(): Promise<string> {
   if (!isWalletAvailable()) {
-    throw new Error("NO_SIGNER: No authorized browser signer found. Please install an authorized developer signer or use sandbox simulation.");
+    throw new Error("NO_WALLET: No Web3 wallet found. Please install MetaMask (https://metamask.io) or an EIP-1193 browser wallet.");
   }
   const accounts: string[] = await (window as any).ethereum.request({ method: 'eth_requestAccounts' });
   if (!accounts || accounts.length === 0) {
-    throw new Error("SIGNER_REJECTED: User did not grant account access.");
+    throw new Error("WALLET_REJECTED: User did not grant account access.");
   }
   return accounts[0];
 }
@@ -298,8 +298,6 @@ function formatDeployData(bytecode: string, abi?: any[]): string {
   // Check if ABI specifies constructor with arguments
   const constructorAbi = abi?.find((item) => item.type === 'constructor');
   if (constructorAbi && constructorAbi.inputs && constructorAbi.inputs.length > 0) {
-    // If constructor expects an initialSupply uint256, append standard 1,000,000 * 10^18 or 1000000
-    // 1000000 in hex is 0x0f4240 (padded to 32 bytes)
     const defaultArg = "00000000000000000000000000000000000000000000000000000000000f4240";
     formatted = `${formatted}${defaultArg}`;
   }
@@ -308,27 +306,27 @@ function formatDeployData(bytecode: string, abi?: any[]): string {
 }
 
 /**
- * Execute real on-chain module deployment:
- * 1. Requests signer connection & network switch
- * 2. Prompts user to SIGN transaction in developer signer
+ * Execute real on-chain smart contract deployment:
+ * 1. Requests Web3 wallet connection & network switch
+ * 2. Prompts user to SIGN transaction in MetaMask/Web3 wallet
  * 3. Broadcasts transaction and polls on-chain testnet receipt
- * 4. Returns confirmed module address and live block explorer links
+ * 4. Returns confirmed contract address and live block explorer links
  */
 export async function deployContractWithWallet(options: DeployOptions): Promise<RealDeployResult> {
-  const { networkId, bytecode, abi, contractName = 'LogicModule', onStatus } = options;
+  const { networkId, bytecode, abi, contractName = 'SmartContract', onStatus } = options;
 
   const targetNet = EVM_TESTNETS.find((n) => n.id === networkId) || EVM_TESTNETS[0];
 
   if (!isWalletAvailable()) {
     throw new Error(
-      "NO_SIGNER: No authorized browser signer was detected in this browser. Please install an authorized developer signer to deploy live testnet modules."
+      "NO_WALLET: No Web3 wallet (MetaMask / Coinbase / Rabby) was detected in this browser. Please install MetaMask to sign and deploy live testnet contracts."
     );
   }
 
   const ethereum = (window as any).ethereum;
 
   // 1. Connect Account
-  onStatus?.("🔑 Connecting to developer signer...");
+  onStatus?.("🦊 Connecting to Web3 wallet...");
   const userAddress = await connectWallet();
   onStatus?.(`🔑 Connected account: ${userAddress.slice(0, 6)}...${userAddress.slice(-4)}`);
 
@@ -339,14 +337,13 @@ export async function deployContractWithWallet(options: DeployOptions): Promise<
   // 3. Prepare creation bytecode
   const deployData = formatDeployData(bytecode, abi);
 
-  // 4. Request Transaction Signature in Signer
-  onStatus?.(`✍️ [SIGNATURE REQUIRED]: Please sign the deployment transaction for '${contractName}' in your signer popup.`);
+  // 4. Request Transaction Signature in Wallet
+  onStatus?.(`✍️ [SIGNATURE REQUIRED]: Please sign the deployment transaction for '${contractName}' in your wallet popup.`);
 
   const txParams: any = {
     from: userAddress,
     data: deployData,
     value: '0x0'
-    // 'to' is omitted for module deployment
   };
 
   try {
@@ -367,7 +364,7 @@ export async function deployContractWithWallet(options: DeployOptions): Promise<
     });
   } catch (err: any) {
     if (err.code === 4001 || err.message?.includes('User rejected') || err.message?.includes('User denied')) {
-      throw new Error("USER_CANCELLED: Software module deployment was rejected in your key provider.");
+      throw new Error("USER_CANCELLED: Smart contract deployment was rejected in your wallet.");
     }
     throw new Error(`TRANSACTION_FAILED: ${err.message || 'Failed to submit transaction.'}`);
   }
@@ -396,7 +393,6 @@ export async function deployContractWithWallet(options: DeployOptions): Promise<
   }
 
   if (!receipt || !receipt.contractAddress) {
-    // If polling timed out, but we have txHash, link to tx
     return {
       contractAddress: `Pending (Tx: ${txHash.slice(0, 10)}...)`,
       txHash,
@@ -410,14 +406,14 @@ export async function deployContractWithWallet(options: DeployOptions): Promise<
   }
 
   if (receipt.status === '0x0') {
-    throw new Error(`TRANSACTION_REVERTED: Software module deployment transaction reverted on ${targetNet.name}.`);
+    throw new Error(`TRANSACTION_REVERTED: Smart contract deployment transaction reverted on ${targetNet.name}.`);
   }
 
   const blockNumber = parseInt(receipt.blockNumber, 16);
   const gasUsed = parseInt(receipt.gasUsed, 16);
   const contractAddress = receipt.contractAddress;
 
-  onStatus?.(`🎉 SOFTWARE MODULE DEPLOYED ON-CLUSTER! Block #${blockNumber.toLocaleString()}`);
+  onStatus?.(`🎉 SMART CONTRACT DEPLOYED ON-CHAIN! Block #${blockNumber.toLocaleString()}`);
 
   return {
     contractAddress,

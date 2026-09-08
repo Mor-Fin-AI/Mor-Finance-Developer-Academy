@@ -611,6 +611,8 @@
   font-family: monospace;
   font-size: 0.7rem;
   color: #64748b;
+  word-break: break-all;
+  max-width: 100%;
 }
 
 .sim-footer-note {
@@ -630,6 +632,10 @@
 }
 
 @media (max-width: 540px) {
+  .transak-modal-overlay {
+    padding: 10px 6px;
+  }
+
   .transak-modal-container {
     height: 95vh;
     max-height: 95vh;
@@ -644,5 +650,18 @@
   .transak-popup-prompt {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .gateway-rails-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .transak-gateway-view,
+  .transak-simulator-container {
+    padding: 16px 12px;
+  }
+
+  .gateway-hero-card {
+    padding: 16px 12px;
   }
 }

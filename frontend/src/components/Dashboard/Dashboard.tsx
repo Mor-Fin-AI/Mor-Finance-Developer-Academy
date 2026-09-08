@@ -204,22 +204,22 @@ export const Dashboard: React.FC<DashboardProps> = ({
     
     if (level < 3) {
       return [
-        { name: 'Introduction to Logic Syntax & State Machines', icon: '💻', tags: 'Basics • 2h 30m', match: 98 },
-        { name: 'Peer-to-Peer Network Models', icon: '⚙️', tags: 'Infrastructure • 3h 15m', match: 92 },
-        { name: 'Enterprise Security Foundations', icon: '🧠', tags: 'Security • 4h 00m', match: 90 }
+        { name: 'Smart Contract Fundamentals & Solidity Syntax', icon: '💻', tags: 'Solidity • 2h 30m', match: 98 },
+        { name: 'Peer-to-Peer Network Models & EVM Architecture', icon: '⚙️', tags: 'EVM • 3h 15m', match: 92 },
+        { name: 'Smart Contract Security & Reentrancy Patterns', icon: '🧠', tags: 'Security • 4h 00m', match: 90 }
       ];
     }
     if (level < 6) {
       return [
-        { name: 'Automated Liquidity & Algorithmic Engines', icon: '💸', tags: 'FinTech • 6h 30m', match: 96 },
-        { name: 'Distributed Consensus & Governance Mechanisms', icon: '🗳️', tags: 'Governance • 5h 15m', match: 93 },
-        { name: 'Programmatic Account & Permission Architecture', icon: '🔐', tags: 'Architecture • 7h 00m', match: 92 }
+        { name: 'Automated Market Makers & DeFi Primitives', icon: '💸', tags: 'DeFi • 6h 30m', match: 96 },
+        { name: 'DAO Governance & Quadratic Voting Mechanisms', icon: '🗳️', tags: 'DAOs • 5h 15m', match: 93 },
+        { name: 'ERC-4337 Account Abstraction & Paymasters', icon: '🔐', tags: 'ERC-4337 • 7h 00m', match: 92 }
       ];
     }
     return [
-      { name: `Advanced ${capitalizedTrack} Scaling Solutions`, icon: '⚡', tags: `${capitalizedTrack} • 8h 30m`, match: 98 },
-      { name: `Secure Logic Engine Audits on ${capitalizedTrack}`, icon: '🛡️', tags: `Security • 6h 15m`, match: 95 },
-      { name: `Optimizing Execution Efficiency on ${capitalizedTrack}`, icon: '⛽', tags: `Optimization • 5h 00m`, match: 92 }
+      { name: `Advanced ${capitalizedTrack} Scaling Solutions & Rollups`, icon: '⚡', tags: `${capitalizedTrack} • 8h 30m`, match: 98 },
+      { name: `Smart Contract Auditing on ${capitalizedTrack}`, icon: '🛡️', tags: `Security • 6h 15m`, match: 95 },
+      { name: `Gas Optimization & Bytecode Analysis on ${capitalizedTrack}`, icon: '⛽', tags: `Optimization • 5h 00m`, match: 92 }
     ];
   };
 
@@ -229,8 +229,8 @@ export const Dashboard: React.FC<DashboardProps> = ({
     <div className="dashboard animate-fade-in">
       {/* Header */}
       <div className="analytics-header">
-        <h2 className="analytics-header__title">Measure Your Growth</h2>
-        <p className="analytics-header__subtitle">Track your progress with actionable insights.</p>
+        <h2 className="analytics-header__title">Measure Your Web3 Growth</h2>
+        <p className="analytics-header__subtitle">Track your on-chain progress, deployments, and certifications.</p>
       </div>
 
       {/* Metric Cards Grid */}
@@ -263,16 +263,16 @@ export const Dashboard: React.FC<DashboardProps> = ({
             <div className="metric-card__value">{certificatesCount}</div>
           </div>
         </div>
-        <div className="metric-card-wrap" onClick={() => onNavigate?.('sandbox')} style={{ cursor: 'pointer' }} title="View deployed modules in Playground">
+        <div className="metric-card-wrap" onClick={() => onNavigate?.('sandbox')} style={{ cursor: 'pointer' }} title="View deployed contracts in Playground">
           <div className="metric-card__icon-container">🚀</div>
           <div>
-            <h4 className="metric-card__title">Modules Deployed</h4>
+            <h4 className="metric-card__title">Contracts Deployed</h4>
             <div className="metric-card__value">{deployedContractsCount}</div>
           </div>
         </div>
       </div>
 
-      {/* Transak Workspace Sandbox Credits On-Ramp Card (Authenticated Session Only) */}
+      {/* Transak Workspace Sandbox Credits On-Ramp Card */}
       <div className="dashboard-onramp-card glass animate-fade-in" style={{
         padding: '20px 24px',
         borderRadius: 'var(--radius-lg)',
@@ -297,12 +297,12 @@ export const Dashboard: React.FC<DashboardProps> = ({
             boxShadow: '0 4px 14px rgba(37, 99, 235, 0.35)',
             flexShrink: 0
           }}>
-            💳
+            ⛽
           </div>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
               <h4 style={{ margin: 0, fontSize: '1.02rem', fontWeight: 700, color: '#f8fafc' }}>
-                Instant Protocol &amp; Sandbox Asset Ramp
+                Instant Crypto &amp; Gas On-Ramp
               </h4>
               <span style={{
                 fontSize: '0.68rem',
@@ -317,7 +317,7 @@ export const Dashboard: React.FC<DashboardProps> = ({
               </span>
             </div>
             <p style={{ margin: '4px 0 0 0', fontSize: '0.82rem', color: 'var(--clr-text-secondary)' }}>
-              Acquire sandbox credits, protocol assets, and developer environment access instantly via card or bank transfer without leaving your dashboard.
+              Acquire testnet gas, protocol assets, and developer environment access instantly via card or bank transfer without leaving your dashboard.
             </p>
           </div>
         </div>

@@ -20,9 +20,9 @@ interface NetworkOption {
 
 const SUPPORTED_ONRAMP_NETWORKS: NetworkOption[] = [
   { id: 'arbitrum', name: 'Arbitrum (Nitro)', transakNetwork: 'arbitrum', symbol: 'ETH', icon: '🌀', testnetName: 'Arbitrum Sepolia' },
-  { id: 'base', name: 'Core Database Frameworks', transakNetwork: 'base', symbol: 'ETH', icon: '🔵', testnetName: 'Database Sepolia' },
-  { id: 'optimism', name: 'Fault-Proof Systems', transakNetwork: 'optimism', symbol: 'ETH', icon: '🔴', testnetName: 'Fault-Proof Sepolia' },
-  { id: 'ethereum', name: 'EVM L1', transakNetwork: 'ethereum', symbol: 'ETH', icon: '🔷', testnetName: 'Sepolia' },
+  { id: 'base', name: 'Base (Coinbase L2)', transakNetwork: 'base', symbol: 'ETH', icon: '🔵', testnetName: 'Base Sepolia' },
+  { id: 'optimism', name: 'Optimism (OP Stack)', transakNetwork: 'optimism', symbol: 'ETH', icon: '🔴', testnetName: 'Optimism Sepolia' },
+  { id: 'ethereum', name: 'Ethereum L1', transakNetwork: 'ethereum', symbol: 'ETH', icon: '🔷', testnetName: 'Ethereum Sepolia' },
   { id: 'polygon', name: 'Polygon', transakNetwork: 'polygon', symbol: 'POL', icon: '💜', testnetName: 'Polygon Amoy' },
 ];
 
@@ -88,15 +88,13 @@ export const TransakWidgetModal: React.FC<TransakWidgetModalProps> = ({
     network: selectedNetwork,
     themeColor: '3b82f6',
     hideMenu: 'true',
-    exchangeScreenTitle: 'Protocol Asset On-Ramp',
+    exchangeScreenTitle: 'Crypto & Gas On-Ramp',
+    cryptoCurrencyCode: currentNetObj.symbol || defaultAssetSymbol,
   });
 
-  const toParamStr = (codes: number[]) => codes.map((c) => String.fromCharCode(c)).join('');
-  queryParams.set(toParamStr([99, 114, 121, 112, 116, 111, 67, 117, 114, 114, 101, 110, 99, 121, 67, 111, 100, 101]), currentNetObj.symbol || defaultAssetSymbol);
-
   if (cleanWallet && cleanWallet.startsWith('0x') && cleanWallet.length === 42) {
-    queryParams.set(toParamStr([119, 97, 108, 108, 101, 116, 65, 100, 100, 114, 101, 115, 115]), cleanWallet);
-    queryParams.set(toParamStr([100, 105, 115, 97, 98, 108, 101, 87, 97, 108, 108, 101, 116, 65, 100, 100, 114, 101, 115, 115, 70, 111, 114, 109]), 'true');
+    queryParams.set('walletAddress', cleanWallet);
+    queryParams.set('disableWalletAddressForm', 'true');
   }
 
   const transakHost = environment === 'STAGING' ? 'https://global-stg.transak.com' : 'https://global.transak.com';
@@ -142,10 +140,10 @@ export const TransakWidgetModal: React.FC<TransakWidgetModalProps> = ({
         {/* Header */}
         <div className="transak-modal-header">
           <div className="transak-modal-title-area">
-            <div className="transak-modal-icon">⚡</div>
+            <div className="transak-modal-icon">⛽</div>
             <div>
               <h3 id="transak-modal-title" className="transak-modal-title">
-                Protocol Asset On-Ramp
+                Crypto &amp; Gas On-Ramp
               </h3>
               <p className="transak-modal-subtitle">
                 <span>Card &amp; Bank Transfer</span>
@@ -192,7 +190,7 @@ export const TransakWidgetModal: React.FC<TransakWidgetModalProps> = ({
                 setSimStatus('idle');
                 setWindowOpened(false);
               }}
-              title="Select network for protocol assets"
+              title="Select network for crypto assets"
             >
               {SUPPORTED_ONRAMP_NETWORKS.map((net) => (
                 <option key={net.id} value={net.transakNetwork}>
@@ -205,13 +203,13 @@ export const TransakWidgetModal: React.FC<TransakWidgetModalProps> = ({
           {cleanWallet && cleanWallet.startsWith('0x') ? (
             <div
               className="transak-wallet-pill"
-              title={`Destination Developer Key: ${cleanWallet}`}
+              title={`Destination Web3 Wallet: ${cleanWallet}`}
             >
-              🔑 {cleanWallet.slice(0, 6)}...{cleanWallet.slice(-4)}
+              🦊 {cleanWallet.slice(0, 6)}...{cleanWallet.slice(-4)}
             </div>
           ) : (
             <div className="transak-wallet-pill" title="Destination will be entered in Transak widget">
-              🔑 Direct to Developer Key
+              🦊 Direct to Web3 Wallet
             </div>
           )}
         </div>
@@ -228,14 +226,14 @@ export const TransakWidgetModal: React.FC<TransakWidgetModalProps> = ({
             <div className="transak-gateway-view">
               <div className="gateway-hero-card">
                 <div className="gateway-hero-badge">
-                  <span className="gateway-status-dot"></span> Regulated Partner Gateway
+                  <span className="gateway-status-dot"></span> Regulated Fiat-to-Crypto Gateway
                 </div>
                 
                 <div className="gateway-hero-title">
                   <span className="gateway-network-icon">{currentNetObj.icon}</span>
                   <div>
-                    <h4>Fund Developer Key on {currentNetObj.name}</h4>
-                    <p>Acquire {currentNetObj.symbol} protocol gas instantly via debit/credit card or bank transfer.</p>
+                    <h4>Fund Wallet on {currentNetObj.name}</h4>
+                    <p>Acquire {currentNetObj.symbol} crypto &amp; gas instantly via debit/credit card or bank transfer.</p>
                   </div>
                 </div>
 
@@ -256,12 +254,12 @@ export const TransakWidgetModal: React.FC<TransakWidgetModalProps> = ({
                     <strong>{currentNetObj.symbol}</strong>
                   </div>
                   <div className="meta-row">
-                    <span>Destination Key:</span>
-                    <code>{cleanWallet ? `${cleanWallet.slice(0, 10)}...${cleanWallet.slice(-6)}` : 'Active Developer Key'}</code>
+                    <span>Destination Wallet:</span>
+                    <code>{cleanWallet ? `${cleanWallet.slice(0, 10)}...${cleanWallet.slice(-6)}` : 'Active Web3 Wallet'}</code>
                   </div>
                   <div className="meta-row">
                     <span>Custody Model:</span>
-                    <span style={{ color: '#10b981', fontWeight: 600 }}>100% Non-Custodial (Direct to Key)</span>
+                    <span style={{ color: '#10b981', fontWeight: 600 }}>100% Non-Custodial (Direct to Wallet)</span>
                   </div>
                 </div>
 
@@ -360,7 +358,7 @@ export const TransakWidgetModal: React.FC<TransakWidgetModalProps> = ({
           <div className="transak-simulator-container">
             <div className="sim-intro">
               <h4>🧪 Developer Testnet On-Ramp Simulator</h4>
-              <p>Simulate instant fiat-to-protocol gas acquisition for local testing without real funds.</p>
+              <p>Simulate instant fiat-to-crypto gas acquisition for local testing without real funds.</p>
             </div>
 
             <div className="sim-form-group">
@@ -398,8 +396,8 @@ export const TransakWidgetModal: React.FC<TransakWidgetModalProps> = ({
                 <span style={{ color: '#10b981' }}>$0.02 (Sponsored Testnet)</span>
               </div>
               <div className="sim-quote-row">
-                <span>Destination Key:</span>
-                <code>{cleanWallet ? `${cleanWallet.slice(0, 10)}...${cleanWallet.slice(-6)}` : '0xDefaultDevKey'}</code>
+                <span>Destination Wallet:</span>
+                <code>{cleanWallet ? `${cleanWallet.slice(0, 10)}...${cleanWallet.slice(-6)}` : '0xDefaultWeb3Wallet'}</code>
               </div>
             </div>
 
@@ -421,7 +419,7 @@ export const TransakWidgetModal: React.FC<TransakWidgetModalProps> = ({
                 <div className="success-icon">✅</div>
                 <div>
                   <strong>Funding Successful!</strong>
-                  <p>Dispatched {(simAmount / 2800).toFixed(4)} {currentNetObj.symbol} to your Developer Key.</p>
+                  <p>Dispatched {(simAmount / 2800).toFixed(4)} {currentNetObj.symbol} to your Web3 wallet.</p>
                   <div className="sim-hash">TX: {simTxHash.slice(0, 18)}...</div>
                 </div>
               </div>

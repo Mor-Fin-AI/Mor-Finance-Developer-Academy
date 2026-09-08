@@ -59,6 +59,11 @@
   border: 1px solid var(--clr-border);
   background: var(--clr-bg-card);
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.sandbox-lang-bar::-webkit-scrollbar {
+  display: none;
 }
 
 .sandbox-lang-btn {
@@ -630,6 +635,8 @@
   padding: 2px 6px;
   border-radius: 4px;
   border: 1px solid rgba(255, 255, 255, 0.08);
+  word-break: break-all;
+  max-width: 100%;
 }
 
 .dep-copy-btn {
@@ -640,6 +647,7 @@
   padding: 2px 4px;
   opacity: 0.75;
   transition: opacity 0.2s;
+  flex-shrink: 0;
 }
 
 .dep-copy-btn:hover {
@@ -658,6 +666,7 @@
   padding: 2px 8px;
   border-radius: 4px;
   transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
 .dep-explorer-link:hover,
@@ -674,6 +683,8 @@
   background: rgba(0, 0, 0, 0.4);
   padding: 2px 6px;
   border-radius: 4px;
+  word-break: break-all;
+  max-width: 100%;
 }
 
 .deployment-card-footer {
@@ -684,6 +695,7 @@
   border-top: 1px solid rgba(255, 255, 255, 0.05);
   font-size: 0.72rem;
   color: var(--clr-text-muted);
+  flex-wrap: wrap;
 }
 
 .dep-meta-stat strong {
@@ -695,4 +707,78 @@
   color: #a78bfa;
   font-weight: 600;
   font-size: 0.7rem;
+}
+
+/* Responsive Sandbox Breakpoints */
+@media (max-width: 768px) {
+  .sandbox-header {
+    padding: 18px 16px;
+    gap: 14px;
+  }
+  .sandbox-header-title {
+    font-size: 1.35rem;
+    word-break: break-word;
+  }
+  .sandbox-header-actions {
+    width: 100%;
+  }
+  .sandbox-header-actions .btn {
+    flex: 1;
+    font-size: 0.8rem;
+    padding: 8px 12px;
+  }
+  .editor-top-bar {
+    padding: 10px 14px;
+  }
+  .editor-templates-selector {
+    width: 100%;
+    margin-top: 4px;
+  }
+  .sandbox-textarea {
+    min-height: 280px;
+    padding: 14px 12px;
+    font-size: 0.78rem;
+  }
+  .editor-footer-bar {
+    padding: 10px 14px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .editor-footer-buttons {
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  .editor-footer-buttons .btn {
+    flex: 1;
+  }
+  .testnet-deploy-controls {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+  .testnet-select-dropdown {
+    width: 100%;
+  }
+  .output-tabs-nav {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .output-tabs-nav::-webkit-scrollbar {
+    display: none;
+  }
+  .output-tab-btn {
+    white-space: nowrap;
+    padding: 8px 10px;
+    font-size: 0.74rem;
+  }
+  .deployment-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .deployment-badges {
+    width: 100%;
+    justify-content: space-between;
+  }
 }

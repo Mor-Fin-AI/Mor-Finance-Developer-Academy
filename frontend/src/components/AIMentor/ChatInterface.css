@@ -287,3 +287,24 @@
     width: 100%;
   }
 }
+
+@media (max-width: 480px) {
+  .mentor-switcher__options {
+    flex-wrap: wrap;
+    gap: 6px;
+    width: 100%;
+  }
+  .mentor-btn {
+    flex: 1;
+    text-align: center;
+    padding: 6px 8px;
+    font-size: 0.72rem;
+  }
+  .chat__input-area {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+  .chat__send-btn {
+    padding: 8px 12px;
+  }
+}

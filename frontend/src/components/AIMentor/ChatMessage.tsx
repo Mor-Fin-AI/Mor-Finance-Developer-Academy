@@ -22,7 +22,7 @@ function parseContent(content: string): Array<{ type: 'text' | 'code'; value: st
     if (match.index > lastIndex) {
       segments.push({ type: 'text', value: content.slice(lastIndex, match.index) });
     }
-    segments.push({ type: 'code', lang: match[1] || 'typescript', value: match[2].trim() });
+    segments.push({ type: 'code', lang: match[1] || 'solidity', value: match[2].trim() });
     lastIndex = match.index + match[0].length;
   }
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './SubscriptionPlans.css';
 
-export const SubscriptionPlans: React.FC<{ isLoggedIn?: boolean }> = ({ isLoggedIn = false }) => {
+export const SubscriptionPlans: React.FC<{ isLoggedIn?: boolean }> = ({ isLoggedIn: _isLoggedIn = false }) => {
   const [activePlan, setActivePlan] = useState<string>('Free');
   const plans = [
     {
@@ -9,13 +9,13 @@ export const SubscriptionPlans: React.FC<{ isLoggedIn?: boolean }> = ({ isLogged
       tagline: 'Get Started',
       icon: '🎁',
       price: 0,
-      description: 'Explore the academy and start your software architecture learning journey.',
+      description: 'Explore the academy and start your Web3 learning journey.',
       features: [
-        'Core Curriculum (Basics)',
+        'Core Web3 Curriculum (Level 1)',
         'Selected Video Lessons',
         'Community Access',
         'AI Mentor Ask (1/day)',
-        'Certificate (Core Basics)'
+        'Certificate (Level 1)'
       ],
       ctaText: 'Get Started',
       note: 'No credit card required',
@@ -29,7 +29,7 @@ export const SubscriptionPlans: React.FC<{ isLoggedIn?: boolean }> = ({ isLogged
       description: 'Strengthen your skills with structured learning and hands-on practice.',
       features: [
         'Everything in Free',
-        'All Core Curriculum',
+        'All 7 Levels Curriculum',
         'Quizzes & Exercises',
         'AI Mentor (10 asks/day)',
         'GitHub Starter Projects',
@@ -43,7 +43,7 @@ export const SubscriptionPlans: React.FC<{ isLoggedIn?: boolean }> = ({ isLogged
       tagline: 'Unlock Opportunities',
       icon: '🚀',
       price: 29,
-      description: 'Unlock career, freelance & startup opportunities with in-demand enterprise programming architecture.',
+      description: 'Unlock career, freelance & startup opportunities with in-demand Web3 skills.',
       isCareer: true,
       subgrid: [
         { title: 'Get Hired', desc: 'Job ready skills', icon: '💼' },
@@ -52,9 +52,9 @@ export const SubscriptionPlans: React.FC<{ isLoggedIn?: boolean }> = ({ isLogged
       ],
       features: [
         'Everything in Basic',
-        'Advanced Object-Oriented Languages (Engine Frameworks)',
-        '7 Distributed Infrastructure Environments',
-        'Automated Organization Engineering',
+        'Advanced Smart Contract Languages (Solidity, Rust, Cairo, Move)',
+        '11 Multi-Chain Ecosystems',
+        'DeFi & DAO Architecture',
         'Real Projects & Case Studies',
         'Career & Freelance Resources',
         'Portfolio & Resume Guidance'
@@ -67,16 +67,16 @@ export const SubscriptionPlans: React.FC<{ isLoggedIn?: boolean }> = ({ isLogged
       tagline: 'Build & Advance',
       icon: '💻',
       price: 149,
-      description: 'Build real-world enterprise systems and advance your developer career.',
+      description: 'Build real-world protocols and advance your Web3 developer career.',
       features: [
         'Everything in Career Boost',
-        'Advanced Logic Protocols & State Machines',
-        'Automated Financial Systems & Architecture',
+        'Advanced DeFi Protocols & Smart Contract Security',
+        'Tokenomics & DAO Governance Design',
         'AI Mentor (Unlimited asks)',
-        'Code Review (Hermes)',
+        'Smart Contract Auditing & Code Review (Hermes)',
         'Priority Support',
         'Early Access to New Courses',
-        'Pro Certificate'
+        'Pro Web3 Certificate'
       ],
       ctaText: 'Go Pro',
       highlighted: false,
@@ -86,7 +86,7 @@ export const SubscriptionPlans: React.FC<{ isLoggedIn?: boolean }> = ({ isLogged
       tagline: 'Scale & Lead',
       icon: '🏢',
       price: 499,
-      description: 'For teams and organizations building the future of distributed systems.',
+      description: 'For teams and organizations building the future of Web3.',
       features: [
         'Everything in Pro',
         'Team Access (Up to 10)',
@@ -103,25 +103,25 @@ export const SubscriptionPlans: React.FC<{ isLoggedIn?: boolean }> = ({ isLogged
   ];
 
   const footerFeatures = [
-    { title: 'Learn', desc: 'Master enterprise software skills step-by-step', icon: '🎓' },
+    { title: 'Learn', desc: 'Master Web3 skills step-by-step', icon: '🎓' },
     { title: 'Get Hired', desc: 'Job-ready skills & career resources', icon: '💼' },
     { title: 'Freelance', desc: 'Find clients & projects to earn', icon: '🤝' },
-    { title: 'Startup', desc: 'Build, launch & grow your tech idea', icon: '🚀' },
+    { title: 'Startup', desc: 'Build, launch & grow your crypto idea', icon: '🚀' },
     { title: 'Earn & Lead', desc: 'Earn badges, certificates & recognition', icon: '🏆' },
     { title: 'Community', desc: 'Connect, collaborate & grow together', icon: '👥' }
   ];
 
   const ecosystems = [
-    { name: 'Distributed State Engines', icon: '🟢' },
-    { name: 'Core Database Frameworks', icon: '🔷' },
-    { name: 'Fault-Proof Systems', icon: '🔴' },
-    { name: 'High-Scale Execution Layers', icon: '🔵' },
-    { name: 'Parallel Protocol Chains', icon: '🟣' },
-    { name: 'High-Throughput Clusters', icon: '🟠' },
-    { name: 'Consensus Network Routing', icon: '🔺' },
-    { name: 'Validity-Proof Scaling', icon: '⭐' },
-    { name: 'Safe Memory Execution', icon: '🟢' },
-    { name: 'Modular Relay Frameworks', icon: '🟣' }
+    { name: 'Ethereum', icon: '🔷' },
+    { name: 'Arbitrum', icon: '🌀' },
+    { name: 'Optimism', icon: '🔴' },
+    { name: 'Base', icon: '🔵' },
+    { name: 'Polygon', icon: '💜' },
+    { name: 'Solana', icon: '☀️' },
+    { name: 'Avalanche', icon: '🔺' },
+    { name: 'Starknet', icon: '✨' },
+    { name: 'Aptos', icon: '⚡' },
+    { name: 'Polkadot', icon: '🟣' }
   ];
 
   return (
@@ -170,7 +170,7 @@ export const SubscriptionPlans: React.FC<{ isLoggedIn?: boolean }> = ({ isLogged
 
             <ul className="plan-card__features">
               {plan.features.map((feature, idx) => {
-                const isChains = feature === '7 Multi-Chains' || feature === '7 Distributed Infrastructure Environments';
+                const isChains = feature.includes('Ecosystems');
                 return (
                   <li key={idx} className="plan-card__feature">
                     <span className="plan-card__feature-check">✓</span>
@@ -226,7 +226,7 @@ export const SubscriptionPlans: React.FC<{ isLoggedIn?: boolean }> = ({ isLogged
           <span className="partners-footer__powered-logo">⬡ MOR FINANCE</span>
         </div>
         <div className="partners-footer__ecosystems">
-          <span className="partners-footer__label">{isLoggedIn ? 'Ecosystem Partners:' : 'Infrastructure Frameworks:'}</span>
+          <span className="partners-footer__label">Ecosystem Partners:</span>
           <div className="partners-footer__list">
             {ecosystems.map((eco) => (
               <span key={eco.name}>{eco.icon} {eco.name}</span>

@@ -90,9 +90,9 @@ export const ForumList: React.FC<ForumListProps> = ({
           <div className="forum-categories" ref={categoriesRef}>
             {[
               { id: 'All Topics', label: 'All Discussions' },
-              { id: 'Discussion', label: 'Distributed Systems' },
-              { id: 'Question', label: 'System Logic Engines' },
-              { id: 'Showcase', label: 'FinTech & Protocols' },
+              { id: 'Discussion', label: 'Web3 Development' },
+              { id: 'Question', label: 'Smart Contracts' },
+              { id: 'Showcase', label: 'DeFi & DAOs' },
               { id: 'Help', label: 'Technical Help & Support' }
             ].map((cat) => (
               <button

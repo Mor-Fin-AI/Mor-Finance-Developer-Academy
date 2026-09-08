@@ -6,22 +6,22 @@ import { streamMentorChat } from '../../api/client';
 import './ChatInterface.css';
 
 const SUGGESTED_PROMPTS = [
-  'Explain how runtime state machines work',
-  'What is a reentrancy attack and how to prevent it?',
-  'Show me a standard account ledger pattern',
-  'How does an automated liquidity mechanism work?',
-  'What is a distributed governance proposal lifecycle?',
+  'Explain how the EVM works',
+  'What is a reentrancy attack?',
+  'Show me a basic ERC-20 token',
+  'How does a liquidity pool work?',
+  'What is a DAO proposal lifecycle?',
 ];
 
 export const LEVEL_CONTEXT_OPTIONS = [
   { value: 'General Developer Academy Curriculum', label: '🌐 General Curriculum' },
-  { value: 'Level 1 — Distributed Systems Fundamentals', label: '🎯 Level 1 — Distributed Systems' },
-  { value: 'Level 2 — Cryptographic Key & Session Management', label: '⚡ Level 2 — Key & Session Management' },
-  { value: 'Level 3 — System Architecture & Logic Engines', label: '📜 Level 3 — Architecture & Logic Engines' },
-  { value: 'Level 4 — Automated Financial Systems Architecture', label: '🏦 Level 4 — Automated Financial Systems' },
-  { value: 'Level 5 — Decentralized Governance & Protocol Design', label: '🏛️ Level 5 — Governance & Protocol Design' },
-  { value: 'Level 6 — Enterprise FinTech Architecture', label: '🚀 Level 6 — Enterprise FinTech Architecture' },
-  { value: 'Level 7 — High-Throughput Distributed Runtimes', label: '🌐 Level 7 — High-Throughput Runtimes' },
+  { value: 'Level 1 — Blockchain Fundamentals', label: '🎯 Level 1 — Blockchain Fundamentals' },
+  { value: 'Level 2 — Wallet Development', label: '⚡ Level 2 — Wallet Development' },
+  { value: 'Level 3 — Smart Contract Development', label: '📜 Level 3 — Smart Contract Development' },
+  { value: 'Level 4 — DeFi Fundamentals', label: '🏦 Level 4 — DeFi Fundamentals' },
+  { value: 'Level 5 — DAO Governance', label: '🏛️ Level 5 — DAO Governance' },
+  { value: 'Level 6 — MOR Finance Protocols', label: '🚀 Level 6 — MOR Finance Protocols' },
+  { value: 'Level 7 — Ecosystem Learning Track', label: '🌐 Level 7 — Ecosystem Track' },
 ];
 
 interface ChatInterfaceProps {
@@ -177,7 +177,7 @@ export const ChatInterface: React.FC<ChatInterfaceProps> = ({
           <button
             className={`mentor-btn ${mentorProvider === 'hermes' ? 'mentor-btn--active' : ''}`}
             onClick={() => setMentorProvider('hermes')}
-            title="Hermes: Engineering Mentor – code review, software architecture templates, debugging, coding exercises, GitHub assistance and engineering support."
+            title="Hermes: Engineering Mentor – code review, smart contract templates, debugging, coding exercises, GitHub assistance and engineering support."
           >
             🛠️ Hermes (Engineering)
           </button>

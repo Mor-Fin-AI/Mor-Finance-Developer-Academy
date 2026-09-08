@@ -2,12 +2,14 @@
 .subscription-plans {
   animation: fadeIn var(--duration) var(--ease-out);
   max-width: 1440px;
+  width: 100%;
   margin: 0 auto;
   padding: 32px;
   border-radius: var(--radius-xl);
   background: var(--clr-bg-card);
   border: 1px solid var(--clr-border);
   color: var(--clr-text-primary);
+  box-sizing: border-box;
 }
 
 /* Header */
@@ -20,13 +22,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 20px;
+  gap: 16px;
   margin-bottom: 24px;
+  width: 100%;
 }
 
 .subscription-plans__line {
   height: 1px;
-  width: 150px;
+  flex: 1;
+  max-width: 150px;
+  min-width: 20px;
   background: linear-gradient(90deg, transparent, var(--clr-border-bright), transparent);
 }
 
@@ -42,6 +47,7 @@
   text-transform: uppercase;
   color: #fff;
   margin: 0;
+  white-space: nowrap;
 }
 
 /* Plans Grid */
@@ -55,7 +61,7 @@
 
 @media (max-width: 1400px) {
   .plans-grid {
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
     gap: 20px;
   }
 }
@@ -371,3 +377,49 @@
   font-size: 0.75rem;
   color: #e2e8f0;
 }
+
+@media (max-width: 768px) {
+  .subscription-plans {
+    padding: 20px 14px;
+    border-radius: var(--radius-lg);
+  }
+  .subscription-plans__header {
+    margin-bottom: 24px;
+  }
+  .plans-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .plans-footer-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 32px;
+    padding-top: 24px;
+  }
+  .partners-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .subscription-plans {
+    padding: 16px 10px;
+  }
+  .subscription-plans__title-plans {
+    font-size: 0.95rem;
+  }
+  .plans-footer-grid {
+    grid-template-columns: 1fr;
+  }
+  .career-boost-subgrid {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .plan-card {
+    padding: 20px 12px;
+  }
+}
+

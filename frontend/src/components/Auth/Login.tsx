@@ -105,7 +105,7 @@ export const Login: React.FC<LoginProps> = ({
                 e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
               }}
             >
-              <span style={{ fontSize: '1.2rem' }}>🔑</span> Authorized Developer Key
+              <span style={{ fontSize: '1.2rem' }}>🦊</span> Connect Web3 Wallet
             </button>
 
             {error && (

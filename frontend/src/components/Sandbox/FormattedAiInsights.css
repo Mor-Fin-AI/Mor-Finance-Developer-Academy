@@ -363,3 +363,40 @@
   align-items: center;
   gap: 6px;
 }
+
+@media (max-width: 768px) {
+  .ai-insights-container {
+    padding: 14px 12px;
+    gap: 12px;
+  }
+  .ai-insights-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .ai-insights-header-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  .ai-section-card {
+    padding: 12px 10px;
+  }
+  .ai-numbered-item,
+  .ai-bullet-item {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .ai-insights-container {
+    padding: 10px 8px;
+  }
+  .ai-insights-lead {
+    padding: 10px 12px;
+    font-size: 0.8rem;
+  }
+  .ai-code-block {
+    padding: 8px 10px;
+    font-size: 0.75rem;
+  }
+}

@@ -1,4 +1,4 @@
-// ─── HeadLayoutMeta component — manages document head title and meta tags based on layout state ───
+// ─── HeadLayoutMeta component — manages document head title and meta tags ───
 import React, { useEffect } from 'react';
 import type { NavPage } from '../../types';
 
@@ -8,30 +8,28 @@ export interface HeadLayoutMetaProps {
 }
 
 const PAGE_TITLES: Record<NavPage, string> = {
-  academy: 'Curriculum & Roadmap',
-  roadmap: 'Curriculum & Roadmap',
-  dashboard: 'Engineering Dashboard',
+  academy: 'Web3 Curriculum & Roadmap',
+  roadmap: 'Web3 Curriculum & Roadmap',
+  dashboard: 'Developer Dashboard',
   analytics: 'Cohort Analytics',
-  sandbox: 'Multi-Runtime Sandbox IDE',
+  sandbox: 'Multi-Chain Web3 Sandbox IDE',
   forum: 'Developer Forum',
-  hackathons: 'Technical Sprints & Grants',
-  careers: 'Career Opportunities',
+  hackathons: 'Web3 Hackathons & Grants',
+  careers: 'Web3 Career Portal',
   mentor: 'AI Mentor Workspace',
-  certificates: 'System Credentials',
+  certificates: 'Web3 Developer Credentials',
   subscriptions: 'Subscription Plans',
-  about: 'About Mor Academy',
+  about: 'About MOR Academy',
 };
 
 export const HeadLayoutMeta: React.FC<HeadLayoutMetaProps> = ({ isLoggedIn, activePage }) => {
   useEffect(() => {
     // 1. Update document title
-    const baseTitle = 'Developer Academy';
-    if (isLoggedIn && activePage && PAGE_TITLES[activePage]) {
+    const baseTitle = 'MOR Developer Academy';
+    if (activePage && PAGE_TITLES[activePage]) {
       document.title = `${PAGE_TITLES[activePage]} — ${baseTitle}`;
-    } else if (isLoggedIn) {
-      document.title = `${baseTitle} — Advanced Software Architecture & Systems`;
     } else {
-      document.title = `${baseTitle} — Enterprise EdTech & Advanced Software Architectures`;
+      document.title = `${baseTitle} — Master Web3 Engineering & Multi-Chain Smart Contracts`;
     }
 
     // Helper to safely set or create meta tags
@@ -46,27 +44,19 @@ export const HeadLayoutMeta: React.FC<HeadLayoutMetaProps> = ({ isLoggedIn, acti
     };
 
     // 2. Update meta description
-    const descContent = isLoggedIn
-      ? 'Developer Academy — Universal curriculum and interactive sandbox for high-performance software logic and distributed enterprise applications.'
-      : 'Master advanced object-oriented logic and enterprise software design with MOR Developer Academy. The primary portal for systems infrastructure developers, cloud layout engineering, and distributed architecture frameworks.';
+    const descContent = 'Master Web3 Engineering & Multi-Chain Smart Contract Architecture. Learn Solidity, Rust, Cairo, Move, and ink! on Ethereum, Arbitrum, Base, Optimism, Solana, Starknet, Aptos, and Polkadot.';
     setMetaTag('name', 'description', descContent);
 
     // 3. Update meta keywords
-    const keywordsContent = isLoggedIn
-      ? 'Enterprise EdTech, Distributed Systems, Software Engineering, Architecture, Compilers, Developer Education'
-      : 'Enterprise EdTech, Distributed Systems Programming, Advanced Data Architectures, Open-Source Software, FinTech Tooling, SaaS Sandbox, Developer Education';
+    const keywordsContent = 'Web3 Developer Academy, Smart Contracts, Solidity, Rust, Cairo, Move, ink!, Ethereum, Arbitrum, Optimism, Base, Solana, Starknet, Aptos, Polkadot, DeFi, dApps';
     setMetaTag('name', 'keywords', keywordsContent);
 
     // 4. Update OpenGraph tags
-    const ogTitleContent = isLoggedIn
-      ? (activePage && PAGE_TITLES[activePage] ? `${PAGE_TITLES[activePage]} — ${baseTitle}` : `${baseTitle} — Advanced Software Architecture & Systems`)
-      : 'Developer Academy — Distributed Systems Programming & Advanced Data Architectures';
+    const ogTitleContent = activePage && PAGE_TITLES[activePage]
+      ? `${PAGE_TITLES[activePage]} — ${baseTitle}`
+      : `${baseTitle} — Master Web3 Engineering & Multi-Chain Smart Contracts`;
     setMetaTag('property', 'og:title', ogTitleContent);
-
-    const ogDescContent = isLoggedIn
-      ? 'Developer Academy — Universal curriculum and interactive sandbox for high-performance software logic and distributed enterprise applications.'
-      : 'Master advanced object-oriented logic and enterprise software design with MOR Developer Academy. The primary portal for systems infrastructure developers, cloud layout engineering, and distributed architecture frameworks.';
-    setMetaTag('property', 'og:description', ogDescContent);
+    setMetaTag('property', 'og:description', descContent);
 
   }, [isLoggedIn, activePage]);
 

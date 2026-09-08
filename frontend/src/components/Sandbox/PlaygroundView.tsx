@@ -12,11 +12,10 @@ import {
   getStoredDeployments,
   saveNewDeployment,
   subscribeDeployments,
-  INITIAL_DEPLOYMENTS,
   type DeployedContractRecord
 } from '../../services/liveDeployer';
 import { FormattedAiInsights } from './FormattedAiInsights';
-import { LOGGED_OUT_SANDBOX_BOILERPLATE } from '../../utils/complianceMask';
+import { TransakWidgetModal } from '../OnRamp/TransakWidgetModal';
 import './PlaygroundView.css';
 
 interface LanguagePreset {
@@ -36,25 +35,25 @@ interface LanguagePreset {
 
 const LANGUAGE_PRESETS: LanguagePreset[] = [
   {
-    id: 'evm_logic',
-    chain: 'Standard Runtime',
-    lang: 'EVM Language',
-    fileName: 'LogicModule.js',
+    id: 'solidity',
+    chain: 'Ethereum / Arbitrum / Base',
+    lang: 'Solidity',
+    fileName: 'Vault.sol',
     icon: '💎',
-    compiler: 'Execution Runtime Compiler v0.8.20',
-    targetEnv: 'EVM Execution Environment',
+    compiler: 'solc v0.8.20+commit.a1b79de6 (EVM Nitro)',
+    targetEnv: 'Arbitrum Sepolia / Base / Ethereum',
     templates: [
       {
-        name: 'Secure Memory Buffer Pattern',
-        description: 'Concurrency-resistant memory buffer using structured state verification',
+        name: 'Secure Vault & CEI Pattern',
+        description: 'Reentrancy-resistant vault using Checks-Effects-Interactions',
         code: `// SPDX-License-Identifier: MIT
-// Language: EVM Language ^0.8.20
+pragma solidity ^0.8.20;
 
 /**
- * @title SecureMemoryBuffer
+ * @title SecureVault
  * @notice Demonstrates Checks-Effects-Interactions pattern for reentrancy prevention.
  */
-contract SecureMemoryBuffer {
+contract SecureVault {
     mapping(address => uint256) public balances;
     bool private locked;
 
@@ -62,7 +61,7 @@ contract SecureMemoryBuffer {
     event Withdrawn(address indexed user, uint256 amount);
 
     modifier nonReentrant() {
-        require(!locked, "Guard: reentrant call");
+        require(!locked, "ReentrancyGuard: reentrant call");
         locked = true;
         _;
         locked = false;
@@ -94,14 +93,14 @@ contract SecureMemoryBuffer {
 }`
       },
       {
-        name: 'Standard Account Ledger Format',
-        description: 'Fixed-allocation account ledger with state events and allowances',
+        name: 'ERC-20 Token Standard',
+        description: 'Fixed-supply governance token with events and allowances',
         code: `// SPDX-License-Identifier: MIT
-// Language: EVM Language ^0.8.20
+pragma solidity ^0.8.20;
 
-contract AccountLedgerStandard {
-    string public name = "Academy Account Ledger";
-    string public symbol = "AAL";
+contract AcademyToken {
+    string public name = "Academy Builder Token";
+    string public symbol = "ABT";
     uint8 public decimals = 18;
     uint256 public totalSupply;
 
@@ -134,7 +133,7 @@ contract AccountLedgerStandard {
     lang: 'Rust (Anchor)',
     fileName: 'src/lib.rs',
     icon: '🟠',
-    compiler: 'Anchor CLI v0.30.1 / Client SDK',
+    compiler: 'Anchor CLI v0.30.1 / @solana/web3.js',
     targetEnv: 'Solana Devnet / Sealevel BPF',
     templates: [
       {
@@ -258,14 +257,14 @@ pub struct CounterState {
     id: 'starknet',
     chain: 'Starknet',
     lang: 'Cairo 2.0',
-    fileName: 'src/module.cairo',
+    fileName: 'src/contract.cairo',
     icon: '✨',
     compiler: 'Scarb v2.6.0 / Cairo 2.0 (CairoVM)',
     targetEnv: 'Starknet Sepolia / Sierra',
     templates: [
       {
         name: 'Starknet Cairo 2.0 State Registry',
-        description: 'Cairo 2.0 module with #[storage] and #[abi(embed_v0)]',
+        description: 'Cairo 2.0 contract with #[storage] and #[abi(embed_v0)]',
         code: `#[starknet::interface]
 pub trait IAcademyRegistry<TContractState> {
     fn set_score(ref self: TContractState, student: starknet::ContractAddress, score: u256);
@@ -322,12 +321,12 @@ pub mod AcademyRegistry {
     lang: 'Rust (ink! Wasm)',
     fileName: 'lib.rs',
     icon: '🟣',
-    compiler: 'cargo-module v4.0.0 / ink! 5.0',
-    targetEnv: 'Polkadot Westend / pallet-modules',
+    compiler: 'cargo-contract v4.0.0 / ink! 5.0',
+    targetEnv: 'Polkadot Westend / pallet-contracts',
     templates: [
       {
         name: 'ink! Flipper & State Toggle',
-        description: 'Substrate Wasm module with storage struct and messages',
+        description: 'Substrate Wasm contract with storage struct and messages',
         code: `![cfg_attr(not(feature = "std"), no_std, no_main)]
 
 #[ink::contract]
@@ -377,7 +376,7 @@ mod academy_flipper {
     templates: [
       {
         name: 'Stylus WASM Graduate Counter',
-        description: 'WASM-optimized high efficiency Stylus module in Rust',
+        description: 'WASM-optimized high efficiency Stylus contract in Rust',
         code: `![cfg_attr(not(feature = "export-abi"), no_main)]
 extern crate alloc;
 use stylus_sdk::{prelude::*, storage::StorageU256};
@@ -405,31 +404,32 @@ impl AcademyCounter {
   },
   {
     id: 'base',
-    chain: 'Core Database Frameworks',
-    lang: 'Core Database Frameworks',
-    fileName: 'DatabaseAccountAbstraction.js',
-    icon: '🔵',
-    compiler: 'Execution Runtime Compiler v0.8.20 (Database Engine)',
-    targetEnv: 'Core Database Frameworks Sandbox',
+    chain: 'Base',
+    lang: 'Solidity (Base)',
+    fileName: 'BaseGaslessPaymaster.sol',
+    icon: '🔷',
+    compiler: 'solc v0.8.20 (Base Sepolia OP Stack)',
+    targetEnv: 'Base Sepolia (Chain ID: 84532)',
     templates: [
       {
-        name: 'Gasless Paymaster (Account Abstraction)',
-        description: 'Sponsors gas execution for users interacting with logic modules',
+        name: 'Base Gasless Paymaster (ERC-4337)',
+        description: 'Account abstraction paymaster sponsoring user transactions on Base Sepolia',
         code: `// SPDX-License-Identifier: MIT
-// Language: EVM Language ^0.8.20
+pragma solidity ^0.8.20;
 
 /**
- * @title DatabaseGaslessPaymaster
- * @notice Validates and sponsors user operation gas in database sandbox.
+ * @title BaseGaslessPaymaster
+ * @notice ERC-4337 compliant gas sponsorship paymaster optimized for Base Sepolia & Coinbase Smart Wallet.
  */
-contract DatabaseGaslessPaymaster {
-    address public owner;
-    mapping(address => bool) public allowedCallers;
+contract BaseGaslessPaymaster {
+    address public immutable owner;
+    mapping(address => bool) public sponsoredContracts;
+    uint256 public totalGasSponsored;
 
-    event UserOperationSponsored(address indexed user, uint256 actualGasCost);
+    event UserOperationSponsored(address indexed sender, uint256 actualGasCost);
 
     modifier onlyOwner() {
-        require(msg.sender == owner, "Only owner");
+        require(msg.sender == owner, "Only paymaster owner");
         _;
     }
 
@@ -437,22 +437,24 @@ contract DatabaseGaslessPaymaster {
         owner = msg.sender;
     }
 
-    function setCallerAllowed(address caller, bool allowed) external onlyOwner {
-        allowedCallers[caller] = allowed;
+    function setSponsorship(address target, bool allowed) external onlyOwner {
+        sponsoredContracts[target] = allowed;
     }
 
     function validatePaymasterUserOp(
-        address user,
+        bytes calldata /* userOp */,
+        bytes32 /* userOpHash */,
         uint256 maxCost
     ) external returns (bytes memory context, uint256 validationData) {
-        require(allowedCallers[user] || user != address(0), "Caller not authorized for gas sponsorship");
-        return (abi.encode(user, maxCost), 0);
+        return (abi.encode(msg.sender, maxCost), 0);
     }
 
     function postOp(
+        uint8 /* mode */,
         bytes calldata context,
         uint256 actualGasCost
     ) external {
+        totalGasSponsored += actualGasCost;
         (address sender, ) = abi.decode(context, (address, uint256));
         emit UserOperationSponsored(sender, actualGasCost);
     }
@@ -461,18 +463,18 @@ contract DatabaseGaslessPaymaster {
 }`
       },
       {
-        name: 'Database Verification Badge',
-        description: 'Verification badge compatible credential proof module',
+        name: 'Base Onchain Attendance Badge',
+        description: 'Coinbase Smart Wallet compatible soulbound attendance proof',
         code: `// SPDX-License-Identifier: MIT
-// Language: EVM Language ^0.8.20
+pragma solidity ^0.8.20;
 
 /**
- * @title DatabaseAttendanceProof
- * @notice Non-transferable onchain attendance proof in database sandbox.
+ * @title BaseAttendanceProof
+ * @notice Non-transferable onchain attendance proof on Base Sepolia.
  */
-contract DatabaseAttendanceProof {
-    string public name = "Academy Attendance";
-    string public symbol = "ACAD-ATTEND";
+contract BaseAttendanceProof {
+    string public name = "Base Academy Attendance";
+    string public symbol = "BASE-ATTEND";
     address public admin;
 
     mapping(address => bool) public hasAttended;
@@ -498,29 +500,29 @@ contract DatabaseAttendanceProof {
   },
   {
     id: 'optimism',
-    chain: 'Fault-Proof Systems',
-    lang: 'Fault-Proof Systems',
-    fileName: 'FaultProofCrossDomainBridge.js',
+    chain: 'Optimism',
+    lang: 'Solidity (Optimism)',
+    fileName: 'OptimismCrossDomainBridge.sol',
     icon: '🔴',
-    compiler: 'Execution Runtime Compiler v0.8.20 (Fault-Proof Standard)',
-    targetEnv: 'Fault-Proof Execution Engine (Superchain Standard)',
+    compiler: 'solc v0.8.20 (OP Stack Superchain)',
+    targetEnv: 'OP Sepolia / OP Mainnet (Superchain)',
     templates: [
       {
-        name: 'Fault-Proof Cross-Domain Bridge',
-        description: 'Cross-domain message transmitter communicating via fault-proof messaging',
+        name: 'OP Superchain Cross-Domain Bridge',
+        description: 'Cross-L2 message transmitter communicating via the Optimism Superchain Messenger',
         code: `// SPDX-License-Identifier: MIT
-// Language: EVM Language ^0.8.20
+pragma solidity ^0.8.20;
 
 /**
- * @title FaultProofCrossDomainBridge
- * @notice Cross-domain message transmitter communicating via the fault-proof messenger.
+ * @title OptimismCrossDomainBridge
+ * @notice Cross-L2 message transmitter communicating via the Optimism Superchain Messenger.
  */
 interface ICrossDomainMessenger {
     function sendMessage(address _target, bytes calldata _message, uint32 _gasLimit) external payable;
     function xDomainMessageSender() external view returns (address);
 }
 
-contract FaultProofCrossDomainBridge {
+contract OptimismCrossDomainBridge {
     address public constant OP_MESSENGER = 0x4200000000000000000000000000000000000007;
     address public owner;
     uint256 public crossChainTransfersCount;
@@ -558,14 +560,14 @@ contract FaultProofCrossDomainBridge {
 }`
       },
       {
-        name: 'Fault-Proof Systems Account Ledger',
-        description: 'Standard fault-proof compatible state ledger template',
+        name: 'Optimism Superchain Mintable ERC-20',
+        description: 'Standard Superchain-compatible token bridge template',
         code: `// SPDX-License-Identifier: MIT
-// Language: EVM Language ^0.8.20
+pragma solidity ^0.8.20;
 
-contract FaultProofSuperchainLedger {
-    string public name = "Fault-Proof Ledger";
-    string public symbol = "FPL";
+contract OptimismSuperchainToken {
+    string public name = "OP Superchain Token";
+    string public symbol = "OPT";
     uint8 public decimals = 18;
     uint256 public totalSupply;
 
@@ -598,71 +600,61 @@ contract FaultProofSuperchainLedger {
   }
 ];
 
+export const PlaygroundView: React.FC<{ isLoggedIn?: boolean }> = ({ isLoggedIn: _isLoggedIn = true }) => {
+  const [activePreset, setActivePreset] = useState<LanguagePreset>(LANGUAGE_PRESETS[0]);
+  const [selectedTemplateIndex, setSelectedTemplateIndex] = useState<number>(0);
+  const [code, setCode] = useState<string>(LANGUAGE_PRESETS[0].templates[0].code);
 
-
-export interface PlaygroundViewProps {
-  isLoggedIn?: boolean;
-}
-
-export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = false }) => {
-  const [selectedLangId, setSelectedLangId] = useState<string>('evm_logic');
-  const activePreset = LANGUAGE_PRESETS.find((p) => p.id === selectedLangId) || LANGUAGE_PRESETS[0];
-
-  const [code, setCode] = useState<string>(() =>
-    isLoggedIn ? activePreset.templates[0].code : LOGGED_OUT_SANDBOX_BOILERPLATE
-  );
-  const [compiling, setCompiling] = useState<boolean>(false);
+  const [activeTab, setActiveTab] = useState<'editor' | 'deploy' | 'ai'>('editor');
+  const [isCompiling, setIsCompiling] = useState<boolean>(false);
   const [compilationResult, setCompilationResult] = useState<CompilationResult | null>(null);
-  const [activeConsoleTab, setActiveConsoleTab] = useState<'console' | 'artifacts' | 'abi' | 'deployments'>('console');
-  
-  // EVM Testnet Deployments & Developer Signer
-  const [deploying, setDeploying] = useState<boolean>(false);
-  const [selectedTestnetId, setSelectedTestnetId] = useState<string>('arbitrum_sepolia');
+  const [consoleOutput, setConsoleOutput] = useState<string[]>([
+    "🚀 Multi-Chain Sandbox IDE ready.",
+    "Select an ecosystem track, load a smart contract preset, or write custom code.",
+    "Click 'Compile Smart Contract' to run client-side syntax checks and generate ABI/bytecode."
+  ]);
+
+  // AI Mentor state
+  const [aiMentor, setAiMentor] = useState<'openclaw' | 'hermes'>('openclaw');
+  const [aiAnalysis, setAiAnalysis] = useState<string>('');
+  const [isAiStreaming, setIsAiStreaming] = useState<boolean>(false);
+
+  // Live Testnet Wallet Deployment State
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
   const [connectingWallet, setConnectingWallet] = useState<boolean>(false);
-  const [deployStepMessage, setDeployStepMessage] = useState<string | null>(null);
+  const [deployingTestnet, setDeployingTestnet] = useState<boolean>(false);
+  const [selectedTestnetId, setSelectedTestnetId] = useState<string>('arbitrum_sepolia');
+  const [deployedContracts, setDeployedContracts] = useState<DeployedContractRecord[]>(getStoredDeployments);
 
-  const [deployedContracts, setDeployedContracts] = useState<DeployedContractRecord[]>(() => {
-    return getStoredDeployments();
-  });
+  // On-Ramp Modal State
+  const [isOnRampOpen, setIsOnRampOpen] = useState<boolean>(false);
 
-  const displayedDeployments = useMemo(() => {
-    return deployedContracts.map((dep) => ({
-      ...dep,
-      contractName: dep.contractName
-        .replace(/SecureVault/g, 'SecureMemoryManager')
-        .replace(/BaseGaslessPaymaster/g, 'GaslessBatchProcessor')
-        .replace(/OptimismCrossDomainBridge/g, 'CrossDomainRouter'),
-      language: dep.language || 'EVM Language',
-      networkName: dep.networkName.replace(/Sepolia/g, 'Cluster'),
-      explorerUrl: dep.explorerUrl || 'https://github.com',
-    }));
-  }, [deployedContracts]);
+  const activeTestnet = useMemo(
+    () => EVM_TESTNETS.find((n) => n.id === selectedTestnetId) || EVM_TESTNETS[0],
+    [selectedTestnetId]
+  );
 
   useEffect(() => {
-    const unsubscribe = subscribeDeployments((deps) => {
+    const unsub = subscribeDeployments((deps) => {
       setDeployedContracts(deps);
     });
-    return unsubscribe;
+    return unsub;
   }, []);
 
-  const activeTestnet = EVM_TESTNETS.find((t) => t.id === selectedTestnetId) || EVM_TESTNETS[0];
-  const isEvmChain = ['evm_logic', 'base', 'optimism', 'arbitrum_stylus'].includes(activePreset.id);
-
-  // Auto-detect connected wallet account on mount
+  // Check connected account on mount
   useEffect(() => {
     getConnectedAccount().then((acc) => {
       if (acc) setWalletAddress(acc);
     });
 
-    if (isWalletAvailable() && (window as any).ethereum?.on) {
-      const handleAccountsChanged = (accounts: string[]) => {
-        setWalletAddress(accounts && accounts.length > 0 ? accounts[0] : null);
+    if (isWalletAvailable()) {
+      const handleAccounts = (accs: string[]) => {
+        setWalletAddress(accs && accs.length > 0 ? accs[0] : null);
       };
-      (window as any).ethereum.on('accountsChanged', handleAccountsChanged);
+      (window as any).ethereum.on('accountsChanged', handleAccounts);
       return () => {
         try {
-          (window as any).ethereum.removeListener('accountsChanged', handleAccountsChanged);
+          (window as any).ethereum.removeListener('accountsChanged', handleAccounts);
         } catch {
           // ignore
         }
@@ -670,826 +662,665 @@ export const PlaygroundView: React.FC<PlaygroundViewProps> = ({ isLoggedIn = fal
     }
   }, []);
 
+  // Update code when preset changes
+  const handleSelectPreset = (preset: LanguagePreset) => {
+    setActivePreset(preset);
+    setSelectedTemplateIndex(0);
+    setCode(preset.templates[0].code);
+    setCompilationResult(null);
+    setConsoleOutput((prev) => [
+      ...prev,
+      `--- Switched to ${preset.chain} (${preset.lang}) ---`,
+      `Loaded template: ${preset.templates[0].name}`
+    ]);
+  };
+
+  const handleSelectTemplate = (index: number) => {
+    setSelectedTemplateIndex(index);
+    setCode(activePreset.templates[index].code);
+    setCompilationResult(null);
+    setConsoleOutput((prev) => [
+      ...prev,
+      `Loaded template: ${activePreset.templates[index].name}`
+    ]);
+  };
+
+  // Compile Handler
+  const handleCompile = async () => {
+    setIsCompiling(true);
+    setConsoleOutput((prev) => [
+      ...prev,
+      `\n⏳ Compiling ${activePreset.fileName} using ${activePreset.compiler}...`
+    ]);
+
+    try {
+      const result = await executeMultiChainCompiler(activePreset.id, code);
+      setCompilationResult(result);
+
+      if (result.success) {
+        setConsoleOutput((prev) => [
+          ...prev,
+          `✅ ${result.stdout || 'Compilation successful'}`,
+          `⛽ Estimated gas: ${result.gasEstimate ? result.gasEstimate.toLocaleString() : '0'} units`,
+          result.artifacts?.bytecode ? `📦 Bytecode generated (${result.artifacts.bytecode.length / 2} bytes)` : '',
+          result.artifacts?.classHash ? `🔑 Starknet Class Hash: ${result.artifacts.classHash}` : '',
+          result.artifacts?.programId ? `☀️ Solana Program ID: ${result.artifacts.programId}` : ''
+        ].filter(Boolean));
+      } else {
+        setConsoleOutput((prev) => [
+          ...prev,
+          `❌ ${result.stdout || result.stderr || 'Compilation failed'}`,
+          ...(result.syntaxErrors || []).map((err) => `  - ${err}`)
+        ]);
+      }
+    } catch (err: any) {
+      setConsoleOutput((prev) => [
+        ...prev,
+        `❌ Compilation execution failure: ${err.message || 'Unknown error'}`
+      ]);
+    } finally {
+      setIsCompiling(false);
+    }
+  };
+
+  // Real Wallet Connect Handler
   const handleConnectWallet = async () => {
     setConnectingWallet(true);
     try {
       const acc = await connectWallet();
       setWalletAddress(acc);
+      setConsoleOutput((prev) => [
+        ...prev,
+        `🦊 Web3 Wallet Connected: ${acc}`
+      ]);
     } catch (err: any) {
-      alert(`Signer Connection Notice: ${err.message}`);
+      alert(`Wallet Notice: ${err.message}`);
     } finally {
       setConnectingWallet(false);
     }
   };
 
-  // AI Mentor Chat in IDE
-  const [askingAi, setAskingAi] = useState<boolean>(false);
-  const [aiAnalysis, setAiAnalysis] = useState<string>('');
-
-  const handleSelectLanguage = (langId: string) => {
-    setSelectedLangId(langId);
-    const preset = LANGUAGE_PRESETS.find((p) => p.id === langId) || LANGUAGE_PRESETS[0];
-    setCode(isLoggedIn ? preset.templates[0].code : LOGGED_OUT_SANDBOX_BOILERPLATE);
-    setCompilationResult(null);
-    setAiAnalysis('');
-    if (langId === 'base') setSelectedTestnetId('base_sepolia');
-    else if (langId === 'optimism') setSelectedTestnetId('optimism_sepolia');
-    else if (langId === 'arbitrum_stylus') setSelectedTestnetId('arbitrum_sepolia');
-    else if (langId === 'evm_logic') setSelectedTestnetId('arbitrum_sepolia');
-  };
-
-  const handleSelectTemplate = (templateCode: string) => {
-    if (!isLoggedIn) {
-      setCode(LOGGED_OUT_SANDBOX_BOILERPLATE);
-      return;
-    }
-    setCode(templateCode);
-    setCompilationResult(null);
-  };
-
-  const handleCompile = async () => {
-    setCompiling(true);
-    setActiveConsoleTab('console');
-    setCompilationResult(null);
-    try {
-      const res = await executeMultiChainCompiler(activePreset.id, code);
-      setCompilationResult(res);
-
-      if (res.success) {
-        const contractAddr = res.artifacts?.programId || res.artifacts?.classHash || res.artifacts?.moduleAddress || res.artifacts?.wasmHash || (res.artifacts?.bytecode ? `0x${res.artifacts.bytecode.slice(2, 42)}` : '0xContractCompiled');
-        const networkId = activePreset.id === 'base' ? 'base_sepolia' : activePreset.id === 'optimism' ? 'optimism_sepolia' : activePreset.chain.toLowerCase().replace(/[^a-z0-9]/g, '_');
-        const execEnv = activePreset.id === 'arbitrum_stylus' ? 'wasm_stylus' : activePreset.id === 'solana' ? 'sealevel_svm' : activePreset.id === 'aptos' ? 'move_vm' : (activePreset.id === 'base' || activePreset.id === 'optimism') ? 'evm_op_stack' : 'evm_nitro';
-        const progLang = activePreset.lang.toLowerCase().includes('rust') ? 'rust' : activePreset.lang.toLowerCase().includes('move') ? 'move' : activePreset.lang.toLowerCase().includes('cairo') ? 'cairo' : 'evm_logic';
-
-        trackStudentDeployment(
-          walletAddress || 'student-builder',
-          'KU_COHORT_2026_01',
-          {
-            contractAddress: contractAddr,
-            network: networkId,
-            executionEnvironment: execEnv,
-            programmingLanguage: progLang,
-            gasUsed: res.gasEstimate || 21000
-          }
-        ).catch((err) => console.warn("Telemetry log warning:", err));
-      }
-    } catch (e: any) {
-      console.error("Compilation error:", e);
-      setCompilationResult({
-        success: false,
-        chain: activePreset.chain,
-        language: activePreset.lang,
-        compiler: 'Error',
-        stdout: `❌ Unexpected error: ${e.message || 'Unknown error'}`,
-        syntaxErrors: [e.message || 'Unknown error'],
-        warnings: [],
-        gasEstimate: 0,
-      });
-    } finally {
-      setCompiling(false);
-    }
-  };
-
+  // Live Testnet Deploy Handler
   const handleDeployToTestnet = async () => {
-    if (deploying || !code.trim()) return;
-    setDeploying(true);
-    setActiveConsoleTab('console');
-    setDeployStepMessage('Compiling software module...');
+    if (deployingTestnet || !code.trim()) return;
+
+    setDeployingTestnet(true);
+    setConsoleOutput((prev) => [
+      ...prev,
+      `\n🚀 Starting deployment to ${activeTestnet.name}...`,
+      `🌐 Target: ${activeTestnet.name} (Chain ID: ${activeTestnet.chainId})`,
+      `📦 Preparing smart contract bytecode...`
+    ]);
 
     try {
-      // 1. Compile software module first to get valid bytecode & schema
-      setCompiling(true);
-      const compileRes = await executeMultiChainCompiler(activePreset.id, code);
-      setCompiling(false);
-      setCompilationResult(compileRes);
+      // Step 1: Ensure bytecode is generated
+      let bytecode = compilationResult?.artifacts?.bytecode;
+      let abi = compilationResult?.artifacts?.abi;
+      let contractName = compilationResult?.artifacts?.contract_name || activePreset.templates[selectedTemplateIndex].name.replace(/\s+/g, '');
 
-      if (!compileRes.success) {
-        throw new Error(
-          compileRes.syntaxErrors?.[0] || 'Module compilation failed. Please resolve compiler errors before deploying.'
-        );
+      if (!bytecode) {
+        setConsoleOutput((prev) => [...prev, `⚙️ Running automated compilation pass before deployment...`]);
+        const compRes = await executeMultiChainCompiler(activePreset.id, code);
+        if (!compRes.success) {
+          setConsoleOutput((prev) => [
+            ...prev,
+            `❌ Pre-deployment compilation failed. Please fix syntax errors first.`
+          ]);
+          alert("Compilation failed. Please fix contract syntax errors before deploying.");
+          return;
+        }
+        bytecode = compRes.artifacts?.bytecode;
+        abi = compRes.artifacts?.abi;
+        contractName = compRes.artifacts?.contract_name || contractName;
       }
 
-      // 2. Extract contract name from code or artifacts
-      const contractMatch = code.match(/(?:contract|module|program)\s+([A-Za-z0-9_]+)/);
-      const contractName = contractMatch ? contractMatch[1] : (compileRes.artifacts?.contract_name || activePreset.templates[0]?.name || 'LogicModule');
+      let deployRes: any = null;
+      let isLiveWallet = false;
 
-      // 3. Real On-Chain Wallet Deployment Pipeline
-      let contractAddress = '';
-      let txHash = '';
-      let blockNumber = 0;
-      let gasUsed = 0;
-      let deployerAddress = walletAddress || 'student-builder';
-      let isLiveWalletDeploy = false;
-
-      const hasWallet = isWalletAvailable();
-
-      if (hasWallet) {
+      if (isWalletAvailable()) {
         try {
-          setDeployStepMessage(`Connecting wallet & switching to ${activeTestnet.name}...`);
-          const deployRes = await deployContractWithWallet({
-            networkId: selectedTestnetId,
-            bytecode: compileRes.artifacts?.bytecode || '',
-            abi: compileRes.artifacts?.abi,
+          deployRes = await deployContractWithWallet({
+            networkId: activeTestnet.id,
+            bytecode: bytecode || '',
+            abi,
             contractName,
             onStatus: (msg) => {
-              setDeployStepMessage(msg);
-              setCompilationResult((prev) => prev ? {
-                ...prev,
-                stdout: `${prev.stdout ? prev.stdout + '\n' : ''}${msg}`
-              } : null);
+              setConsoleOutput((prev) => [...prev, msg]);
             }
           });
-
-          contractAddress = deployRes.contractAddress;
-          txHash = deployRes.txHash;
-          blockNumber = deployRes.blockNumber;
-          gasUsed = deployRes.gasUsed;
-          deployerAddress = deployRes.deployerAddress;
-          setWalletAddress(deployRes.deployerAddress);
-          isLiveWalletDeploy = true;
+          isLiveWallet = true;
+          if (deployRes.deployerAddress) {
+            setWalletAddress(deployRes.deployerAddress);
+          }
         } catch (walletErr: any) {
           if (walletErr.message?.includes('USER_CANCELLED')) {
-            throw new Error("Transaction signature was rejected by your developer signer. Deployment cancelled.");
+            setConsoleOutput((prev) => [...prev, `❌ Deployment cancelled: Signature rejected in wallet.`]);
+            return;
           }
-          console.warn("Signer deployment error:", walletErr);
+          console.warn("Wallet deployment error:", walletErr);
           const proceedSim = window.confirm(
-            `Live signer deployment failed: ${walletErr.message}\n\nWould you like to fall back to simulated testnet broadcast?`
+            `Live wallet deployment failed: ${walletErr.message}\n\nWould you like to fall back to a simulated deployment?`
           );
-          if (!proceedSim) {
-            throw walletErr;
-          }
+          if (!proceedSim) return;
         }
       } else {
         const proceedSim = window.confirm(
-          `No authorized browser signer was detected.\n\nTo sign transactions with your developer key, please install an authorized browser signer.\n\nWould you like to run a simulated sandbox deployment instead?`
+          `No Web3 wallet (MetaMask / Coinbase) detected in this browser.\n\nTo sign real transactions, please install MetaMask.\n\nWould you like to run a simulated sandbox deployment instead?`
         );
-        if (!proceedSim) {
-          throw new Error("Developer signer required. Please connect an authorized signer to deploy live modules.");
-        }
+        if (!proceedSim) return;
       }
 
-      // Simulated fallback if wallet was unavailable or errored with consent
-      if (!isLiveWalletDeploy) {
+      let contractAddress = deployRes?.contractAddress;
+      let txHash = deployRes?.txHash;
+      let blockNumber = deployRes?.blockNumber;
+      let gasUsed = deployRes?.gasUsed || 185000;
+      let deployer = deployRes?.deployerAddress || walletAddress || '0xDemoWalletUser';
+
+      if (!isLiveWallet) {
         const randomHex = (len: number) => {
           let s = '';
           const chars = '0123456789abcdef';
           for (let i = 0; i < len; i++) s += chars[Math.floor(Math.random() * chars.length)];
           return s;
         };
-
         contractAddress = `0x${randomHex(40)}`;
         txHash = `0x${randomHex(64)}`;
         blockNumber = 14892100 + Math.floor(Math.random() * 30000);
-        gasUsed = compileRes.gasEstimate ? Math.max(compileRes.gasEstimate, 168000) : (185000 + Math.floor(Math.random() * 80000));
       }
-
-      // 4. Log to telemetry for institutional grant tracking
-      trackStudentDeployment(
-        deployerAddress,
-        'KU_COHORT_2026_01',
-        {
-          contractAddress,
-          network: activeTestnet.telemetryNetwork,
-          executionEnvironment: activeTestnet.execEnv,
-          programmingLanguage: activePreset.lang.toLowerCase().includes('rust') ? 'rust' : 'evm_logic',
-          gasUsed
-        }
-      ).catch((err) => console.warn("Deployment telemetry warning:", err));
 
       const newRecord: DeployedContractRecord = {
         id: `dep-${Date.now()}`,
         contractName,
-        contractAddress,
-        txHash,
+        contractAddress: contractAddress!,
+        txHash: txHash!,
         networkId: activeTestnet.id,
         networkName: activeTestnet.name,
         networkIcon: activeTestnet.icon,
         chainId: activeTestnet.chainId,
         explorerUrl: activeTestnet.explorerUrl,
         gasUsed,
-        blockNumber,
+        blockNumber: blockNumber || 0,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
         language: activePreset.lang
       };
 
-      const updatedDeployments = saveNewDeployment(newRecord);
-      setDeployedContracts(updatedDeployments);
+      saveNewDeployment(newRecord);
 
-      // 5. Provide detailed deployment receipt in terminal console
-      const receiptLog = `
-🚀 ======================================================================
-📡 ${isLiveWalletDeploy ? 'LIVE DEPLOYMENT CONFIRMED' : 'SANDBOX BROADCAST TO RUNTIME'}: ${activeTestnet.name.toUpperCase()}
-======================================================================
-• Target Network:      ${activeTestnet.name} (Chain ID: ${activeTestnet.chainId})
-• RPC Endpoint:        ${activeTestnet.rpcUrl}
-• Module Name:         ${contractName}
-• Total Deployed:      ${updatedDeployments.length} Modules Recorded (Count +1)
-• Signer Account:      ${deployerAddress} ${isLiveWalletDeploy ? '(Cryptographically Signed via Developer Key)' : '(Simulated)'}
-• Module Address:      ${contractAddress}
-• Transaction Hash:    ${txHash}
-• Block Number:        #${blockNumber.toLocaleString()}
-• Gas Consumed:        ${gasUsed.toLocaleString()} Gas Units
-• Deployment Status:   ${isLiveWalletDeploy ? '✅ CONFIRMED (Live Block Receipt Verified)' : '✅ CONFIRMED (Simulated)'}
-• Bytecode Status:     ✅ Valid Execution Initcode
+      trackStudentDeployment(
+        deployer,
+        'KU_COHORT_2026_01',
+        {
+          contractAddress: contractAddress!,
+          network: activeTestnet.telemetryNetwork,
+          executionEnvironment: activeTestnet.execEnv,
+          programmingLanguage: activePreset.lang.toLowerCase(),
+          gasUsed
+        }
+      ).catch((e) => console.warn("Telemetry warning:", e));
 
-🔗 Live Environment Links:
-  - Module:      ${activeTestnet.explorerUrl}/address/${contractAddress}
-  - Transaction: ${activeTestnet.explorerUrl}/tx/${txHash}
-
-📡 Academy Grant Telemetry:
-  - Signer / Dev ID:   ${deployerAddress}
-  - Execution Engine:  ${activeTestnet.execEnv.toUpperCase()}
-  - Verification:      ${isLiveWalletDeploy ? 'Verified Benchmark Standard' : 'Sandbox Verification'}
-======================================================================
-`;
-
-      setCompilationResult((prev) => ({
-        ...(prev || compileRes),
-        stdout: `${(prev?.stdout || compileRes.stdout || '')}\n\n${receiptLog}`
-      }));
-
-    } catch (err: any) {
-      console.error("Testnet deployment error:", err);
-      alert(`Deployment Error: ${err.message || 'Failed to broadcast testnet deployment'}`);
-      setCompilationResult((prev) => prev ? {
+      setConsoleOutput((prev) => [
         ...prev,
-        stdout: `${prev.stdout ? prev.stdout + '\n\n' : ''}❌ DEPLOYMENT FAILED: ${err.message || 'Unknown error'}`
-      } : null);
+        `======================================================================`,
+        `🎉 ${isLiveWallet ? 'LIVE TESTNET CONTRACT DEPLOYED!' : 'SANDBOX SIMULATED DEPLOYMENT SUCCESSFUL'}`,
+        `======================================================================`,
+        `• Contract Name:    ${contractName}`,
+        `• Target Network:   ${activeTestnet.name} (Chain ID: ${activeTestnet.chainId})`,
+        `• Contract Address: ${contractAddress}`,
+        `• Transaction Hash: ${txHash}`,
+        `• Block Number:     #${blockNumber?.toLocaleString()}`,
+        `• Gas Consumed:     ${gasUsed.toLocaleString()} units`,
+        `• Status:           ${isLiveWallet ? '✅ Verified on Live Testnet' : '✅ Verified in Local Sandbox'}`,
+        ``,
+        `🔗 Block Explorer Links:`,
+        `  - Contract: ${activeTestnet.explorerUrl}/address/${contractAddress}`,
+        `  - Tx:       ${activeTestnet.explorerUrl}/tx/${txHash}`,
+        `======================================================================`
+      ]);
+
+      setActiveTab('deploy');
+    } catch (err: any) {
+      setConsoleOutput((prev) => [...prev, `❌ Deployment failed: ${err.message || 'Unknown error'}`]);
+      alert(`Deployment Error: ${err.message || 'Failed to deploy contract'}`);
     } finally {
-      setDeploying(false);
-      setCompiling(false);
-      setDeployStepMessage(null);
+      setDeployingTestnet(false);
     }
   };
 
-  const handleAskAi = async () => {
-    if (askingAi || !code.trim()) return;
-    setAskingAi(true);
+  // AI Mentor Stream Analysis
+  const handleAskMentor = async () => {
+    if (isAiStreaming || !code.trim()) return;
+
+    setIsAiStreaming(true);
     setAiAnalysis('');
+    setActiveTab('ai');
+
+    const prompt =
+      aiMentor === 'openclaw'
+        ? `Please provide educational guidance, syntax explanations, and best practices for this ${activePreset.lang} code:\n\n${code}`
+        : `Please perform a rigorous smart contract security audit, gas optimization review, and vulnerability analysis on this ${activePreset.lang} code:\n\n${code}`;
+
     try {
-      let fullText = '';
+      let accumulated = '';
       for await (const _ of streamMentorChat(
-        `Please review this ${activePreset.lang} software architecture. Check for security vulnerabilities, compiler compatibility, and give concise optimization suggestions.`,
+        prompt,
         code,
         (delta) => {
-          fullText += delta;
-          setAiAnalysis(fullText);
+          accumulated += delta;
+          setAiAnalysis(accumulated);
         },
-        'demo-user',
-        'hermes'
+        'sandbox-developer',
+        aiMentor
       )) {}
-    } catch (e: any) {
-      setAiAnalysis(`AI Mentor Error: ${e.message || 'Could not connect to AI Mentor'}`);
+    } catch (err: any) {
+      setAiAnalysis(`Error contacting ${aiMentor}: ${err.message || 'Service temporarily unavailable'}`);
     } finally {
-      setAskingAi(false);
+      setIsAiStreaming(false);
     }
-  };
-
-  const handleDownloadCode = () => {
-    const blob = new Blob([code], { type: 'text/plain;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = activePreset.fileName.endsWith('.js') || activePreset.fileName.endsWith('.rs') || activePreset.fileName.endsWith('.cairo') || activePreset.fileName.endsWith('.move') ? activePreset.fileName : 'LogicModule.js';
-    link.click();
-    URL.revokeObjectURL(url);
-  };
-
-  const handleCopyCode = () => {
-    navigator.clipboard.writeText(code);
-    alert("Code copied to clipboard!");
   };
 
   return (
-    <div className="sandbox-playground animate-fade-in">
-      {/* Header Banner */}
-      <div className="sandbox-header glass">
-        <div className="sandbox-header-info">
-          <div className="sandbox-header-tag">
-            <span>💻 MULTI-RUNTIME CODE SANDBOX</span>
-            <span>•</span>
-            <span>UNIVERSAL SOFTWARE LOGIC COMPILER</span>
+    <div className="playground animate-fade-in">
+      {/* Header */}
+      <div className="playground-header glass">
+        <div className="playground-header__info">
+          <div className="playground-badge">
+            <span>⚡ MULTI-CHAIN WEB3 IDE</span>
+            <span className="badge-divider">•</span>
+            <span>LIVE COMPILERS &amp; TESTNET DEPLOYER</span>
           </div>
-          <h1 className="sandbox-header-title">
-            Interactive Software Architecture Playground
-          </h1>
-          <p className="sandbox-header-subtitle">
-            Write, compile, test, and analyze object-oriented software architecture and system logic engines across high-performance execution environments.
+          <h2 className="playground-title">Smart Contract Sandbox</h2>
+          <p className="playground-subtitle">
+            Write, compile, analyze with AI mentors, and deploy smart contracts to Ethereum, Arbitrum, Base, Optimism, Solana, Starknet, Aptos &amp; Polkadot.
           </p>
         </div>
 
-        <div className="sandbox-header-actions">
-          <div
-            className="sandbox-deployed-stat-badge"
-            title="Total verified software modules deployed to live environments"
+        <div className="playground-header__actions">
+          {/* Transak Gas On-Ramp Launcher */}
+          <button
+            className="btn btn--secondary playground-onramp-btn"
+            onClick={() => setIsOnRampOpen(true)}
+            title="Acquire testnet gas or crypto assets via Transak"
             style={{
-              display: 'flex',
+              display: 'inline-flex',
               alignItems: 'center',
-              gap: '10px',
-              padding: '6px 14px',
-              borderRadius: '8px',
-              background: 'linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(16, 185, 129, 0.2))',
+              gap: '6px',
               border: '1px solid rgba(59, 130, 246, 0.4)',
-              boxShadow: '0 0 15px rgba(37, 99, 235, 0.2)'
+              background: 'rgba(59, 130, 246, 0.1)',
+              color: '#93c5fd'
             }}
           >
-            <span style={{ fontSize: '1.25rem' }}>🚀</span>
-            <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.15 }}>
-              <span style={{ fontSize: '1.1rem', fontWeight: 800, color: '#93c5fd' }}>{deployedContracts.length}</span>
-              <span style={{ fontSize: '0.65rem', color: 'var(--clr-text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>
-                System Modules Deployed
-              </span>
-            </div>
-          </div>
-          <button className="btn btn--secondary" onClick={handleDownloadCode} title="Download source file">
-            💾 Export Logic.js
+            <span>⛽</span> Gas On-Ramp
           </button>
-          <button className="btn btn--secondary" onClick={handleCopyCode} title="Copy code to clipboard">
-            📋 Copy Code
+
+          {walletAddress ? (
+            <div className="playground-wallet-pill" title={`Connected Web3 Wallet: ${walletAddress}`}>
+              🦊 {walletAddress.slice(0, 6)}...{walletAddress.slice(-4)}
+            </div>
+          ) : (
+            <button
+              className="btn btn--secondary"
+              onClick={handleConnectWallet}
+              disabled={connectingWallet}
+              style={{ fontSize: '0.82rem', padding: '8px 14px' }}
+            >
+              {connectingWallet ? 'Connecting...' : '🦊 Connect Wallet'}
+            </button>
+          )}
+
+          <button
+            className="btn btn--secondary"
+            onClick={handleAskMentor}
+            disabled={isAiStreaming}
+            title="Ask OpenClaw or Hermes AI to review this code"
+          >
+            🤖 Ask AI Mentor
+          </button>
+
+          <button
+            className="btn btn--primary"
+            onClick={handleCompile}
+            disabled={isCompiling}
+          >
+            {isCompiling ? (
+              <>
+                <span className="spinner" style={{ width: 14, height: 14, marginRight: 6 }} />
+                Compiling...
+              </>
+            ) : (
+              '⚡ Compile Smart Contract'
+            )}
           </button>
         </div>
       </div>
 
-      {/* Language Tabs Bar */}
-      <div className="sandbox-lang-bar glass">
-        {LANGUAGE_PRESETS.map((preset) => {
-          const btnName = preset.id === 'evm_logic'
-            ? 'EVM Language'
-            : preset.id === 'solana'
-            ? 'System-Level'
-            : preset.id === 'base'
-            ? 'Core Database'
-            : preset.id === 'optimism'
-            ? 'Fault-Proof'
-            : preset.lang;
-          const btnChain = preset.id === 'evm_logic'
-            ? 'Runtime'
-            : preset.id === 'solana'
-            ? 'Infrastructure Compiler'
-            : preset.id === 'base'
-            ? 'Database Engine'
-            : preset.id === 'optimism'
-            ? 'Fault-Proof Systems'
-            : preset.chain.split('/')[0].trim();
-
-          return (
+      {/* Preset / Ecosystem Bar */}
+      <div className="preset-bar glass">
+        <span className="preset-bar__label">Ecosystem Runtime:</span>
+        <div className="preset-bar__list">
+          {LANGUAGE_PRESETS.map((preset) => (
             <button
               key={preset.id}
-              className={`sandbox-lang-btn ${selectedLangId === preset.id ? 'active' : ''}`}
-              onClick={() => handleSelectLanguage(preset.id)}
+              className={`preset-btn ${activePreset.id === preset.id ? 'preset-btn--active' : ''}`}
+              onClick={() => handleSelectPreset(preset)}
             >
-              <span className="lang-icon">{preset.icon}</span>
-              <span className="lang-name">{btnName}</span>
-              <span className="lang-chain">{btnChain}</span>
+              <span className="preset-btn__icon">{preset.icon}</span>
+              <span className="preset-btn__lang">{preset.lang}</span>
+              <span className="preset-btn__chain">{preset.chain}</span>
             </button>
-          );
-        })}
+          ))}
+        </div>
       </div>
 
-      {/* Editor & Console Grid */}
-      <div className="sandbox-ide-grid">
+      {/* Main Split-Pane Workspace */}
+      <div className="playground-workspace">
         {/* Left Column: Code Editor */}
-        <div className="sandbox-editor-panel glass">
-          {/* Editor Top Bar */}
-          <div className="editor-top-bar">
-            <div className="editor-tab-indicator">
-              <span className="dot dot--red" />
-              <span className="dot dot--amber" />
-              <span className="dot dot--green" />
-              <select
-                className="editor-lang-dropdown"
-                value={selectedLangId}
-                onChange={(e) => handleSelectLanguage(e.target.value)}
-                style={{
-                  background: 'rgba(255, 255, 255, 0.08)',
-                  color: '#93c5fd',
-                  border: '1px solid rgba(255, 255, 255, 0.15)',
-                  borderRadius: '6px',
-                  padding: '4px 10px',
-                  fontSize: '0.8rem',
-                  fontWeight: 700,
-                  cursor: 'pointer',
-                  outline: 'none',
-                  marginLeft: '4px'
-                }}
-              >
-                {LANGUAGE_PRESETS.map((p) => {
-                  const label = !isLoggedIn
-                    ? `${p.icon} EVM Language (${p.id === 'solana' ? 'High Throughput' : p.id === 'evm_logic' ? 'Runtime' : p.id === 'base' ? 'Core Database' : p.id === 'optimism' ? 'Fault-Proof' : p.lang})`
-                    : p.id === 'evm_logic'
-                    ? `${p.icon} EVM Language (Runtime)`
-                    : p.id === 'solana'
-                    ? `${p.icon} System Infrastructure Compiler`
-                    : p.id === 'base'
-                    ? `${p.icon} Core Database Frameworks`
-                    : p.id === 'optimism'
-                    ? `${p.icon} Fault-Proof Systems`
-                    : `${p.icon} ${p.lang} (${p.chain.split('/')[0].trim()})`;
-
-                  return (
-                    <option key={p.id} value={p.id} style={{ background: '#090a14', color: '#fff' }}>
-                      {label}
-                    </option>
-                  );
-                })}
-              </select>
-              <span className="editor-filename">{isLoggedIn ? activePreset.fileName : 'Logic.js'}</span>
-              <span className="editor-target-env">{isLoggedIn ? activePreset.targetEnv : 'Secure Logic Environment'}</span>
+        <div className="editor-pane glass">
+          <div className="editor-pane__header">
+            <div className="editor-tab">
+              <span className="editor-tab__icon">{activePreset.icon}</span>
+              <span className="editor-tab__filename">{activePreset.fileName}</span>
             </div>
 
-            {/* Boilerplate & Template selector */}
-            <div className="editor-templates-selector">
-              <span style={{ fontSize: '0.72rem', color: 'var(--clr-text-muted)', marginRight: '4px' }}>Templates:</span>
-              {activePreset.templates.map((t, idx) => {
-                let displayName = t.name;
-                if (displayName.includes('Secure Vault')) displayName = 'Secure Memory Buffer Pattern';
-                else if (displayName.includes('State Token')) displayName = 'Standard Account Ledger Format';
-
-                return (
-                  <button
-                    key={idx}
-                    className="template-pill-btn"
-                    onClick={() => handleSelectTemplate(t.code)}
-                    title={t.description || 'Standard system architecture template'}
-                  >
-                    ⚡ {displayName}
-                  </button>
-                );
-              })}
-              <button
-                className="template-pill-btn"
-                onClick={() => handleSelectTemplate(isLoggedIn ? `// Write your custom ${activePreset.lang} code here\n\n` : '// Write system logic here\n\n')}
-                title="Clear editor to blank canvas"
-                style={{ opacity: 0.8 }}
+            <div className="template-dropdown-wrap">
+              <span className="template-label">Template:</span>
+              <select
+                className="template-select"
+                value={selectedTemplateIndex}
+                onChange={(e) => handleSelectTemplate(Number(e.target.value))}
               >
-                🧹 Blank
-              </button>
+                {activePreset.templates.map((tpl, idx) => (
+                  <option key={idx} value={idx}>
+                    {tpl.name}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
 
-          {/* Textarea Editor */}
-          <textarea
-            className="sandbox-textarea"
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
-            spellCheck={false}
-            placeholder={isLoggedIn ? `// Write ${activePreset.lang} code here...` : '// Write application logic code here...'}
-          />
+          <div className="editor-pane__body">
+            <textarea
+              className="code-textarea"
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+              spellCheck={false}
+              placeholder="// Write your smart contract code here..."
+            />
+          </div>
 
-          {/* Editor Footer Action Bar */}
-          <div className="editor-footer-bar">
-            <div className="compiler-spec-badge">
-              <span>{activePreset.icon}</span>
-              <span>{isLoggedIn ? activePreset.compiler : 'Enterprise Syntax Engine v2.4 (Nitro)'}</span>
-            </div>
-
-            <div className="editor-footer-buttons">
-              {!isLoggedIn && (
-                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '0.74rem', color: '#94a3b8', padding: '5px 12px', background: 'rgba(255,255,255,0.03)', borderRadius: '6px', border: '1px solid rgba(255,255,255,0.08)' }}>
-                  🔒 Sign in to access live multi-runtime compiler execution &amp; deployment
-                </div>
-              )}
-
-              {isLoggedIn && isEvmChain && (
-                <div className="testnet-deploy-controls">
-                  {walletAddress ? (
-                    <span
-                      className="wallet-status-badge"
-                      style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '5px',
-                        fontSize: '0.74rem',
-                        fontWeight: 600,
-                        padding: '4px 8px',
-                        borderRadius: '6px',
-                        background: 'rgba(34, 197, 94, 0.15)',
-                        border: '1px solid rgba(34, 197, 94, 0.3)',
-                        color: '#86efac'
-                      }}
-                      title={`Connected Signer: ${walletAddress}`}
-                    >
-                      <span style={{ display: 'inline-block', width: '7px', height: '7px', borderRadius: '50%', background: '#22c55e' }}></span>
-                      {walletAddress.slice(0, 6)}...{walletAddress.slice(-4)}
-                    </span>
-                  ) : (
-                    <button
-                      type="button"
-                      className="btn btn--secondary btn--sm btn-connect-wallet"
-                      onClick={handleConnectWallet}
-                      disabled={connectingWallet}
-                      style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '5px',
-                        fontSize: '0.74rem',
-                        fontWeight: 600,
-                        padding: '4px 8px',
-                        background: 'rgba(234, 88, 12, 0.15)',
-                        borderColor: 'rgba(234, 88, 12, 0.35)',
-                        color: '#fdba74'
-                      }}
-                      title="Connect developer signer to sign live transactions"
-                    >
-                      🔑 {connectingWallet ? 'Connecting...' : 'Connect Signer'}
-                    </button>
-                  )}
-                  <select
-                    className="testnet-select-dropdown"
-                    value={selectedTestnetId}
-                    onChange={(e) => setSelectedTestnetId(e.target.value)}
-                    title="Select target EVM Testnet for deployment"
-                  >
-                    {EVM_TESTNETS.map((net) => (
-                      <option key={net.id} value={net.id}>
-                        {net.icon} {net.name}
-                      </option>
-                    ))}
-                  </select>
-                  <a
-                    href={activeTestnet.faucetUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="testnet-faucet-link"
-                    title={`Get free testnet gas from ${activeTestnet.name} faucet`}
-                  >
-                    🚰 Faucet
-                  </a>
-                  <span
-                    className="testnet-deployed-count-pill"
-                    style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '4px',
-                      fontSize: '0.74rem',
-                      fontWeight: 700,
-                      padding: '4px 8px',
-                      borderRadius: '6px',
-                      background: 'rgba(59, 130, 246, 0.15)',
-                      border: '1px solid rgba(59, 130, 246, 0.3)',
-                      color: '#93c5fd'
-                    }}
-                    title="Total verified modules deployed across all testnet environments"
-                  >
-                    📦 {deployedContracts.length} Deployed
-                  </span>
-                  <button
-                    className="btn btn--primary btn--sm btn-deploy-testnet"
-                    onClick={handleDeployToTestnet}
-                    disabled={deploying || compiling || !code.trim()}
-                    title={`Deploy software module to ${activeTestnet.name} (prompts developer key signature)`}
-                  >
-                    {deploying ? (deployStepMessage || '⏳ Deploying...') : `🚀 Sign & Deploy (${activeTestnet.name.split(' ')[0]})`}
-                  </button>
-                </div>
-              )}
-              <button
-                className="btn btn--secondary btn--sm"
-                onClick={handleAskAi}
-                disabled={askingAi}
-                style={{
-                  backgroundColor: askingAi ? 'rgba(245, 158, 11, 0.15)' : 'rgba(37, 99, 235, 0.15)',
-                  color: askingAi ? '#f59e0b' : '#60a5fa',
-                  borderColor: askingAi ? 'rgba(245, 158, 11, 0.3)' : 'rgba(37, 99, 235, 0.3)'
-                }}
-              >
-                {askingAi ? '⏳ Reviewing Code...' : '🔮 AI Mentor Review'}
-              </button>
-              <button
-                className="btn btn--primary btn--sm"
-                onClick={handleCompile}
-                disabled={compiling || !code.trim()}
-                style={{ backgroundColor: '#2563eb' }}
-              >
-                {compiling ? '⏳ Compiling...' : `🚀 Compile & Verify (${isLoggedIn ? activePreset.lang : 'Logic'})`}
-              </button>
-            </div>
+          <div className="editor-pane__footer">
+            <span className="compiler-badge">🛠️ {activePreset.compiler}</span>
+            <span className="env-badge">🌐 {activePreset.targetEnv}</span>
           </div>
         </div>
 
-        {/* Right Column: Compiler Output, Artifacts & AI Insights */}
-        <div className="sandbox-output-panel glass">
-          {/* Output Nav Tabs */}
-          <div className="output-tabs-nav">
+        {/* Right Column: Interactive Tabs (Editor Logs / Testnet Deploy / AI Review) */}
+        <div className="output-pane glass">
+          <div className="output-tabs-bar">
             <button
-              className={`output-tab-btn ${activeConsoleTab === 'console' ? 'active' : ''}`}
-              onClick={() => setActiveConsoleTab('console')}
+              className={`output-tab-btn ${activeTab === 'editor' ? 'output-tab-btn--active' : ''}`}
+              onClick={() => setActiveTab('editor')}
             >
-              📟 Terminal Console
+              💻 Compiler Terminal
             </button>
             <button
-              className={`output-tab-btn ${activeConsoleTab === 'artifacts' ? 'active' : ''}`}
-              onClick={() => setActiveConsoleTab('artifacts')}
+              className={`output-tab-btn ${activeTab === 'deploy' ? 'output-tab-btn--active' : ''}`}
+              onClick={() => setActiveTab('deploy')}
             >
-              📦 Artifacts &amp; Hashes
+              🚀 Live Testnet Deploy ({deployedContracts.length})
             </button>
             <button
-              className={`output-tab-btn ${activeConsoleTab === 'abi' ? 'active' : ''}`}
-              onClick={() => setActiveConsoleTab('abi')}
+              className={`output-tab-btn ${activeTab === 'ai' ? 'output-tab-btn--active' : ''}`}
+              onClick={() => setActiveTab('ai')}
             >
-              📜 Interface Schema
-            </button>
-            <button
-              className={`output-tab-btn ${activeConsoleTab === 'deployments' ? 'active' : ''}`}
-              onClick={() => setActiveConsoleTab('deployments')}
-            >
-              📡 System Deployments ({deployedContracts.length})
+              🤖 AI Code Review {isAiStreaming && <span className="streaming-dot" />}
             </button>
           </div>
 
-          {/* Console Tab */}
-          {activeConsoleTab === 'console' && (
-            <div className="output-terminal-body">
-              <div className="terminal-header-status">
-                <span>STATUS: {compiling ? '⏳ COMPILING...' : compilationResult ? (compilationResult.success ? '✅ PASSED' : '❌ FAILED') : 'IDLE'}</span>
-                {compilationResult?.gasEstimate ? (
-                  <span className="gas-badge">⚡ {compilationResult.gasEstimate.toLocaleString()} Gas Units</span>
-                ) : null}
-              </div>
-
-              <pre className="terminal-logs">
-                {compiling ? (
-                  `⏳ Loading ${activePreset.lang} compiler...\n   Running compiler diagnostics...`
-                ) : compilationResult ? (
-                  compilationResult.stdout || (compilationResult.syntaxErrors && compilationResult.syntaxErrors.length > 0 ? `❌ Compilation failed:\n\n${compilationResult.syntaxErrors.join('\n\n')}` : 'Compilation finished.')
-                ) : (
-                  <span style={{ color: 'var(--clr-text-muted)' }}>
-                    Sandbox terminal is idle. Click "Compile &amp; Verify" to run the compiler and view real-time diagnostics.
-                  </span>
-                )}
-              </pre>
-
-              {aiAnalysis && (
-                <FormattedAiInsights
-                  content={aiAnalysis}
-                  isLoading={askingAi}
-                  onClear={() => setAiAnalysis('')}
-                />
-              )}
-            </div>
-          )}
-
-          {/* Artifacts Tab */}
-          {activeConsoleTab === 'artifacts' && (
-            <div className="output-artifacts-body">
-              {compilationResult?.artifacts ? (
-                <div className="artifacts-list">
-                  {compilationResult.artifacts.programId && (
-                    <div className="artifact-item">
-                      <span className="artifact-label">Program ID:</span>
-                      <code className="artifact-value">{compilationResult.artifacts.programId}</code>
-                    </div>
-                  )}
-                  {compilationResult.artifacts.classHash && (
-                    <div className="artifact-item">
-                      <span className="artifact-label">Sierra Class Hash:</span>
-                      <code className="artifact-value">{compilationResult.artifacts.classHash}</code>
-                    </div>
-                  )}
-                  {compilationResult.artifacts.moduleAddress && (
-                    <div className="artifact-item">
-                      <span className="artifact-label">📜 Aptos Move Module:</span>
-                      <code className="artifact-value">{compilationResult.artifacts.moduleAddress}</code>
-                    </div>
-                  )}
-                  {compilationResult.artifacts.wasmHash && (
-                    <div className="artifact-item">
-                      <span className="artifact-label">WASM Code Hash:</span>
-                      <code className="artifact-value">{compilationResult.artifacts.wasmHash}</code>
-                    </div>
-                  )}
-                  {compilationResult.artifacts.bytecode && (
-                    <div className="artifact-item">
-                      <span className="artifact-label">📦 Runtime Bytecode:</span>
-                      <pre className="artifact-code">{compilationResult.artifacts.bytecode}</pre>
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <div className="empty-state-text">
-                  Compile your software module to generate verified execution artifacts, binary schemas, and runtime bytecode.
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* ABI / IDL Tab */}
-          {activeConsoleTab === 'abi' && (
-            <div className="output-abi-body">
-              {compilationResult?.artifacts?.idl || compilationResult?.artifacts?.abi ? (
-                <pre className="abi-json-viewer">
-                  {JSON.stringify(compilationResult.artifacts.idl || compilationResult.artifacts.abi, null, 2)}
-                </pre>
-              ) : (
-                <div className="empty-state-text">
-                  Compile your software module to inspect the generated interface schema.
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* Testnet Deployments Tab */}
-          {activeConsoleTab === 'deployments' && (
-            <div className="output-deployments-body">
-              <div className="deployments-tab-header">
-                <div className="deployments-tab-title">
-                  <span className="title-text">📡 Verified System Sandbox Deployments</span>
-                  <span className="deployments-count-badge">{displayedDeployments.length} Recorded</span>
-                </div>
-                {displayedDeployments.length > 0 && (
+          <div className="output-pane__content">
+            {/* Tab 1: Terminal Console */}
+            {activeTab === 'editor' && (
+              <div className="console-view animate-fade-in">
+                <div className="console-toolbar">
+                  <span className="console-title">Execution Logs</span>
                   <button
-                    className="btn-clear-deployments"
-                    onClick={() => {
-                      if (window.confirm("Reset deployment history?")) {
-                        setDeployedContracts(INITIAL_DEPLOYMENTS);
-                        localStorage.removeItem('mor_deployed_contracts');
-                      }
-                    }}
-                    title="Reset deployment history"
+                    className="console-clear-btn"
+                    onClick={() => setConsoleOutput([])}
                   >
-                    Reset List
+                    Clear Terminal
                   </button>
-                )}
-              </div>
-
-              {displayedDeployments.length === 0 ? (
-                <div className="empty-state-text">
-                  No modules verified yet. Select an execution environment, test your system logic, and verify your software architecture in the live sandbox environment.
                 </div>
-              ) : (
-                <div className="deployments-list">
-                  {displayedDeployments.map((dep) => (
-                    <div key={dep.id} className="deployment-card">
-                      <div className="deployment-card-header">
-                        <div className="deployment-network-badge">
-                          <span className="net-icon">{dep.networkIcon}</span>
-                          <span className="net-name">{dep.networkName}</span>
-                          <span className="net-chain-id">Chain ID: {dep.chainId}</span>
-                        </div>
-                        <div className="deployment-badges">
-                          <span className="status-badge-verified">✅ Verified Logic Engine</span>
-                          <span className="deployment-time">{dep.timestamp}</span>
-                        </div>
-                      </div>
-
-                      <div className="deployment-card-row">
-                        <span className="dep-row-label">Module:</span>
-                        <span className="dep-contract-name">{dep.contractName}</span>
-                        <span className="dep-lang-tag">({dep.language || 'EVM Language'})</span>
-                      </div>
-
-                      <div className="deployment-card-row">
-                        <span className="dep-row-label">Module ID:</span>
-                        <code className="dep-address">{dep.contractAddress}</code>
-                        <button
-                          className="dep-copy-btn"
-                          onClick={() => {
-                            navigator.clipboard.writeText(dep.contractAddress);
-                            alert("Module ID copied!");
-                          }}
-                          title="Copy Module ID"
-                        >
-                          📋
-                        </button>
-                        <a
-                          href={dep.explorerUrl ? `${dep.explorerUrl}/address/${dep.contractAddress}` : 'https://github.com'}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="dep-explorer-link"
-                          title="View Architecture Telemetry"
-                        >
-                          🔍 Telemetry
-                        </a>
-                      </div>
-
-                      <div className="deployment-card-row">
-                        <span className="dep-row-label">{isLoggedIn ? 'Tx Hash:' : 'Verification ID:'}</span>
-                        <code className="dep-tx-hash">{dep.txHash.slice(0, 18)}...{dep.txHash.slice(-8)}</code>
-                        <a
-                          href={isLoggedIn ? `${dep.explorerUrl}/tx/${dep.txHash}` : 'https://github.com'}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="dep-tx-link"
-                          title={isLoggedIn ? "View Transaction on Block Explorer" : "View Verification Receipt"}
-                        >
-                          🧾 {isLoggedIn ? 'Tx Receipt' : 'Receipt'}
-                        </a>
-                      </div>
-
-                      <div className="deployment-card-footer">
-                        <span className="dep-meta-stat">⚡ <strong>{dep.gasUsed.toLocaleString()}</strong> {isLoggedIn ? 'Gas' : 'Compute Units'}</span>
-                        <span className="dep-meta-stat">📦 {isLoggedIn ? 'Block' : 'Epoch'} <strong>#{dep.blockNumber.toLocaleString()}</strong></span>
-                        <span className="dep-meta-telemetry">📡 Logged to Grant Telemetry</span>
-                      </div>
+                <div className="console-screen">
+                  {consoleOutput.map((line, idx) => (
+                    <div
+                      key={idx}
+                      className={`console-line ${
+                        line.startsWith('✅') ? 'console-line--success' :
+                        line.startsWith('❌') ? 'console-line--error' :
+                        line.startsWith('⏳') ? 'console-line--info' :
+                        line.startsWith('---') ? 'console-line--divider' : ''
+                      }`}
+                    >
+                      {line}
                     </div>
                   ))}
                 </div>
-              )}
-            </div>
-          )}
+
+                {compilationResult?.success && (
+                  <div className="compilation-meta-box">
+                    <div className="meta-item">
+                      <span className="meta-lbl">Gas Estimate</span>
+                      <span className="meta-val">{compilationResult.gasEstimate.toLocaleString()} units</span>
+                    </div>
+                    <div className="meta-item">
+                      <span className="meta-lbl">Build Status</span>
+                      <span className="meta-val meta-val--ok">0 Warnings, 0 Errors</span>
+                    </div>
+                    <div className="meta-item">
+                      <span className="meta-lbl">Target Network</span>
+                      <span className="meta-val">{activePreset.targetEnv}</span>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Tab 2: Testnet Deployer */}
+            {activeTab === 'deploy' && (
+              <div className="deploy-view animate-fade-in">
+                <div className="deploy-card glass">
+                  <h4 className="deploy-card__title">Deploy to Live EVM Testnet</h4>
+                  <p className="deploy-card__desc">
+                    Connect your MetaMask wallet, choose an EVM testnet, and deploy this smart contract directly on-chain.
+                  </p>
+
+                  <div className="testnet-select-grid">
+                    {EVM_TESTNETS.map((net) => (
+                      <button
+                        key={net.id}
+                        className={`testnet-btn ${selectedTestnetId === net.id ? 'testnet-btn--active' : ''}`}
+                        onClick={() => setSelectedTestnetId(net.id)}
+                      >
+                        <span className="testnet-btn__icon">{net.icon}</span>
+                        <div>
+                          <span className="testnet-btn__name">{net.name}</span>
+                          <span className="testnet-btn__chain">Chain ID: {net.chainId}</span>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="deploy-meta-grid">
+                    <div className="deploy-meta-cell">
+                      <span>Target Network:</span>
+                      <strong>{activeTestnet.name}</strong>
+                    </div>
+                    <div className="deploy-meta-cell">
+                      <span>Native Token:</span>
+                      <strong>{activeTestnet.symbol}</strong>
+                    </div>
+                    <div className="deploy-meta-cell">
+                      <span>Faucet Access:</span>
+                      <a href={activeTestnet.faucetUrl} target="_blank" rel="noopener noreferrer" className="faucet-link">
+                        Get Free Testnet Gas ↗
+                      </a>
+                    </div>
+                    <div className="deploy-meta-cell">
+                      <span>Wallet Status:</span>
+                      <span>{walletAddress ? `🔑 ${walletAddress.slice(0, 6)}...` : '⚠️ Not Connected'}</span>
+                    </div>
+                  </div>
+
+                  <div className="deploy-actions-row">
+                    {!walletAddress && (
+                      <button className="btn btn--secondary" onClick={handleConnectWallet} disabled={connectingWallet}>
+                        🦊 Connect MetaMask
+                      </button>
+                    )}
+                    <button
+                      className="btn btn--primary"
+                      onClick={handleDeployToTestnet}
+                      disabled={deployingTestnet}
+                    >
+                      {deployingTestnet ? (
+                        <>
+                          <span className="spinner" style={{ width: 14, height: 14, marginRight: 6 }} />
+                          Deploying to {activeTestnet.name}...
+                        </>
+                      ) : (
+                        `🚀 Deploy to ${activeTestnet.name}`
+                      )}
+                    </button>
+                  </div>
+                </div>
+
+                {/* Deployed Contracts History Table */}
+                <div className="deployments-history glass">
+                  <h4 className="deployments-history__title">
+                    <span>📜 Deployed Contracts Registry</span>
+                    <span className="badge badge--primary">{deployedContracts.length} Total</span>
+                  </h4>
+
+                  {deployedContracts.length === 0 ? (
+                    <p className="no-deployments-msg">No contracts deployed yet. Click 'Deploy' to launch your first contract!</p>
+                  ) : (
+                    <div className="deployments-table-wrapper">
+                      <table className="deployments-table">
+                        <thead>
+                          <tr>
+                            <th>Contract Name</th>
+                            <th>Network</th>
+                            <th>Contract Address</th>
+                            <th>Transaction</th>
+                            <th>Gas</th>
+                            <th>Time</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {deployedContracts.map((dep) => (
+                            <tr key={dep.id}>
+                              <td><strong>{dep.contractName}</strong></td>
+                              <td>
+                                <span className="net-pill">
+                                  {dep.networkIcon} {dep.networkName}
+                                </span>
+                              </td>
+                              <td>
+                                <a
+                                  href={`${dep.explorerUrl}/address/${dep.contractAddress}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="explorer-link"
+                                >
+                                  {dep.contractAddress.slice(0, 6)}...{dep.contractAddress.slice(-4)} ↗
+                                </a>
+                              </td>
+                              <td>
+                                <a
+                                  href={`${dep.explorerUrl}/tx/${dep.txHash}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="explorer-link"
+                                >
+                                  {dep.txHash.slice(0, 6)}... ↗
+                                </a>
+                              </td>
+                              <td>{dep.gasUsed ? dep.gasUsed.toLocaleString() : '185,000'}</td>
+                              <td>{dep.timestamp}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Tab 3: AI Code Review */}
+            {activeTab === 'ai' && (
+              <div className="ai-review-pane animate-fade-in">
+                <div className="ai-review-header">
+                  <div className="ai-mentor-selector">
+                    <span className="ai-lbl">Selected Mentor:</span>
+                    <button
+                      className={`ai-mentor-btn ${aiMentor === 'openclaw' ? 'ai-mentor-btn--active' : ''}`}
+                      onClick={() => setAiMentor('openclaw')}
+                    >
+                      🔮 OpenClaw (Curriculum &amp; Education)
+                    </button>
+                    <button
+                      className={`ai-mentor-btn ${aiMentor === 'hermes' ? 'ai-mentor-btn--active' : ''}`}
+                      onClick={() => setAiMentor('hermes')}
+                    >
+                      🛠️ Hermes (Security Audit &amp; Gas Review)
+                    </button>
+                  </div>
+
+                  <button
+                    className="btn btn--secondary btn--sm"
+                    onClick={handleAskMentor}
+                    disabled={isAiStreaming}
+                  >
+                    {isAiStreaming ? 'Analyzing...' : 'Re-run Analysis'}
+                  </button>
+                </div>
+
+                <div className="ai-analysis-content">
+                  {isAiStreaming && !aiAnalysis ? (
+                    <div className="ai-loading-box">
+                      <div className="spinner" />
+                      <p>
+                        {aiMentor === 'openclaw'
+                          ? 'OpenClaw is analyzing your smart contract logic...'
+                          : 'Hermes is scanning bytecode and vulnerabilities...'}
+                      </p>
+                    </div>
+                  ) : aiAnalysis ? (
+                    <FormattedAiInsights content={aiAnalysis} onClear={() => setAiAnalysis('')} />
+                  ) : (
+                    <div className="ai-empty-prompt">
+                      <span className="empty-icon">💡</span>
+                      <h4>No Analysis Generated Yet</h4>
+                      <p>Click "Ask AI Mentor" to get instant security analysis, syntax guidance, and gas optimization advice.</p>
+                      <button className="btn btn--primary" onClick={handleAskMentor}>
+                        Run AI Smart Contract Review
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
+      {/* Gas On-Ramp Modal */}
+      <TransakWidgetModal
+        isOpen={isOnRampOpen}
+        onClose={() => setIsOnRampOpen(false)}
+        walletAddress={walletAddress || ''}
+        defaultNetwork={activeTestnet.id}
+      />
     </div>
   );
 };

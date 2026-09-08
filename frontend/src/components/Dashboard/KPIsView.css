@@ -23,7 +23,7 @@
 
 .kpis-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
   gap: 20px;
 }
 
@@ -36,6 +36,7 @@
   flex-direction: column;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
   transition: all 0.3s;
+  box-sizing: border-box;
 }
 
 .kpi-card:hover {
@@ -83,4 +84,19 @@
   justify-content: center;
   height: 300px;
   gap: 16px;
+}
+
+@media (max-width: 480px) {
+  .kpis-container {
+    padding: 16px 10px;
+  }
+  .kpis-title {
+    font-size: 1.4rem;
+  }
+  .kpi-card {
+    padding: 16px 14px;
+  }
+  .kpi-card__value {
+    font-size: 1.8rem;
+  }
 }

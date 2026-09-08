@@ -547,7 +547,7 @@
     overflow-x: auto;
     white-space: nowrap;
     -webkit-overflow-scrolling: touch;
-    padding-bottom: 4px;
+    padding: 0 16px 4px 16px;
   }
   .workspace-tab-bar::-webkit-scrollbar {
     display: none;
@@ -564,5 +564,29 @@
   }
   .reading-scroll-area {
     padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .workspace-body-container {
+    padding: 12px 8px;
+  }
+  .reading-scroll-area {
+    padding: 12px 8px;
+  }
+  .quiz-score-banner {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+  .reset-btn {
+    margin-left: 0;
+    width: 100%;
+  }
+  .lesson-md-h1 {
+    font-size: 1.25rem;
+  }
+  .lesson-md-h2 {
+    font-size: 1.1rem;
   }
 }

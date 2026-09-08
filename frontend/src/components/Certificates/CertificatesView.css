@@ -84,7 +84,7 @@
 /* Grid Layout */
 .certs-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
   gap: 24px;
 }
 
@@ -329,10 +329,46 @@
 }
 
 @media (max-width: 768px) {
+  .certs-container {
+    padding: 16px 10px 36px 10px;
+  }
+  .certs-header {
+    padding: 20px 16px;
+  }
   .certs-title {
-    font-size: 1.6rem;
+    font-size: 1.45rem;
+    word-break: break-word;
+  }
+  .certs-filter-bar {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-wrap: nowrap;
+    padding-bottom: 6px;
+  }
+  .cert-filter-pill {
+    white-space: nowrap;
+    font-size: 0.8rem;
+    padding: 6px 12px;
   }
   .certs-grid {
     grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .cert-card {
+    padding: 20px 16px;
+  }
+  .cert-card__val--id {
+    word-break: break-all;
+  }
+}
+
+@media (max-width: 480px) {
+  .cert-card__title {
+    font-size: 1.1rem;
+  }
+  .cert-card__seal {
+    font-size: 1.5rem;
+    top: 16px;
+    right: 16px;
   }
 }

@@ -911,12 +911,22 @@
   border-radius: 6px;
 }
 
+@media (max-width: 1024px) {
+  .hacks-layout {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
 @media (max-width: 768px) {
   .hackathons-view {
     padding: 16px 8px;
+    width: 100%;
+    box-sizing: border-box;
   }
   .hacks-title {
     font-size: 1.45rem;
+    word-break: break-word;
   }
   .hacks-promo-banner {
     padding: 20px 16px;
@@ -928,6 +938,8 @@
     padding: 8px 12px;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    width: 100%;
+    box-sizing: border-box;
   }
   .hacks-tabs {
     gap: 4px;
@@ -936,6 +948,31 @@
   .hacks-tab-btn {
     padding: 6px 14px;
     font-size: 0.8rem;
+    white-space: nowrap;
+  }
+  .hack-item {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px;
+    gap: 14px;
+  }
+  .hack-item__main {
+    padding-right: 0;
+  }
+  .hack-item__title-row {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .hack-item__meta {
+    flex-wrap: wrap;
+    gap: 8px 14px;
+  }
+  .hack-hero-card {
+    padding: 20px 16px;
+  }
+  .hack-detail-title {
+    font-size: 1.45rem;
+    word-break: break-word;
   }
   .stepper-timeline {
     flex-direction: column;
@@ -953,5 +990,17 @@
   }
   .stepper-line {
     display: none;
+  }
+  .hacks-stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .hack-item__title {
+    font-size: 1rem;
+  }
+  .hack-hero-card {
+    padding: 16px 12px;
   }
 }

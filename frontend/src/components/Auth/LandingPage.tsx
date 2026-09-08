@@ -36,24 +36,24 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         <div className="landing-brand-banner-container">
           <img
             src="/mor-brand-banner.png"
-            alt="MOR Developer Academy - Code. Architecture. Build The Future."
+            alt="MOR Developer Academy - Code. Crypto. Build The Future."
             className="landing-brand-banner"
           />
         </div>
 
-        <span className="landing-badge">ENTERPRISE EDTECH &amp; SOFTWARE ARCHITECTURE</span>
+        <span className="landing-badge">OFFICIAL WEB3 DEVELOPER ACADEMY</span>
 
         <h2 className="landing-hero__title">
-          Master <span className="gradient-text">Distributed Ledger Programming &amp; Advanced Data Architectures</span>
+          Master <span className="gradient-text">Web3 Engineering &amp; Smart Contract Architecture</span>
         </h2>
         <p className="landing-hero__desc">
-          The enterprise educational platform for <strong>Distributed Ledger Programming &amp; Advanced Data Architectures</strong>. Master <strong>Open-Source Software Architecture &amp; Algorithmic Design</strong>, explore <strong>Automated Financial Technology Tooling &amp; SaaS Sandbox</strong> environments, compile live with <strong>OpenClaw &amp; Hermes AI Mentors</strong>, and earn verified academic credentials.
+          The premier developer academy for <strong>Web3 Engineering &amp; Multi-Chain Architecture</strong>. Master <strong>Solidity, Rust, Cairo, Move, and ink!</strong>, build decentralized applications (dApps), compile live in the <strong>Multi-Chain Web3 Sandbox</strong> with <strong>OpenClaw &amp; Hermes AI Mentors</strong>, and earn verified on-chain developer certifications.
         </p>
 
         {loading ? (
           <div className="landing-loading">
             <div className="spinner" />
-            <p>Authenticating student credentials...</p>
+            <p>Authenticating credentials...</p>
           </div>
         ) : (
           <div className="landing-cta-container">
@@ -80,13 +80,16 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             {/* Primary Call To Action - Enter Developer Academy */}
             <div className="landing-primary-cta">
               <button className="btn btn--secondary landing-main-cta-btn" onClick={onLoginGitHub}>
-                🚀 Launch Enterprise Learning Portal
+                🚀 Launch Web3 Developer Portal
               </button>
             </div>
             
             <div className="landing-cta-buttons">
               <button className="btn btn--secondary landing-login-btn" onClick={onLoginGitHub}>
                 🐱 Continue with GitHub SSO
+              </button>
+              <button className="btn btn--secondary landing-login-btn" onClick={onLoginWallet}>
+                🦊 Connect Web3 Wallet
               </button>
               <button
                 className="btn btn--secondary landing-login-btn"
@@ -149,93 +152,77 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <a href="https://github.com/Mor-Fin-AI/Mor-Finance-Developer-Academy#readme" target="_blank" rel="noopener noreferrer" className="trust-link">
               <span>📖</span> Syllabus &amp; Docs
             </a>
-            <a href="https://discord.gg/Jjt52cQEV" target="_blank" rel="noopener noreferrer" className="trust-link">
-              <span>🌐</span> Student Community
-            </a>
           </div>
         </div>
       </section>
 
-      {/* Built for Developers Section */}
-      <section className="landing-built-devs animate-fade-up">
-        <div className="landing-section-header">
-          <span className="landing-badge">ENTERPRISE SOFTWARE ENGINE</span>
-          <h3 className="landing-section-title">Built for Distributed Systems &amp; Software Engineers</h3>
-          <p className="landing-section-sub">Everything you need to advance from computer science fundamentals to enterprise systems architect.</p>
-        </div>
+      {/* Feature grid */}
+      <section className="landing-features">
+        <h3 className="landing-section-title">Everything You Need to Master Web3</h3>
+        <p className="landing-section-subtitle">
+          From Solidity fundamentals to advanced Multi-Chain scaling and ZK protocols.
+        </p>
 
-        <div className="built-devs-grid">
+        <div className="landing-grid">
           {[
             {
-              icon: '🏛️',
-              title: 'Distributed Ledger Programming',
-              desc: 'Structured curriculum in Distributed Ledger Programming & Advanced Data Architectures, virtual machines, and state machines.'
-            },
-            {
-              icon: '⚙️',
-              title: 'Open-Source Architecture',
-              desc: 'Hands-on practice in Open-Source Software Architecture & Algorithmic Design, modular patterns, and enterprise code quality.'
-            },
-            {
-              icon: '📊',
-              title: 'Automated FinTech Tooling',
-              desc: 'Production-ready templates for Automated Financial Technology Tooling & SaaS Sandbox environments, concurrency guards, and event streaming.'
-            },
-            {
-              icon: '📝',
-              title: 'Architecture Quizzes',
-              desc: 'Test your understanding with instant quiz evaluations, algorithmic concept checks, and system security reviews.'
-            },
-            {
-              icon: '💻',
-              title: 'Coding Exercises',
-              desc: 'Live in-browser code compilation with automated test suites, syntax verification, and line-by-line feedback.'
+              icon: '📚',
+              title: 'Structured Multichain Curriculum',
+              desc: 'From cryptographic primitives to Solidity, Rust Anchor, Move, Cairo, and ink!. 7 complete levels with interactive quizzes.',
             },
             {
               icon: '🤖',
-              title: 'AI Code Mentor',
-              desc: 'Powered by OpenClaw & Hermes models for 24/7 real-time debugging, architectural guidance, and security auditing.'
+              title: 'OpenClaw & Hermes AI Mentors',
+              desc: '24/7 AI pair programming with OpenClaw for curriculum guidance and Hermes for automated smart contract auditing & code reviews.',
             },
             {
-              icon: '📈',
-              title: 'Learning Analytics',
-              desc: 'Track your XP, streak counters, completed levels, and verified institutional skill badges on your student profile.'
+              icon: '💻',
+              title: 'Multi-Chain Sandbox IDE',
+              desc: 'Write, compile, and deploy Solidity, Rust (Stylus & Anchor), Cairo 2.0, Move, and ink! in an interactive browser IDE.',
             },
             {
-              icon: '💬',
-              title: 'Community Forum',
-              desc: 'Collaborate with fellow builders, request peer code reviews, and join collaborative engineering sprints.'
-            }
-          ].map((item) => (
-            <div key={item.title} className="built-dev-card glass">
-              <div className="built-dev-icon">{item.icon}</div>
-              <h4>{item.title}</h4>
-              <p>{item.desc}</p>
+              icon: '🏆',
+              title: 'On-Chain Verifiable Certifications',
+              desc: 'Earn cryptographic certificates and build proof-of-work credentials recognized across Web3 foundations.',
+            },
+            {
+              icon: '⚔️',
+              title: 'Hackathons & Bounties',
+              desc: 'Participate in real-time hackathons, build innovative dApps, and win bounties directly from leading protocols.',
+            },
+            {
+              icon: '💼',
+              title: 'Web3 Career Portal',
+              desc: 'Access curated smart contract jobs, paid internships, and foundation grants across top blockchain ecosystems.',
+            },
+          ].map((feat) => (
+            <div key={feat.title} className="landing-card glass">
+              <div className="landing-card__icon">{feat.icon}</div>
+              <h4 className="landing-card__title">{feat.title}</h4>
+              <p className="landing-card__desc">{feat.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Supported Ecosystems Section */}
+      {/* Multi-Chain Ecosystems section */}
       <section className="landing-ecosystems animate-fade-up">
-        <div className="landing-section-header">
-          <span className="landing-badge">DISTRIBUTED RUNTIMES &amp; COMPILERS</span>
-          <h3 className="landing-ecosystems__title">Supported Distributed Systems</h3>
-          <p className="landing-ecosystems__desc">Build, compile, and test distributed ledger software across high-performance execution environments and modern data networks.</p>
-        </div>
-        
-        <div className="landing-ecosystems-grid">
+        <h3 className="landing-section-title">Supported Blockchain Ecosystems</h3>
+        <p className="landing-section-subtitle">
+          Dedicated tracks, smart contract compilers, and sandbox testnets for the leading Layer 1 and Layer 2 networks.
+        </p>
+
+        <div className="landing-ecosystem-grid">
           {[
-            { name: 'EVM Language Engine', desc: 'Foundational distributed ledger runtime for verifiable state computation and open-source applications.', icon: '🔷' },
-            { name: 'Optimistic Rollup Engine', desc: 'Leading optimistic execution layer providing ultra-fast throughput and low-latency transaction processing.', icon: '🌀' },
-            { name: 'Interoperable Systems Engine', desc: 'Scalable architecture powering an ecosystem of interoperable network clusters.', icon: '🔴' },
-            { name: 'High-Throughput Layer-2 Engine', desc: 'Secure, low-latency, developer-friendly Layer 2 network architecture incubated by Coinbase.', icon: '🔵' },
-            { name: 'Modular Distributed System Engine', desc: 'Modular distributed system and aggregation suite supporting enterprise layer 2 networks.', icon: '💜' },
-            { name: 'Multi-Subnet Architecture', desc: 'Subnet execution environment designed for high-throughput enterprise architectures and modular microservices.', icon: '🔺' },
-            { name: 'High-Throughput Parallel Systems Engine', desc: 'High-performance distributed network optimized for sub-second execution and Rust-based programs.', icon: '☀️' },
-            { name: 'Provable Verification Engine', desc: 'Scalable execution network leveraging STARK validity proofs and high-assurance CairoVM architectures.', icon: '✨' },
-            { name: 'Modular State Engine', desc: 'High-throughput distributed ledger powered by the Move programming language and Block-STM parallel engine.', icon: '🟢' },
-            { name: 'Modular Micro-Consensus Engine', desc: 'Heterogeneous multi-network framework connecting specialized application chains with ink! Rust modules.', icon: '🟣' }
+            { name: 'Ethereum', desc: 'Layer 1 settlement and EVM standard. Solidity, Hardhat, Foundry, and OpenZeppelin smart contracts.', icon: '🔷' },
+            { name: 'Arbitrum', desc: 'L2 Optimistic Rollup & Stylus WASM with Rust / C++. Deploy high-throughput dApps at ultra-low gas.', icon: '🌀' },
+            { name: 'Optimism', desc: 'OP Stack Superchain & Cross-Domain Rollup messaging connecting inter-operable Ethereum L2s.', icon: '🔴' },
+            { name: 'Base', desc: 'Coinbase L2, OnchainKit, Smart Wallets, and Gasless Paymasters for seamless user onboarding.', icon: '🔵' },
+            { name: 'Polygon', desc: 'Polygon PoS, CDK (Chain Development Kit), Plonky2 ZK verifiers, and zkEVM rollups.', icon: '💜' },
+            { name: 'Solana', desc: 'High-throughput Sealevel runtime, Proof-of-History, and Rust Anchor smart contract framework.', icon: '☀️' },
+            { name: 'Starknet', desc: 'ZK-Rollup validity proofs, Cairo 2.0 smart contracts, and native Account Abstraction.', icon: '✨' },
+            { name: 'Aptos', desc: 'MoveVM safe memory execution, resource accounts, and parallel transaction engine.', icon: '⚡' },
+            { name: 'Polkadot', desc: 'Heterogeneous multi-chain framework connecting Substrate parachains with ink! Rust.', icon: '🟣' }
           ].map((eco) => (
             <div key={eco.name} className="landing-ecosystem-card glass">
               <div className="landing-ecosystem-icon">{eco.icon}</div>
@@ -254,12 +241,12 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         </div>
         <div className="landing-stat-divider" />
         <div className="landing-stat-item">
-          <div className="landing-stat-value gradient-text">Multi-Runtime</div>
-          <div className="landing-stat-label">Distributed Network Tracks</div>
+          <div className="landing-stat-value gradient-text">11+</div>
+          <div className="landing-stat-label">Multi-Chain Tracks</div>
         </div>
         <div className="landing-stat-divider" />
         <div className="landing-stat-item">
-          <div className="landing-stat-value gradient-text">WASM &amp; Native</div>
+          <div className="landing-stat-value gradient-text">WASM &amp; EVM</div>
           <div className="landing-stat-label">Multi-Runtime Compilers</div>
         </div>
         <div className="landing-stat-divider" />
@@ -278,10 +265,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({
           <a href="https://discord.gg/Jjt52cQEV" target="_blank" rel="noopener noreferrer">Community</a>
           <a href="/about">About MOR</a>
         </div>
-        <p>© 2026 Morfinance AI. 66 Paul Street, London, EC2A 4NA. All rights reserved. | Enterprise EdTech &amp; Advanced Software Architectures</p>
+        <p>© 2026 Morfinance AI. 66 Paul Street, London, EC2A 4NA. All rights reserved. | Official Web3 Developer Academy</p>
       </footer>
 
-      {/* Secure Student & Developer Gateway Modal (Gated Behind User Action) */}
+      {/* Secure Student & Developer Gateway Modal */}
       {showStudentGateway && (
         <div
           className="student-gateway-overlay"
@@ -341,7 +328,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               Student &amp; Developer Gateway
             </h3>
             <p style={{ fontSize: '0.88rem', color: '#94a3b8', lineHeight: 1.5, marginBottom: '28px' }}>
-              Secure authentication portal for enrolled university students, researchers, and accredited software engineers.
+              Authentication portal for enrolled university students, researchers, and Web3 smart contract engineers.
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -364,6 +351,30 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 }}
               >
                 <span>🐱</span> Continue with GitHub Student SSO
+              </button>
+
+              <button
+                className="btn btn--secondary"
+                onClick={() => {
+                  setShowStudentGateway(false);
+                  onLoginWallet();
+                }}
+                style={{
+                  width: '100%',
+                  padding: '14px 20px',
+                  borderRadius: '12px',
+                  fontWeight: 700,
+                  fontSize: '0.95rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '10px',
+                  background: 'rgba(59, 130, 246, 0.15)',
+                  borderColor: 'rgba(59, 130, 246, 0.4)',
+                  color: '#93c5fd',
+                }}
+              >
+                <span>🦊</span> Connect Web3 Wallet (MetaMask / EIP-1193)
               </button>
 
               {onOpenFastTrack && (
@@ -391,41 +402,10 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                   <span>🎓</span> Kenyatta Univ Fast-Track Routing
                 </button>
               )}
-
-              {/* Developer Key & Key-Pair Authentication - Gated Inside Student Gateway */}
-              <div style={{ margin: '12px 0 4px 0', borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '16px' }}>
-                <span style={{ fontSize: '0.72rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 700 }}>
-                  Advanced Developer Authentication
-                </span>
-              </div>
-
-              <button
-                className="btn btn--secondary"
-                onClick={() => {
-                  setShowStudentGateway(false);
-                  onLoginWallet();
-                }}
-                style={{
-                  width: '100%',
-                  padding: '12px 18px',
-                  borderRadius: '10px',
-                  fontWeight: 600,
-                  fontSize: '0.85rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '8px',
-                  background: 'rgba(59, 130, 246, 0.08)',
-                  border: '1px solid rgba(59, 130, 246, 0.25)',
-                  color: '#93c5fd',
-                }}
-              >
-                <span>🔑</span> Authorized Developer Key (PKI / Key-Pair Auth)
-              </button>
             </div>
 
             <div style={{ marginTop: '20px', fontSize: '0.75rem', color: '#64748b' }}>
-              🔒 Protected by Enterprise Identity &amp; Role-Based Access Control
+              🔒 Protected by Cryptographic Signatures &amp; Verified SSO
             </div>
           </div>
         </div>
@@ -435,4 +415,3 @@ export const LandingPage: React.FC<LandingPageProps> = ({
 };
 
 export default LandingPage;
-

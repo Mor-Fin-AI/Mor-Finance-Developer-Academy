@@ -208,6 +208,7 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
 .tag-pill:hover {
@@ -251,7 +252,7 @@
 /* Jobs Grid */
 .jobs-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
   gap: 20px;
 }
 
@@ -263,6 +264,7 @@
   background: rgba(15, 23, 42, 0.6);
   border: 1px solid rgba(255, 255, 255, 0.07);
   transition: all 0.25s ease;
+  box-sizing: border-box;
 }
 
 .job-card:hover {
@@ -280,6 +282,8 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .job-company-badge {
@@ -304,6 +308,7 @@
   color: #fff;
   margin: 0 0 12px 0;
   line-height: 1.4;
+  word-break: break-word;
 }
 
 .job-card__details {
@@ -347,6 +352,8 @@
   align-items: center;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
   padding-top: 14px;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .job-date {
@@ -391,6 +398,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
+  flex-wrap: wrap;
 }
 
 .pagination-btn {
@@ -444,7 +452,7 @@
 /* Opportunities Grid */
 .opportunities-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
   gap: 20px;
 }
 
@@ -456,6 +464,7 @@
   background: rgba(15, 23, 42, 0.6);
   border: 1px solid rgba(255, 255, 255, 0.07);
   transition: all 0.25s ease;
+  box-sizing: border-box;
 }
 
 .opportunity-card:hover {
@@ -473,6 +482,7 @@
 
 .opportunity-icon {
   font-size: 2rem;
+  flex-shrink: 0;
 }
 
 .opportunity-title {
@@ -511,7 +521,7 @@
 /* Startup Ideas Grid */
 .ideas-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
   gap: 20px;
 }
 
@@ -523,6 +533,7 @@
   background: rgba(15, 23, 42, 0.6);
   border: 1px solid rgba(255, 255, 255, 0.07);
   transition: all 0.25s ease;
+  box-sizing: border-box;
 }
 
 .idea-card:hover {
@@ -546,6 +557,7 @@
 
 .idea-icon {
   font-size: 1.4rem;
+  flex-shrink: 0;
 }
 
 .idea-category-badge {
@@ -578,7 +590,7 @@
 /* Freelance Grid */
 .freelance-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
   gap: 20px;
 }
 
@@ -590,6 +602,7 @@
   background: rgba(15, 23, 42, 0.6);
   border: 1px solid rgba(255, 255, 255, 0.07);
   transition: all 0.25s ease;
+  box-sizing: border-box;
 }
 
 .freelance-card:hover {
@@ -607,6 +620,7 @@
 
 .freelance-icon {
   font-size: 2rem;
+  flex-shrink: 0;
 }
 
 .freelance-name {
@@ -638,7 +652,7 @@
 /* Loading & Empty States */
 .jobs-loading-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
   gap: 20px;
 }
 
@@ -667,17 +681,51 @@
 }
 
 @media (max-width: 768px) {
+  .career-dashboard {
+    padding: 6px 10px 30px 10px;
+    gap: 16px;
+  }
+  .career-header {
+    padding: 20px 16px;
+  }
   .career-header__title {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
+  }
+  .career-main-controls {
+    padding: 16px 14px;
+    gap: 14px;
   }
   .view-selector-group {
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
   }
   .view-btn {
     width: 100%;
-    justify-content: flex-start;
+    justify-content: center;
+    padding: 9px 12px;
+    font-size: 0.85rem;
+  }
+  .search-and-tags-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .career-search-box {
+    min-width: 100%;
+    width: 100%;
+  }
+  .remote-toggle-btn {
+    width: 100%;
+    text-align: center;
   }
   .pagination-bar {
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+    padding: 12px 14px;
+  }
+  .pagination-pages {
     justify-content: center;
   }
   .jobs-grid,
@@ -685,5 +733,29 @@
   .ideas-grid,
   .freelance-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .view-selector-group {
+    grid-template-columns: 1fr;
+  }
+  .career-header__title {
+    font-size: 1.3rem;
+  }
+  .job-card,
+  .opportunity-card,
+  .idea-card,
+  .freelance-card {
+    padding: 16px 14px;
+  }
+  .pagination-btn--nav {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+  .pagination-btn--num {
+    width: 32px;
+    height: 32px;
+    font-size: 0.8rem;
   }
 }

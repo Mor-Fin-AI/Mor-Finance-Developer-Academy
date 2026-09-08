@@ -2,7 +2,6 @@
 import React from 'react';
 import type { LevelProgress } from '../../types';
 import { LEVEL_COLORS, LEVEL_ICONS } from '../../types';
-import { sanitizeComplianceText } from '../../utils/complianceMask';
 import './LevelCard.css';
 
 interface LevelCardProps {
@@ -42,7 +41,7 @@ export const LevelCard: React.FC<LevelCardProps> = ({ level, isLast, onSelect })
         {/* Content */}
         <div className="level-card__content">
           <div className="level-card__header">
-            <h3 className="level-card__title">{sanitizeComplianceText(level.title)}</h3>
+            <h3 className="level-card__title">{level.title}</h3>
             {isComplete && <span className="badge badge--success">✓ Complete</span>}
             {!level.is_unlocked && <span className="badge badge--locked">Locked</span>}
           </div>
