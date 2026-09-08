@@ -536,6 +536,618 @@
   color: #f1f5f9;
 }
 
+/* ─── Testnet Deployer Tab & Registry ─────────────────────────────────────── */
+.deploy-view {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  flex: 1;
+}
+
+.deploy-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 22px 24px;
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.deploy-card__header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.deploy-card__badge {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.deploy-card__title {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.deploy-card__desc {
+  font-size: 0.86rem;
+  color: #94a3b8;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Testnet Selection Grid */
+.testnet-select-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.testnet-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #e2e8f0;
+}
+
+.testnet-btn:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(99, 102, 241, 0.4);
+  transform: translateY(-1px);
+}
+
+.testnet-btn--active {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(59, 130, 246, 0.28) 100%) !important;
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 16px rgba(59, 130, 246, 0.3), inset 0 0 10px rgba(59, 130, 246, 0.15);
+}
+
+.testnet-btn__icon {
+  font-size: 1.45rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.testnet-btn__info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  overflow: hidden;
+}
+
+.testnet-btn__name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #f8fafc;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.testnet-btn__chain {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #94a3b8;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.testnet-btn--active .testnet-btn__chain {
+  color: #93c5fd;
+}
+
+/* Deploy Meta Grid */
+.deploy-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  padding: 14px 18px;
+}
+
+.deploy-meta-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.deploy-meta-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #64748b;
+}
+
+.deploy-meta-val {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.deploy-meta-val--connected {
+  color: #34d399;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+}
+
+.deploy-meta-val--disconnected {
+  color: #fbbf24;
+  font-size: 0.8rem;
+}
+
+.faucet-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #38bdf8;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.faucet-link:hover {
+  color: #7dd3fc;
+  text-decoration: underline;
+}
+
+.faucet-link__arrow {
+  font-size: 0.85rem;
+}
+
+/* Deploy Action Row */
+.deploy-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-top: 4px;
+}
+
+.deploy-connect-btn {
+  font-size: 0.84rem;
+  padding: 10px 18px;
+}
+
+.deploy-submit-btn {
+  font-size: 0.88rem;
+  font-weight: 700;
+  padding: 10px 22px;
+  background: linear-gradient(135deg, #7c3aed 0%, #3b82f6 100%) !important;
+  box-shadow: 0 4px 18px rgba(124, 58, 237, 0.4);
+  transition: all 0.2s ease;
+}
+
+.deploy-submit-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 22px rgba(124, 58, 237, 0.55);
+}
+
+/* ─── Deployed Contracts Registry Table ───────────────────────────────────── */
+.deployments-history {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 20px 22px;
+  border-radius: 14px;
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.deployments-history__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.deployments-history__title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.deployments-history__icon {
+  font-size: 1.15rem;
+}
+
+.deployments-history__title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.badge-registry-count {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #93c5fd;
+  background: rgba(59, 130, 246, 0.18);
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  padding: 3px 10px;
+  border-radius: 14px;
+  letter-spacing: 0.04em;
+}
+
+.no-deployments-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 36px 20px;
+  text-align: center;
+  gap: 10px;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.no-deployments-icon {
+  font-size: 2rem;
+  opacity: 0.7;
+}
+
+.no-deployments-msg {
+  font-size: 0.86rem;
+  color: #94a3b8;
+  margin: 0;
+}
+
+/* Registry Table Wrapper & Styling */
+.deployments-table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(5, 7, 15, 0.6);
+}
+
+.deployments-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.82rem;
+}
+
+.deployments-table thead {
+  background: rgba(15, 23, 42, 0.95);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.deployments-table th {
+  padding: 12px 16px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #94a3b8;
+  white-space: nowrap;
+}
+
+.deployments-table tbody tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  transition: background 0.15s ease;
+}
+
+.deployments-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.deployments-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.deployments-table td {
+  padding: 14px 16px;
+  vertical-align: middle;
+  color: #cbd5e1;
+  white-space: nowrap;
+}
+
+.cell-contract-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.contract-doc-icon {
+  font-size: 0.95rem;
+  opacity: 0.8;
+}
+
+.contract-title-text {
+  font-weight: 800;
+  color: #ffffff;
+  font-size: 0.84rem;
+}
+
+.net-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  color: #93c5fd;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.net-pill__icon {
+  font-size: 0.9rem;
+}
+
+.explorer-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #818cf8;
+  text-decoration: none;
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  padding: 4px 9px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.explorer-link:hover {
+  background: rgba(99, 102, 241, 0.22);
+  border-color: #6366f1;
+  color: #a5b4fc;
+  transform: translateY(-1px);
+}
+
+.explorer-link__arrow {
+  font-size: 0.82rem;
+  color: #a5b4fc;
+}
+
+.cell-gas {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.gas-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #cbd5e1;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.cell-status-time {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.verified-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #34d399;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.timestamp-text {
+  font-size: 0.74rem;
+  color: #64748b;
+  font-weight: 600;
+}
+
+/* ─── AI Code Review Tab ─────────────────────────────────────────────────── */
+.ai-review-pane {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+
+.ai-review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.ai-mentor-selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ai-lbl {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.ai-mentor-btn {
+  padding: 6px 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #cbd5e1;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ai-mentor-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.ai-mentor-btn--active {
+  background: rgba(168, 85, 247, 0.2) !important;
+  border-color: #a855f7 !important;
+  color: #e9d5ff !important;
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.3);
+}
+
+.ai-analysis-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.ai-loading-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 20px;
+  gap: 16px;
+  text-align: center;
+}
+
+.ai-loading-box p {
+  font-size: 0.88rem;
+  color: #93c5fd;
+  margin: 0;
+}
+
+.ai-empty-prompt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 20px;
+  text-align: center;
+  gap: 12px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  border: 1px dashed rgba(255, 255, 255, 0.08);
+}
+
+.empty-icon {
+  font-size: 2.2rem;
+}
+
+.ai-empty-prompt h4 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0;
+}
+
+.ai-empty-prompt p {
+  font-size: 0.86rem;
+  color: #94a3b8;
+  max-width: 420px;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ─── Responsive Sandbox Breakpoints ─────────────────────────────────────── */
+@media (max-width: 768px) {
+  .playground-header {
+    padding: 18px 16px;
+    gap: 14px;
+  }
+
+  .playground-title {
+    font-size: 1.45rem;
+  }
+
+  .playground-header__actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .playground-header__actions .btn--primary {
+    grid-column: 1 / -1;
+  }
+
+  .testnet-select-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .deploy-meta-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .deploy-actions-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .deploy-actions-row .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .editor-pane__header,
+  .editor-pane__footer {
+    padding: 10px 14px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .template-dropdown-wrap {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .template-select {
+    max-width: none;
+    flex: 1;
+  }
+
+  .output-pane__content {
+    padding: 14px;
+  }
+}
+
 @media (max-width: 480px) {
   .playground-header__actions {
     grid-template-columns: 1fr;
@@ -552,5 +1164,14 @@
   .preset-btn {
     padding: 6px 10px;
     font-size: 0.74rem;
+  }
+
+  .deploy-meta-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .deploy-card,
+  .deployments-history {
+    padding: 16px 14px;
   }
 }

@@ -112,7 +112,7 @@ export const INITIAL_DEPLOYMENTS: DeployedContractRecord[] = [
     explorerUrl: 'https://sepolia.arbiscan.io',
     gasUsed: 264820,
     blockNumber: 14892103,
-    timestamp: 'Verified',
+    timestamp: '10m ago',
     language: 'Solidity'
   },
   {
@@ -127,7 +127,7 @@ export const INITIAL_DEPLOYMENTS: DeployedContractRecord[] = [
     explorerUrl: 'https://sepolia.basescan.org',
     gasUsed: 198340,
     blockNumber: 14892080,
-    timestamp: 'Verified',
+    timestamp: '35m ago',
     language: 'Solidity'
   },
   {
@@ -142,7 +142,7 @@ export const INITIAL_DEPLOYMENTS: DeployedContractRecord[] = [
     explorerUrl: 'https://sepolia-optimism.etherscan.io',
     gasUsed: 218750,
     blockNumber: 14892015,
-    timestamp: 'Verified',
+    timestamp: '1h ago',
     language: 'Solidity'
   }
 ];

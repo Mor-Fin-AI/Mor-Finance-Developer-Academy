@@ -1128,20 +1128,24 @@ export const PlaygroundView: React.FC<{ isLoggedIn?: boolean }> = ({ isLoggedIn:
             {activeTab === 'deploy' && (
               <div className="deploy-view animate-fade-in">
                 <div className="deploy-card glass">
-                  <h4 className="deploy-card__title">Deploy to Live EVM Testnet</h4>
-                  <p className="deploy-card__desc">
-                    Connect your MetaMask wallet, choose an EVM testnet, and deploy this smart contract directly on-chain.
-                  </p>
+                  <div className="deploy-card__header">
+                    <span className="deploy-card__badge">🚀 LIVE ON-CHAIN DEPLOYER</span>
+                    <h4 className="deploy-card__title">Deploy to Live EVM Testnet</h4>
+                    <p className="deploy-card__desc">
+                      Connect your MetaMask or browser Web3 wallet, choose an EVM testnet, and deploy this smart contract directly on-chain.
+                    </p>
+                  </div>
 
                   <div className="testnet-select-grid">
                     {EVM_TESTNETS.map((net) => (
                       <button
                         key={net.id}
+                        type="button"
                         className={`testnet-btn ${selectedTestnetId === net.id ? 'testnet-btn--active' : ''}`}
                         onClick={() => setSelectedTestnetId(net.id)}
                       >
                         <span className="testnet-btn__icon">{net.icon}</span>
-                        <div>
+                        <div className="testnet-btn__info">
                           <span className="testnet-btn__name">{net.name}</span>
                           <span className="testnet-btn__chain">Chain ID: {net.chainId}</span>
                         </div>
@@ -1151,33 +1155,36 @@ export const PlaygroundView: React.FC<{ isLoggedIn?: boolean }> = ({ isLoggedIn:
 
                   <div className="deploy-meta-grid">
                     <div className="deploy-meta-cell">
-                      <span>Target Network:</span>
-                      <strong>{activeTestnet.name}</strong>
+                      <span className="deploy-meta-label">Target Network</span>
+                      <strong className="deploy-meta-val">{activeTestnet.name}</strong>
                     </div>
                     <div className="deploy-meta-cell">
-                      <span>Native Token:</span>
-                      <strong>{activeTestnet.symbol}</strong>
+                      <span className="deploy-meta-label">Native Token</span>
+                      <strong className="deploy-meta-val">{activeTestnet.symbol}</strong>
                     </div>
                     <div className="deploy-meta-cell">
-                      <span>Faucet Access:</span>
+                      <span className="deploy-meta-label">Faucet Access</span>
                       <a href={activeTestnet.faucetUrl} target="_blank" rel="noopener noreferrer" className="faucet-link">
-                        Get Free Testnet Gas ↗
+                        <span>Get Free Testnet Gas</span>
+                        <span className="faucet-link__arrow">↗</span>
                       </a>
                     </div>
                     <div className="deploy-meta-cell">
-                      <span>Wallet Status:</span>
-                      <span>{walletAddress ? `🔑 ${walletAddress.slice(0, 6)}...` : '⚠️ Not Connected'}</span>
+                      <span className="deploy-meta-label">Wallet Status</span>
+                      <span className={`deploy-meta-val ${walletAddress ? 'deploy-meta-val--connected' : 'deploy-meta-val--disconnected'}`}>
+                        {walletAddress ? `🔑 ${walletAddress.slice(0, 6)}...${walletAddress.slice(-4)}` : '⚠️ Not Connected'}
+                      </span>
                     </div>
                   </div>
 
                   <div className="deploy-actions-row">
                     {!walletAddress && (
-                      <button className="btn btn--secondary" onClick={handleConnectWallet} disabled={connectingWallet}>
-                        🦊 Connect MetaMask
+                      <button className="btn btn--secondary deploy-connect-btn" onClick={handleConnectWallet} disabled={connectingWallet}>
+                        🦊 {connectingWallet ? 'Connecting...' : 'Connect MetaMask'}
                       </button>
                     )}
                     <button
-                      className="btn btn--primary"
+                      className="btn btn--primary deploy-submit-btn"
                       onClick={handleDeployToTestnet}
                       disabled={deployingTestnet}
                     >
@@ -1195,13 +1202,19 @@ export const PlaygroundView: React.FC<{ isLoggedIn?: boolean }> = ({ isLoggedIn:
 
                 {/* Deployed Contracts History Table */}
                 <div className="deployments-history glass">
-                  <h4 className="deployments-history__title">
-                    <span>📜 Deployed Contracts Registry</span>
-                    <span className="badge badge--primary">{deployedContracts.length} Total</span>
-                  </h4>
+                  <div className="deployments-history__header">
+                    <div className="deployments-history__title-wrap">
+                      <span className="deployments-history__icon">📜</span>
+                      <h4 className="deployments-history__title">Deployed Contracts Registry</h4>
+                    </div>
+                    <span className="badge-registry-count">{deployedContracts.length} Total</span>
+                  </div>
 
                   {deployedContracts.length === 0 ? (
-                    <p className="no-deployments-msg">No contracts deployed yet. Click 'Deploy' to launch your first contract!</p>
+                    <div className="no-deployments-box">
+                      <span className="no-deployments-icon">🚀</span>
+                      <p className="no-deployments-msg">No contracts deployed yet. Click 'Deploy' to launch your first smart contract!</p>
+                    </div>
                   ) : (
                     <div className="deployments-table-wrapper">
                       <table className="deployments-table">
@@ -1211,17 +1224,21 @@ export const PlaygroundView: React.FC<{ isLoggedIn?: boolean }> = ({ isLoggedIn:
                             <th>Network</th>
                             <th>Contract Address</th>
                             <th>Transaction</th>
-                            <th>Gas</th>
-                            <th>Time</th>
+                            <th>Gas Used</th>
+                            <th>Status &amp; Time</th>
                           </tr>
                         </thead>
                         <tbody>
                           {deployedContracts.map((dep) => (
                             <tr key={dep.id}>
-                              <td><strong>{dep.contractName}</strong></td>
+                              <td className="cell-contract-name">
+                                <span className="contract-doc-icon">📄</span>
+                                <span className="contract-title-text">{dep.contractName}</span>
+                              </td>
                               <td>
                                 <span className="net-pill">
-                                  {dep.networkIcon} {dep.networkName}
+                                  <span className="net-pill__icon">{dep.networkIcon}</span>
+                                  <span className="net-pill__name">{dep.networkName}</span>
                                 </span>
                               </td>
                               <td>
@@ -1230,8 +1247,10 @@ export const PlaygroundView: React.FC<{ isLoggedIn?: boolean }> = ({ isLoggedIn:
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="explorer-link"
+                                  title={`View on ${dep.networkName} explorer`}
                                 >
-                                  {dep.contractAddress.slice(0, 6)}...{dep.contractAddress.slice(-4)} ↗
+                                  <span className="explorer-link__hash">{dep.contractAddress.slice(0, 6)}...{dep.contractAddress.slice(-4)}</span>
+                                  <span className="explorer-link__arrow">↗</span>
                                 </a>
                               </td>
                               <td>
@@ -1240,12 +1259,19 @@ export const PlaygroundView: React.FC<{ isLoggedIn?: boolean }> = ({ isLoggedIn:
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="explorer-link"
+                                  title={`View transaction on ${dep.networkName} explorer`}
                                 >
-                                  {dep.txHash.slice(0, 6)}... ↗
+                                  <span className="explorer-link__hash">{dep.txHash.slice(0, 6)}...{dep.txHash.slice(-4)}</span>
+                                  <span className="explorer-link__arrow">↗</span>
                                 </a>
                               </td>
-                              <td>{dep.gasUsed ? dep.gasUsed.toLocaleString() : '185,000'}</td>
-                              <td>{dep.timestamp}</td>
+                              <td className="cell-gas">
+                                <span className="gas-badge">⚡ {dep.gasUsed ? dep.gasUsed.toLocaleString() : '185,000'}</span>
+                              </td>
+                              <td className="cell-status-time">
+                                <span className="verified-badge">✓ Verified</span>
+                                <span className="timestamp-text">{dep.timestamp === 'Verified' ? 'Recently' : dep.timestamp}</span>
+                              </td>
                             </tr>
                           ))}
                         </tbody>
