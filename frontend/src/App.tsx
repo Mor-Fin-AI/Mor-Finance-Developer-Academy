@@ -267,24 +267,28 @@ export default function App() {
       }, 8000);
 
       let clientId = (import.meta as any).env?.VITE_GITHUB_CLIENT_ID;
-      let redirectUri = (import.meta as any).env?.VITE_GITHUB_REDIRECT_URI || window.location.origin;
+      let redirectUri = (import.meta as any).env?.VITE_GITHUB_REDIRECT_URI;
 
       try {
-        const config = await fetchAuthConfig(4000);
-        if (config.github_client_id && config.github_client_id.trim() && config.github_client_id !== 'YOUR_GITHUB_CLIENT_ID_CONFIG') {
+        const config = await fetchAuthConfig(5000);
+        if (config.github_client_id && config.github_client_id.trim()) {
           clientId = config.github_client_id.trim();
-          redirectUri = config.github_redirect_uri || redirectUri;
+        }
+        if (config.github_redirect_uri && config.github_redirect_uri.trim()) {
+          redirectUri = config.github_redirect_uri.trim();
         }
       } catch (err) {
-        console.warn("Could not retrieve backend auth config within timeout, using fallback client ID:", err);
+        console.warn("Could not retrieve backend auth config within timeout:", err);
       }
 
-      if (!clientId || clientId === 'YOUR_GITHUB_CLIENT_ID_CONFIG') {
-        clientId = 'Ov23liJ2hxzWckVzJpxM';
+      if (!clientId || !clientId.trim()) {
+        clearTimeout(timeoutTimer);
+        throw new Error("GitHub OAuth Client ID is not configured on the backend or environment.");
       }
 
       clearTimeout(timeoutTimer);
-      const redirectUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=user:email`;
+      const redirectParam = redirectUri ? `&redirect_uri=${encodeURIComponent(redirectUri)}` : '';
+      const redirectUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}${redirectParam}&scope=user:email`;
       window.location.href = redirectUrl;
       return;
     } catch (err: any) {
@@ -395,24 +399,28 @@ export default function App() {
       }, 8000);
 
       let clientId = (import.meta as any).env?.VITE_GITHUB_CLIENT_ID;
-      let redirectUri = (import.meta as any).env?.VITE_GITHUB_REDIRECT_URI || window.location.origin;
+      let redirectUri = (import.meta as any).env?.VITE_GITHUB_REDIRECT_URI;
 
       try {
-        const config = await fetchAuthConfig(4000);
-        if (config.github_client_id && config.github_client_id.trim() && config.github_client_id !== 'YOUR_GITHUB_CLIENT_ID_CONFIG') {
+        const config = await fetchAuthConfig(5000);
+        if (config.github_client_id && config.github_client_id.trim()) {
           clientId = config.github_client_id.trim();
-          redirectUri = config.github_redirect_uri || redirectUri;
+        }
+        if (config.github_redirect_uri && config.github_redirect_uri.trim()) {
+          redirectUri = config.github_redirect_uri.trim();
         }
       } catch (err) {
-        console.warn("Could not retrieve public auth config, using fallback ID:", err);
+        console.warn("Could not retrieve public auth config:", err);
       }
 
-      if (!clientId || clientId === 'YOUR_GITHUB_CLIENT_ID_CONFIG') {
-        clientId = 'Ov23liJ2hxzWckVzJpxM';
+      if (!clientId || !clientId.trim()) {
+        clearTimeout(timeoutTimer);
+        throw new Error("GitHub OAuth Client ID is not configured on the backend or environment.");
       }
 
       clearTimeout(timeoutTimer);
-      const redirectUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=user`;
+      const redirectParam = redirectUri ? `&redirect_uri=${encodeURIComponent(redirectUri)}` : '';
+      const redirectUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}${redirectParam}&scope=user`;
       window.location.href = redirectUrl;
       return;
     } catch (err) {

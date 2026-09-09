@@ -89,21 +89,36 @@ export interface AuthConfig {
   github_redirect_uri: string;
 }
 
-export async function fetchAuthConfig(timeoutMs = 6000): Promise<AuthConfig> {
+let cachedAuthConfigPromise: Promise<AuthConfig> | null = null;
+
+export async function fetchAuthConfig(timeoutMs = 8000, forceFresh = false): Promise<AuthConfig> {
+  if (cachedAuthConfigPromise && !forceFresh) {
+    return cachedAuthConfigPromise;
+  }
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
-  try {
-    const res = await fetch(`${BASE}/auth/config`, { signal: controller.signal });
-    clearTimeout(timer);
-    if (!res.ok) throw new Error(`Failed to fetch auth config: ${res.status}`);
-    return res.json();
-  } catch (err: any) {
-    clearTimeout(timer);
-    if (err.name === 'AbortError') {
-      throw new Error(`Authentication configuration request timed out (${timeoutMs}ms)`);
-    }
-    throw err;
-  }
+  const p = fetch(`${BASE}/auth/config`, { signal: controller.signal })
+    .then((res) => {
+      clearTimeout(timer);
+      if (!res.ok) throw new Error(`Failed to fetch auth config: ${res.status}`);
+      return res.json() as Promise<AuthConfig>;
+    })
+    .catch((err) => {
+      clearTimeout(timer);
+      cachedAuthConfigPromise = null; // Reset cache on failure so next attempt retries
+      if (err.name === 'AbortError') {
+        throw new Error(`Authentication configuration request timed out (${timeoutMs}ms)`);
+      }
+      throw err;
+    });
+
+  cachedAuthConfigPromise = p;
+  return p;
+}
+
+// Pre-fetch auth config in the background on module load
+if (typeof window !== 'undefined') {
+  fetchAuthConfig(10000).catch(() => {});
 }
 
 export interface AuthResponse {
@@ -4951,45 +4966,51 @@ export async function initiateFrictionlessEnrollment(
   cohort?: string,
   timeoutMs = 5000
 ) {
-  const envAppUrl = (import.meta as any).env?.VITE_APP_URL;
   const envRedirectUri = (import.meta as any).env?.VITE_GITHUB_REDIRECT_URI;
-  const effectiveRedirectUri = redirectUri || envRedirectUri || (envAppUrl ? envAppUrl.replace(/\/$/, '') : (typeof window !== 'undefined' ? window.location.origin : 'http://localhost:5173'));
   const effectiveUniversity = university || (import.meta as any).env?.VITE_UNIVERSITY_NAME || 'Kenyatta University';
   const effectiveCohort = cohort || (import.meta as any).env?.VITE_COHORT_ID || 'KU_COHORT_2026_01';
 
   let resolvedClientId = clientId;
 
   // 1. Check Vite env if not validly provided
-  if (!resolvedClientId || resolvedClientId === 'YOUR_GITHUB_CLIENT_ID_CONFIG') {
+  if (!resolvedClientId) {
     const viteEnvId = (import.meta as any).env?.VITE_GITHUB_CLIENT_ID;
-    if (viteEnvId && viteEnvId !== 'YOUR_GITHUB_CLIENT_ID_CONFIG') {
-      resolvedClientId = viteEnvId;
+    if (viteEnvId && viteEnvId.trim()) {
+      resolvedClientId = viteEnvId.trim();
     }
   }
 
   // 2. Fetch from backend /api/auth/config with timeout
-  if (!resolvedClientId || resolvedClientId === 'YOUR_GITHUB_CLIENT_ID_CONFIG') {
+  let backendRedirectUri: string | undefined;
+  if (!resolvedClientId) {
     try {
       const config = await fetchAuthConfig(timeoutMs);
-      if (config.github_client_id && config.github_client_id !== 'YOUR_GITHUB_CLIENT_ID_CONFIG') {
+      if (config.github_client_id && config.github_client_id.trim()) {
         resolvedClientId = config.github_client_id.trim();
       }
-    } catch (e) {
-      console.warn('[MOR_AUTH]: Backend auth config lookup timed out or failed; using verified fallback client ID.');
+      if (config.github_redirect_uri && config.github_redirect_uri.trim()) {
+        backendRedirectUri = config.github_redirect_uri.trim();
+      }
+    } catch (e: any) {
+      console.warn('[MOR_AUTH]: Backend auth config lookup failed:', e);
     }
   }
 
-  // 3. Verified fallback from backend config (GITHUB_CLIENT_ID)
-  if (!resolvedClientId || resolvedClientId === 'YOUR_GITHUB_CLIENT_ID_CONFIG') {
-    resolvedClientId = 'Ov23liJ2hxzWckVzJpxM';
+  // 3. If still no client ID, throw explicit error instead of falling back to wrong environment ID
+  if (!resolvedClientId || !resolvedClientId.trim()) {
+    throw new Error('GitHub OAuth is not configured. Missing GitHub Client ID on the server or environment.');
   }
 
-  console.log('[MOR_AUTH]: Launching rapid OAuth enrollment with client ID:', resolvedClientId, effectiveUniversity, effectiveCohort);
   const stateParameters = btoa(JSON.stringify({
     university: effectiveUniversity,
     cohort: effectiveCohort
   }));
-  const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${resolvedClientId}&redirect_uri=${encodeURIComponent(effectiveRedirectUri)}&scope=user:email&state=${stateParameters}`;
+
+  const explicitRedirect = redirectUri || envRedirectUri || backendRedirectUri;
+  const redirectParam = explicitRedirect ? `&redirect_uri=${encodeURIComponent(explicitRedirect)}` : '';
+
+  console.log('[MOR_AUTH]: Launching OAuth enrollment with client ID:', resolvedClientId, 'Redirect:', explicitRedirect || 'Default (App Callback URL)');
+  const githubAuthUrl = `https://github.com/login/oauth/authorize?client_id=${resolvedClientId}${redirectParam}&scope=user:email&state=${stateParameters}`;
   window.location.href = githubAuthUrl;
 }
 

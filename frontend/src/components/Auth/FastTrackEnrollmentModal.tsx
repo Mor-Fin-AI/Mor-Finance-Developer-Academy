@@ -66,7 +66,7 @@ export const FastTrackEnrollmentModal: React.FC<FastTrackEnrollmentModalProps> =
     try {
       await initiateFrictionlessEnrollment(
         undefined,
-        baseOrigin,
+        undefined,
         activeUniversity,
         activeCohort,
         5000

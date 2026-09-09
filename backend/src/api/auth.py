@@ -47,21 +47,28 @@ async def auth_github_callback(req: UniversityEnrollmentCallback):
         try:
             async with httpx.AsyncClient() as client:
                 resp = await client.post("https://github.com/login/oauth/access_token", headers=headers, data=data)
-                if resp.status_code == 200:
-                    token_data = resp.json()
-                    access_token = token_data.get("access_token")
-                    if access_token:
-                        user_headers = {
-                            "Authorization": f"Bearer {access_token}",
-                            "User-Agent": "Developer-Academy-Backend"
-                        }
-                        user_resp = await client.get("https://api.github.com/user", headers=user_headers)
-                        if user_resp.status_code == 200:
-                            user_info = user_resp.json()
-                            username = user_info.get("login")
-                            name = user_info.get("name")
-                            email = user_info.get("email")
-                            avatar_url = user_info.get("avatar_url")
+                token_data = resp.json() if resp.status_code == 200 else {}
+                
+                # If exchange failed with redirect_uri error, retry without redirect_uri
+                if ("error" in token_data or resp.status_code != 200) and "redirect_uri" in data:
+                    data_no_redirect = {k: v for k, v in data.items() if k != "redirect_uri"}
+                    retry_resp = await client.post("https://github.com/login/oauth/access_token", headers=headers, data=data_no_redirect)
+                    if retry_resp.status_code == 200:
+                        token_data = retry_resp.json()
+
+                access_token = token_data.get("access_token")
+                if access_token:
+                    user_headers = {
+                        "Authorization": f"Bearer {access_token}",
+                        "User-Agent": "Developer-Academy-Backend"
+                    }
+                    user_resp = await client.get("https://api.github.com/user", headers=user_headers)
+                    if user_resp.status_code == 200:
+                        user_info = user_resp.json()
+                        username = user_info.get("login")
+                        name = user_info.get("name")
+                        email = user_info.get("email")
+                        avatar_url = user_info.get("avatar_url")
         except Exception as e:
             print(f"Notice: GitHub OAuth network exchange fallback: {e}")
 
@@ -150,10 +157,13 @@ async def auth_github(req: GithubAuthRequest):
         
         async with httpx.AsyncClient() as client:
             resp = await client.post("https://github.com/login/oauth/access_token", headers=headers, data=data)
-            if resp.status_code != 200:
-                raise HTTPException(status_code=400, detail="Failed to request access token from GitHub.")
+            token_data = resp.json() if resp.status_code == 200 else {}
+            if ("error" in token_data or resp.status_code != 200) and "redirect_uri" in data:
+                data_no_redirect = {k: v for k, v in data.items() if k != "redirect_uri"}
+                retry_resp = await client.post("https://github.com/login/oauth/access_token", headers=headers, data=data_no_redirect)
+                if retry_resp.status_code == 200:
+                    token_data = retry_resp.json()
             
-            token_data = resp.json()
             access_token = token_data.get("access_token")
             if not access_token:
                 raise HTTPException(

@@ -20,9 +20,9 @@ class Settings(BaseSettings):
     hermes_api_url: str = "http://localhost:11434/v1"
     hermes_model: str = "hermes-3-llama-3.1-8b"
     mentor_api_url: str = "https://frontend-v2-eta-red.vercel.app/api/agents/mentors/ask"
-    mentor_bearer_token: str = "60d6b55053548bd64ce97ebaba3ae09b5574f744655b3a44ef254158eda41899"
-    web3_career_api_key: str = "X9q3WrJhceDrdb3oYt2xXeF8Aukh1YsZ"
-    web3_career_token: str = "X9q3WrJhceDrdb3oYt2xXeF8Aukh1YsZ"
+    mentor_bearer_token: str = ""
+    web3_career_api_key: str = ""
+    web3_career_token: str = ""
 
 
 settings = Settings()

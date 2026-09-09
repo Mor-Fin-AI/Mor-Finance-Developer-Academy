@@ -80,10 +80,11 @@ def fetch_live_web3_career_jobs(
     remote: Optional[bool] = None, 
     limit: int = 20
 ) -> List[Dict[str, Any]]:
-    """
-    Fetch live job listings directly from Web3.Career API using the configured API token.
-    """
-    api_token = settings.web3_career_api_key or "X9q3WrJhceDrdb3oYt2xXeF8Aukh1YsZ"
+    api_token = settings.web3_career_api_key or settings.web3_career_token
+    if not api_token:
+        if cache_key in _CACHE:
+            return _CACHE[cache_key]["data"]
+        return []
     
     params: Dict[str, str] = {
         "token": api_token,

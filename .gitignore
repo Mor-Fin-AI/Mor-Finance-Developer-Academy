@@ -1,18 +1,49 @@
+# Environment variables & secrets
+.env
+.env.*
+*.env
+*.env.*
+*.env.local
+*.env.development.local
+*.env.test.local
+*.env.production.local
+backend/.env
+backend/.env.*
+frontend/.env
+frontend/.env.*
+
+# Private keys & certificates
+*.pem
+*.key
+*.cert
+*.pfx
+*.pkcs12
+secrets/
+credentials.json
+
+# Node & Frontend
+node_modules/
+dist/
+build/
+.npm
+.eslintcache
+
 # Virtual environment
 .venv/
 venv/
 ENV/
+env/
 
 # Python Cache
 **/__pycache__/
 *.pyc
 *.pyo
 *.pyd
-
-# Environment variables file
-.env
-backend/.env
+.pytest_cache/
+.coverage
+htmlcov/
 
 # OS files
 .DS_Store
 Thumbs.db
+

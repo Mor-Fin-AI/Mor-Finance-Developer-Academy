@@ -355,7 +355,7 @@ dist/assets/index.js            728.21 kB │ gzip: 199.38 kB
 #### Frontend Environment Variables (`frontend/.env`):
 ```env
 VITE_API_URL=https://mor-finance-developer-academy-backend.onrender.com
-VITE_GITHUB_CLIENT_ID=Ov23liJ2hxzWckVzJpxM
+VITE_GITHUB_CLIENT_ID=your_github_client_id_here
 VITE_GITHUB_REDIRECT_URI=https://morfinance.ai
 VITE_APP_URL=https://morfinance.ai
 VITE_COHORT_ID=KU_COHORT_2026_01
@@ -366,11 +366,11 @@ VITE_UNIVERSITY_NAME=Kenyatta University
 ```env
 APP_ENV=production
 CORS_ORIGINS=["https://morfinance.ai","http://localhost:5173"]
-GITHUB_CLIENT_ID=Ov23liJ2hxzWckVzJpxM
-GITHUB_CLIENT_SECRET=e6e01ef7f4bb422389d073fa0ae3f2b798fd7526
+GITHUB_CLIENT_ID=your_github_client_id_here
+GITHUB_CLIENT_SECRET=your_github_client_secret_here
 GITHUB_REDIRECT_URI=https://morfinance.ai
-MONGODB_URI=mongodb+srv://<USER>:<PASS>@cluster.mongodb.net/devjobs
-SECRET_KEY=90a635f5e49068260463f17f2ce36d74dfbd042da88d372246e06daeef4cf88a
+MONGODB_URI=mongodb+srv://<USER>:<PASSWORD>@cluster.mongodb.net/devjobs
+SECRET_KEY=your_secure_random_jwt_secret_key_here
 ```
 
 ---
