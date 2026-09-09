@@ -178,12 +178,12 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "What is the primary innovation of Aptos's Block-STM parallel execution engine?",
         "options": [
-          "It executes transactions optimistically in parallel and validates dependencies concurrently, achieving over 100k TPS without sharding.",
           "It executes transactions one by one in single-threaded order.",
           "It disables smart contract state changes.",
+          "It executes transactions optimistically in parallel and validates dependencies concurrently, achieving over 100k TPS without sharding.",
           "It replaces blockchain with centralized SQL."
         ],
-        "correct_idx": 0
+        "correct_idx": 2
       },
       {
         "question": "How does Move's linear type system protect digital assets compared to EVM?",
@@ -198,20 +198,20 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "What is a Resource Account in Aptos?",
         "options": [
-          "An autonomous account used by developers to manage modules, publish packages, and control state without a direct private key.",
-          "A standard user wallet with 12 seed words.",
           "A temporary testnet faucet account.",
-          "A bank savings account."
+          "A standard user wallet with 12 seed words.",
+          "A bank savings account.",
+          "An autonomous account used by developers to manage modules, publish packages, and control state without a direct private key."
         ],
-        "correct_idx": 0
+        "correct_idx": 3
       },
       {
         "question": "What consensus algorithm powers the Aptos Layer-1 network?",
         "options": [
           "AptosBFT (DiemBFT v4) with sub-second finality and leader reputation mechanism.",
+          "Round-robin email consensus.",
           "Proof of Work mining.",
-          "Proof of Authority with a single admin node.",
-          "Round-robin email consensus."
+          "Proof of Authority with a single admin node."
         ],
         "correct_idx": 0
       },
@@ -219,21 +219,21 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "question": "What role does the Move Bytecode Verifier play before execution?",
         "options": [
           "It rigorously verifies type safety, memory bounds, and resource linearity before any code can run on-chain.",
-          "It translates Move to Solidity.",
           "It mines APT tokens.",
-          "It formats code indentation."
+          "It formats code indentation.",
+          "It translates Move to Solidity."
         ],
         "correct_idx": 0
       },
       {
         "question": "Why are reentrancy attacks virtually impossible in native Move smart contracts?",
         "options": [
-          "Move enforces strict resource borrow semantics and does not permit uncontrolled dynamic call dispatch loops.",
-          "Move contracts have no external functions.",
           "Move disables token transfers.",
-          "Move contracts do not use state."
+          "Move contracts have no external functions.",
+          "Move contracts do not use state.",
+          "Move enforces strict resource borrow semantics and does not permit uncontrolled dynamic call dispatch loops."
         ],
-        "correct_idx": 0
+        "correct_idx": 3
       }
     ],
     "exercise": {
@@ -257,8 +257,8 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "question": "Which command initializes a new Aptos developer profile and generates testnet keypairs?",
         "options": [
           "aptos init --network testnet",
-          "npm install aptos",
           "git clone aptos",
+          "npm install aptos",
           "docker run aptos"
         ],
         "correct_idx": 0
@@ -266,19 +266,19 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "What file defines dependencies, package metadata, and named addresses in an Aptos Move project?",
         "options": [
-          "Move.toml",
-          "package.json",
           "Cargo.toml",
-          "Hardhat.config.js"
+          "package.json",
+          "Hardhat.config.js",
+          "Move.toml"
         ],
-        "correct_idx": 0
+        "correct_idx": 3
       },
       {
         "question": "Which Aptos CLI command runs formal unit tests and test suites locally?",
         "options": [
           "aptos move test",
-          "aptos run test",
           "npm test",
+          "aptos run test",
           "cargo check"
         ],
         "correct_idx": 0
@@ -286,30 +286,30 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "How do developers fund their testnet account using the Aptos CLI?",
         "options": [
+          "aptos mine --blocks 100",
           "aptos account fund-with-faucet --account default",
           "aptos buy tokens --credit-card",
-          "aptos mine --blocks 100",
           "aptos transfer from master"
         ],
-        "correct_idx": 0
+        "correct_idx": 1
       },
       {
         "question": "What is the purpose of named addresses in Move.toml (e.g. `my_addr = '_'` or `0xcafe`)?",
         "options": [
-          "They decouple source code from hardcoded addresses, allowing seamless deployment to dynamic account addresses.",
           "They create DNS records.",
           "They encrypt GitHub commits.",
+          "They decouple source code from hardcoded addresses, allowing seamless deployment to dynamic account addresses.",
           "They rename user wallets."
         ],
-        "correct_idx": 0
+        "correct_idx": 2
       },
       {
         "question": "What does the `--named-addresses` flag do during Move compilation?",
         "options": [
           "It dynamically binds named address identifiers in the Move module to specific hex addresses at compile/publish time.",
+          "It exports private keys.",
           "It sets the gas price to zero.",
-          "It downloads external images.",
-          "It exports private keys."
+          "It downloads external images."
         ],
         "correct_idx": 0
       }
@@ -334,52 +334,52 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "What are the four core abilities in the Move programming language?",
         "options": [
-          "key, store, copy, and drop",
-          "public, private, internal, and external",
           "read, write, execute, and delete",
-          "get, set, push, and pop"
+          "key, store, copy, and drop",
+          "get, set, push, and pop",
+          "public, private, internal, and external"
         ],
-        "correct_idx": 0
+        "correct_idx": 1
       },
       {
         "question": "Which ability must a Move struct possess to be stored in global storage under an account address?",
         "options": [
-          "key",
-          "copy",
           "drop",
-          "store only"
+          "store only",
+          "copy",
+          "key"
         ],
-        "correct_idx": 0
+        "correct_idx": 3
       },
       {
         "question": "Which built-in Move function publishes a newly instantiated resource into the caller's account storage?",
         "options": [
-          "move_to(&signer, resource_instance)",
           "borrow_global_mut<T>(address)",
-          "exists<T>(address)",
-          "destroy(resource)"
+          "destroy(resource)",
+          "move_to(&signer, resource_instance)",
+          "exists<T>(address)"
         ],
-        "correct_idx": 0
+        "correct_idx": 2
       },
       {
         "question": "What is the difference between `copy` and `drop` abilities in Move?",
         "options": [
-          "`copy` allows value duplicating, while `drop` allows values to be popped/destroyed when leaving scope.",
           "`copy` destroys resources and `drop` clones them.",
-          "`copy` is for NFTs and `drop` is for tokens.",
-          "Both abilities do the exact same thing."
+          "`copy` allows value duplicating, while `drop` allows values to be popped/destroyed when leaving scope.",
+          "Both abilities do the exact same thing.",
+          "`copy` is for NFTs and `drop` is for tokens."
         ],
-        "correct_idx": 0
+        "correct_idx": 1
       },
       {
         "question": "How does the Aptos Fungible Asset (FA) standard improve upon legacy Coin modules?",
         "options": [
-          "It provides a unified, object-based standard for fungible tokens with native metadata, royalties, and deposit hooks.",
-          "It requires 50% more gas.",
           "It prevents token transfers entirely.",
+          "It requires 50% more gas.",
+          "It provides a unified, object-based standard for fungible tokens with native metadata, royalties, and deposit hooks.",
           "It only works on Bitcoin."
         ],
-        "correct_idx": 0
+        "correct_idx": 2
       },
       {
         "question": "Which Move function safely checks if a specific resource struct exists under an address before borrowing it?",
@@ -422,42 +422,42 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "What is an `entry` function in an Aptos Move module?",
         "options": [
-          "A public entrypoint function that can be called directly by external transactions signed by user wallets.",
-          "A private helper function for internal recursion.",
           "The constructor function that only runs once at genesis.",
-          "A compiler configuration macro."
+          "A public entrypoint function that can be called directly by external transactions signed by user wallets.",
+          "A compiler configuration macro.",
+          "A private helper function for internal recursion."
         ],
-        "correct_idx": 0
+        "correct_idx": 1
       },
       {
         "question": "How does a frontend DApp request Petra Wallet to sign and broadcast a Move transaction?",
         "options": [
-          "window.aptos.signAndSubmitTransaction({ payload: { function: '0x1::...::transfer', typeArguments: [], functionArguments: [recipient, amount] } })",
           "window.alert('sign transfer')",
-          "document.cookie = 'transfer'",
-          "fetch('http://localhost/pay')"
+          "fetch('http://localhost/pay')",
+          "window.aptos.signAndSubmitTransaction({ payload: { function: '0x1::...::transfer', typeArguments: [], functionArguments: [recipient, amount] } })",
+          "document.cookie = 'transfer'"
         ],
-        "correct_idx": 0
+        "correct_idx": 2
       },
       {
         "question": "What API does the Aptos Indexer provide for lightning-fast historical queries and token balances?",
         "options": [
-          "GraphQL API endpoint with real-time subscriptions.",
-          "SOAP XML endpoints.",
           "FTP directory listings.",
+          "SOAP XML endpoints.",
+          "GraphQL API endpoint with real-time subscriptions.",
           "CSV file downloads."
         ],
-        "correct_idx": 0
+        "correct_idx": 2
       },
       {
         "question": "How are Move `view` functions queried using the Aptos TypeScript SDK?",
         "options": [
-          "aptos.view({ payload: { function: '0x123::module::get_balance', functionArguments: [account] } }) without gas fees.",
-          "By submitting an on-chain transaction that burns APT.",
           "By mining a block locally.",
+          "By submitting an on-chain transaction that burns APT.",
+          "aptos.view({ payload: { function: '0x123::module::get_balance', functionArguments: [account] } }) without gas fees.",
           "By restarting the browser."
         ],
-        "correct_idx": 0
+        "correct_idx": 2
       },
       {
         "question": "What security check ensures a frontend only interacts with audited, verified Move package addresses?",
@@ -500,50 +500,50 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "What package upgrade policies are supported on Aptos?",
         "options": [
-          "`compatible` (backward-compatible upgrades) and `immutable` (permanently locked code).",
+          "Automatic daily code replacements.",
           "Only mutable code with unrestricted replacement.",
-          "No upgrades ever permitted.",
-          "Automatic daily code replacements."
+          "`compatible` (backward-compatible upgrades) and `immutable` (permanently locked code).",
+          "No upgrades ever permitted."
         ],
-        "correct_idx": 0
+        "correct_idx": 2
       },
       {
         "question": "Where can developers and grant reviewers inspect verified Move module bytecode on Aptos?",
         "options": [
-          "Aptos Explorer (explorer.aptoslabs.com) or AptoScan.",
           "Etherscan.",
           "GitHub issues only.",
+          "Aptos Explorer (explorer.aptoslabs.com) or AptoScan.",
           "A local text file."
         ],
-        "correct_idx": 0
+        "correct_idx": 2
       },
       {
         "question": "What is required to verify that an Aptos testnet deployment challenge has completed successfully?",
         "options": [
-          "A confirmed transaction hash on Aptos Testnet with valid emitted events and resource state creation.",
           "A screenshot of a terminal only.",
+          "An email to the miner.",
           "A printed paper receipt.",
-          "An email to the miner."
+          "A confirmed transaction hash on Aptos Testnet with valid emitted events and resource state creation."
         ],
-        "correct_idx": 0
+        "correct_idx": 3
       },
       {
         "question": "What gas optimization practice reduces storage costs when publishing Move modules?",
         "options": [
+          "Increasing transaction gas limit to max.",
           "Minimizing unused dependencies in Move.toml and leveraging optimized byte representation.",
           "Adding random comments.",
-          "Writing code in single long lines.",
-          "Increasing transaction gas limit to max."
+          "Writing code in single long lines."
         ],
-        "correct_idx": 0
+        "correct_idx": 1
       },
       {
         "question": "How does successful completion of this Aptos track and deployment challenge qualify you for ecosystem grants?",
         "options": [
           "It provides verifiable proof of technical competency, on-chain testnet deployment, and production Move proficiency.",
-          "It automatically gives financial loans.",
           "It eliminates the need for any application form.",
-          "It replaces developer interviews."
+          "It replaces developer interviews.",
+          "It automatically gives financial loans."
         ],
         "correct_idx": 0
       }
@@ -570,62 +570,62 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "What is the primary scaling mechanism of Starknet as a Layer-2 ZK-Rollup?",
         "options": [
-          "It executes thousands of transactions off-chain, bundles them into a single STARK validity proof, and verifies it on Ethereum L1.",
           "It runs sidechains with separate consensus and no L1 security.",
           "It deletes historical transactions every 30 days.",
-          "It uses centralized web servers without cryptography."
+          "It uses centralized web servers without cryptography.",
+          "It executes thousands of transactions off-chain, bundles them into a single STARK validity proof, and verifies it on Ethereum L1."
         ],
-        "correct_idx": 0
+        "correct_idx": 3
       },
       {
         "question": "What is unique about STARK proofs compared to SNARKs?",
         "options": [
-          "STARKs require no trusted setup ceremony and are transparent and post-quantum secure.",
           "STARKs require toxic waste ceremonies.",
+          "STARKs require no trusted setup ceremony and are transparent and post-quantum secure.",
           "STARKs are slower to verify.",
           "STARKs only work on Bitcoin."
         ],
-        "correct_idx": 0
+        "correct_idx": 1
       },
       {
         "question": "What does Native Account Abstraction mean on Starknet?",
         "options": [
-          "All accounts are smart contracts with custom validation (`__validate__`) and execution (`__execute__`) logic \u2014 there are no EOAs.",
-          "Accounts are managed by centralized email servers.",
+          "Contracts cannot hold balances.",
           "Users have no private keys.",
-          "Contracts cannot hold balances."
+          "All accounts are smart contracts with custom validation (`__validate__`) and execution (`__execute__`) logic \u2014 there are no EOAs.",
+          "Accounts are managed by centralized email servers."
         ],
-        "correct_idx": 0
+        "correct_idx": 2
       },
       {
         "question": "What computational unit is natively used for arithmetic in the Cairo Virtual Machine (CairoVM)?",
         "options": [
-          "Prime Field elements (`felt252`).",
           "Floating-point IEEE-754 numbers.",
+          "64-bit signed integers only.",
           "ASCII strings.",
-          "64-bit signed integers only."
+          "Prime Field elements (`felt252`)."
         ],
-        "correct_idx": 0
+        "correct_idx": 3
       },
       {
         "question": "What role does the Starknet Sequencer play in the network topology?",
         "options": [
-          "It receives transactions, orders them, executes Cairo bytecode, and generates L2 blocks before sending state diffs to the Prover.",
           "It mines Proof of Work hashes.",
-          "It verifies Ethereum L1 consensus.",
-          "It hosts user frontends."
+          "It receives transactions, orders them, executes Cairo bytecode, and generates L2 blocks before sending state diffs to the Prover.",
+          "It hosts user frontends.",
+          "It verifies Ethereum L1 consensus."
         ],
-        "correct_idx": 0
+        "correct_idx": 1
       },
       {
         "question": "How does Cairo 2.0 guarantee that code execution can always be proven?",
         "options": [
-          "Using Sierra (Safe Intermediate Execution Representation) which ensures all branches and operations are provable without crashes.",
-          "By running Java bytecode in a sandbox.",
           "By preventing loops and if statements.",
-          "By executing code on Ethereum L1 directly."
+          "By running Java bytecode in a sandbox.",
+          "By executing code on Ethereum L1 directly.",
+          "Using Sierra (Safe Intermediate Execution Representation) which ensures all branches and operations are provable without crashes."
         ],
-        "correct_idx": 0
+        "correct_idx": 3
       }
     ],
     "exercise": {
@@ -649,8 +649,8 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "question": "Which official build tool and package manager is used for Cairo and Starknet projects?",
         "options": [
           "Scarb",
-          "npm",
           "pip",
+          "npm",
           "maven"
         ],
         "correct_idx": 0
@@ -658,52 +658,52 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "What command-line tool is used for declaring class hashes and deploying contract instances on Starknet?",
         "options": [
-          "starkli",
           "hardhat",
+          "remix",
           "truffle",
-          "remix"
+          "starkli"
         ],
-        "correct_idx": 0
+        "correct_idx": 3
       },
       {
         "question": "Why are Starknet deployments split into two distinct steps (`declare` and `deploy`)?",
         "options": [
-          "`declare` registers the immutable contract class code and computes the class hash once, while `deploy` instantiates individual contract instances.",
-          "Because the compiler cannot run in one step.",
           "To charge double gas fees.",
-          "To verify user identity."
+          "To verify user identity.",
+          "Because the compiler cannot run in one step.",
+          "`declare` registers the immutable contract class code and computes the class hash once, while `deploy` instantiates individual contract instances."
         ],
-        "correct_idx": 0
+        "correct_idx": 3
       },
       {
         "question": "Which testing framework provides blazing-fast unit tests and cheatcodes for Cairo contracts?",
         "options": [
-          "snforge (Starknet Foundry)",
           "Mocha/Chai",
           "PyTest legacy",
+          "snforge (Starknet Foundry)",
           "JUnit"
         ],
-        "correct_idx": 0
+        "correct_idx": 2
       },
       {
         "question": "What configuration file defines dependencies and compiler targets for a Scarb project?",
         "options": [
           "Scarb.toml",
+          "starknet.config.json",
           "Cargo.lock",
-          "package.json",
-          "starknet.config.json"
+          "package.json"
         ],
         "correct_idx": 0
       },
       {
         "question": "Which testnet is the primary network for Starknet contract testing and grant verifications?",
         "options": [
-          "Starknet Sepolia",
           "Goerli (deprecated)",
+          "Starknet Sepolia",
           "Ropsten",
           "Kovan"
         ],
-        "correct_idx": 0
+        "correct_idx": 1
       }
     ],
     "exercise": {
@@ -726,19 +726,19 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "Which attribute macro marks a module as a deployable Starknet smart contract in Cairo 2.0?",
         "options": [
-          "#[starknet::contract]",
-          "#[contract]",
+          "#[program]",
           "#[solidity::contract]",
-          "#[program]"
+          "#[starknet::contract]",
+          "#[contract]"
         ],
-        "correct_idx": 0
+        "correct_idx": 2
       },
       {
         "question": "Where is contract persistent state declared in a Cairo smart contract?",
         "options": [
           "Inside the `#[storage]` struct definition.",
-          "In global memory variables.",
           "In the Scarb.toml file.",
+          "In global memory variables.",
           "In frontend localStorage."
         ],
         "correct_idx": 0
@@ -756,32 +756,32 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "Which type is used to represent modern 256-bit integers in Cairo 2.0?",
         "options": [
+          "double",
           "u256 (composed of two 128-bit limbs: low and high)",
-          "felt252 only",
           "int64",
-          "double"
+          "felt252 only"
         ],
-        "correct_idx": 0
+        "correct_idx": 1
       },
       {
         "question": "How are events declared and emitted in Cairo smart contracts?",
         "options": [
-          "Declared inside an `#[event]` enum and emitted via `self.emit(EventName { ... })`.",
-          "By printing to console with `println!()`.",
           "By sending HTTP POST requests.",
+          "By printing to console with `println!()`.",
+          "Declared inside an `#[event]` enum and emitted via `self.emit(EventName { ... })`.",
           "By writing to a text file."
         ],
-        "correct_idx": 0
+        "correct_idx": 2
       },
       {
         "question": "What access control pattern is standard in Cairo OpenZeppelin contracts?",
         "options": [
-          "Ownable Component (`#[abi(embed_v0)] impl OwnableImpl`) and AccessControl Component.",
+          "Allowing any caller to call admin functions.",
           "Hardcoding admin private key in storage.",
-          "Checking IP addresses.",
-          "Allowing any caller to call admin functions."
+          "Ownable Component (`#[abi(embed_v0)] impl OwnableImpl`) and AccessControl Component.",
+          "Checking IP addresses."
         ],
-        "correct_idx": 0
+        "correct_idx": 2
       }
     ],
     "exercise": {
@@ -805,62 +805,62 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "Which JavaScript/TypeScript SDK is the industry standard for Starknet DApps?",
         "options": [
+          "viem EVM",
           "starknet.js (v6)",
-          "web3.js",
           "ethers.js v5",
-          "viem EVM"
+          "web3.js"
         ],
-        "correct_idx": 0
+        "correct_idx": 1
       },
       {
         "question": "What major UX advantage does Starknet's Account Abstraction provide for transaction bundling?",
         "options": [
-          "Multicalls \u2014 users can approve tokens AND execute a swap in a single atomic transaction signature.",
+          "Wallets have no passcodes.",
           "Transactions require no internet connection.",
           "Gas is refunded in Bitcoin.",
-          "Wallets have no passcodes."
+          "Multicalls \u2014 users can approve tokens AND execute a swap in a single atomic transaction signature."
         ],
-        "correct_idx": 0
+        "correct_idx": 3
       },
       {
         "question": "Which popular Web3 smart contract wallets are native to Starknet?",
         "options": [
-          "Argent X and Braavos",
-          "MetaMask only",
           "Phantom only",
+          "MetaMask only",
+          "Argent X and Braavos",
           "Coinbase Wallet extension only"
         ],
-        "correct_idx": 0
+        "correct_idx": 2
       },
       {
         "question": "What is a Paymaster on Starknet?",
         "options": [
-          "A smart contract that sponsors transaction gas fees or allows users to pay gas in alternative ERC-20 tokens (like USDC or STRK).",
           "A payroll employee.",
           "A hardware mining machine.",
-          "A block explorer advertisement."
+          "A block explorer advertisement.",
+          "A smart contract that sponsors transaction gas fees or allows users to pay gas in alternative ERC-20 tokens (like USDC or STRK)."
         ],
-        "correct_idx": 0
+        "correct_idx": 3
       },
       {
         "question": "How do developers query read-only contract state using Starknet.js?",
         "options": [
           "Using `myContract.call('get_balance', [userAddress])` without submitting a transaction.",
-          "By broadcasting a signed transaction that pays gas.",
           "By querying an SQL database.",
-          "By restarting the RPC node."
+          "By restarting the RPC node.",
+          "By broadcasting a signed transaction that pays gas."
         ],
         "correct_idx": 0
       },
       {
         "question": "What RPC method retrieves filtered contract events directly from Starknet RPC nodes?",
         "options": [
-          "starknet_getEvents",
           "eth_getLogs",
-          "sol_getEvents",
-          "get_transactions"
+          "get_transactions",
+          "starknet_getEvents",
+          "sol_getEvents"
         ],
-        "correct_idx": 0
+        "correct_idx": 2
       }
     ],
     "exercise": {
@@ -883,60 +883,60 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "Which command declares a compiled Cairo contract class hash to Starknet Sepolia?",
         "options": [
+          "npm run declare",
           "starkli declare target/dev/my_contract.contract_class.json --network sepolia",
           "starkli upload contract",
-          "scarb push mainnet",
-          "npm run declare"
+          "scarb push mainnet"
         ],
-        "correct_idx": 0
+        "correct_idx": 1
       },
       {
         "question": "Which command instantiates and deploys a declared class hash with constructor arguments?",
         "options": [
-          "starkli deploy <CLASS_HASH> <CONSTRUCTOR_ARGS> --network sepolia",
-          "starkli create contract",
           "forge create",
-          "cargo deploy"
+          "cargo deploy",
+          "starkli deploy <CLASS_HASH> <CONSTRUCTOR_ARGS> --network sepolia",
+          "starkli create contract"
         ],
-        "correct_idx": 0
+        "correct_idx": 2
       },
       {
         "question": "Where can developers and grant evaluators verify deployed Cairo contracts on Starknet Sepolia?",
         "options": [
-          "Starkscan (sepolia.starkscan.co) or Voyager (sepolia.voyager.online).",
+          "Subscan.",
           "Etherscan mainnet.",
-          "Solscan.",
-          "Subscan."
+          "Starkscan (sepolia.starkscan.co) or Voyager (sepolia.voyager.online).",
+          "Solscan."
         ],
-        "correct_idx": 0
+        "correct_idx": 2
       },
       {
         "question": "What role does the Universal Deployer Contract (UDC) play on Starknet?",
         "options": [
-          "It standardizes deterministic contract address deployment using salt and caller addresses across the network.",
-          "It burns unused STRK tokens.",
           "It manages user seed phrases.",
-          "It routes DNS traffic."
+          "It burns unused STRK tokens.",
+          "It routes DNS traffic.",
+          "It standardizes deterministic contract address deployment using salt and caller addresses across the network."
         ],
-        "correct_idx": 0
+        "correct_idx": 3
       },
       {
         "question": "What verification artifact confirms successful completion of the Starknet Deployment Challenge?",
         "options": [
-          "A confirmed transaction hash on Starknet Sepolia with verified contract class and initial storage state.",
-          "A local terminal log screenshot.",
           "A paper certificate.",
-          "A GitHub commit with no deployment."
+          "A confirmed transaction hash on Starknet Sepolia with verified contract class and initial storage state.",
+          "A GitHub commit with no deployment.",
+          "A local terminal log screenshot."
         ],
-        "correct_idx": 0
+        "correct_idx": 1
       },
       {
         "question": "Why is completing this deployment challenge critical for Starknet Foundation grant reviewers?",
         "options": [
           "It provides immutable on-chain proof of working Cairo smart contract deployments and real Layer-2 builder impact.",
           "It guarantees immediate grant funding without review.",
-          "It eliminates the need for code review.",
-          "It waives all future gas fees."
+          "It waives all future gas fees.",
+          "It eliminates the need for code review."
         ],
         "correct_idx": 0
       }
@@ -964,61 +964,61 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "question": "What is Proof of History (PoH) in Solana architecture?",
         "options": [
           "A verifiable cryptographic delay function (VDF) that creates a decentralized clock before consensus, enabling parallel processing.",
+          "A KYC identity verification standard.",
           "A Proof of Work mining algorithm.",
-          "A database backup system.",
-          "A KYC identity verification standard."
+          "A database backup system."
         ],
         "correct_idx": 0
       },
       {
         "question": "How does the Sealevel parallel smart contract runtime achieve massive throughput?",
         "options": [
-          "By reading and writing to non-overlapping accounts concurrently across multiple CPU threads and GPU cores.",
           "By executing all transactions on a single thread.",
           "By delaying block production.",
+          "By reading and writing to non-overlapping accounts concurrently across multiple CPU threads and GPU cores.",
           "By deleting historical blocks."
         ],
-        "correct_idx": 0
+        "correct_idx": 2
       },
       {
         "question": "In Solana's account model, what is the key distinction between programs and data accounts?",
         "options": [
-          "Programs (code) are marked as executable and are stateless; all state is stored separately in data accounts.",
           "Programs store all variables inside their own code.",
-          "Data accounts can execute instructions directly.",
-          "There is no distinction between code and data."
+          "There is no distinction between code and data.",
+          "Programs (code) are marked as executable and are stateless; all state is stored separately in data accounts.",
+          "Data accounts can execute instructions directly."
         ],
-        "correct_idx": 0
+        "correct_idx": 2
       },
       {
         "question": "What is Rent in the Solana account model?",
         "options": [
           "A storage fee deducted from accounts unless they maintain a minimum SOL balance to be 'Rent Exempt'.",
+          "Gas cost for compilation.",
           "A monthly fee paid to cloud servers.",
-          "Transaction fee paid to validators.",
-          "Gas cost for compilation."
+          "Transaction fee paid to validators."
         ],
         "correct_idx": 0
       },
       {
         "question": "What is Gulf Stream in Solana network engineering?",
         "options": [
-          "A mempool-less transaction forwarding protocol that pushes transactions to upcoming leaders before block generation.",
           "A cross-chain bridge to Ethereum.",
+          "A cold storage hardware wallet.",
           "An ocean current monitoring system.",
-          "A cold storage hardware wallet."
+          "A mempool-less transaction forwarding protocol that pushes transactions to upcoming leaders before block generation."
         ],
-        "correct_idx": 0
+        "correct_idx": 3
       },
       {
         "question": "What prevents state corruption during concurrent parallel execution on Solana?",
         "options": [
+          "Transactions run only at midnight.",
           "Transactions must explicitly declare all accounts they intend to read and write in advance.",
           "Transactions are paused when two users click send.",
-          "Global locks on the entire blockchain state.",
-          "Transactions run only at midnight."
+          "Global locks on the entire blockchain state."
         ],
-        "correct_idx": 0
+        "correct_idx": 1
       }
     ],
     "exercise": {
@@ -1041,62 +1041,62 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "Which framework is the industry standard for writing secure, idiomatic Solana smart contracts in Rust?",
         "options": [
-          "Anchor Framework",
           "Hardhat",
+          "Anchor Framework",
           "Foundry",
           "Truffle"
         ],
-        "correct_idx": 0
+        "correct_idx": 1
       },
       {
         "question": "Which command compiles an Anchor project and generates the Interface Definition Language (IDL)?",
         "options": [
-          "anchor build",
-          "cargo run",
+          "npm run compile",
           "solana build",
-          "npm run compile"
+          "anchor build",
+          "cargo run"
         ],
-        "correct_idx": 0
+        "correct_idx": 2
       },
       {
         "question": "What is the purpose of the Anchor IDL (Interface Definition Language) JSON file?",
         "options": [
-          "It describes all instructions, accounts, types, and errors, allowing client SDKs to generate typed bindings automatically.",
           "It stores private keys.",
-          "It formats CSS stylesheets.",
-          "It calculates validator rewards."
+          "It describes all instructions, accounts, types, and errors, allowing client SDKs to generate typed bindings automatically.",
+          "It calculates validator rewards.",
+          "It formats CSS stylesheets."
         ],
-        "correct_idx": 0
+        "correct_idx": 1
       },
       {
         "question": "Which command starts a fast local Solana test validator on your development machine?",
         "options": [
-          "solana-test-validator",
           "solana start",
           "anchor localnode",
-          "docker solana up"
+          "docker solana up",
+          "solana-test-validator"
         ],
-        "correct_idx": 0
+        "correct_idx": 3
       },
       {
         "question": "How do you request 2 free SOL on Solana Devnet for contract deployment testing?",
         "options": [
-          "solana airdrop 2 --url devnet",
           "solana buy 2 devnet",
           "solana mine devnet",
-          "solana faucet get 2"
+          "solana faucet get 2",
+          "solana airdrop 2 --url devnet"
         ],
-        "correct_idx": 0
+        "correct_idx": 3
       },
       {
         "question": "What file in an Anchor project configures cluster URLs, program IDs, and test scripts?",
         "options": [
-          "Anchor.toml",
-          "package.json",
           "Cargo.toml",
+          "package.json",
+          "Anchor.toml",
           "solana.json"
         ],
-        "correct_idx": 0
+        "correct_idx": 2
       }
     ],
     "exercise": {
@@ -1121,8 +1121,8 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "options": [
           "An account address deterministically derived from program ID and seed bytes that has no private key, controlled solely by the program.",
           "A standard user wallet address.",
-          "A random number generated by miners.",
-          "A temporary session token."
+          "A temporary session token.",
+          "A random number generated by miners."
         ],
         "correct_idx": 0
       },
@@ -1131,8 +1131,8 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "options": [
           "#[derive(Accounts)]",
           "#[storage]",
-          "#[payable]",
-          "#[contract]"
+          "#[contract]",
+          "#[payable]"
         ],
         "correct_idx": 0
       },
@@ -1140,9 +1140,9 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "question": "Why must accounts initialized with `#[account(init, payer = signer, space = 8 + ...)]` allocate space?",
         "options": [
           "To allocate memory on-chain, including the 8-byte Anchor discriminator and serialized data field sizes.",
-          "To reserve bandwidth on RPC nodes.",
           "To pay validator tips.",
-          "To speed up compiler execution."
+          "To speed up compiler execution.",
+          "To reserve bandwidth on RPC nodes."
         ],
         "correct_idx": 0
       },
@@ -1159,22 +1159,22 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "How does Anchor protect against account substitution and missing signer vulnerabilities?",
         "options": [
-          "Through declarative account constraints like `#[account(signer)]` and `#[account(mut, has_one = authority)]`.",
-          "By disabling multi-user transactions.",
           "By encrypting all account data with passwords.",
+          "By disabling multi-user transactions.",
+          "Through declarative account constraints like `#[account(signer)]` and `#[account(mut, has_one = authority)]`.",
           "By running contracts in read-only mode."
         ],
-        "correct_idx": 0
+        "correct_idx": 2
       },
       {
         "question": "What standard token library is used for fungible and non-fungible tokens on Solana?",
         "options": [
-          "SPL Token (Solana Program Library) and Token-2022 Extensions.",
           "ERC-20 standard.",
           "Move Coin module.",
+          "SPL Token (Solana Program Library) and Token-2022 Extensions.",
           "Cairo token component."
         ],
-        "correct_idx": 0
+        "correct_idx": 2
       }
     ],
     "exercise": {
@@ -1197,19 +1197,19 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "Which JavaScript libraries are used to build interactive full-stack Solana web applications?",
         "options": [
-          "@solana/web3.js, @coral-xyz/anchor, and @solana/wallet-adapter-react",
           "web3.py",
+          "starknet.js",
           "ethers v5",
-          "starknet.js"
+          "@solana/web3.js, @coral-xyz/anchor, and @solana/wallet-adapter-react"
         ],
-        "correct_idx": 0
+        "correct_idx": 3
       },
       {
         "question": "What are Versioned Transactions (v0) and Address Lookup Tables (ALTs) on Solana?",
         "options": [
           "They compress large transaction payloads by referencing 256 accounts in an on-chain table, bypassing the 1232-byte limit.",
-          "They increase transaction fees.",
           "They disable transaction signatures.",
+          "They increase transaction fees.",
           "They convert SOL to ETH."
         ],
         "correct_idx": 0
@@ -1227,32 +1227,32 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "What method listens to real-time account state updates via Solana WebSocket RPC connections?",
         "options": [
-          "connection.onAccountChange(publicKey, callback)",
-          "connection.poll()",
+          "document.onchange()",
           "window.addEventListener('block')",
-          "document.onchange()"
+          "connection.poll()",
+          "connection.onAccountChange(publicKey, callback)"
         ],
-        "correct_idx": 0
+        "correct_idx": 3
       },
       {
         "question": "Which popular browser extension wallets are standard across the Solana ecosystem?",
         "options": [
-          "Phantom and Solflare",
           "ArgentX only",
           "SubWallet only",
-          "MetaMask only"
+          "MetaMask only",
+          "Phantom and Solflare"
         ],
-        "correct_idx": 0
+        "correct_idx": 3
       },
       {
         "question": "How does a frontend handle RPC rate limits when querying Solana cluster state?",
         "options": [
-          "Using dedicated RPC providers (Helius, Triton, QuickNode) and implementing retry backoffs.",
-          "By closing the user's browser.",
+          "By deploying private testnets.",
           "By removing wallet connections.",
-          "By deploying private testnets."
+          "By closing the user's browser.",
+          "Using dedicated RPC providers (Helius, Triton, QuickNode) and implementing retry backoffs."
         ],
-        "correct_idx": 0
+        "correct_idx": 3
       }
     ],
     "exercise": {
@@ -1275,62 +1275,62 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "Which command deploys a compiled Solana program binary to Devnet?",
         "options": [
+          "npm run deploy:devnet",
           "solana program deploy target/deploy/my_program.so --url devnet",
-          "solana upload contract",
           "anchor publish",
-          "npm run deploy:devnet"
+          "solana upload contract"
         ],
-        "correct_idx": 0
+        "correct_idx": 1
       },
       {
         "question": "How do developers publish their Anchor IDL directly on-chain for public explorer verification?",
         "options": [
+          "npm publish idl",
           "anchor idl init --filepath target/idl/my_program.json <PROGRAM_ID> --provider.cluster devnet",
           "solana idl push",
-          "git commit idl.json",
-          "npm publish idl"
+          "git commit idl.json"
         ],
-        "correct_idx": 0
+        "correct_idx": 1
       },
       {
         "question": "Where can developers, users, and grant committees inspect verified Solana Devnet programs?",
         "options": [
+          "Starkscan.",
           "Solscan Devnet (solscan.io/?cluster=devnet) or Solana Explorer (explorer.solana.com/?cluster=devnet).",
           "Etherscan.",
-          "Starkscan.",
           "Subscan."
         ],
-        "correct_idx": 0
+        "correct_idx": 1
       },
       {
         "question": "What keypair authority is required to execute future program upgrades on Solana?",
         "options": [
-          "The Upgrade Authority keypair configured during initial program deployment.",
-          "Any random user wallet.",
           "The validator leader.",
-          "A cloud API token."
+          "The Upgrade Authority keypair configured during initial program deployment.",
+          "A cloud API token.",
+          "Any random user wallet."
         ],
-        "correct_idx": 0
+        "correct_idx": 1
       },
       {
         "question": "What on-chain artifacts prove successful completion of the Solana Deployment Challenge?",
         "options": [
-          "A live Program ID on Solana Devnet, initialized PDA data accounts, and confirmed transaction signatures.",
-          "A screenshot of VS Code.",
           "A text file on your desktop.",
-          "A GitHub pull request with no deployment."
+          "A GitHub pull request with no deployment.",
+          "A screenshot of VS Code.",
+          "A live Program ID on Solana Devnet, initialized PDA data accounts, and confirmed transaction signatures."
         ],
-        "correct_idx": 0
+        "correct_idx": 3
       },
       {
         "question": "Why do Solana Foundation and Superteam grant reviewers evaluate live Devnet deployments?",
         "options": [
+          "It automatically guarantees venture capital funding.",
           "It demonstrates working technical mastery of Anchor, account space allocation, PDA security, and true builder readiness.",
           "It replaces pitch decks completely.",
-          "It automatically guarantees venture capital funding.",
           "It gives unlimited free SOL."
         ],
-        "correct_idx": 0
+        "correct_idx": 1
       }
     ],
     "exercise": {
@@ -1355,62 +1355,62 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "What is the primary role of the Polkadot Relay Chain in the multi-chain ecosystem?",
         "options": [
-          "It coordinates shared security, consensus, and trust-free cross-chain messaging (XCM) across all connected parachains.",
           "It executes individual smart contracts directly on the relay chain.",
+          "It mines Bitcoin blocks.",
           "It hosts user frontends on decentralized servers.",
-          "It mines Bitcoin blocks."
+          "It coordinates shared security, consensus, and trust-free cross-chain messaging (XCM) across all connected parachains."
         ],
-        "correct_idx": 0
+        "correct_idx": 3
       },
       {
         "question": "What is the consensus mechanism utilized by Polkadot for network security and block finality?",
         "options": [
+          "Proof of Elapsed Time.",
           "Nominated Proof-of-Stake (NPoS) paired with BABE block authoring and GRANDPA deterministic finality gadget.",
           "Proof of Work SHA-256 mining.",
-          "Proof of Elapsed Time.",
           "Single-node centralized validation."
         ],
-        "correct_idx": 0
+        "correct_idx": 1
       },
       {
         "question": "What is XCM (Cross-Consensus Messaging) in Polkadot?",
         "options": [
+          "A WebSocket protocol for browser notifications.",
           "A standardized, language-agnostic message format for trust-free interoperability between parachains, smart contracts, and relay chains.",
           "An email newsletter for token holders.",
-          "A WebSocket protocol for browser notifications.",
           "A compiler optimizer for C++."
         ],
-        "correct_idx": 0
+        "correct_idx": 1
       },
       {
         "question": "What is the core advantage of Shared Security for parachain developers?",
         "options": [
-          "New parachains inherit the economic security of the entire Polkadot validator pool from day one without bootstrapping their own validators.",
-          "Parachains never pay transaction fees.",
+          "Parachains run without internet connections.",
           "Parachains do not require code auditing.",
-          "Parachains run without internet connections."
+          "New parachains inherit the economic security of the entire Polkadot validator pool from day one without bootstrapping their own validators.",
+          "Parachains never pay transaction fees."
         ],
-        "correct_idx": 0
+        "correct_idx": 2
       },
       {
         "question": "What is Agile Coretime in the Polkadot 2.0 architecture?",
         "options": [
-          "A dynamic, flexible market for purchasing computing power and blockspace on-demand (bulk or instant) instead of multi-year slot auctions.",
           "A system clock for CPU cooling.",
-          "A manual miner scheduling tool.",
-          "A monthly token subscription."
+          "A dynamic, flexible market for purchasing computing power and blockspace on-demand (bulk or instant) instead of multi-year slot auctions.",
+          "A monthly token subscription.",
+          "A manual miner scheduling tool."
         ],
-        "correct_idx": 0
+        "correct_idx": 1
       },
       {
         "question": "What is the Substrate framework in Polkadot ecosystem development?",
         "options": [
-          "A modular, extensible Rust framework for building custom, sovereign blockchains and execution runtimes (FRAME pallets).",
+          "A database query language.",
           "A React CSS framework.",
           "A hardware wallet manufacturing kit.",
-          "A database query language."
+          "A modular, extensible Rust framework for building custom, sovereign blockchains and execution runtimes (FRAME pallets)."
         ],
-        "correct_idx": 0
+        "correct_idx": 3
       }
     ],
     "exercise": {
@@ -1433,62 +1433,62 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "Which CLI tool is the official compiler and packaging suite for ink! WebAssembly smart contracts?",
         "options": [
-          "cargo-contract",
           "anchor-cli",
           "scarb",
+          "cargo-contract",
           "truffle"
         ],
-        "correct_idx": 0
+        "correct_idx": 2
       },
       {
         "question": "What file bundle is generated by `cargo contract build --release` for deployment?",
         "options": [
-          "A `.contract` bundle containing compiled WebAssembly bytecode and metadata.json ABI.",
-          "A `.sol` text file.",
           "A `.wasm` file only without metadata.",
-          "A `.zip` image archive."
+          "A `.sol` text file.",
+          "A `.zip` image archive.",
+          "A `.contract` bundle containing compiled WebAssembly bytecode and metadata.json ABI."
         ],
-        "correct_idx": 0
+        "correct_idx": 3
       },
       {
         "question": "Which local node environment is specifically designed for testing ink! contracts locally?",
         "options": [
-          "Substrate Contracts Node (`substrate-contracts-node`)",
+          "Geth node",
           "Hardhat Network",
-          "Anvil",
-          "Geth node"
+          "Substrate Contracts Node (`substrate-contracts-node`)",
+          "Anvil"
         ],
-        "correct_idx": 0
+        "correct_idx": 2
       },
       {
         "question": "What is Swanky Suite in the Polkadot developer ecosystem?",
         "options": [
-          "An integrated CLI and developer toolkit for creating, compiling, deploying, and testing ink! Wasm smart contracts.",
           "A DEX trading bot.",
-          "A wallet extension for Chrome.",
-          "A Discord community bot."
+          "An integrated CLI and developer toolkit for creating, compiling, deploying, and testing ink! Wasm smart contracts.",
+          "A Discord community bot.",
+          "A wallet extension for Chrome."
         ],
-        "correct_idx": 0
+        "correct_idx": 1
       },
       {
         "question": "Which web interface allows developers to inspect extrinsics, upload code, and interact with parachain nodes?",
         "options": [
-          "Polkadot.js Apps (polkadot.js.org/apps)",
           "Remix IDE",
-          "Solscan",
-          "Etherscan"
+          "Polkadot.js Apps (polkadot.js.org/apps)",
+          "Etherscan",
+          "Solscan"
         ],
-        "correct_idx": 0
+        "correct_idx": 1
       },
       {
         "question": "Which testnets are standard for deploying and testing Substrate and ink! contracts before mainnet?",
         "options": [
-          "Westend (Relay Chain testnet), Rococo (Parachain testnet), and Paseo testnet.",
-          "Sepolia EVM testnet.",
           "Solana Devnet.",
-          "Bitcoin Regtest."
+          "Bitcoin Regtest.",
+          "Sepolia EVM testnet.",
+          "Westend (Relay Chain testnet), Rococo (Parachain testnet), and Paseo testnet."
         ],
-        "correct_idx": 0
+        "correct_idx": 3
       }
     ],
     "exercise": {
@@ -1511,62 +1511,62 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "What is ink! in the Polkadot / Substrate ecosystem?",
         "options": [
+          "A graphic design tool.",
           "An embedded domain-specific language (eDSL) based on Rust that compiles smart contracts to WebAssembly for `pallet-contracts`.",
-          "A visual drag-and-drop programming language.",
           "A private sidechain.",
-          "A graphic design tool."
+          "A visual drag-and-drop programming language."
         ],
-        "correct_idx": 0
+        "correct_idx": 1
       },
       {
         "question": "Which attribute macro marks the root persistent storage struct in an ink! contract?",
         "options": [
-          "#[ink(storage)]",
-          "#[storage]",
           "#[state]",
-          "#[derive(Accounts)]"
+          "#[derive(Accounts)]",
+          "#[storage]",
+          "#[ink(storage)]"
         ],
-        "correct_idx": 0
+        "correct_idx": 3
       },
       {
         "question": "Which storage data structure provides gas-efficient key-value mappings in ink! 4/5?",
         "options": [
-          "ink::storage::Mapping<K, V>",
           "std::collections::HashMap<K, V>",
-          "Vec<K, V>",
-          "Array<K, V>"
+          "Array<K, V>",
+          "ink::storage::Mapping<K, V>",
+          "Vec<K, V>"
         ],
-        "correct_idx": 0
+        "correct_idx": 2
       },
       {
         "question": "What is the difference between `#[ink(constructor)]` and `#[ink(message)]` in ink!?",
         "options": [
+          "Both macros are identical.",
           "`constructor` initializes contract state at instantiation, while `message` defines callable external methods.",
-          "`constructor` executes on every transaction.",
           "`message` only runs during compilation.",
-          "Both macros are identical."
+          "`constructor` executes on every transaction."
         ],
-        "correct_idx": 0
+        "correct_idx": 1
       },
       {
         "question": "How are value-receiving functions marked in ink! smart contracts?",
         "options": [
-          "#[ink(message, payable)]",
           "#[payable]",
-          "#[receive_tokens]",
-          "#[msg_value]"
+          "#[ink(message, payable)]",
+          "#[msg_value]",
+          "#[receive_tokens]"
         ],
-        "correct_idx": 0
+        "correct_idx": 1
       },
       {
         "question": "What return type is recommended for fallible ink! messages to return clean error diagnostics to callers?",
         "options": [
+          "Null pointers.",
           "Result<T, Error> with custom enum error variants.",
           "Boolean true/false only.",
-          "Null pointers.",
           "Void with panic!()."
         ],
-        "correct_idx": 0
+        "correct_idx": 1
       }
     ],
     "exercise": {
@@ -1589,52 +1589,52 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "Which JavaScript/TypeScript API libraries connect frontends to Polkadot parachains and ink! contracts?",
         "options": [
-          "@polkadot/api and @polkadot/api-contract",
-          "ethers.js v6",
+          "starknet.js",
           "web3.py",
-          "starknet.js"
+          "@polkadot/api and @polkadot/api-contract",
+          "ethers.js v6"
         ],
-        "correct_idx": 0
+        "correct_idx": 2
       },
       {
         "question": "What are the two components of Weight V2 in Substrate gas metering?",
         "options": [
-          "`ref_time` (CPU execution time in picoseconds) and `proof_size` (storage proof size in bytes).",
           "Gas price and gas limit.",
           "Memory and disk space only.",
+          "`ref_time` (CPU execution time in picoseconds) and `proof_size` (storage proof size in bytes).",
           "Network latency and ping."
         ],
-        "correct_idx": 0
+        "correct_idx": 2
       },
       {
         "question": "Which multi-chain browser wallets provide native support for Polkadot, Kusama, and ink! parachains?",
         "options": [
-          "SubWallet, Talisman, and Polkadot.js extension",
-          "MetaMask only",
           "Phantom only",
-          "Coinbase Wallet only"
+          "SubWallet, Talisman, and Polkadot.js extension",
+          "Coinbase Wallet only",
+          "MetaMask only"
         ],
-        "correct_idx": 0
+        "correct_idx": 1
       },
       {
         "question": "How do developers instantiate a typed contract instance using @polkadot/api-contract?",
         "options": [
-          "const contract = new ContractPromise(api, metadataAbi, contractAddress);",
-          "const contract = new Web3Contract(abi);",
           "const contract = loadContract();",
-          "const contract = api.get();"
+          "const contract = new ContractPromise(api, metadataAbi, contractAddress);",
+          "const contract = api.get();",
+          "const contract = new Web3Contract(abi);"
         ],
-        "correct_idx": 0
+        "correct_idx": 1
       },
       {
         "question": "What event callback confirms that a Substrate transaction has achieved deterministic finality?",
         "options": [
-          "`status.isFinalized` in the extrinsic subscription stream.",
           "`status.isInBlock` only.",
-          "`status.isBroadcast` only.",
-          "`window.onload`."
+          "`window.onload`.",
+          "`status.isFinalized` in the extrinsic subscription stream.",
+          "`status.isBroadcast` only."
         ],
-        "correct_idx": 0
+        "correct_idx": 2
       },
       {
         "question": "How does a frontend DApp estimate gas/weight before executing an ink! state-modifying message?",
@@ -1667,50 +1667,50 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
       {
         "question": "Which command compiles an ink! contract into optimized release WebAssembly bytecode?",
         "options": [
-          "cargo contract build --release",
-          "cargo build",
           "npm run build",
-          "solc --release"
+          "cargo build",
+          "solc --release",
+          "cargo contract build --release"
         ],
-        "correct_idx": 0
+        "correct_idx": 3
       },
       {
         "question": "What is the difference between code upload (`upload_code`) and contract instantiation (`instantiate_with_code`) in `pallet-contracts`?",
         "options": [
-          "`upload_code` stores the Wasm bytecode once and returns a CodeHash, allowing multiple contract instances to share the same code cheaply.",
-          "`upload_code` executes all functions immediately.",
           "`instantiate` deletes the bytecode after deployment.",
-          "There is no difference."
+          "`upload_code` stores the Wasm bytecode once and returns a CodeHash, allowing multiple contract instances to share the same code cheaply.",
+          "There is no difference.",
+          "`upload_code` executes all functions immediately."
         ],
-        "correct_idx": 0
+        "correct_idx": 1
       },
       {
         "question": "What is the purpose of the `salt` parameter during ink! contract instantiation?",
         "options": [
-          "It ensures unique, deterministic contract address generation even when instantiating the same CodeHash multiple times.",
           "It encrypts the contract bytecode.",
+          "It ensures unique, deterministic contract address generation even when instantiating the same CodeHash multiple times.",
           "It sets the admin password.",
           "It calculates validator tips."
         ],
-        "correct_idx": 0
+        "correct_idx": 1
       },
       {
         "question": "Where can developers and Web3 Foundation grant evaluators inspect verified Polkadot/Kusama contract deployments?",
         "options": [
-          "Subscan (subscan.io) or Polkadot.js Apps Contract tab.",
           "Etherscan.",
           "Solscan.",
+          "Subscan (subscan.io) or Polkadot.js Apps Contract tab.",
           "Basescan."
         ],
-        "correct_idx": 0
+        "correct_idx": 2
       },
       {
         "question": "What verified artifact proves successful completion of the Polkadot / Substrate Deployment Challenge?",
         "options": [
           "A confirmed Extrinsic Block Hash, deployed Contract Account Address, and verified Wasm metadata on-chain.",
-          "A text file on your computer.",
           "A printed PDF with no blockchain hash.",
-          "A screenshot of a local folder."
+          "A screenshot of a local folder.",
+          "A text file on your computer."
         ],
         "correct_idx": 0
       },
@@ -1718,9 +1718,9 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "question": "Why do Web3 Foundation and Decentralized Futures grant committees prioritize live testnet deployments?",
         "options": [
           "It provides immutable on-chain proof of working Rust Wasm smart contracts, technical proficiency, and ecosystem impact.",
+          "It waives all future blockchain transactions.",
           "It automatically guarantees token allocations.",
-          "It eliminates the need for software engineering.",
-          "It waives all future blockchain transactions."
+          "It eliminates the need for software engineering."
         ],
         "correct_idx": 0
       }
@@ -1735,10 +1735,2797 @@ const FRONTEND_TRACK_LESSONS: Record<string, Lesson> = {
         "verify"
       ]
     }
+  },
+  "arbitrum-1": {
+    "id": "arbitrum-1",
+    "level_id": 1,
+    "title": "Module 1: Arbitrum Nitro Architecture, One/Nova Topologies & Rollup Messaging",
+    "duration": "15 mins",
+    "xp": 150,
+    "content": "# Module 1: Arbitrum Nitro Architecture, One/Nova Topologies & Rollup Messaging\n### Arbitrum Ecosystem Track | Developer Academy\n\nMaster Arbitrum Nitro architecture: WASM-based State Transition Function (Wasm STF), ArbOS execution, Sequencer batching, and L1-L2 cross-chain inbox messaging.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Arbitrum.\n2. **Toolchain Proficiency**: Master Stylus SDK & Hardhat/Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity / Rust code on EVM (Nitro) + WASM (Stylus) adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Arbitrum Sepolia** and verify artifacts on **Arbiscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/OffchainLabs/nitro](https://github.com/OffchainLabs/nitro)\n- **Ecosystem Starter Templates**: [https://github.com/OffchainLabs/stylus-sdk-rs](https://github.com/OffchainLabs/stylus-sdk-rs)\n- **Block Explorer & State Verifier**: **Arbiscan**\n- **Native Testnet Environment**: **Arbitrum Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "quiz": [
+      {
+        "question": "What is the execution engine behind Arbitrum Nitro that replaces the classic AVM?",
+        "options": [
+          "A centralized SQL transaction processor.",
+          "A WASM-based emulator running standard geth core inside WebAssembly.",
+          "A customized JavaScript V8 runtime.",
+          "A single-threaded Python interpreter."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "What is the primary architectural difference between Arbitrum One and Arbitrum Nova?",
+        "options": [
+          "Arbitrum One posts full transaction data to Ethereum L1 with fraud proofs, whereas Nova uses a Data Availability Committee for ultra-low fees in gaming.",
+          "Arbitrum One only supports Bitcoin transactions.",
+          "Both networks share the exact same Data Availability model.",
+          "Arbitrum Nova disables smart contracts completely."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "How does L1-to-L2 message passing work on Arbitrum?",
+        "options": [
+          "By creating a temporary DNS record.",
+          "By sending an unencrypted WebSocket packet to node miners.",
+          "By depositing into the Inbox contract on Ethereum L1, which creates a retryable ticket executed by ArbOS on L2.",
+          "By executing a hard-fork on Ethereum L1."
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "What are 'Retryable Tickets' in Arbitrum cross-chain messaging?",
+        "options": [
+          "Discount vouchers for future gas purchases.",
+          "Refund receipts printed for cancelled transactions.",
+          "Temporary testnet tokens.",
+          "L2 transaction execution requests created on L1 that can be redeemed within a timeout period if gas execution initially fails."
+        ],
+        "correct_idx": 3
+      },
+      {
+        "question": "What is the role of the Arbitrum Sequencer?",
+        "options": [
+          "Generating cryptographic artwork for NFT marketplaces.",
+          "Validating email credentials of users.",
+          "Receiving user transactions, establishing deterministic instant execution ordering, and publishing compressed transaction batches to Ethereum.",
+          "Mining proof-of-work blocks on Bitcoin."
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "How does fraud proof verification work during the challenge period on Arbitrum One?",
+        "options": [
+          "Random lottery selection of valid blocks.",
+          "Instant unilateral rollback by a single central administrator.",
+          "Interactive multi-round bisection search narrowing disputes down to a single one-step WASM instruction executed on L1.",
+          "Voting via Discord community polls."
+        ],
+        "correct_idx": 2
+      }
+    ],
+    "exercise": {
+      "instruction": "Write a Solidity / Rust code snippet for Module 1. The code must contain the keywords 'ArbitrumNitro' and 'ArbOS'.",
+      "template": "// Arbitrum Module 1: Arbitrum Nitro Architecture, One/Nova Topologies & Rollup Messaging\n// Language: Solidity / Rust\n// Write implementation below:\n",
+      "required_keywords": [
+        "ArbitrumNitro",
+        "ArbOS"
+      ]
+    }
+  },
+  "arbitrum-2": {
+    "id": "arbitrum-2",
+    "level_id": 2,
+    "title": "Module 2: Arbitrum Stylus SDK & Rust Smart Contract WASM Setup",
+    "duration": "18 mins",
+    "xp": 200,
+    "content": "# Module 2: Arbitrum Stylus SDK & Rust Smart Contract WASM Setup\n### Arbitrum Ecosystem Track | Developer Academy\n\nSet up the official Stylus Rust toolchain (cargo stylus), compile Rust smart contracts to WebAssembly, configure activation transactions, and benchmark gas execution.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Arbitrum.\n2. **Toolchain Proficiency**: Master Stylus SDK & Hardhat/Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity / Rust code on EVM (Nitro) + WASM (Stylus) adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Arbitrum Sepolia** and verify artifacts on **Arbiscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/OffchainLabs/nitro](https://github.com/OffchainLabs/nitro)\n- **Ecosystem Starter Templates**: [https://github.com/OffchainLabs/stylus-sdk-rs](https://github.com/OffchainLabs/stylus-sdk-rs)\n- **Block Explorer & State Verifier**: **Arbiscan**\n- **Native Testnet Environment**: **Arbitrum Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "quiz": [
+      {
+        "question": "What is Arbitrum Stylus?",
+        "options": [
+          "A visual drawing tool for smart contract diagrams.",
+          "A token bridge for moving Solana tokens to Arbitrum.",
+          "A feature allowing developers to write smart contracts in Rust, C, and C++ compiled to WebAssembly that run alongside EVM contracts at near-native speeds.",
+          "A centralized code formatting extension."
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "Which CLI tool is used to compile, check, and deploy Rust smart contracts to Arbitrum Stylus?",
+        "options": [
+          "anchor build",
+          "npm stylus-cli",
+          "truffle compile",
+          "cargo-stylus"
+        ],
+        "correct_idx": 3
+      },
+      {
+        "question": "What does `cargo stylus check` do before deploying a Rust contract?",
+        "options": [
+          "It publishes code directly to mainnet without authorization.",
+          "It performs static analysis and checks WASM exports, memory bounds, and Stylus SDK compatibility.",
+          "It deletes all Rust compiler warnings.",
+          "It mines 100 testnet blocks."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "What is the gas cost benefit of executing compute-heavy algorithms in Stylus Rust compared to EVM bytecode?",
+        "options": [
+          "Stylus has identical gas costs to Solidity EVM bytecode.",
+          "Stylus reduces compute costs by 10x\u2013100x and memory costs by up to 500x.",
+          "Stylus charges zero gas fees forever.",
+          "Stylus makes transactions 50% more expensive."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "How do Stylus WASM contracts interoperate with standard EVM Solidity contracts?",
+        "options": [
+          "They require centralized cross-chain bridges.",
+          "They cannot communicate and operate on completely isolated blockchains.",
+          "They require converting Solidity code to JavaScript.",
+          "They share the exact same global state, contract storage layout, and can seamlessly call each other using standard ABI interfaces."
+        ],
+        "correct_idx": 3
+      },
+      {
+        "question": "What macro in the Stylus SDK declares the public smart contract entrypoint?",
+        "options": [
+          "#[main_function]",
+          "#[public_contract]",
+          "#[solidity_export]",
+          "#[entrypoint]"
+        ],
+        "correct_idx": 3
+      }
+    ],
+    "exercise": {
+      "instruction": "Write a Solidity / Rust code snippet for Module 2. The code must contain the keywords 'StylusSDK' and 'cargo-stylus'.",
+      "template": "// Arbitrum Module 2: Arbitrum Stylus SDK & Rust Smart Contract WASM Setup\n// Language: Solidity / Rust\n// Write implementation below:\n",
+      "required_keywords": [
+        "StylusSDK",
+        "cargo-stylus"
+      ]
+    }
+  },
+  "arbitrum-3": {
+    "id": "arbitrum-3",
+    "level_id": 3,
+    "title": "Module 3: Stylus Rust Smart Contracts: Memory, Storage & Host I/O",
+    "duration": "21 mins",
+    "xp": 250,
+    "content": "# Module 3: Stylus Rust Smart Contracts: Memory, Storage & Host I/O\n### Arbitrum Ecosystem Track | Developer Academy\n\nImplement production Stylus Rust contracts: managing StorageType, StorageU256, StorageVec, reentrancy guards, event emission with evm::log, and custom Solidity ABI export.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Arbitrum.\n2. **Toolchain Proficiency**: Master Stylus SDK & Hardhat/Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity / Rust code on EVM (Nitro) + WASM (Stylus) adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Arbitrum Sepolia** and verify artifacts on **Arbiscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/OffchainLabs/nitro](https://github.com/OffchainLabs/nitro)\n- **Ecosystem Starter Templates**: [https://github.com/OffchainLabs/stylus-sdk-rs](https://github.com/OffchainLabs/stylus-sdk-rs)\n- **Block Explorer & State Verifier**: **Arbiscan**\n- **Native Testnet Environment**: **Arbitrum Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "quiz": [
+      {
+        "question": "How does the Stylus Rust SDK handle contract storage without garbage collection?",
+        "options": [
+          "By writing to a centralized MongoDB database.",
+          "Using typed storage wrappers like StorageU256 and StorageMap that read and write directly to EVM 32-byte storage slots.",
+          "By storing all data in browser cookies.",
+          "By storing everything in temporary memory RAM."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "How do you emit EVM-compatible events from a Stylus Rust smart contract?",
+        "options": [
+          "By calling `console.log()` in Rust.",
+          "By sending HTTP POST requests to an external server.",
+          "By writing to standard Linux stdout files.",
+          "Using `stylus_sdk::evm::log` or the `#[stylus::event]` macro."
+        ],
+        "correct_idx": 3
+      },
+      {
+        "question": "What is the purpose of `cargo stylus export-abi`?",
+        "options": [
+          "It translates Rust code into Python.",
+          "It automatically generates a Solidity ABI and interface definitions from your Rust contract functions.",
+          "It compiles the contract into an APK file.",
+          "It exports private keys to a text file."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "Why does Stylus use `#[cfg_attr(not(feature = \"export-abi\"), no_main)]` in Rust contract crates?",
+        "options": [
+          "To disable compilation errors.",
+          "To export ABI metadata during interface extraction while targeting bare WASM compilation for deployment.",
+          "To permit unrestricted recursion.",
+          "To encrypt the source code."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "How does Stylus prevent out-of-bounds memory allocation attacks in WASM?",
+        "options": [
+          "By disabling dynamic memory allocations entirely.",
+          "By running contracts in an unmetered sandbox.",
+          "By enforcing strict WebAssembly page limits and charging gas for WASM memory expansion.",
+          "By checking user IP addresses."
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "How is msg.sender and msg.value accessed inside a Stylus Rust method?",
+        "options": [
+          "By querying the local operating system user.",
+          "By reading environment variables from `.env`.",
+          "By passing parameters manually in function arguments.",
+          "Using `stylus_sdk::msg::sender()` and `stylus_sdk::msg::value()`."
+        ],
+        "correct_idx": 3
+      }
+    ],
+    "exercise": {
+      "instruction": "Write a Solidity / Rust code snippet for Module 3. The code must contain the keywords 'StorageU256' and 'StylusHost'.",
+      "template": "// Arbitrum Module 3: Stylus Rust Smart Contracts: Memory, Storage & Host I/O\n// Language: Solidity / Rust\n// Write implementation below:\n",
+      "required_keywords": [
+        "StorageU256",
+        "StylusHost"
+      ]
+    }
+  },
+  "arbitrum-4": {
+    "id": "arbitrum-4",
+    "level_id": 4,
+    "title": "Module 4: Full-Stack Arbitrum DApps & Arbiscan Contract Verification",
+    "duration": "24 mins",
+    "xp": 300,
+    "content": "# Module 4: Full-Stack Arbitrum DApps & Arbiscan Contract Verification\n### Arbitrum Ecosystem Track | Developer Academy\n\nBuild reactive frontends connecting to Arbitrum Sepolia (Chain ID 421614), integrate Viem/Wagmi with Arbitrum RPC nodes, and verify multi-contract deployments on Arbiscan.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Arbitrum.\n2. **Toolchain Proficiency**: Master Stylus SDK & Hardhat/Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity / Rust code on EVM (Nitro) + WASM (Stylus) adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Arbitrum Sepolia** and verify artifacts on **Arbiscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/OffchainLabs/nitro](https://github.com/OffchainLabs/nitro)\n- **Ecosystem Starter Templates**: [https://github.com/OffchainLabs/stylus-sdk-rs](https://github.com/OffchainLabs/stylus-sdk-rs)\n- **Block Explorer & State Verifier**: **Arbiscan**\n- **Native Testnet Environment**: **Arbitrum Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "quiz": [
+      {
+        "question": "What is the Chain ID for the Arbitrum Sepolia testnet?",
+        "options": [
+          "11155111",
+          "1",
+          "421614",
+          "8453"
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "Which block explorer is the primary explorer for Arbitrum One and Arbitrum Sepolia?",
+        "options": [
+          "Voyager",
+          "AptosScan",
+          "Solscan",
+          "Arbiscan"
+        ],
+        "correct_idx": 3
+      },
+      {
+        "question": "How does a frontend connect to Arbitrum Sepolia using Wagmi/Viem?",
+        "options": [
+          "By writing raw TCP socket handlers in WebSockets.",
+          "By manually rewriting browser network headers.",
+          "By configuring `arbitrumSepolia` from `viem/chains` in the Wagmi client configuration.",
+          "By connecting directly via SSH."
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "What step is required to activate a Stylus Rust contract on-chain after deploying the WASM code?",
+        "options": [
+          "Restarting the Arbitrum validator network.",
+          "Submitting a contract activation transaction that compiles the WASM bytecode to native machine code in ArbOS.",
+          "Signing an agreement with the Arbitrum Foundation.",
+          "Paying an annual license subscription in Bitcoin."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "How do you query L1-to-L2 gas fees and base fees on Arbitrum?",
+        "options": [
+          "By checking centralized exchange spot prices.",
+          "By calling Google Maps API.",
+          "By estimating randomly in the frontend.",
+          "By calling the ArbSys precompile at address `0x0000000000000000000000000000000000000064`."
+        ],
+        "correct_idx": 3
+      },
+      {
+        "question": "What API enables programmatic source code verification on Arbiscan?",
+        "options": [
+          "The GitHub OAuth API.",
+          "The Arbiscan API using Foundry `forge verify-contract` or Hardhat verify plugin.",
+          "A manual paper form submitted via postal mail.",
+          "The Twitter verification badge API."
+        ],
+        "correct_idx": 1
+      }
+    ],
+    "exercise": {
+      "instruction": "Write a Solidity / Rust code snippet for Module 4. The code must contain the keywords 'Arbiscan' and 'ArbitrumSepolia'.",
+      "template": "// Arbitrum Module 4: Full-Stack Arbitrum DApps & Arbiscan Contract Verification\n// Language: Solidity / Rust\n// Write implementation below:\n",
+      "required_keywords": [
+        "Arbiscan",
+        "ArbitrumSepolia"
+      ]
+    }
+  },
+  "arbitrum-5": {
+    "id": "arbitrum-5",
+    "level_id": 5,
+    "title": "Module 5: Arbitrum Sepolia Deployment Challenge & Stylus WASM Verification",
+    "duration": "27 mins",
+    "xp": 350,
+    "content": "# Module 5: Arbitrum Sepolia Deployment Challenge & Stylus WASM Verification\n### Arbitrum Ecosystem Track | Developer Academy\n\nHands-on Deployment Challenge: Compile your Arbitrum smart contracts (Solidity or Stylus Rust), deploy to Arbitrum Sepolia testnet, verify on Arbiscan, and complete institutional certification.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Arbitrum.\n2. **Toolchain Proficiency**: Master Stylus SDK & Hardhat/Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity / Rust code on EVM (Nitro) + WASM (Stylus) adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Arbitrum Sepolia** and verify artifacts on **Arbiscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/OffchainLabs/nitro](https://github.com/OffchainLabs/nitro)\n- **Ecosystem Starter Templates**: [https://github.com/OffchainLabs/stylus-sdk-rs](https://github.com/OffchainLabs/stylus-sdk-rs)\n- **Block Explorer & State Verifier**: **Arbiscan**\n- **Native Testnet Environment**: **Arbitrum Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "quiz": [
+      {
+        "question": "Which command deploys and activates a Stylus Rust smart contract to Arbitrum Sepolia?",
+        "options": [
+          "cargo stylus deploy --private-key=<KEY> --endpoint=<RPC_URL>",
+          "docker run arbitrum-node",
+          "npm publish --arbitrum",
+          "git push testnet main"
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "Where can grant reviewers and employers inspect your verified Arbitrum Sepolia smart contract deployment?",
+        "options": [
+          "On the Arbiscan Sepolia block explorer at `https://sepolia.arbiscan.io/address/<CONTRACT_ADDRESS>`.",
+          "In a local text file.",
+          "On GitHub issues only.",
+          "In private browser cookies."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "What verified proof is generated upon completing the Arbitrum Developer Academy challenge?",
+        "options": [
+          "An empty git repository.",
+          "A printed certificate sent in the mail.",
+          "A local terminal screenshot.",
+          "An on-chain transaction hash and certified digital credential verified by academy telemetry."
+        ],
+        "correct_idx": 3
+      },
+      {
+        "question": "Why do ecosystem foundations like the Arbitrum Foundation value verified testnet contract deployments?",
+        "options": [
+          "They replace developer technical interviews.",
+          "They prove practical engineering competence in building scalable Layer-2 and Stylus WASM decentralized applications.",
+          "They guarantee instant mainnet token distributions.",
+          "They eliminate the need for open-source code licenses."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "What gas optimization best practice applies when deploying to Arbitrum Nitro?",
+        "options": [
+          "Adding random comments in contract headers.",
+          "Writing code without any functions.",
+          "Setting transaction gas limit to the maximum integer value.",
+          "Using standard Solidity 0.8.20+ with Shanghai/Cancun EVM targets and optimizing storage slot packing."
+        ],
+        "correct_idx": 3
+      },
+      {
+        "question": "How does completing the Arbitrum curriculum prepare developers for Arbitrum Foundation grant funding?",
+        "options": [
+          "It provides automated bank loans.",
+          "It guarantees full-time governance seats.",
+          "It deletes all smart contract audits.",
+          "It satisfies the required technical milestones, Blueprint compliance, and on-chain telemetry criteria."
+        ],
+        "correct_idx": 3
+      }
+    ],
+    "exercise": {
+      "instruction": "Complete the Arbitrum Testnet Deployment Challenge! Write a deployment configuration and verification snippet containing 'arbitrum', 'deploy', 'testnet', and 'verify'.",
+      "template": "// \u2500\u2500\u2500 Arbitrum Testnet Deployment & Verification \u2500\u2500\u2500\n// Target: Arbitrum Sepolia\n// Network Explorer: Arbiscan\n\n// Complete deployment declaration below:\n",
+      "required_keywords": [
+        "arbitrum",
+        "deploy",
+        "testnet",
+        "verify"
+      ]
+    }
+  },
+  "base-1": {
+    "id": "base-1",
+    "level_id": 1,
+    "title": "Module 1: Base Architecture, OP Stack Integration & Coinbase Ecosystem",
+    "duration": "15 mins",
+    "xp": 150,
+    "content": "# Module 1: Base Architecture, OP Stack Integration & Coinbase Ecosystem\n### Base Ecosystem Track | Developer Academy\n\nExplore Base Layer-2 architecture: OP Stack rollup mechanics, Superchain interoperability, sequencer revenue sharing, and Coinbase developer ecosystem integration.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Base.\n2. **Toolchain Proficiency**: Master Coinbase Smart Wallet & Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on OP Stack EVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Base Sepolia** and verify artifacts on **BaseScan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/base-org](https://github.com/base-org)\n- **Ecosystem Starter Templates**: [https://github.com/coinbase/smart-wallet](https://github.com/coinbase/smart-wallet)\n- **Block Explorer & State Verifier**: **BaseScan**\n- **Native Testnet Environment**: **Base Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "quiz": [
+      {
+        "question": "What framework powers the Base Layer-2 blockchain architecture?",
+        "options": [
+          "Solana Sealevel BPF runtime.",
+          "Bitcoin Lightning Network.",
+          "A proprietary closed-source database engine.",
+          "The open-source MIT-licensed OP Stack (Optimism Collective Superchain)."
+        ],
+        "correct_idx": 3
+      },
+      {
+        "question": "What is the primary mission of the Base network in the Web3 ecosystem?",
+        "options": [
+          "To restrict developer smart contract creation.",
+          "To bring the next billion users on-chain with sub-cent gas fees, developer-friendly UX, and deep Coinbase product integration.",
+          "To disable fiat onramps and offramps.",
+          "To replace all Layer-1 blockchains with a centralized company server."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "How does Base achieve low transaction fees while maintaining Ethereum L1 security?",
+        "options": [
+          "By operating without cryptographic signatures.",
+          "By batching transactions off-chain, compressing state updates, and posting EIP-4844 blobs to Ethereum Layer-1.",
+          "By deleting transaction history every week.",
+          "By running validators on residential laptops only."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "What is the Superchain vision shared by Base and Optimism?",
+        "options": [
+          "A unified network of interconnected OP Stack chains sharing security, communication (interoperability), and an open-source development stack.",
+          "A single giant monopolistic server.",
+          "A private corporate intranet.",
+          "A bridge that only transfers fiat currencies."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "What role does EIP-4844 (Proto-Danksharding) play in Base's transaction cost reduction?",
+        "options": [
+          "It increases block confirmation times.",
+          "It prevents smart contracts from using storage.",
+          "It introduces ephemeral 'data blobs' on Ethereum L1 that drastically lower L2 rollup data posting costs by over 90%.",
+          "It removes miner tips completely."
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "How does Base support developer grants and builder retro-funding?",
+        "options": [
+          "By issuing corporate stock options.",
+          "By charging upfront developer registration fees.",
+          "Through Base Builder Grants, Optimism RetroPGF allocations, and hackathon bounties tracking verified contract activity.",
+          "By selling user data to advertisers."
+        ],
+        "correct_idx": 2
+      }
+    ],
+    "exercise": {
+      "instruction": "Write a Solidity code snippet for Module 1. The code must contain the keywords 'BaseOPStack' and 'Superchain'.",
+      "template": "// Base Module 1: Base Architecture, OP Stack Integration & Coinbase Ecosystem\n// Language: Solidity\n// Write implementation below:\n",
+      "required_keywords": [
+        "BaseOPStack",
+        "Superchain"
+      ]
+    }
+  },
+  "base-2": {
+    "id": "base-2",
+    "level_id": 2,
+    "title": "Module 2: Base Toolchain, Base Sepolia Setup & Foundry Development",
+    "duration": "18 mins",
+    "xp": 200,
+    "content": "# Module 2: Base Toolchain, Base Sepolia Setup & Foundry Development\n### Base Ecosystem Track | Developer Academy\n\nConfigure Foundry and Hardhat for Base Sepolia (Chain ID 84532), manage RPC connections, testnet faucets, and build optimized Solidity contracts.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Base.\n2. **Toolchain Proficiency**: Master Coinbase Smart Wallet & Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on OP Stack EVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Base Sepolia** and verify artifacts on **BaseScan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/base-org](https://github.com/base-org)\n- **Ecosystem Starter Templates**: [https://github.com/coinbase/smart-wallet](https://github.com/coinbase/smart-wallet)\n- **Block Explorer & State Verifier**: **BaseScan**\n- **Native Testnet Environment**: **Base Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "quiz": [
+      {
+        "question": "What is the Chain ID for the Base Sepolia testnet?",
+        "options": [
+          "84532",
+          "421614",
+          "1",
+          "8453"
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "Which command compiles and runs Solidity test suites using Foundry for Base?",
+        "options": [
+          "npm start",
+          "forge test -vvv",
+          "cargo build",
+          "python test.py"
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "How do developers acquire Base Sepolia testnet ETH for gas?",
+        "options": [
+          "By emailing Coinbase support.",
+          "Using the official Coinbase Developer Platform Faucet or Superchain Faucet.",
+          "By purchasing tokens on centralized exchanges.",
+          "By mining proof-of-work blocks on Base."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "What RPC URL is the standard public endpoint for Base Sepolia?",
+        "options": [
+          "https://sepolia.base.org",
+          "https://eth.llamarpc.com",
+          "http://localhost:8545",
+          "https://mainnet.base.org"
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "Why is Foundry preferred by high-velocity Base smart contract developers?",
+        "options": [
+          "Because it does not support EVM bytecode.",
+          "Because tests and scripts are written directly in pure Solidity with blazing fast native Rust execution and fuzzing.",
+          "Because it only runs on mobile devices.",
+          "Because it requires no knowledge of blockchain."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "What environment variable configuration is required in `foundry.toml` to verify contracts on BaseScan?",
+        "options": [
+          "`network = 'testnet'` only",
+          "`[etherscan] base_sepolia = { key = \"${BASESCAN_API_KEY}\", url = \"https://api-sepolia.basescan.org/api\" }`",
+          "`apiKey = 12345` without quotes",
+          "`disable_verification = true`"
+        ],
+        "correct_idx": 1
+      }
+    ],
+    "exercise": {
+      "instruction": "Write a Solidity code snippet for Module 2. The code must contain the keywords 'BaseSepolia' and 'Foundry'.",
+      "template": "// Base Module 2: Base Toolchain, Base Sepolia Setup & Foundry Development\n// Language: Solidity\n// Write implementation below:\n",
+      "required_keywords": [
+        "BaseSepolia",
+        "Foundry"
+      ]
+    }
+  },
+  "base-3": {
+    "id": "base-3",
+    "level_id": 3,
+    "title": "Module 3: Smart Contracts on Base: Gas Optimization & Account Abstraction",
+    "duration": "21 mins",
+    "xp": 250,
+    "content": "# Module 3: Smart Contracts on Base: Gas Optimization & Account Abstraction\n### Base Ecosystem Track | Developer Academy\n\nWrite gas-optimized Solidity smart contracts for Base, leverage ERC-4337 Account Abstraction, passkey signers, and Coinbase Smart Wallet integration.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Base.\n2. **Toolchain Proficiency**: Master Coinbase Smart Wallet & Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on OP Stack EVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Base Sepolia** and verify artifacts on **BaseScan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/base-org](https://github.com/base-org)\n- **Ecosystem Starter Templates**: [https://github.com/coinbase/smart-wallet](https://github.com/coinbase/smart-wallet)\n- **Block Explorer & State Verifier**: **BaseScan**\n- **Native Testnet Environment**: **Base Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "quiz": [
+      {
+        "question": "What major UX breakthrough does the Coinbase Smart Wallet bring to Base applications?",
+        "options": [
+          "Passkey-based onboarding allowing users to create on-chain smart wallets in seconds using FaceID/TouchID with zero seed phrases or browser extensions.",
+          "It forces all users to submit government IDs before sending transactions.",
+          "It replaces blockchain transactions with SMS text messages.",
+          "It requires users to write down 24 recovery words on paper."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "How does ERC-4337 Paymaster integration benefit Base users?",
+        "options": [
+          "It disables token transfers.",
+          "It prevents contracts from emitting events.",
+          "It increases gas costs by 200%.",
+          "Applications can sponsor all transaction gas fees (gasless UX) or let users pay gas in USDC instead of ETH."
+        ],
+        "correct_idx": 3
+      },
+      {
+        "question": "What is OnchainKit provided by the Base ecosystem?",
+        "options": [
+          "A ready-to-use collection of React components and TypeScript utilities for seamless wallet connection, identity, and checkout flows on Base.",
+          "A closed-source proprietary database.",
+          "A physical hardware wallet device.",
+          "A compiler plugin for C++."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "How do developers verify EIP-712 typed data signatures in Base smart contracts?",
+        "options": [
+          "Using `ECDSA.recover()` with the domain separator and typed hash struct according to EIP-712 standards.",
+          "By checking user IP addresses.",
+          "By comparing string lengths.",
+          "By querying an off-chain REST API."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "What storage layout optimization saves the most gas in Solidity contracts deployed to Base?",
+        "options": [
+          "Packing multiple variables (`uint128`, `uint64`, `address`, `bool`) into single 32-byte storage slots (`SSTORE` efficiency).",
+          "Creating a separate storage slot for every single variable.",
+          "Declaring all variables as strings.",
+          "Avoiding storage entirely."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "Why are UserOperations bundled rather than sent directly as standard EOA transactions in ERC-4337?",
+        "options": [
+          "To bypass blockchain consensus.",
+          "To allow bundlers to batch multiple operations and execute them via the canonical EntryPoint contract in a single atomic transaction.",
+          "To encrypt transactions so validators cannot see them.",
+          "To slow down transaction processing."
+        ],
+        "correct_idx": 1
+      }
+    ],
+    "exercise": {
+      "instruction": "Write a Solidity code snippet for Module 3. The code must contain the keywords 'CoinbaseSmartWallet' and 'AccountAbstraction'.",
+      "template": "// Base Module 3: Smart Contracts on Base: Gas Optimization & Account Abstraction\n// Language: Solidity\n// Write implementation below:\n",
+      "required_keywords": [
+        "CoinbaseSmartWallet",
+        "AccountAbstraction"
+      ]
+    }
+  },
+  "base-4": {
+    "id": "base-4",
+    "level_id": 4,
+    "title": "Module 4: Full-Stack Base DApps, OnchainKit & Smart Wallet Integration",
+    "duration": "24 mins",
+    "xp": 300,
+    "content": "# Module 4: Full-Stack Base DApps, OnchainKit & Smart Wallet Integration\n### Base Ecosystem Track | Developer Academy\n\nConstruct production React/Next.js applications on Base Sepolia using Wagmi, Viem, OnchainKit components, and BaseScan contract verification.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Base.\n2. **Toolchain Proficiency**: Master Coinbase Smart Wallet & Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on OP Stack EVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Base Sepolia** and verify artifacts on **BaseScan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/base-org](https://github.com/base-org)\n- **Ecosystem Starter Templates**: [https://github.com/coinbase/smart-wallet](https://github.com/coinbase/smart-wallet)\n- **Block Explorer & State Verifier**: **BaseScan**\n- **Native Testnet Environment**: **Base Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "quiz": [
+      {
+        "question": "Which Wagmi chain definition represents Base Sepolia in frontend code?",
+        "options": [
+          "`baseSepolia` from `wagmi/chains` or `viem/chains`.",
+          "`polygon`",
+          "`solanaDevnet`",
+          "`mainnet`"
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "What component from OnchainKit provides instant 1-click Passkey login for Base users?",
+        "options": [
+          "`<MetamaskButton>` only.",
+          "`<Wallet>` and `<ConnectWallet>` wrappers from `@coinbase/onchainkit/wallet`.",
+          "`<LoginForm>` from standard HTML.",
+          "`<OAuthButton>` only."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "Which block explorer is dedicated to tracking Base transactions and smart contract bytecode?",
+        "options": [
+          "Subscan.",
+          "Solscan.",
+          "BaseScan (basescan.org / sepolia.basescan.org).",
+          "Voyager."
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "How do you verify a Solidity contract on BaseScan using Foundry CLI?",
+        "options": [
+          "`npm verify`",
+          "`forge upload-source --base`",
+          "`forge verify-contract <ADDRESS> <CONTRACT_PATH>:<NAME> --chain-id 84532 --verifier-url https://api-sepolia.basescan.org/api --etherscan-api-key <KEY>`",
+          "`git commit -m 'verified'`"
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "What telemetry metric proves active student engagement on Base for grant applications?",
+        "options": [
+          "The color theme of the website.",
+          "The number of lines of README text.",
+          "Verified testnet and mainnet contract deployments, transaction interaction count, and unique active user addresses.",
+          "The number of local git branches."
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "What is the average transaction confirmation latency on Base Layer-2?",
+        "options": [
+          "2 hours.",
+          "Under 2 seconds with instant soft-finality from the OP Stack Sequencer.",
+          "15 minutes.",
+          "3 business days."
+        ],
+        "correct_idx": 1
+      }
+    ],
+    "exercise": {
+      "instruction": "Write a Solidity code snippet for Module 4. The code must contain the keywords 'OnchainKit' and 'BaseScan'.",
+      "template": "// Base Module 4: Full-Stack Base DApps, OnchainKit & Smart Wallet Integration\n// Language: Solidity\n// Write implementation below:\n",
+      "required_keywords": [
+        "OnchainKit",
+        "BaseScan"
+      ]
+    }
+  },
+  "base-5": {
+    "id": "base-5",
+    "level_id": 5,
+    "title": "Module 5: Base Sepolia Deployment Challenge & BaseScan Verification",
+    "duration": "27 mins",
+    "xp": 350,
+    "content": "# Module 5: Base Sepolia Deployment Challenge & BaseScan Verification\n### Base Ecosystem Track | Developer Academy\n\nHands-on Deployment Challenge: Compile your smart contracts, deploy to Base Sepolia testnet, verify source code on BaseScan, and achieve verified Base Builder status.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Base.\n2. **Toolchain Proficiency**: Master Coinbase Smart Wallet & Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on OP Stack EVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Base Sepolia** and verify artifacts on **BaseScan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/base-org](https://github.com/base-org)\n- **Ecosystem Starter Templates**: [https://github.com/coinbase/smart-wallet](https://github.com/coinbase/smart-wallet)\n- **Block Explorer & State Verifier**: **BaseScan**\n- **Native Testnet Environment**: **Base Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "quiz": [
+      {
+        "question": "What is required to pass the Base Sepolia Testnet Deployment Challenge?",
+        "options": [
+          "A draft text file on your desktop.",
+          "A Figma design prototype only.",
+          "A live deployed smart contract on Base Sepolia with verified source code on BaseScan and emitted contract events.",
+          "An unresolved compiler error."
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "Where can grant reviewers view your verified contract on Base Sepolia?",
+        "options": [
+          "On a local offline computer.",
+          "In browser local storage.",
+          "At `https://sepolia.basescan.org/address/<YOUR_CONTRACT_ADDRESS>`.",
+          "In a private Discord message only."
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "What digital credential is minted upon completing the Base Track challenge?",
+        "options": [
+          "A physical plastic badge.",
+          "A temporary coupon.",
+          "An email receipt.",
+          "A cryptographically verifiable Developer Academy Certificate recognizing Base and OP Stack competence."
+        ],
+        "correct_idx": 3
+      },
+      {
+        "question": "How does verified contract deployment on Base enhance developer career opportunities?",
+        "options": [
+          "It demonstrates verifiable, on-chain proof of execution capability to Web3 companies and grant foundations.",
+          "It eliminates the need for software licenses.",
+          "It replaces all future code testing requirements.",
+          "It guarantees an immediate executive salary."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "What security check should always be completed before deploying smart contracts to Base?",
+        "options": [
+          "Auditing access controls (Ownable/Roles), checking reentrancy guards, and verifying input validation math.",
+          "Disabling all unit tests.",
+          "Deleting error revert messages.",
+          "Hardcoding private keys into the frontend code."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "How can developers apply for Base Ecosystem funding following track graduation?",
+        "options": [
+          "By mailing paper invoices.",
+          "By calling telephone customer support.",
+          "By purchasing third-party marketing ads.",
+          "By submitting their verified contract address and GitHub repository to the Base Grants portal and Optimism RetroPGF."
+        ],
+        "correct_idx": 3
+      }
+    ],
+    "exercise": {
+      "instruction": "Complete the Base Testnet Deployment Challenge! Write a deployment configuration and verification snippet containing 'base', 'deploy', 'testnet', and 'verify'.",
+      "template": "// \u2500\u2500\u2500 Base Testnet Deployment & Verification \u2500\u2500\u2500\n// Target: Base Sepolia\n// Network Explorer: BaseScan\n\n// Complete deployment declaration below:\n",
+      "required_keywords": [
+        "base",
+        "deploy",
+        "testnet",
+        "verify"
+      ]
+    }
+  },
+  "optimism-1": {
+    "id": "optimism-1",
+    "level_id": 1,
+    "title": "Module 1: Optimism Architecture, Fault Proofs & Superchain Interoperability",
+    "duration": "15 mins",
+    "xp": 150,
+    "content": "# Module 1: Optimism Architecture, Fault Proofs & Superchain Interoperability\n### Optimism Ecosystem Track | Developer Academy\n\nMaster Optimism rollup architecture: Cannon fault-proof VM, OP Stack execution clients (op-geth/op-node), and Superchain cross-chain communication.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Optimism.\n2. **Toolchain Proficiency**: Master Foundry & Hardhat for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on OP Stack Superchain EVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **OP Sepolia** and verify artifacts on **OP Etherscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/ethereum-optimism/optimism](https://github.com/ethereum-optimism/optimism)\n- **Ecosystem Starter Templates**: [https://github.com/ethereum-optimism/superchain-registry](https://github.com/ethereum-optimism/superchain-registry)\n- **Block Explorer & State Verifier**: **OP Etherscan**\n- **Native Testnet Environment**: **OP Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "quiz": [
+      {
+        "question": "What is Cannon in the Optimism fault proof architecture?",
+        "options": [
+          "An on-chain MIPS emulator that executes compiled EVM byte-steps on Ethereum L1 to mathematically resolve dispute challenges.",
+          "A physical artillery weapon.",
+          "A database clustering plugin.",
+          "A video compression codec."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "What are the two core software components of an OP Stack rollup node?",
+        "options": [
+          "mysql and postgres.",
+          "nginx and apache.",
+          "react and vite.",
+          "op-node (consensus/derivation client) and op-geth (execution engine client)."
+        ],
+        "correct_idx": 3
+      },
+      {
+        "question": "What is the Optimism Superchain?",
+        "options": [
+          "A horizontally scalable network of OP Stack chains that share security, communication layers, and governance standards.",
+          "A cryptocurrency exchange platform.",
+          "A private consortium for credit card companies.",
+          "A single monolithic blockchain running on 10,000 servers."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "How do OP Stack rollups handle Layer-1 data availability?",
+        "options": [
+          "By deriving state transitions from transaction data batches posted to Ethereum L1 via EIP-4844 data blobs.",
+          "By broadcasting data over FM radio frequencies.",
+          "By storing everything in IPFS exclusively.",
+          "By running daily SQL database backups."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "What is the role of the Optimism Collective governance model?",
+        "options": [
+          "A single centralized board of directors with unilateral control.",
+          "A bicameral governance system (Token House & Citizens' House) driving protocol upgrades and RetroPGF public goods funding.",
+          "A legal court in Switzerland.",
+          "An automated AI bot that controls all funds."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "What is Retroactive Public Goods Funding (RetroPGF)?",
+        "options": [
+          "Giving upfront venture capital loans with high interest.",
+          "Collecting taxes from developers.",
+          "Charging subscription fees to access documentation.",
+          "Rewarding projects and developers after they have delivered verified positive impact to the Optimism and Web3 ecosystem."
+        ],
+        "correct_idx": 3
+      }
+    ],
+    "exercise": {
+      "instruction": "Write a Solidity code snippet for Module 1. The code must contain the keywords 'OptimismOPStack' and 'FaultProofs'.",
+      "template": "// Optimism Module 1: Optimism Architecture, Fault Proofs & Superchain Interoperability\n// Language: Solidity\n// Write implementation below:\n",
+      "required_keywords": [
+        "OptimismOPStack",
+        "FaultProofs"
+      ]
+    }
+  },
+  "optimism-2": {
+    "id": "optimism-2",
+    "level_id": 2,
+    "title": "Module 2: OP Stack Toolchain, Local Devnet & Hardhat/Foundry Environment",
+    "duration": "18 mins",
+    "xp": 200,
+    "content": "# Module 2: OP Stack Toolchain, Local Devnet & Hardhat/Foundry Environment\n### Optimism Ecosystem Track | Developer Academy\n\nSet up the OP Stack development environment: running local devnets with `op-node`, configuring OP Sepolia (Chain ID 11155420), and building Solidity smart contracts.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Optimism.\n2. **Toolchain Proficiency**: Master Foundry & Hardhat for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on OP Stack Superchain EVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **OP Sepolia** and verify artifacts on **OP Etherscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/ethereum-optimism/optimism](https://github.com/ethereum-optimism/optimism)\n- **Ecosystem Starter Templates**: [https://github.com/ethereum-optimism/superchain-registry](https://github.com/ethereum-optimism/superchain-registry)\n- **Block Explorer & State Verifier**: **OP Etherscan**\n- **Native Testnet Environment**: **OP Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "quiz": [
+      {
+        "question": "What is the Chain ID for the Optimism Sepolia testnet?",
+        "options": [
+          "11155420",
+          "1",
+          "10",
+          "420"
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "Which block explorer is the standard verification tool for OP Sepolia?",
+        "options": [
+          "Voyager.",
+          "Arbiscan.",
+          "OP Etherscan (sepolia-optimism.etherscan.io).",
+          "Solscan."
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "How do you configure an OP Sepolia network connection in `foundry.toml`?",
+        "options": [
+          "By disabling RPC endpoints.",
+          "By defining `op_sepolia = { url = \"https://sepolia.optimism.io\", chain_id = 11155420 }` under `[rpc_endpoints]`.",
+          "By hardcoding IP addresses in Solidity code.",
+          "By setting `network = 'internet'`."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "What is the L1Block precompile contract on Optimism (address `0x4200000000000000000000000000000000000015`)?",
+        "options": [
+          "A user wallet contract.",
+          "A special system contract that exposes current Ethereum Layer-1 block attributes (number, timestamp, basefee, blobBaseFee) to L2 contracts.",
+          "A DEX liquidity pool.",
+          "A compiler configuration file."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "How do developers acquire OP Sepolia testnet ETH for contract deployment?",
+        "options": [
+          "By transferring from mainnet.",
+          "Via the Superchain Faucet (faucet.circle.com or superchain-faucet.optimism.io) or bridging from Ethereum Sepolia.",
+          "By mining proof-of-work on GPU rigs.",
+          "By paying credit card fees."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "What is the gas fee formula on Optimism Layer-2?",
+        "options": [
+          "Total Fee = Random percentage of transaction value.",
+          "Transactions on Optimism are completely free.",
+          "Total Fee = (Execution Gas * L2 Base Fee) + (L1 Data Fee calculated from compressed transaction size and L1 blob base fee).",
+          "Total Fee = Flat 1 USD per transaction."
+        ],
+        "correct_idx": 2
+      }
+    ],
+    "exercise": {
+      "instruction": "Write a Solidity code snippet for Module 2. The code must contain the keywords 'OPSepolia' and 'SuperchainDev'.",
+      "template": "// Optimism Module 2: OP Stack Toolchain, Local Devnet & Hardhat/Foundry Environment\n// Language: Solidity\n// Write implementation below:\n",
+      "required_keywords": [
+        "OPSepolia",
+        "SuperchainDev"
+      ]
+    }
+  },
+  "optimism-3": {
+    "id": "optimism-3",
+    "level_id": 3,
+    "title": "Module 3: Superchain Smart Contracts: Standard Bridge & Cross-Domain Messaging",
+    "duration": "21 mins",
+    "xp": 250,
+    "content": "# Module 3: Superchain Smart Contracts: Standard Bridge & Cross-Domain Messaging\n### Optimism Ecosystem Track | Developer Academy\n\nBuild cross-chain decentralized applications using the OP Stack Standard Bridge, CrossDomainMessenger, and multi-chain messaging interfaces.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Optimism.\n2. **Toolchain Proficiency**: Master Foundry & Hardhat for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on OP Stack Superchain EVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **OP Sepolia** and verify artifacts on **OP Etherscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/ethereum-optimism/optimism](https://github.com/ethereum-optimism/optimism)\n- **Ecosystem Starter Templates**: [https://github.com/ethereum-optimism/superchain-registry](https://github.com/ethereum-optimism/superchain-registry)\n- **Block Explorer & State Verifier**: **OP Etherscan**\n- **Native Testnet Environment**: **OP Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "quiz": [
+      {
+        "question": "What contract enables secure cross-domain messaging between Ethereum L1 and Optimism L2?",
+        "options": [
+          "A centralized backend web server.",
+          "A standard WebSocket connection.",
+          "The `L1CrossDomainMessenger` and `L2CrossDomainMessenger` contracts.",
+          "An HTTP REST endpoint."
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "What is the `L1StandardBridge` contract on Optimism?",
+        "options": [
+          "A decentralized exchange router.",
+          "A physical suspension bridge in California.",
+          "A frontend React UI library.",
+          "A canonical bridge contract that locks ERC-20 tokens on L1 and mints corresponding `OptimismMintableERC20` representations on L2."
+        ],
+        "correct_idx": 3
+      },
+      {
+        "question": "How do developers verify that an incoming call to an L2 contract was initiated by a specific address on L1?",
+        "options": [
+          "By checking `ICrossDomainMessenger(msg.sender).xDomainMessageSender()` inside the target contract method.",
+          "By querying a centralized Oracle.",
+          "By reading `tx.origin` only.",
+          "By comparing string names."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "What is an `OptimismMintableERC20` token standard?",
+        "options": [
+          "An ERC-20 standard interface allowing the canonical bridge to mint and burn token supplies in sync with L1 collateral deposits and withdrawals.",
+          "An unbacked algorithmic stablecoin.",
+          "A non-transferable soulbound token.",
+          "An NFT metadata standard."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "What is the standard withdrawal challenge period when moving assets from Optimism back to Ethereum L1 via fault proofs?",
+        "options": [
+          "1 year.",
+          "10 seconds.",
+          "7 days (the dispute challenge window).",
+          "Instant with zero challenge window."
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "How can fast third-party liquidity bridges provide instant L2-to-L1 withdrawals without waiting 7 days?",
+        "options": [
+          "By bribing miners.",
+          "By deleting the transaction history.",
+          "By providing fronted liquidity on L1 in exchange for a small fee, taking on the 7-day settlement risk themselves.",
+          "By bypassing Ethereum protocol security."
+        ],
+        "correct_idx": 2
+      }
+    ],
+    "exercise": {
+      "instruction": "Write a Solidity code snippet for Module 3. The code must contain the keywords 'StandardBridge' and 'CrossDomainMessenger'.",
+      "template": "// Optimism Module 3: Superchain Smart Contracts: Standard Bridge & Cross-Domain Messaging\n// Language: Solidity\n// Write implementation below:\n",
+      "required_keywords": [
+        "StandardBridge",
+        "CrossDomainMessenger"
+      ]
+    }
+  },
+  "optimism-4": {
+    "id": "optimism-4",
+    "level_id": 4,
+    "title": "Module 4: Full-Stack Optimism DApps & OP Etherscan Verification",
+    "duration": "24 mins",
+    "xp": 300,
+    "content": "# Module 4: Full-Stack Optimism DApps & OP Etherscan Verification\n### Optimism Ecosystem Track | Developer Academy\n\nDevelop responsive full-stack applications with Wagmi, Viem, Next.js, and verify deployed smart contracts on OP Etherscan.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Optimism.\n2. **Toolchain Proficiency**: Master Foundry & Hardhat for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on OP Stack Superchain EVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **OP Sepolia** and verify artifacts on **OP Etherscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/ethereum-optimism/optimism](https://github.com/ethereum-optimism/optimism)\n- **Ecosystem Starter Templates**: [https://github.com/ethereum-optimism/superchain-registry](https://github.com/ethereum-optimism/superchain-registry)\n- **Block Explorer & State Verifier**: **OP Etherscan**\n- **Native Testnet Environment**: **OP Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "quiz": [
+      {
+        "question": "Which Viem chain definition represents Optimism Sepolia in TypeScript frontends?",
+        "options": [
+          "`optimismSepolia` from `viem/chains`.",
+          "`arbitrumOne`",
+          "`solana`",
+          "`mainnet`"
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "How do you verify a deployed Solidity contract on OP Etherscan using Foundry CLI?",
+        "options": [
+          "`forge publish --superchain`",
+          "`git push verify main`",
+          "`forge verify-contract <ADDRESS> <PATH>:<NAME> --chain-id 11155420 --verifier-url https://api-sepolia-optimistic.etherscan.io/api --etherscan-api-key <KEY>`",
+          "`npm run verify-optimism`"
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "What is the primary benefit of deploying on the Optimism Superchain for multi-chain DApps?",
+        "options": [
+          "Consistent tooling, shared developer standards, zero code refactoring across OP Stack chains (Base, OP, Zora, Mode, Frax).",
+          "Restricted smart contract execution.",
+          "Higher gas costs.",
+          "Incompatibility with standard EVM wallets."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "What precompile contract is used to estimate L1 data fees before broadcasting an Optimism transaction?",
+        "options": [
+          "A local JSON file.",
+          "The `GasPriceOracle` contract at address `0x420000000000000000000000000000000000000F`.",
+          "The Uniswap router.",
+          "The Chainlink price feed."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "How does the OP Stack support future interop and shared sequencing across the Superchain?",
+        "options": [
+          "Through Superchain Interop protocols enabling atomic cross-chain transactions without trust assumptions between OP chains.",
+          "By running all chains on a single central server.",
+          "By disabling independent chain governance.",
+          "By merging all chains into a single giant database."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "Where can developers monitor ecosystem grants, RetroPGF rounds, and Superchain analytics?",
+        "options": [
+          "On the official Optimism Governance Portal (gov.optimism.io) and RetroPGF directories.",
+          "On private Reddit forums.",
+          "On physical bulletin boards.",
+          "In closed Discord groups only."
+        ],
+        "correct_idx": 0
+      }
+    ],
+    "exercise": {
+      "instruction": "Write a Solidity code snippet for Module 4. The code must contain the keywords 'OPEtherscan' and 'SuperchainUI'.",
+      "template": "// Optimism Module 4: Full-Stack Optimism DApps & OP Etherscan Verification\n// Language: Solidity\n// Write implementation below:\n",
+      "required_keywords": [
+        "OPEtherscan",
+        "SuperchainUI"
+      ]
+    }
+  },
+  "optimism-5": {
+    "id": "optimism-5",
+    "level_id": 5,
+    "title": "Module 5: OP Sepolia Deployment Challenge & Superchain Verification",
+    "duration": "27 mins",
+    "xp": 350,
+    "content": "# Module 5: OP Sepolia Deployment Challenge & Superchain Verification\n### Optimism Ecosystem Track | Developer Academy\n\nHands-on Deployment Challenge: Compile your smart contracts, deploy to OP Sepolia testnet, verify on OP Etherscan, and complete Superchain certification.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Optimism.\n2. **Toolchain Proficiency**: Master Foundry & Hardhat for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on OP Stack Superchain EVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **OP Sepolia** and verify artifacts on **OP Etherscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/ethereum-optimism/optimism](https://github.com/ethereum-optimism/optimism)\n- **Ecosystem Starter Templates**: [https://github.com/ethereum-optimism/superchain-registry](https://github.com/ethereum-optimism/superchain-registry)\n- **Block Explorer & State Verifier**: **OP Etherscan**\n- **Native Testnet Environment**: **OP Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "quiz": [
+      {
+        "question": "What is required to complete the Optimism Sepolia Deployment Challenge?",
+        "options": [
+          "An unverified bytecode string on a local machine.",
+          "A testnet faucet transaction only.",
+          "A PowerPoint presentation only.",
+          "A live deployed smart contract on OP Sepolia with verified source code on OP Etherscan and active transaction telemetry."
+        ],
+        "correct_idx": 3
+      },
+      {
+        "question": "Where can grant evaluators and hiring partners inspect your verified OP Sepolia deployment?",
+        "options": [
+          "On a private USB thumb drive.",
+          "On the OP Etherscan Sepolia explorer at `https://sepolia-optimism.etherscan.io/address/<CONTRACT_ADDRESS>`.",
+          "On an unhosted local web server.",
+          "In browser session storage."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "What on-chain milestone does the Developer Academy issue upon completing the Optimism track?",
+        "options": [
+          "A temporary coupon code.",
+          "A text message confirmation.",
+          "A paper receipt in the mail.",
+          "A verifiable cryptographic certificate registered on-chain validating Superchain & OP Stack technical mastery."
+        ],
+        "correct_idx": 3
+      },
+      {
+        "question": "Why do ecosystem grant programs value interactive testnet deployments over theoretical coursework?",
+        "options": [
+          "Because they replace open-source licenses.",
+          "Because they eliminate all future software maintenance.",
+          "Because live deployments prove real-world engineering execution, smart contract safety, and end-to-end tooling competence.",
+          "Because testnet deployments generate mining revenue for funders."
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "What security pattern should always be implemented in smart contracts handling user funds on Layer-2?",
+        "options": [
+          "Allowing anyone to call withdrawal functions.",
+          "Storing private keys in smart contract state.",
+          "Checks-Effects-Interactions, reentrancy guards, strict access control, and safe token transfer wrappers (`SafeERC20`).",
+          "Disabling all error messages."
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "How can graduating developers leverage their Optimism track completion for RetroPGF and Superchain Grants?",
+        "options": [
+          "By purchasing social media followers.",
+          "By linking their verified academy credential, GitHub repository, and deployed contract in their official grant application.",
+          "By sending automated spam emails.",
+          "By creating multiple fake GitHub accounts."
+        ],
+        "correct_idx": 1
+      }
+    ],
+    "exercise": {
+      "instruction": "Complete the Optimism Testnet Deployment Challenge! Write a deployment configuration and verification snippet containing 'optimism', 'deploy', 'testnet', and 'verify'.",
+      "template": "// \u2500\u2500\u2500 Optimism Testnet Deployment & Verification \u2500\u2500\u2500\n// Target: OP Sepolia\n// Network Explorer: OP Etherscan\n\n// Complete deployment declaration below:\n",
+      "required_keywords": [
+        "optimism",
+        "deploy",
+        "testnet",
+        "verify"
+      ]
+    }
+  },
+  "polygon-1": {
+    "id": "polygon-1",
+    "level_id": 1,
+    "title": "Module 1: Polygon Architecture: PoS Heimdall/Bor & zkEVM Validium Topologies",
+    "duration": "15 mins",
+    "xp": 150,
+    "content": "# Module 1: Polygon Architecture: PoS Heimdall/Bor & zkEVM Validium Topologies\n### Polygon Ecosystem Track | Developer Academy\n\nExplore Polygon's dual architecture: the Heimdall (Tendermint validator) / Bor (EVM block producer) PoS network and Polygon zkEVM ZK-Rollup scaling technology.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polygon.\n2. **Toolchain Proficiency**: Master Foundry & Hardhat for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on Polygon PoS & zkEVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Polygon Amoy Testnet** and verify artifacts on **PolygonScan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/maticnetwork](https://github.com/maticnetwork)\n- **Ecosystem Starter Templates**: [https://github.com/0xPolygon/polygon-docs](https://github.com/0xPolygon/polygon-docs)\n- **Block Explorer & State Verifier**: **PolygonScan**\n- **Native Testnet Environment**: **Polygon Amoy Testnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "quiz": [
+      {
+        "question": "What are the two core layers of the Polygon PoS network architecture?",
+        "options": [
+          "Master node and Slave node.",
+          "Frontend React and Backend Python.",
+          "MySQL and Redis.",
+          "Heimdall (Proof-of-Stake validator layer based on Tendermint) and Bor (EVM-compatible block production layer based on Geth)."
+        ],
+        "correct_idx": 3
+      },
+      {
+        "question": "What is Polygon zkEVM?",
+        "options": [
+          "A centralized database running in AWS.",
+          "A browser extension for Chrome.",
+          "A proof-of-work mining algorithm for GPUs.",
+          "A Type-2 ZK-Rollup that executes standard Ethereum bytecode with zero changes and generates zero-knowledge validity proofs for L1 verification."
+        ],
+        "correct_idx": 3
+      },
+      {
+        "question": "What native token powers gas fees and staking on Polygon (formerly MATIC)?",
+        "options": [
+          "SOL",
+          "POL (Polygon Ecosystem Token).",
+          "DOGE",
+          "BTC"
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "How does Polygon PoS maintain checkpoint security with Ethereum Layer-1?",
+        "options": [
+          "Heimdall validators periodically aggregate blocks and post signed Merkle root checkpoints to Ethereum L1 smart contracts.",
+          "By using paper receipts.",
+          "By running daily database dumps to Amazon S3.",
+          "By emailing block summaries to Ethereum miners."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "What is the AggLayer (Aggregation Layer) in the Polygon 2.0 vision?",
+        "options": [
+          "A CSS style preprocessor.",
+          "A cross-chain settlement protocol connecting multiple ZK-powered chains for near-instant cross-chain transactions and shared liquidity.",
+          "A database aggregation pipeline in MongoDB.",
+          "A centralized token exchange."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "Why do enterprise and gaming applications frequently choose Polygon for deployment?",
+        "options": [
+          "Because of sub-cent transaction fees, high throughput (thousands of TPS), and instant finality combined with full EVM compatibility.",
+          "Because Polygon only works on Android.",
+          "Because Polygon charges monthly user fees.",
+          "Because Polygon does not support smart contracts."
+        ],
+        "correct_idx": 0
+      }
+    ],
+    "exercise": {
+      "instruction": "Write a Solidity code snippet for Module 1. The code must contain the keywords 'PolygonPoS' and 'zkEVM'.",
+      "template": "// Polygon Module 1: Polygon Architecture: PoS Heimdall/Bor & zkEVM Validium Topologies\n// Language: Solidity\n// Write implementation below:\n",
+      "required_keywords": [
+        "PolygonPoS",
+        "zkEVM"
+      ]
+    }
+  },
+  "polygon-2": {
+    "id": "polygon-2",
+    "level_id": 2,
+    "title": "Module 2: Polygon Toolchain, Amoy Testnet Faucets & Foundry Setup",
+    "duration": "18 mins",
+    "xp": 200,
+    "content": "# Module 2: Polygon Toolchain, Amoy Testnet Faucets & Foundry Setup\n### Polygon Ecosystem Track | Developer Academy\n\nConfigure developer environments for Polygon Amoy Testnet (Chain ID 80002), manage POL faucets, RPC endpoints, and deploy Solidity smart contracts.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polygon.\n2. **Toolchain Proficiency**: Master Foundry & Hardhat for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on Polygon PoS & zkEVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Polygon Amoy Testnet** and verify artifacts on **PolygonScan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/maticnetwork](https://github.com/maticnetwork)\n- **Ecosystem Starter Templates**: [https://github.com/0xPolygon/polygon-docs](https://github.com/0xPolygon/polygon-docs)\n- **Block Explorer & State Verifier**: **PolygonScan**\n- **Native Testnet Environment**: **Polygon Amoy Testnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "quiz": [
+      {
+        "question": "What is the Chain ID for the Polygon Amoy testnet (Sepolia-anchored testnet)?",
+        "options": [
+          "80002",
+          "1",
+          "137",
+          "1101"
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "Which block explorer is the standard tool for inspecting Polygon Amoy transactions and contracts?",
+        "options": [
+          "Etherscan mainnet.",
+          "Solscan.",
+          "Voyager.",
+          "PolygonScan (amoy.polygonscan.com)."
+        ],
+        "correct_idx": 3
+      },
+      {
+        "question": "How do developers obtain testnet POL tokens for Polygon Amoy gas fees?",
+        "options": [
+          "By purchasing tokens on Binance.",
+          "From the official Polygon Faucet (faucet.polygon.technology) or Alchemy/Infura Amoy faucets.",
+          "By calling telephone support.",
+          "By mining proof-of-work blocks on GPU."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "What RPC URL is commonly used to connect to Polygon Amoy testnet?",
+        "options": [
+          "https://eth.llamarpc.com",
+          "https://polygon-rpc.com",
+          "http://localhost:8545",
+          "https://rpc-amoy.polygon.technology"
+        ],
+        "correct_idx": 3
+      },
+      {
+        "question": "How do you configure Polygon Amoy verification in `foundry.toml`?",
+        "options": [
+          "`[etherscan] polygon_amoy = { key = \"${POLYGONSCAN_API_KEY}\", url = \"https://api-amoy.polygonscan.com/api\" }`",
+          "`skip_verification = true`",
+          "`verifier = 'auto'` without API keys",
+          "`network = 'polygon'` only"
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "What is the primary advantage of testing on Amoy over legacy Mumbai testnet?",
+        "options": [
+          "Amoy is anchored to Ethereum Sepolia L1, providing long-term stability and modern EVM feature compatibility.",
+          "Amoy disables all gas fees forever.",
+          "Amoy uses Python instead of Solidity.",
+          "Amoy does not require a wallet."
+        ],
+        "correct_idx": 0
+      }
+    ],
+    "exercise": {
+      "instruction": "Write a Solidity code snippet for Module 2. The code must contain the keywords 'PolygonAmoy' and 'POL'.",
+      "template": "// Polygon Module 2: Polygon Toolchain, Amoy Testnet Faucets & Foundry Setup\n// Language: Solidity\n// Write implementation below:\n",
+      "required_keywords": [
+        "PolygonAmoy",
+        "POL"
+      ]
+    }
+  },
+  "polygon-3": {
+    "id": "polygon-3",
+    "level_id": 3,
+    "title": "Module 3: Polygon Smart Contracts: State Sync, FxPortal & Plasma Bridges",
+    "duration": "21 mins",
+    "xp": 250,
+    "content": "# Module 3: Polygon Smart Contracts: State Sync, FxPortal & Plasma Bridges\n### Polygon Ecosystem Track | Developer Academy\n\nImplement cross-chain interoperability: state receiver contracts, FxPortal bridge mechanics, and custom token mapping between Ethereum and Polygon.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polygon.\n2. **Toolchain Proficiency**: Master Foundry & Hardhat for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on Polygon PoS & zkEVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Polygon Amoy Testnet** and verify artifacts on **PolygonScan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/maticnetwork](https://github.com/maticnetwork)\n- **Ecosystem Starter Templates**: [https://github.com/0xPolygon/polygon-docs](https://github.com/0xPolygon/polygon-docs)\n- **Block Explorer & State Verifier**: **PolygonScan**\n- **Native Testnet Environment**: **Polygon Amoy Testnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "quiz": [
+      {
+        "question": "What is the State Sync mechanism on Polygon PoS?",
+        "options": [
+          "An FTP file transfer tool.",
+          "A WebSocket synchronization library for React.",
+          "A native protocol mechanism that automatically forwards events emitted by L1 StateSender contracts to L2 StateReceiver contracts.",
+          "A database replication service in AWS."
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "What is the FxPortal bridge on Polygon?",
+        "options": [
+          "A physical gate at an office.",
+          "A permissionless, tokenless state transfer bridge that allows contracts on Ethereum and Polygon to pass arbitrary data without token mapping approvals.",
+          "A decentralized lending protocol.",
+          "A frontend styling template."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "Which interface must a Polygon contract implement to receive state sync data from Ethereum L1?",
+        "options": [
+          "`IFxMessageProcessor` or `IStateReceiver` (`onStateReceive`).",
+          "`IERC20` only.",
+          "`IOwnable` only.",
+          "`IDisposable` only."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "What is the difference between the Polygon PoS Bridge and Polygon zkEVM Bridge?",
+        "options": [
+          "The PoS bridge relies on validator multisig checkpoints, whereas the zkEVM bridge uses cryptographic ZK validity proofs for trustless security.",
+          "The zkEVM bridge requires 30 days to withdraw.",
+          "Both bridges are centralized web servers.",
+          "The PoS bridge only transfers Bitcoin."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "What is `FxERC20RootTunnel` and `FxERC20ChildTunnel` in the FxPortal architecture?",
+        "options": [
+          "Private VPN tunnels.",
+          "CSS animation classes.",
+          "The L1 and L2 bridge tunnel contracts that lock ERC-20 tokens on Ethereum and mint/burn corresponding child tokens on Polygon.",
+          "Network routing cables."
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "Why should developers sanitize data payloads received via `onStateReceive`?",
+        "options": [
+          "To encrypt the data on disk.",
+          "To verify that `msg.sender` matches the canonical StateReceiver address and validate the origin sender address from L1.",
+          "To format strings into uppercase.",
+          "To compress the payload size."
+        ],
+        "correct_idx": 1
+      }
+    ],
+    "exercise": {
+      "instruction": "Write a Solidity code snippet for Module 3. The code must contain the keywords 'StateSync' and 'FxPortal'.",
+      "template": "// Polygon Module 3: Polygon Smart Contracts: State Sync, FxPortal & Plasma Bridges\n// Language: Solidity\n// Write implementation below:\n",
+      "required_keywords": [
+        "StateSync",
+        "FxPortal"
+      ]
+    }
+  },
+  "polygon-4": {
+    "id": "polygon-4",
+    "level_id": 4,
+    "title": "Module 4: Full-Stack Polygon DApps & PolygonScan Verification",
+    "duration": "24 mins",
+    "xp": 300,
+    "content": "# Module 4: Full-Stack Polygon DApps & PolygonScan Verification\n### Polygon Ecosystem Track | Developer Academy\n\nBuild scalable decentralized applications on Polygon using Wagmi/Viem, integrate fast RPC providers, and verify smart contract deployments on PolygonScan.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polygon.\n2. **Toolchain Proficiency**: Master Foundry & Hardhat for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on Polygon PoS & zkEVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Polygon Amoy Testnet** and verify artifacts on **PolygonScan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/maticnetwork](https://github.com/maticnetwork)\n- **Ecosystem Starter Templates**: [https://github.com/0xPolygon/polygon-docs](https://github.com/0xPolygon/polygon-docs)\n- **Block Explorer & State Verifier**: **PolygonScan**\n- **Native Testnet Environment**: **Polygon Amoy Testnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "quiz": [
+      {
+        "question": "Which Viem chain definition corresponds to Polygon Amoy Testnet?",
+        "options": [
+          "`mainnet`",
+          "`bsc`",
+          "`polygonAmoy` from `viem/chains`.",
+          "`polygon` (mainnet)"
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "How do you verify a smart contract on PolygonScan using Foundry CLI?",
+        "options": [
+          "`forge verify-contract <ADDRESS> <PATH>:<NAME> --chain-id 80002 --verifier-url https://api-amoy.polygonscan.com/api --etherscan-api-key <KEY>`",
+          "`git push polygon main`",
+          "`npm run verify`",
+          "`forge verify --polygon`"
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "What is Polygon ID / Privado ID?",
+        "options": [
+          "An email username.",
+          "A decentralized identity and zero-knowledge verifiable credentials framework built on Polygon for private identity proof without revealing data.",
+          "A social security database.",
+          "A government issued passport."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "What RPC optimization ensures high-throughput reliability when interacting with Polygon nodes?",
+        "options": [
+          "Disabling JSON-RPC responses.",
+          "Querying only public free endpoints with high rate limits.",
+          "Using dedicated provider RPC endpoints (Alchemy, Infura, QuickNode) with automated retry and fallback configurations.",
+          "Sending all requests over plain HTTP without TLS."
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "How does sub-second block time on Polygon affect frontend transaction tracking UX?",
+        "options": [
+          "It prevents frontends from querying transaction receipts.",
+          "It forces full page reloads.",
+          "It requires users to wait 30 minutes for confirmation.",
+          "Transactions confirm in 2\u20133 seconds, allowing frontends to provide near-instant feedback and fluid UI updates."
+        ],
+        "correct_idx": 3
+      },
+      {
+        "question": "Where can developers submit their Polygon projects for Polygon Village ecosystem grants and accelerators?",
+        "options": [
+          "On the official Polygon Village developer portal (polygon.technology/village).",
+          "By sending paper letters to India.",
+          "In closed Telegram channels only.",
+          "On Craigslist."
+        ],
+        "correct_idx": 0
+      }
+    ],
+    "exercise": {
+      "instruction": "Write a Solidity code snippet for Module 4. The code must contain the keywords 'PolygonScan' and 'WagmiPolygon'.",
+      "template": "// Polygon Module 4: Full-Stack Polygon DApps & PolygonScan Verification\n// Language: Solidity\n// Write implementation below:\n",
+      "required_keywords": [
+        "PolygonScan",
+        "WagmiPolygon"
+      ]
+    }
+  },
+  "polygon-5": {
+    "id": "polygon-5",
+    "level_id": 5,
+    "title": "Module 5: Polygon Amoy Deployment Challenge & zkEVM Verification",
+    "duration": "27 mins",
+    "xp": 350,
+    "content": "# Module 5: Polygon Amoy Deployment Challenge & zkEVM Verification\n### Polygon Ecosystem Track | Developer Academy\n\nHands-on Deployment Challenge: Compile your smart contracts, deploy to Polygon Amoy testnet, verify on PolygonScan, and complete your Polygon Developer certification.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polygon.\n2. **Toolchain Proficiency**: Master Foundry & Hardhat for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on Polygon PoS & zkEVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Polygon Amoy Testnet** and verify artifacts on **PolygonScan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/maticnetwork](https://github.com/maticnetwork)\n- **Ecosystem Starter Templates**: [https://github.com/0xPolygon/polygon-docs](https://github.com/0xPolygon/polygon-docs)\n- **Block Explorer & State Verifier**: **PolygonScan**\n- **Native Testnet Environment**: **Polygon Amoy Testnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "quiz": [
+      {
+        "question": "What is required to complete the Polygon Amoy Deployment Challenge?",
+        "options": [
+          "A live deployed contract on Polygon Amoy with verified source code on PolygonScan and successful state execution.",
+          "A testnet faucet request only.",
+          "A screenshot of a code editor with no broadcasted transaction.",
+          "A text document on your desktop."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "Where can grant reviewers inspect your verified Polygon Amoy smart contract?",
+        "options": [
+          "At `https://amoy.polygonscan.com/address/<YOUR_CONTRACT_ADDRESS>`.",
+          "On an unhosted local server.",
+          "In browser local storage.",
+          "In a private email only."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "What credential is issued upon completing the Polygon track?",
+        "options": [
+          "A temporary gift card.",
+          "An SMS message.",
+          "A cryptographically verifiable digital certificate demonstrating mastery of Polygon PoS, zkEVM, and Solidity smart contracts.",
+          "A physical paper diploma."
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "Why do enterprise Web3 hiring managers value verified testnet smart contract deployments on Polygon?",
+        "options": [
+          "Because they prove end-to-end technical capability, gas-efficient design, and practical deployment experience on high-throughput networks.",
+          "Because testnets provide legal immunity.",
+          "Because testnets eliminate software licensing.",
+          "Because testnets replace the need for real user testing."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "What gas optimization technique is especially important for high-frequency Polygon applications?",
+        "options": [
+          "Setting the gas limit to infinite.",
+          "Using immutable variables, batching state updates in arrays, and caching storage variables in memory inside loops.",
+          "Using strings for all numerical values.",
+          "Writing code without any loops or functions."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "How can developers use their Polygon Developer Academy credentials to apply for Polygon Village funding?",
+        "options": [
+          "By emailing personal bank statements.",
+          "By purchasing advertising space.",
+          "By running automated bots.",
+          "By including their verifiable certificate link, GitHub repo, and verified contract address in the Polygon Village grant application form."
+        ],
+        "correct_idx": 3
+      }
+    ],
+    "exercise": {
+      "instruction": "Complete the Polygon Testnet Deployment Challenge! Write a deployment configuration and verification snippet containing 'polygon', 'deploy', 'testnet', and 'verify'.",
+      "template": "// \u2500\u2500\u2500 Polygon Testnet Deployment & Verification \u2500\u2500\u2500\n// Target: Polygon Amoy Testnet\n// Network Explorer: PolygonScan\n\n// Complete deployment declaration below:\n",
+      "required_keywords": [
+        "polygon",
+        "deploy",
+        "testnet",
+        "verify"
+      ]
+    }
+  },
+  "avalanche-1": {
+    "id": "avalanche-1",
+    "level_id": 1,
+    "title": "Module 1: Avalanche Architecture: Primary Network (X/P/C Chains) & Snow Consensus",
+    "duration": "15 mins",
+    "xp": 150,
+    "content": "# Module 1: Avalanche Architecture: Primary Network (X/P/C Chains) & Snow Consensus\n### Avalanche Ecosystem Track | Developer Academy\n\nMaster the Avalanche multi-chain architecture: the Primary Network consisting of the Exchange Chain (X-Chain), Platform Chain (P-Chain), Contract Chain (C-Chain), and the Snow consensus family.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Avalanche.\n2. **Toolchain Proficiency**: Master Avalanche CLI & Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on Avalanche C-Chain EVM & Subnets adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Avalanche Fuji Testnet** and verify artifacts on **Snowtrace**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/ava-labs/avalanchego](https://github.com/ava-labs/avalanchego)\n- **Ecosystem Starter Templates**: [https://github.com/ava-labs/avalanche-starter-kit](https://github.com/ava-labs/avalanche-starter-kit)\n- **Block Explorer & State Verifier**: **Snowtrace**\n- **Native Testnet Environment**: **Avalanche Fuji Testnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "quiz": [
+      {
+        "question": "What are the three built-in blockchains that compose the Avalanche Primary Network?",
+        "options": [
+          "Frontend, Backend, and Database chains.",
+          "Bitcoin, Ethereum, and Solana chains.",
+          "Alpha, Beta, and Gamma chains.",
+          "X-Chain (Exchange Chain for assets), P-Chain (Platform Chain for staking and Subnets), and C-Chain (Contract Chain for EVM smart contracts)."
+        ],
+        "correct_idx": 3
+      },
+      {
+        "question": "Which Avalanche chain executes standard Solidity EVM smart contracts?",
+        "options": [
+          "The C-Chain (Contract Chain / Coreth).",
+          "The P-Chain.",
+          "The Bitcoin network.",
+          "The X-Chain."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "What is unique about Avalanche's Snow consensus family (Avalanche/Snowman)?",
+        "options": [
+          "It uses repeated sub-sampling voting among validators to achieve sub-second, irreversible finality with high decentralization and no leader bottlenecks.",
+          "It uses round-robin voting.",
+          "It relies on a single master node.",
+          "It uses classical Proof of Work mining with energy-intensive hashes."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "What is an Avalanche Subnet (Custom L1)?",
+        "options": [
+          "A sub-folder on GitHub.",
+          "A dynamic, sovereign group of validators working together to achieve consensus on custom blockchains with dedicated state, execution rules, and custom gas tokens.",
+          "A private chat room.",
+          "A temporary WiFi network."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "What is Avalanche Warp Messaging (AWM) and Teleporter?",
+        "options": [
+          "A native cross-chain communication protocol enabling trustless, sub-second message and asset transfer between Avalanche Subnets and the C-Chain without bridges.",
+          "An email newsletter service.",
+          "A video conference app.",
+          "An SMS messaging gateway."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "What native token is used to pay gas fees on the Avalanche C-Chain?",
+        "options": [
+          "SOL",
+          "AVAX (Avalanche Native Token).",
+          "USDC only",
+          "ETH"
+        ],
+        "correct_idx": 1
+      }
+    ],
+    "exercise": {
+      "instruction": "Write a Solidity code snippet for Module 1. The code must contain the keywords 'AvalancheSnow' and 'CChain'.",
+      "template": "// Avalanche Module 1: Avalanche Architecture: Primary Network (X/P/C Chains) & Snow Consensus\n// Language: Solidity\n// Write implementation below:\n",
+      "required_keywords": [
+        "AvalancheSnow",
+        "CChain"
+      ]
+    }
+  },
+  "avalanche-2": {
+    "id": "avalanche-2",
+    "level_id": 2,
+    "title": "Module 2: Avalanche Toolchain, Avalanche CLI & Fuji Testnet Setup",
+    "duration": "18 mins",
+    "xp": 200,
+    "content": "# Module 2: Avalanche Toolchain, Avalanche CLI & Fuji Testnet Setup\n### Avalanche Ecosystem Track | Developer Academy\n\nConfigure the official Avalanche CLI toolchain, manage Avalanche Fuji Testnet (Chain ID 43113), fund testnet AVAX faucets, and build Solidity contracts.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Avalanche.\n2. **Toolchain Proficiency**: Master Avalanche CLI & Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on Avalanche C-Chain EVM & Subnets adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Avalanche Fuji Testnet** and verify artifacts on **Snowtrace**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/ava-labs/avalanchego](https://github.com/ava-labs/avalanchego)\n- **Ecosystem Starter Templates**: [https://github.com/ava-labs/avalanche-starter-kit](https://github.com/ava-labs/avalanche-starter-kit)\n- **Block Explorer & State Verifier**: **Snowtrace**\n- **Native Testnet Environment**: **Avalanche Fuji Testnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "quiz": [
+      {
+        "question": "What is the Chain ID for the Avalanche Fuji C-Chain testnet?",
+        "options": [
+          "43113",
+          "1",
+          "43114",
+          "8453"
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "Which block explorer is the primary tool for verifying Avalanche C-Chain smart contracts?",
+        "options": [
+          "Arbiscan.",
+          "Snowtrace / Routescan (testnet.snowtrace.io / routescan.io).",
+          "Etherscan mainnet.",
+          "Solscan."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "How do developers obtain testnet AVAX for Fuji deployment gas fees?",
+        "options": [
+          "By mining proof-of-work blocks on GPU.",
+          "By purchasing tokens on Coinbase.",
+          "By sending letters to Ava Labs.",
+          "From the official Core Faucet (core.app/tools/testnet-faucet) or Avalanche Fuji Faucets."
+        ],
+        "correct_idx": 3
+      },
+      {
+        "question": "What CLI tool is officially used to create, test, and deploy custom Avalanche Subnets and local networks?",
+        "options": [
+          "`anchor init`",
+          "`cargo check`",
+          "`avalanche-cli` (`avalanche network start`, `avalanche subnet deploy`).",
+          "`npm start`"
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "What RPC URL is the standard public endpoint for the Avalanche Fuji C-Chain?",
+        "options": [
+          "`https://api.avax.network/ext/bc/C/rpc`",
+          "`https://api.avax-test.network/ext/bc/C/rpc`",
+          "`https://eth.llamarpc.com`",
+          "`http://localhost:8545`"
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "How do you configure Avalanche Fuji verification in `foundry.toml`?",
+        "options": [
+          "`verify = true` without URLs",
+          "`disable_explorer = true`",
+          "`[etherscan] avalanche_fuji = { key = \"${SNOWTRACE_API_KEY}\", url = \"https://api.routescan.io/v2/network/testnet/evm/43113/etherscan\" }`",
+          "`network = 'fuji'` only"
+        ],
+        "correct_idx": 2
+      }
+    ],
+    "exercise": {
+      "instruction": "Write a Solidity code snippet for Module 2. The code must contain the keywords 'AvalancheFuji' and 'AvalancheCLI'.",
+      "template": "// Avalanche Module 2: Avalanche Toolchain, Avalanche CLI & Fuji Testnet Setup\n// Language: Solidity\n// Write implementation below:\n",
+      "required_keywords": [
+        "AvalancheFuji",
+        "AvalancheCLI"
+      ]
+    }
+  },
+  "avalanche-3": {
+    "id": "avalanche-3",
+    "level_id": 3,
+    "title": "Module 3: Custom Avalanche Subnets & Custom Virtual Machine Architecture",
+    "duration": "21 mins",
+    "xp": 250,
+    "content": "# Module 3: Custom Avalanche Subnets & Custom Virtual Machine Architecture\n### Avalanche Ecosystem Track | Developer Academy\n\nArchitect custom App-Chains on Avalanche: configuring custom EVM parameters (Subnet-EVM), custom gas tokens, fee manager precompiles, and validator staking rules.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Avalanche.\n2. **Toolchain Proficiency**: Master Avalanche CLI & Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on Avalanche C-Chain EVM & Subnets adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Avalanche Fuji Testnet** and verify artifacts on **Snowtrace**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/ava-labs/avalanchego](https://github.com/ava-labs/avalanchego)\n- **Ecosystem Starter Templates**: [https://github.com/ava-labs/avalanche-starter-kit](https://github.com/ava-labs/avalanche-starter-kit)\n- **Block Explorer & State Verifier**: **Snowtrace**\n- **Native Testnet Environment**: **Avalanche Fuji Testnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "quiz": [
+      {
+        "question": "What is Subnet-EVM on Avalanche?",
+        "options": [
+          "A frontend JavaScript library.",
+          "A customizable fork of Coreth (Go-Ethereum) tailored for Avalanche Subnets with configurable gas limits, block times, and custom stateful precompiles.",
+          "An SQL database server.",
+          "A hardware crypto wallet."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "How do stateful precompiles in Subnet-EVM empower customized blockchain governance?",
+        "options": [
+          "They force contracts to run in browser JavaScript.",
+          "They replace private keys with usernames.",
+          "They allow developers to implement custom native features (e.g., fee configuration, native token minting, allowlisting transactions) directly at the protocol level in Go.",
+          "They delete all smart contracts upon execution."
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "Can an Avalanche Subnet use its own custom ERC-20-like token as its native gas token instead of AVAX?",
+        "options": [
+          "No, gas tokens cannot be customized in Web3.",
+          "No, Subnets can only use Bitcoin.",
+          "Yes, but only if approved by US banks.",
+          "Yes, Subnet-EVM allows defining any custom native gas token with custom supply and distribution mechanics during Subnet genesis."
+        ],
+        "correct_idx": 3
+      },
+      {
+        "question": "What is Teleporter on Avalanche?",
+        "options": [
+          "A video conferencing protocol.",
+          "A centralized bridge website.",
+          "A physical teleportation machine.",
+          "An EVM-compatible wrapper around Avalanche Warp Messaging (AWM) that provides a standard cross-subnet smart contract messaging interface."
+        ],
+        "correct_idx": 3
+      },
+      {
+        "question": "What validator staking requirement exists for validating an Avalanche Subnet?",
+        "options": [
+          "Validators must pay monthly cash subscriptions.",
+          "Subnet validators must validate the Avalanche Primary Network and be registered on the P-Chain via `P-Chain.addSubnetValidator`.",
+          "Validators require no staking collateral.",
+          "Validators must operate on AWS exclusively."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "What is the benefit of building an App-Chain as an Avalanche Subnet compared to deploying on a shared public L1?",
+        "options": [
+          "Dedicated isolated throughput, custom compliance rules (KYC/geo-fencing if needed), custom gas mechanics, and zero fee volatility from other DApps.",
+          "Centralized server hosting requirements.",
+          "Inability to interoperate with other blockchains.",
+          "Higher transaction fees for users."
+        ],
+        "correct_idx": 0
+      }
+    ],
+    "exercise": {
+      "instruction": "Write a Solidity code snippet for Module 3. The code must contain the keywords 'SubnetEVM' and 'Precompiles'.",
+      "template": "// Avalanche Module 3: Custom Avalanche Subnets & Custom Virtual Machine Architecture\n// Language: Solidity\n// Write implementation below:\n",
+      "required_keywords": [
+        "SubnetEVM",
+        "Precompiles"
+      ]
+    }
+  },
+  "avalanche-4": {
+    "id": "avalanche-4",
+    "level_id": 4,
+    "title": "Module 4: Full-Stack Avalanche DApps, Core Wallet & Snowtrace Verification",
+    "duration": "24 mins",
+    "xp": 300,
+    "content": "# Module 4: Full-Stack Avalanche DApps, Core Wallet & Snowtrace Verification\n### Avalanche Ecosystem Track | Developer Academy\n\nDevelop responsive DApps on Avalanche Fuji using Wagmi, Viem, Core Wallet extension, and verify deployed Solidity smart contracts on Snowtrace.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Avalanche.\n2. **Toolchain Proficiency**: Master Avalanche CLI & Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on Avalanche C-Chain EVM & Subnets adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Avalanche Fuji Testnet** and verify artifacts on **Snowtrace**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/ava-labs/avalanchego](https://github.com/ava-labs/avalanchego)\n- **Ecosystem Starter Templates**: [https://github.com/ava-labs/avalanche-starter-kit](https://github.com/ava-labs/avalanche-starter-kit)\n- **Block Explorer & State Verifier**: **Snowtrace**\n- **Native Testnet Environment**: **Avalanche Fuji Testnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "quiz": [
+      {
+        "question": "Which Viem chain definition represents Avalanche Fuji in frontend React code?",
+        "options": [
+          "`mainnet`",
+          "`avalancheFuji` from `viem/chains`.",
+          "`polygon`",
+          "`avalanche` (mainnet)"
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "What is the Core Wallet built by Ava Labs?",
+        "options": [
+          "A non-custodial multi-chain wallet built specifically for seamless interaction with Avalanche C-Chain, Subnets, Bitcoin, and Ethereum.",
+          "A desktop operating system.",
+          "An email client.",
+          "A centralized trading desk."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "How do you verify a smart contract on Snowtrace / Routescan using Foundry CLI?",
+        "options": [
+          "`forge publish --avalanche`",
+          "`git commit -m 'verified'`",
+          "`forge verify-contract <ADDRESS> <PATH>:<NAME> --chain-id 43113 --verifier-url https://api.routescan.io/v2/network/testnet/evm/43113/etherscan --etherscan-api-key <KEY>`",
+          "`npm run verify`"
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "What latency advantage do users experience on the Avalanche C-Chain?",
+        "options": [
+          "Overnight batch processing.",
+          "1-hour fraud proof windows.",
+          "Sub-second transaction finality (typically ~700ms) with irreversible state confirmation.",
+          "15-minute confirmation delays."
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "What API service enables fast historical indexing of Avalanche subnets and C-Chain events?",
+        "options": [
+          "SOAP XML endpoints.",
+          "FTP file transfers.",
+          "CSV spreadsheet downloads.",
+          "The Avalanche Glacier API and Subgraphs via The Graph."
+        ],
+        "correct_idx": 3
+      },
+      {
+        "question": "Where can builders apply for ecosystem grants and accelerator support within Avalanche?",
+        "options": [
+          "Through Blizzard the Avalanche Ecosystem Fund, Multiverse incentive programs, and Codebase accelerator.",
+          "On Craigslist.",
+          "Via postal letters.",
+          "In closed Telegram groups only."
+        ],
+        "correct_idx": 0
+      }
+    ],
+    "exercise": {
+      "instruction": "Write a Solidity code snippet for Module 4. The code must contain the keywords 'Snowtrace' and 'CoreWallet'.",
+      "template": "// Avalanche Module 4: Full-Stack Avalanche DApps, Core Wallet & Snowtrace Verification\n// Language: Solidity\n// Write implementation below:\n",
+      "required_keywords": [
+        "Snowtrace",
+        "CoreWallet"
+      ]
+    }
+  },
+  "avalanche-5": {
+    "id": "avalanche-5",
+    "level_id": 5,
+    "title": "Module 5: Avalanche Fuji Deployment Challenge & Subnet Verification",
+    "duration": "27 mins",
+    "xp": 350,
+    "content": "# Module 5: Avalanche Fuji Deployment Challenge & Subnet Verification\n### Avalanche Ecosystem Track | Developer Academy\n\nHands-on Deployment Challenge: Compile your smart contracts, deploy to Avalanche Fuji C-Chain testnet, verify on Snowtrace, and complete your Avalanche Developer certification.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Avalanche.\n2. **Toolchain Proficiency**: Master Avalanche CLI & Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on Avalanche C-Chain EVM & Subnets adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Avalanche Fuji Testnet** and verify artifacts on **Snowtrace**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/ava-labs/avalanchego](https://github.com/ava-labs/avalanchego)\n- **Ecosystem Starter Templates**: [https://github.com/ava-labs/avalanche-starter-kit](https://github.com/ava-labs/avalanche-starter-kit)\n- **Block Explorer & State Verifier**: **Snowtrace**\n- **Native Testnet Environment**: **Avalanche Fuji Testnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "quiz": [
+      {
+        "question": "What is required to complete the Avalanche Fuji Deployment Challenge?",
+        "options": [
+          "A PowerPoint design mockup only.",
+          "A live deployed contract on Avalanche Fuji C-Chain with verified source code on Snowtrace/Routescan and emitted event telemetry.",
+          "A testnet faucet request without contract deployment.",
+          "A local text file on your computer."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "Where can grant evaluators and recruiters inspect your verified Avalanche deployment?",
+        "options": [
+          "In browser local storage.",
+          "In a private offline text file.",
+          "At `https://testnet.snowtrace.io/address/<YOUR_CONTRACT_ADDRESS>` or Routescan.",
+          "On an unhosted local server."
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "What digital credential is generated upon passing the Avalanche track challenge?",
+        "options": [
+          "A verifiable cryptographic certificate validating Avalanche C-Chain, Subnet architecture, and Solidity competence.",
+          "A temporary discount coupon.",
+          "An email receipt.",
+          "A paper certificate mailed to your house."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "Why do Avalanche Foundation and Blizzard evaluators prioritize verified on-chain deployments in grant reviews?",
+        "options": [
+          "Because live deployments demonstrate proven technical competency, practical execution ability, and production readiness.",
+          "Because they guarantee financial loans.",
+          "Because testnet deployments generate token revenue for evaluators.",
+          "Because they remove all need for software licenses."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "What security check should always be completed before publishing smart contracts to Avalanche C-Chain?",
+        "options": [
+          "Disabling all unit tests.",
+          "Ensuring arithmetic safety, implementing reentrancy guards, verifying access controls, and testing with fuzzing suites.",
+          "Hardcoding private keys into frontend code.",
+          "Deleting error revert strings."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "How can graduating developers use their Avalanche Developer Academy credential in ecosystem grant proposals?",
+        "options": [
+          "By creating multiple anonymous aliases.",
+          "By purchasing advertising space.",
+          "By sending automated cold emails.",
+          "By linking their verifiable credential, GitHub repository, and verified testnet contract address in their official Blizzard/Multiverse grant application."
+        ],
+        "correct_idx": 3
+      }
+    ],
+    "exercise": {
+      "instruction": "Complete the Avalanche Testnet Deployment Challenge! Write a deployment configuration and verification snippet containing 'avalanche', 'deploy', 'testnet', and 'verify'.",
+      "template": "// \u2500\u2500\u2500 Avalanche Testnet Deployment & Verification \u2500\u2500\u2500\n// Target: Avalanche Fuji Testnet\n// Network Explorer: Snowtrace\n\n// Complete deployment declaration below:\n",
+      "required_keywords": [
+        "avalanche",
+        "deploy",
+        "testnet",
+        "verify"
+      ]
+    }
+  },
+  "fullstack-1": {
+    "id": "fullstack-1",
+    "level_id": 1,
+    "title": "Module 1: Full-Stack Web3 Architecture & RPC Provider Topologies",
+    "duration": "15 mins",
+    "xp": 150,
+    "content": "# Module 1: Full-Stack Web3 Architecture & RPC Provider Topologies\n### Full Stack Blockchain Developer Ecosystem Track | Developer Academy\n\nMaster end-to-end decentralized application architecture: client-side wallet connections (EIP-1193), JSON-RPC node infrastructure (Alchemy/Infura/QuickNode), multi-chain fallback providers, and CORS/WebSocket rate limiting.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Full Stack Blockchain Developer.\n2. **Toolchain Proficiency**: Master Next.js 14, Viem, Wagmi v2, Ethers.js & Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic TypeScript & Solidity code on EVM & Node/Browser Web3 Engine adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Arbitrum Sepolia, Base Sepolia & OP Sepolia** and verify artifacts on **Arbiscan / BaseScan / Etherscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/scaffold-eth/scaffold-eth-2](https://github.com/scaffold-eth/scaffold-eth-2)\n- **Ecosystem Starter Templates**: [https://github.com/wevm/wagmi](https://github.com/wevm/wagmi)\n- **Block Explorer & State Verifier**: **Arbiscan / BaseScan / Etherscan**\n- **Native Testnet Environment**: **Arbitrum Sepolia, Base Sepolia & OP Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "quiz": [
+      {
+        "question": "What is the primary role of an RPC provider (like Infura or Alchemy) in full-stack Web3 architecture?",
+        "options": [
+          "To compile TypeScript code into WebAssembly.",
+          "To custody user private keys on centralized servers.",
+          "To replace decentralized consensus with SQL queries.",
+          "To serve as a JSON-RPC gateway allowing web frontends to read blockchain state and broadcast signed transactions without running local archive nodes."
+        ],
+        "correct_idx": 3
+      },
+      {
+        "question": "What standard interface defines how browser wallet extensions (like MetaMask) communicate with Web3 frontends?",
+        "options": [
+          "EIP-1193 JavaScript Ethereum Provider API (`window.ethereum`).",
+          "OAuth 2.0 PKCE protocol.",
+          "FTP byte-stream protocol.",
+          "GraphQL Schema Definition."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "Why should full-stack DApps configure fallback RPC transports instead of relying on a single endpoint?",
+        "options": [
+          "To prevent single points of failure, mitigate rate limits (HTTP 429), and automatically failover during network congestion.",
+          "To disable smart contract security checks.",
+          "To bypass blockchain gas fees entirely.",
+          "To make transactions irreversible without confirmations."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "What security measure prevents malicious websites from spoofing transactions through wallet providers?",
+        "options": [
+          "HTML input sanitization.",
+          "Cryptographic transaction signing where private keys never leave the secure enclave or extension sandbox.",
+          "Plaintext passwords stored in browser cookies.",
+          "IP address whitelisting on smart contracts."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "How do Web3 frontends handle real-time smart contract events (e.g. Transfers, Mints)?",
+        "options": [
+          "Via WebSocket (WSS) JSON-RPC subscriptions or HTTP polling mechanisms listening to contract logs.",
+          "By reading browser LocalStorage directly.",
+          "By sending emails to node operators.",
+          "By continuously refreshing the entire webpage every second."
+        ],
+        "correct_idx": 0
+      }
+    ],
+    "exercise": {
+      "instruction": "Write a TypeScript & Solidity code snippet for Module 1. The code must contain the keywords 'provider' and 'rpc'.",
+      "template": "// Full Stack Blockchain Developer Module 1: Full-Stack Web3 Architecture & RPC Provider Topologies\n// Language: TypeScript & Solidity\n// Write implementation below:\n",
+      "required_keywords": [
+        "provider",
+        "rpc"
+      ]
+    }
+  },
+  "fullstack-2": {
+    "id": "fullstack-2",
+    "level_id": 2,
+    "title": "Module 2: Smart Contract Interaction Hooks with Viem, Wagmi v2 & React Query",
+    "duration": "18 mins",
+    "xp": 200,
+    "content": "# Module 2: Smart Contract Interaction Hooks with Viem, Wagmi v2 & React Query\n### Full Stack Blockchain Developer Ecosystem Track | Developer Academy\n\nBuild reactive Web3 interfaces with Wagmi v2 and Viem: type-safe contract reads, write simulation (`simulateContract`), TanStack React Query cache invalidation, and custom hooks.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Full Stack Blockchain Developer.\n2. **Toolchain Proficiency**: Master Next.js 14, Viem, Wagmi v2, Ethers.js & Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic TypeScript & Solidity code on EVM & Node/Browser Web3 Engine adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Arbitrum Sepolia, Base Sepolia & OP Sepolia** and verify artifacts on **Arbiscan / BaseScan / Etherscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/scaffold-eth/scaffold-eth-2](https://github.com/scaffold-eth/scaffold-eth-2)\n- **Ecosystem Starter Templates**: [https://github.com/wevm/wagmi](https://github.com/wevm/wagmi)\n- **Block Explorer & State Verifier**: **Arbiscan / BaseScan / Etherscan**\n- **Native Testnet Environment**: **Arbitrum Sepolia, Base Sepolia & OP Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "quiz": [
+      {
+        "question": "What makes Viem more performant and developer-friendly than legacy Web3 libraries?",
+        "options": [
+          "It runs contracts entirely inside SQLite.",
+          "It eliminates the need for Solidity compilation.",
+          "It is modular, lightweight, tree-shakeable, and provides end-to-end TypeScript type inference directly from Contract ABIs.",
+          "It does not require network connections."
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "Why is `simulateContract` (dry-running) recommended before broadcasting a write transaction in Wagmi/Viem?",
+        "options": [
+          "It permanently records the state change without a transaction.",
+          "It executes the call locally on the node to catch reverts and calculate accurate gas estimates before the user pays gas fees.",
+          "It deletes all contract warnings.",
+          "It deposits free tokens into the caller's wallet."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "How does Wagmi v2 integrate with TanStack React Query?",
+        "options": [
+          "It requires global Redux stores.",
+          "It forces all state to be stored in URL parameters.",
+          "It leverages Query and Mutation hooks (`useReadContract`, `useWriteContract`) for automatic caching, refetching, and window focus synchronization.",
+          "It replaces React component lifecycle with WebSockets."
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "What is an ABI (Application Binary Interface) in frontend contract integration?",
+        "options": [
+          "A binary executable that runs the EVM.",
+          "A node server configuration file.",
+          "A CSS stylesheet defining button layouts.",
+          "A JSON schema specifying functions, inputs, outputs, and event signatures necessary for encoding calls and decoding receipts."
+        ],
+        "correct_idx": 3
+      },
+      {
+        "question": "How do you handle pending transaction states and receipt confirmations in a React DApp?",
+        "options": [
+          "By checking backend database rows.",
+          "By disabling user clicks for a hardcoded 5 minutes.",
+          "Using `useWaitForTransactionReceipt` with the transaction hash to track confirmation status and show loaders.",
+          "By assuming the transaction succeeds immediately when the wallet popup appears."
+        ],
+        "correct_idx": 2
+      }
+    ],
+    "exercise": {
+      "instruction": "Write a TypeScript & Solidity code snippet for Module 2. The code must contain the keywords 'wagmi' and 'viem'.",
+      "template": "// Full Stack Blockchain Developer Module 2: Smart Contract Interaction Hooks with Viem, Wagmi v2 & React Query\n// Language: TypeScript & Solidity\n// Write implementation below:\n",
+      "required_keywords": [
+        "wagmi",
+        "viem"
+      ]
+    }
+  },
+  "fullstack-3": {
+    "id": "fullstack-3",
+    "level_id": 3,
+    "title": "Module 3: Decentralized Indexing & Storage: The Graph, Subgraphs & IPFS",
+    "duration": "21 mins",
+    "xp": 250,
+    "content": "# Module 3: Decentralized Indexing & Storage: The Graph, Subgraphs & IPFS\n### Full Stack Blockchain Developer Ecosystem Track | Developer Academy\n\nArchitect scalable decentralized backends: writing AssemblyScript mappings for The Graph subgraphs, querying indexed blockchain entities via GraphQL, and pinning decentralized metadata with IPFS / Filecoin.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Full Stack Blockchain Developer.\n2. **Toolchain Proficiency**: Master Next.js 14, Viem, Wagmi v2, Ethers.js & Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic TypeScript & Solidity code on EVM & Node/Browser Web3 Engine adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Arbitrum Sepolia, Base Sepolia & OP Sepolia** and verify artifacts on **Arbiscan / BaseScan / Etherscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/scaffold-eth/scaffold-eth-2](https://github.com/scaffold-eth/scaffold-eth-2)\n- **Ecosystem Starter Templates**: [https://github.com/wevm/wagmi](https://github.com/wevm/wagmi)\n- **Block Explorer & State Verifier**: **Arbiscan / BaseScan / Etherscan**\n- **Native Testnet Environment**: **Arbitrum Sepolia, Base Sepolia & OP Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "quiz": [
+      {
+        "question": "Why are indexing protocols like The Graph necessary for production full-stack Web3 applications?",
+        "options": [
+          "Standard RPC nodes only support basic key-value lookups; subgraphs index event logs into relational GraphQL databases for complex queries and filtering.",
+          "Because blockchains cannot execute smart contracts without subgraphs.",
+          "To replace all frontend React components with server-rendered HTML.",
+          "To encrypt all user wallet balances."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "What language is used to write event handlers and mappings inside a Subgraph manifest?",
+        "options": [
+          "C# .NET.",
+          "PHP 8.2.",
+          "AssemblyScript (a TypeScript-like language compiled to WebAssembly).",
+          "Python Django."
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "What is the primary characteristic of IPFS (InterPlanetary File System) storage?",
+        "options": [
+          "A centralized Amazon S3 bucket managed by node validators.",
+          "A temporary caching proxy.",
+          "Content-addressable storage where data is referenced by its cryptographic hash (CID) rather than a location URL.",
+          "A relational PostgreSQL table stored in browser memory."
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "What is 'IPFS Pinning' and why is it essential for production DApp assets?",
+        "options": [
+          "Compressing images into zip archives.",
+          "Encrypting HTML tags with SHA-256.",
+          "Locking files with a four-digit PIN code.",
+          "Ensuring that specific IPFS nodes persistently store and serve content so it does not get garbage-collected from the P2P network."
+        ],
+        "correct_idx": 3
+      },
+      {
+        "question": "How does a frontend DApp efficiently query an indexed Subgraph?",
+        "options": [
+          "By connecting directly via SSH to Ethereum miners.",
+          "By downloading the entire Ethereum blockchain locally.",
+          "By sending standard GraphQL queries via Apollo Client or Urql to The Graph decentralized network or hosted service.",
+          "By scraping block explorer HTML pages."
+        ],
+        "correct_idx": 2
+      }
+    ],
+    "exercise": {
+      "instruction": "Write a TypeScript & Solidity code snippet for Module 3. The code must contain the keywords 'subgraph' and 'ipfs'.",
+      "template": "// Full Stack Blockchain Developer Module 3: Decentralized Indexing & Storage: The Graph, Subgraphs & IPFS\n// Language: TypeScript & Solidity\n// Write implementation below:\n",
+      "required_keywords": [
+        "subgraph",
+        "ipfs"
+      ]
+    }
+  },
+  "fullstack-4": {
+    "id": "fullstack-4",
+    "level_id": 4,
+    "title": "Module 4: Modern Account Abstraction: ERC-4337, Paymasters & Smart Sessions",
+    "duration": "24 mins",
+    "xp": 300,
+    "content": "# Module 4: Modern Account Abstraction: ERC-4337, Paymasters & Smart Sessions\n### Full Stack Blockchain Developer Ecosystem Track | Developer Academy\n\nImplement next-generation Web3 UX: UserOperations, Bundlers, EntryPoint contract architecture, Gasless Paymasters (sponsoring transactions), and passkey/session-key authentication with Coinbase Smart Wallet / Biconomy.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Full Stack Blockchain Developer.\n2. **Toolchain Proficiency**: Master Next.js 14, Viem, Wagmi v2, Ethers.js & Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic TypeScript & Solidity code on EVM & Node/Browser Web3 Engine adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Arbitrum Sepolia, Base Sepolia & OP Sepolia** and verify artifacts on **Arbiscan / BaseScan / Etherscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/scaffold-eth/scaffold-eth-2](https://github.com/scaffold-eth/scaffold-eth-2)\n- **Ecosystem Starter Templates**: [https://github.com/wevm/wagmi](https://github.com/wevm/wagmi)\n- **Block Explorer & State Verifier**: **Arbiscan / BaseScan / Etherscan**\n- **Native Testnet Environment**: **Arbitrum Sepolia, Base Sepolia & OP Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "quiz": [
+      {
+        "question": "What is the primary breakthrough of ERC-4337 Account Abstraction?",
+        "options": [
+          "It enables smart contract wallets with custom verification logic, gas sponsorship, and batching without requiring Ethereum protocol consensus changes.",
+          "It removes private key cryptography from Web3 entirely.",
+          "It replaces gas fees with monthly credit card subscriptions.",
+          "It turns all smart contracts into ERC-20 tokens."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "What is a 'UserOperation' in the ERC-4337 architecture?",
+        "options": [
+          "A standard browser mouse click event.",
+          "A compiler optimization warning.",
+          "A pseudo-transaction object describing an execution request sent to an alternative mempool, later bundled into an on-chain transaction by a Bundler.",
+          "A user password change request."
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "What role does a Paymaster contract fulfill in Account Abstraction?",
+        "options": [
+          "It stores smart contract compiler binaries.",
+          "It inspects UserOperations and sponsors gas fees (gasless transactions) or allows users to pay gas in ERC-20 tokens like USDC.",
+          "It acts as a decentralized bank granting loans.",
+          "It prints NFT artwork."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "How do Session Keys improve Web3 gaming and DeFi user experience?",
+        "options": [
+          "They delete all user session cookies when the tab closes.",
+          "They grant permanent administrator ownership to dapps.",
+          "They allow pre-approved smart contract interactions within specific parameters and time windows without prompt popups for every action.",
+          "They store private keys in plaintext in local storage."
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "What contract acts as the universal singleton orchestrator for all ERC-4337 UserOperations?",
+        "options": [
+          "The UniswapV2Factory contract.",
+          "The ERC-20 token wrapper.",
+          "The Hardhat local node.",
+          "The EntryPoint contract (e.g. 0x0000000071727De22E5E9d8BAf0edAc6f37da032)."
+        ],
+        "correct_idx": 3
+      }
+    ],
+    "exercise": {
+      "instruction": "Write a TypeScript & Solidity code snippet for Module 4. The code must contain the keywords 'ERC4337' and 'paymaster'.",
+      "template": "// Full Stack Blockchain Developer Module 4: Modern Account Abstraction: ERC-4337, Paymasters & Smart Sessions\n// Language: TypeScript & Solidity\n// Write implementation below:\n",
+      "required_keywords": [
+        "ERC4337",
+        "paymaster"
+      ]
+    }
+  },
+  "fullstack-5": {
+    "id": "fullstack-5",
+    "level_id": 5,
+    "title": "Module 5: Full-Stack DApp Production Deployment & Multi-Chain Verification Challenge",
+    "duration": "27 mins",
+    "xp": 350,
+    "content": "# Module 5: Full-Stack DApp Production Deployment & Multi-Chain Verification Challenge\n### Full Stack Blockchain Developer Ecosystem Track | Developer Academy\n\nHands-on Deployment Challenge: Compile your full-stack DApp smart contracts, deploy to Arbitrum/Base/OP Sepolia testnets, integrate frontend ABI & Wagmi provider configuration, and verify on-chain artifacts.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Full Stack Blockchain Developer.\n2. **Toolchain Proficiency**: Master Next.js 14, Viem, Wagmi v2, Ethers.js & Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic TypeScript & Solidity code on EVM & Node/Browser Web3 Engine adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Arbitrum Sepolia, Base Sepolia & OP Sepolia** and verify artifacts on **Arbiscan / BaseScan / Etherscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/scaffold-eth/scaffold-eth-2](https://github.com/scaffold-eth/scaffold-eth-2)\n- **Ecosystem Starter Templates**: [https://github.com/wevm/wagmi](https://github.com/wevm/wagmi)\n- **Block Explorer & State Verifier**: **Arbiscan / BaseScan / Etherscan**\n- **Native Testnet Environment**: **Arbitrum Sepolia, Base Sepolia & OP Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+    "quiz": [
+      {
+        "question": "What critical files must be synchronized between the smart contract repository and the frontend DApp during deployment?",
+        "options": [
+          "The deployed contract addresses for each target network and the compiled ABI JSON artifacts.",
+          "The `.env` file containing deployer private keys.",
+          "The local Hardhat cache directory.",
+          "The compiler source code of solc."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "What environment variable configuration is required for multi-chain testnet deployment scripts?",
+        "options": [
+          "Default localhost ports.",
+          "Testnet RPC URLs, deployer private key (via secure secrets/keystore), and block explorer API verification keys.",
+          "Hardcoded plaintext passwords committed to git.",
+          "Root administrative system passwords."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "Why should frontend DApps deploy smart contracts to Layer-2 testnets (Arbitrum/Base/OP) in addition to Ethereum Sepolia?",
+        "options": [
+          "Because Layer-2 networks do not support Solidity.",
+          "Because Ethereum testnets do not allow token transfers.",
+          "To avoid having to write frontend tests.",
+          "To deliver sub-second transaction latency, reduce user gas costs by 95%+, and provide scalable Superchain/Rollup interoperability."
+        ],
+        "correct_idx": 3
+      },
+      {
+        "question": "What verified artifact proves successful completion of the Full Stack Deployment Challenge?",
+        "options": [
+          "A mockup image in Figma.",
+          "An empty GitHub repository.",
+          "A live deployed contract address on an EVM testnet with verified source code and an interactive frontend interface.",
+          "A screenshot of a local terminal with no testnet broadcast."
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "Why do Web3 institutional grant reviewers value live full-stack testnet deployments over pure theory?",
+        "options": [
+          "It guarantees immediate mainnet token listings.",
+          "It prevents future code modifications.",
+          "It replaces the need for open-source code licenses.",
+          "It demonstrates proven execution capability, end-to-end technical competency, verified user UX, and real multi-chain ecosystem impact."
+        ],
+        "correct_idx": 3
+      }
+    ],
+    "exercise": {
+      "instruction": "Complete the Full Stack Blockchain Developer Testnet Deployment Challenge! Write a deployment configuration and verification snippet containing 'fullstack', 'deploy', 'testnet', and 'verify'.",
+      "template": "// \u2500\u2500\u2500 Full Stack Blockchain Developer Testnet Deployment & Verification \u2500\u2500\u2500\n// Target: Arbitrum Sepolia, Base Sepolia & OP Sepolia\n// Network Explorer: Arbiscan / BaseScan / Etherscan\n\n// Complete deployment declaration below:\n",
+      "required_keywords": [
+        "fullstack",
+        "deploy",
+        "testnet",
+        "verify"
+      ]
+    }
+  },
+  "1-1": {
+    "id": "1-1",
+    "level_id": 1,
+    "title": "Introduction to Peer-to-Peer Networks",
+    "duration": "8 mins",
+    "xp": 100,
+    "content": "# Introduction to Peer-to-Peer Networks\n\nA peer-to-peer (P2P) network is a decentralized communications model in which each party (peer) has equivalent capabilities and can initiate communications. This is in contrast to the traditional client-server model, where some computers are dedicated to serving others.\n\n### Key Concepts:\n1. **Decentralization**: No central server acts as a single point of failure.\n2. **Distributed Ledger**: Every node keeps a copy of the database.\n3. **Consensus**: Nodes must agree on the state of the network.\n\nWeb3 relies heavily on P2P networks (like Ethereum DevP2P or LibP2P) to broadcast transactions and blocks to all participants without relying on a centralized intermediary.\n",
+    "quiz": [
+      {
+        "question": "What is the primary difference between a client-server network and a peer-to-peer network?",
+        "options": [
+          "Client-server networks have no central authority.",
+          "Peer-to-peer networks distribute data and control equally among participating nodes.",
+          "Peer-to-peer networks are slower and less secure.",
+          "Client-server networks only run on Unix machines."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "Which protocol is commonly used in modern blockchains like Ethereum for peer communication?",
+        "options": [
+          "FTP",
+          "HTTP",
+          "DevP2P / LibP2P",
+          "SMTP"
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "What role does a distributed ledger play in a decentralized network?",
+        "options": [
+          "It hosts centralized frontend web servers.",
+          "It stores temporary browser session cookies.",
+          "It encrypts hard drives locally.",
+          "Every validator maintains an immutable synchronized copy of state transitions."
+        ],
+        "correct_idx": 3
+      },
+      {
+        "question": "What prevents bad actors from rewriting history on a consensus-driven P2P blockchain?",
+        "options": [
+          "Legal copyright agreements.",
+          "Cloud firewall rules.",
+          "Cryptographic hashing combined with majority Byzantine Fault Tolerant consensus.",
+          "Manual administrator passwords."
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "In blockchain P2P gossip networks, what is transaction propagation?",
+        "options": [
+          "Streaming video files over torrents.",
+          "Deleting invalid blocks from disk.",
+          "Sending private emails between wallet owners.",
+          "Nodes broadcasting verified unconfirmed transactions to neighboring peers until the whole network is informed."
+        ],
+        "correct_idx": 3
+      }
+    ],
+    "exercise": {
+      "instruction": "Write a basic comment explaining the concept of a decentralized node in your own words. The code should contain the word '// decentralization'.",
+      "template": "// Starter template\n// Write your comment here:\n",
+      "required_keywords": [
+        "decentralization"
+      ]
+    }
+  },
+  "1-2": {
+    "id": "1-2",
+    "level_id": 1,
+    "title": "Cryptography: Hash Functions & Keys",
+    "duration": "10 mins",
+    "xp": 100,
+    "content": "# Cryptography: Hash Functions & Keys\n\nCryptography is the foundation of blockchain security. It enables trustless verification and secures assets using mathematical concepts.\n\n### Hash Functions\nA cryptographic hash function takes an input (message) and returns a fixed-size string of bytes (digest).\n- **Deterministic**: The same input always produces the same output.\n- **One-way**: You cannot reverse-engineer the input from the hash.\n- **Collision Resistant**: It is extremely hard to find two different inputs that produce the same output.\n- **Example**: Keccak-256 (used in Ethereum) and SHA-256 (used in Bitcoin).\n\n### Public and Private Keys\nBlockchains use asymmetric cryptography:\n- **Private Key**: A secret number that allows you to sign transactions and spend funds. Keep it secret!\n- **Public Key**: Derived mathematically from the private key; acts as your identity on the network.\n- **Address**: A shortened hash of your public key (e.g., `0x71C...`).\n",
+    "quiz": [
+      {
+        "question": "Which hash function is primarily used inside the Ethereum Virtual Machine (EVM)?",
+        "options": [
+          "SHA-256",
+          "MD5",
+          "Keccak-256",
+          "bcrypt"
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "What is the purpose of a Private Key?",
+        "options": [
+          "To cryptographically sign transactions and approve transfers without revealing secrets.",
+          "To share publicly as your account number.",
+          "To encrypt files on your local hard drive.",
+          "To generate random blocks in mining."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "What does collision resistance in cryptographic hash functions guarantee?",
+        "options": [
+          "Hashes can never be decrypted.",
+          "Hashes always contain 128 characters.",
+          "It is computationally infeasible to find two distinct inputs x and y such that hash(x) == hash(y).",
+          "Hashes run in constant zero milliseconds."
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "How is a public blockchain wallet address typically derived?",
+        "options": [
+          "By asking an ISP for a static IP address.",
+          "By hashing the public key derived from the ECDSA/Ed25519 private key curve.",
+          "By generating a random 6-digit PIN code.",
+          "By registering a username on a DNS server."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "Why is elliptic curve digital signature algorithm (ECDSA/Ed25519) crucial in Web3?",
+        "options": [
+          "It allows anyone with the public key to mathematically verify transaction authenticity without knowing the private key.",
+          "It converts Solidity code into HTML.",
+          "It compresses smart contract bytecode.",
+          "It prevents high gas prices automatically."
+        ],
+        "correct_idx": 0
+      }
+    ],
+    "exercise": {
+      "instruction": "Create a smart contract comment defining a mock private key variable. The code must contain the word 'privateKey' and 'Keccak256'.",
+      "template": "// Define variables below:\n",
+      "required_keywords": [
+        "privateKey",
+        "Keccak256"
+      ]
+    }
+  },
+  "2-1": {
+    "id": "2-1",
+    "level_id": 2,
+    "title": "Solidity Fundamentals & State Variables",
+    "duration": "15 mins",
+    "xp": 150,
+    "content": "# Solidity Fundamentals & State Variables\n\nSmart contracts are immutable programs deployed on-chain that execute deterministic logic.\n\n### Contract Anatomy\n1. **SPDX License Identifier**: Tells users and compilers how the code is licensed.\n2. **Pragma Directive**: Specifies the compiler version (e.g., `pragma solidity ^0.8.20;`).\n3. **State Variables**: Permanently stored in contract storage on the blockchain.\n4. **Functions**: Read or modify state variables.\n",
+    "quiz": [
+      {
+        "question": "Where are state variables stored in a smart contract?",
+        "options": [
+          "In temporary memory",
+          "In the call stack",
+          "On the blockchain's persistent storage",
+          "On the local hard drive"
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "What is the purpose of the `pragma solidity` directive?",
+        "options": [
+          "It specifies the compiler version the contract is written for.",
+          "It imports external npm packages.",
+          "It sets the gas limit for execution.",
+          "It connects to MetaMask."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "What is the gas difference between `view` functions and state-modifying functions when called externally?",
+        "options": [
+          "`view` functions cost double the gas.",
+          "`view` functions executed off-chain via RPC are free of gas, while state-modifying transactions consume gas.",
+          "Both cost exactly 21,000 gas.",
+          "State-modifying functions are free."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "Which keyword in Solidity restricts state variable access to within the contract and derived contracts?",
+        "options": [
+          "external",
+          "public",
+          "private",
+          "internal"
+        ],
+        "correct_idx": 3
+      },
+      {
+        "question": "What occurs when an integer arithmetic overflow happens in Solidity ^0.8.0?",
+        "options": [
+          "The miner receives extra gas.",
+          "The number wraps around silently like in Solidity 0.4.",
+          "The compiler crashes.",
+          "The transaction automatically reverts due to built-in overflow checks."
+        ],
+        "correct_idx": 3
+      }
+    ],
+    "exercise": {
+      "instruction": "Write a minimal Solidity contract named `StorageExample` that declares a `uint256 public count;` state variable.",
+      "template": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.20;\n\ncontract StorageExample {\n    // Declare count variable here\n}\n",
+      "required_keywords": [
+        "contract",
+        "uint256",
+        "public",
+        "count"
+      ]
+    }
+  },
+  "3-1": {
+    "id": "3-1",
+    "level_id": 3,
+    "title": "ERC-20 Fungible Token Standard",
+    "duration": "18 mins",
+    "xp": 200,
+    "content": "# ERC-20 Fungible Token Standard\n\nThe ERC-20 standard defines a common interface for fungible tokens on EVM networks. Every token unit is identical in type and value.\n\n### Key ERC-20 Functions:\n- `totalSupply()`: Returns total circulating supply.\n- `balanceOf(account)`: Returns token balance of an address.\n- `transfer(to, amount)`: Transfers tokens from caller to recipient.\n- `approve(spender, amount)` & `transferFrom(from, to, amount)`: Allows third-party contracts (DEXs/lending) to spend tokens on behalf of a user.\n",
+    "quiz": [
+      {
+        "question": "What is the primary characteristic of an ERC-20 token?",
+        "options": [
+          "All tokens are identical and interchangeable (fungible).",
+          "It can only be held by validators.",
+          "It does not require gas to transfer.",
+          "Each token has a unique ID and metadata (non-fungible)."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "Which function pair allows a decentralized exchange (DEX) to swap tokens on your behalf?",
+        "options": [
+          "`deposit` and `withdraw`",
+          "`approve` and `transferFrom`",
+          "`burn` and `mint`",
+          "`lock` and `unlock`"
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "What security vulnerability can occur if an ERC-20 `transferFrom` lacks reentrancy guards or safe checks?",
+        "options": [
+          "Memory leak on node servers.",
+          "DNS spoofing.",
+          "Reentrancy or allowance underflow exploits.",
+          "CSS stylesheet injection."
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "What standard decimal precision is used by the vast majority of ERC-20 tokens?",
+        "options": [
+          "0 decimals",
+          "6 decimals",
+          "8 decimals",
+          "18 decimals"
+        ],
+        "correct_idx": 3
+      },
+      {
+        "question": "Why is emitting a `Transfer` event required by the ERC-20 specification?",
+        "options": [
+          "It increases contract bytecode size.",
+          "It resets contract allowances.",
+          "It allows block explorers, indexers, and wallets to detect state changes and update balances off-chain.",
+          "It burns unused gas."
+        ],
+        "correct_idx": 2
+      }
+    ],
+    "exercise": {
+      "instruction": "Implement an ERC-20 interface snippet containing `function transfer(address to, uint256 amount) external returns (bool);`.",
+      "template": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.20;\n\ninterface IERC20 {\n    // Add transfer signature here\n}\n",
+      "required_keywords": [
+        "function",
+        "transfer",
+        "address",
+        "uint256",
+        "returns",
+        "bool"
+      ]
+    }
+  },
+  "4-1": {
+    "id": "4-1",
+    "level_id": 4,
+    "title": "Reentrancy Attacks & Checks-Effects-Interactions Pattern",
+    "duration": "20 mins",
+    "xp": 250,
+    "content": "# Reentrancy Attacks & Security Best Practices\n\nReentrancy is one of the most famous vulnerabilities in smart contract history, responsible for the 2016 DAO hack.\n\n### How Reentrancy Occurs:\n1. Contract A calls an external contract B or sends ETH (`call{value: x}(\"\")`).\n2. Execution control transfers to Contract B before Contract A updates its internal balance.\n3. Contract B calls back into Contract A's withdrawal function, draining funds repeatedly!\n\n### Defense Mechanisms:\n- **Checks-Effects-Interactions Pattern**: Always update internal state (Effects) before making external calls (Interactions).\n- **ReentrancyGuard**: Use OpenZeppelin's `nonReentrant` modifier.\n",
+    "quiz": [
+      {
+        "question": "What is the Checks-Effects-Interactions pattern?",
+        "options": [
+          "A design pattern where internal state is updated BEFORE external contract calls or transfers are executed.",
+          "A frontend React hook.",
+          "A pattern where external calls are made first to check liquidity.",
+          "A compiler setting in Hardhat."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "Which OpenZeppelin modifier prevents recursive reentry into smart contract functions?",
+        "options": [
+          "initializer",
+          "onlyOwner",
+          "nonReentrant",
+          "whenNotPaused"
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "Why is `transfer()` no longer unconditionally recommended for sending ETH in modern contracts?",
+        "options": [
+          "It always fails on testnets.",
+          "It imposes a strict 2,300 gas limit which breaks contracts using account abstraction or multisigs.",
+          "It uses too much memory.",
+          "It was removed in Solidity 0.8."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "What security risk is posed by `tx.origin` authentication?",
+        "options": [
+          "Phishing attacks where a malicious intermediary contract tricks a victim into calling a privileged function.",
+          "Flash loan liquidation.",
+          "Gas starvation.",
+          "Integer overflow."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "What is the purpose of static analysis tools like Slither and Mythril in smart contract auditing?",
+        "options": [
+          "To automatically inspect ASTs and CFGs to flag vulnerabilities like uninitialized storage and reentrancy before deployment.",
+          "To manage seed phrases.",
+          "To generate CSS animations.",
+          "To compress video files for IPFS."
+        ],
+        "correct_idx": 0
+      }
+    ],
+    "exercise": {
+      "instruction": "Implement a secure withdrawal pattern using the `nonReentrant` modifier keyword.",
+      "template": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.20;\n\ncontract SecureVault {\n    mapping(address => uint256) public balances;\n\n    // Implement secure withdraw function\n}\n",
+      "required_keywords": [
+        "withdraw",
+        "nonReentrant",
+        "balances",
+        "msg.sender"
+      ]
+    }
+  },
+  "5-1": {
+    "id": "5-1",
+    "level_id": 5,
+    "title": "Ethereum / EVM Testnet Deployment Challenge",
+    "duration": "25 mins",
+    "xp": 300,
+    "content": "# EVM Testnet Deployment Challenge\n\nDeploy your verified smart contract to Ethereum Sepolia or Base Sepolia testnets.\n\n### Deployment Verification Steps:\n1. Compile your contract with Hardhat / Foundry (`forge build`).\n2. Set your testnet RPC URL and deployer private key.\n3. Broadcast the deployment transaction to Sepolia testnet (`forge create`).\n4. Verify contract source code on Etherscan or Basescan block explorer.\n",
+    "quiz": [
+      {
+        "question": "What artifact is generated by Solidity compilers for frontend interfaces to interact with deployed contracts?",
+        "options": [
+          "Application Binary Interface (ABI) JSON specification.",
+          "PNG favicon image.",
+          "Node.js package.json.",
+          "CSS stylesheet."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "What is the purpose of verifying contract source code on block explorers?",
+        "options": [
+          "It proves the compiled bytecode matches the published human-readable source code for transparency.",
+          "It refunds deployment gas.",
+          "It hides transaction history.",
+          "It prevents anyone from calling contract functions."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "Which testnet is the primary recommended testnet for Ethereum protocol upgrades and testing?",
+        "options": [
+          "Bitcoin Testnet",
+          "Ropsten (deprecated)",
+          "Sepolia",
+          "Mainnet"
+        ],
+        "correct_idx": 2
+      },
+      {
+        "question": "What toolchain command in Foundry compiles and builds smart contract bytecode?",
+        "options": [
+          "git push",
+          "forge build",
+          "npm start",
+          "solc --clean"
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "Why should private keys NEVER be hardcoded into source code repositories?",
+        "options": [
+          "It changes the contract address.",
+          "It makes the contract name too long.",
+          "Automated bots continuously scrape public repos to immediately drain funds from exposed keys.",
+          "It slows down compiler performance."
+        ],
+        "correct_idx": 2
+      }
+    ],
+    "exercise": {
+      "instruction": "Write a deployment script comment declaring the Sepolia testnet target and contract verification. Must contain 'Sepolia', 'deploy', and 'verify'.",
+      "template": "// Deployment Script\n",
+      "required_keywords": [
+        "Sepolia",
+        "deploy",
+        "verify"
+      ]
+    }
+  },
+  "6-1": {
+    "id": "6-1",
+    "level_id": 6,
+    "title": "MOR Finance Protocols & AI Smart Agents",
+    "duration": "25 mins",
+    "xp": 300,
+    "content": "# MOR Finance Protocols & AI Smart Agents\n\nMOR Finance pioneers the convergence of decentralized AI, on-chain capital allocation, and automated smart agent economies.\n\n### Core Ecosystem Pillars:\n1. **Morpheus Smart Agents**: Decentralized AI agents executing smart contract transactions on behalf of users.\n2. **Compute & Capital Provision**: Directing computational power and capital rewards to open-source developers.\n3. **Decentralized Governance**: Token-weighted protocol steering and community-directed grants.\n",
+    "quiz": [
+      {
+        "question": "What is a Morpheus AI Smart Agent in the MOR Finance ecosystem?",
+        "options": [
+          "A centralized cloud chatbot running on a private database.",
+          "An autonomous decentralized software agent combining LLM reasoning with direct smart contract interaction capabilities.",
+          "A static HTML web page.",
+          "A graphic design tool."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "How does MOR Finance incentivize open-source AI and Web3 developer contributions?",
+        "options": [
+          "Through proof-of-contribution emission rewards, ecosystem grants, and compute rewards.",
+          "By charging developers high subscription fees.",
+          "Through manual fiat wire transfers.",
+          "By restricting code access."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "What role does the Developer Academy play in the MOR Finance ecosystem?",
+        "options": [
+          "Hosting video streaming servers.",
+          "Onboarding, training, certifying, and connecting developers to grant applications, ecosystem bounties, and Web3 careers.",
+          "Selling proprietary hardware.",
+          "Managing fiat banking licenses."
+        ],
+        "correct_idx": 1
+      },
+      {
+        "question": "Which cryptographic standard ensures AI agents only execute approved on-chain transactions?",
+        "options": [
+          "Session keys with granular permission scopes and spend limits.",
+          "Unrestricted master private keys.",
+          "PlainText passwords.",
+          "Cookie tokens."
+        ],
+        "correct_idx": 0
+      },
+      {
+        "question": "How do decentralized AI agents interact with liquidity and DeFi protocols on-chain?",
+        "options": [
+          "By making phone calls to market makers.",
+          "Through web scraping only.",
+          "By sending physical checks.",
+          "By querying on-chain oracle feeds, calculating optimal paths, and submitting signed transactions via RPC nodes."
+        ],
+        "correct_idx": 3
+      }
+    ],
+    "exercise": {
+      "instruction": "Write a contract comment declaring an AI Agent interaction module. Must contain 'SmartAgent', 'Morpheus', and 'Governance'.",
+      "template": "// MOR Finance AI Protocol\n",
+      "required_keywords": [
+        "SmartAgent",
+        "Morpheus",
+        "Governance"
+      ]
+    }
   }
 };
 
-const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
+export const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
   "aptos": [
     {
       "level_id": 1,
@@ -1756,12 +4543,12 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "What is the primary innovation of Aptos's Block-STM parallel execution engine?",
               "options": [
-                "It executes transactions optimistically in parallel and validates dependencies concurrently, achieving over 100k TPS without sharding.",
                 "It executes transactions one by one in single-threaded order.",
                 "It disables smart contract state changes.",
+                "It executes transactions optimistically in parallel and validates dependencies concurrently, achieving over 100k TPS without sharding.",
                 "It replaces blockchain with centralized SQL."
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             },
             {
               "question": "How does Move's linear type system protect digital assets compared to EVM?",
@@ -1776,20 +4563,20 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "What is a Resource Account in Aptos?",
               "options": [
-                "An autonomous account used by developers to manage modules, publish packages, and control state without a direct private key.",
-                "A standard user wallet with 12 seed words.",
                 "A temporary testnet faucet account.",
-                "A bank savings account."
+                "A standard user wallet with 12 seed words.",
+                "A bank savings account.",
+                "An autonomous account used by developers to manage modules, publish packages, and control state without a direct private key."
               ],
-              "correct_idx": 0
+              "correct_idx": 3
             },
             {
               "question": "What consensus algorithm powers the Aptos Layer-1 network?",
               "options": [
                 "AptosBFT (DiemBFT v4) with sub-second finality and leader reputation mechanism.",
+                "Round-robin email consensus.",
                 "Proof of Work mining.",
-                "Proof of Authority with a single admin node.",
-                "Round-robin email consensus."
+                "Proof of Authority with a single admin node."
               ],
               "correct_idx": 0
             },
@@ -1797,21 +4584,21 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "question": "What role does the Move Bytecode Verifier play before execution?",
               "options": [
                 "It rigorously verifies type safety, memory bounds, and resource linearity before any code can run on-chain.",
-                "It translates Move to Solidity.",
                 "It mines APT tokens.",
-                "It formats code indentation."
+                "It formats code indentation.",
+                "It translates Move to Solidity."
               ],
               "correct_idx": 0
             },
             {
               "question": "Why are reentrancy attacks virtually impossible in native Move smart contracts?",
               "options": [
-                "Move enforces strict resource borrow semantics and does not permit uncontrolled dynamic call dispatch loops.",
-                "Move contracts have no external functions.",
                 "Move disables token transfers.",
-                "Move contracts do not use state."
+                "Move contracts have no external functions.",
+                "Move contracts do not use state.",
+                "Move enforces strict resource borrow semantics and does not permit uncontrolled dynamic call dispatch loops."
               ],
-              "correct_idx": 0
+              "correct_idx": 3
             }
           ],
           "exercise": {
@@ -1842,8 +4629,8 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "question": "Which command initializes a new Aptos developer profile and generates testnet keypairs?",
               "options": [
                 "aptos init --network testnet",
-                "npm install aptos",
                 "git clone aptos",
+                "npm install aptos",
                 "docker run aptos"
               ],
               "correct_idx": 0
@@ -1851,19 +4638,19 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "What file defines dependencies, package metadata, and named addresses in an Aptos Move project?",
               "options": [
-                "Move.toml",
-                "package.json",
                 "Cargo.toml",
-                "Hardhat.config.js"
+                "package.json",
+                "Hardhat.config.js",
+                "Move.toml"
               ],
-              "correct_idx": 0
+              "correct_idx": 3
             },
             {
               "question": "Which Aptos CLI command runs formal unit tests and test suites locally?",
               "options": [
                 "aptos move test",
-                "aptos run test",
                 "npm test",
+                "aptos run test",
                 "cargo check"
               ],
               "correct_idx": 0
@@ -1871,30 +4658,30 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "How do developers fund their testnet account using the Aptos CLI?",
               "options": [
+                "aptos mine --blocks 100",
                 "aptos account fund-with-faucet --account default",
                 "aptos buy tokens --credit-card",
-                "aptos mine --blocks 100",
                 "aptos transfer from master"
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             },
             {
               "question": "What is the purpose of named addresses in Move.toml (e.g. `my_addr = '_'` or `0xcafe`)?",
               "options": [
-                "They decouple source code from hardcoded addresses, allowing seamless deployment to dynamic account addresses.",
                 "They create DNS records.",
                 "They encrypt GitHub commits.",
+                "They decouple source code from hardcoded addresses, allowing seamless deployment to dynamic account addresses.",
                 "They rename user wallets."
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             },
             {
               "question": "What does the `--named-addresses` flag do during Move compilation?",
               "options": [
                 "It dynamically binds named address identifiers in the Move module to specific hex addresses at compile/publish time.",
+                "It exports private keys.",
                 "It sets the gas price to zero.",
-                "It downloads external images.",
-                "It exports private keys."
+                "It downloads external images."
               ],
               "correct_idx": 0
             }
@@ -1926,52 +4713,52 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "What are the four core abilities in the Move programming language?",
               "options": [
-                "key, store, copy, and drop",
-                "public, private, internal, and external",
                 "read, write, execute, and delete",
-                "get, set, push, and pop"
+                "key, store, copy, and drop",
+                "get, set, push, and pop",
+                "public, private, internal, and external"
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             },
             {
               "question": "Which ability must a Move struct possess to be stored in global storage under an account address?",
               "options": [
-                "key",
-                "copy",
                 "drop",
-                "store only"
+                "store only",
+                "copy",
+                "key"
               ],
-              "correct_idx": 0
+              "correct_idx": 3
             },
             {
               "question": "Which built-in Move function publishes a newly instantiated resource into the caller's account storage?",
               "options": [
-                "move_to(&signer, resource_instance)",
                 "borrow_global_mut<T>(address)",
-                "exists<T>(address)",
-                "destroy(resource)"
+                "destroy(resource)",
+                "move_to(&signer, resource_instance)",
+                "exists<T>(address)"
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             },
             {
               "question": "What is the difference between `copy` and `drop` abilities in Move?",
               "options": [
-                "`copy` allows value duplicating, while `drop` allows values to be popped/destroyed when leaving scope.",
                 "`copy` destroys resources and `drop` clones them.",
-                "`copy` is for NFTs and `drop` is for tokens.",
-                "Both abilities do the exact same thing."
+                "`copy` allows value duplicating, while `drop` allows values to be popped/destroyed when leaving scope.",
+                "Both abilities do the exact same thing.",
+                "`copy` is for NFTs and `drop` is for tokens."
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             },
             {
               "question": "How does the Aptos Fungible Asset (FA) standard improve upon legacy Coin modules?",
               "options": [
-                "It provides a unified, object-based standard for fungible tokens with native metadata, royalties, and deposit hooks.",
-                "It requires 50% more gas.",
                 "It prevents token transfers entirely.",
+                "It requires 50% more gas.",
+                "It provides a unified, object-based standard for fungible tokens with native metadata, royalties, and deposit hooks.",
                 "It only works on Bitcoin."
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             },
             {
               "question": "Which Move function safely checks if a specific resource struct exists under an address before borrowing it?",
@@ -2021,42 +4808,42 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "What is an `entry` function in an Aptos Move module?",
               "options": [
-                "A public entrypoint function that can be called directly by external transactions signed by user wallets.",
-                "A private helper function for internal recursion.",
                 "The constructor function that only runs once at genesis.",
-                "A compiler configuration macro."
+                "A public entrypoint function that can be called directly by external transactions signed by user wallets.",
+                "A compiler configuration macro.",
+                "A private helper function for internal recursion."
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             },
             {
               "question": "How does a frontend DApp request Petra Wallet to sign and broadcast a Move transaction?",
               "options": [
-                "window.aptos.signAndSubmitTransaction({ payload: { function: '0x1::...::transfer', typeArguments: [], functionArguments: [recipient, amount] } })",
                 "window.alert('sign transfer')",
-                "document.cookie = 'transfer'",
-                "fetch('http://localhost/pay')"
+                "fetch('http://localhost/pay')",
+                "window.aptos.signAndSubmitTransaction({ payload: { function: '0x1::...::transfer', typeArguments: [], functionArguments: [recipient, amount] } })",
+                "document.cookie = 'transfer'"
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             },
             {
               "question": "What API does the Aptos Indexer provide for lightning-fast historical queries and token balances?",
               "options": [
-                "GraphQL API endpoint with real-time subscriptions.",
-                "SOAP XML endpoints.",
                 "FTP directory listings.",
+                "SOAP XML endpoints.",
+                "GraphQL API endpoint with real-time subscriptions.",
                 "CSV file downloads."
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             },
             {
               "question": "How are Move `view` functions queried using the Aptos TypeScript SDK?",
               "options": [
-                "aptos.view({ payload: { function: '0x123::module::get_balance', functionArguments: [account] } }) without gas fees.",
-                "By submitting an on-chain transaction that burns APT.",
                 "By mining a block locally.",
+                "By submitting an on-chain transaction that burns APT.",
+                "aptos.view({ payload: { function: '0x123::module::get_balance', functionArguments: [account] } }) without gas fees.",
                 "By restarting the browser."
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             },
             {
               "question": "What security check ensures a frontend only interacts with audited, verified Move package addresses?",
@@ -2106,50 +4893,50 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "What package upgrade policies are supported on Aptos?",
               "options": [
-                "`compatible` (backward-compatible upgrades) and `immutable` (permanently locked code).",
+                "Automatic daily code replacements.",
                 "Only mutable code with unrestricted replacement.",
-                "No upgrades ever permitted.",
-                "Automatic daily code replacements."
+                "`compatible` (backward-compatible upgrades) and `immutable` (permanently locked code).",
+                "No upgrades ever permitted."
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             },
             {
               "question": "Where can developers and grant reviewers inspect verified Move module bytecode on Aptos?",
               "options": [
-                "Aptos Explorer (explorer.aptoslabs.com) or AptoScan.",
                 "Etherscan.",
                 "GitHub issues only.",
+                "Aptos Explorer (explorer.aptoslabs.com) or AptoScan.",
                 "A local text file."
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             },
             {
               "question": "What is required to verify that an Aptos testnet deployment challenge has completed successfully?",
               "options": [
-                "A confirmed transaction hash on Aptos Testnet with valid emitted events and resource state creation.",
                 "A screenshot of a terminal only.",
+                "An email to the miner.",
                 "A printed paper receipt.",
-                "An email to the miner."
+                "A confirmed transaction hash on Aptos Testnet with valid emitted events and resource state creation."
               ],
-              "correct_idx": 0
+              "correct_idx": 3
             },
             {
               "question": "What gas optimization practice reduces storage costs when publishing Move modules?",
               "options": [
+                "Increasing transaction gas limit to max.",
                 "Minimizing unused dependencies in Move.toml and leveraging optimized byte representation.",
                 "Adding random comments.",
-                "Writing code in single long lines.",
-                "Increasing transaction gas limit to max."
+                "Writing code in single long lines."
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             },
             {
               "question": "How does successful completion of this Aptos track and deployment challenge qualify you for ecosystem grants?",
               "options": [
                 "It provides verifiable proof of technical competency, on-chain testnet deployment, and production Move proficiency.",
-                "It automatically gives financial loans.",
                 "It eliminates the need for any application form.",
-                "It replaces developer interviews."
+                "It replaces developer interviews.",
+                "It automatically gives financial loans."
               ],
               "correct_idx": 0
             }
@@ -2185,62 +4972,62 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "What is the primary scaling mechanism of Starknet as a Layer-2 ZK-Rollup?",
               "options": [
-                "It executes thousands of transactions off-chain, bundles them into a single STARK validity proof, and verifies it on Ethereum L1.",
                 "It runs sidechains with separate consensus and no L1 security.",
                 "It deletes historical transactions every 30 days.",
-                "It uses centralized web servers without cryptography."
+                "It uses centralized web servers without cryptography.",
+                "It executes thousands of transactions off-chain, bundles them into a single STARK validity proof, and verifies it on Ethereum L1."
               ],
-              "correct_idx": 0
+              "correct_idx": 3
             },
             {
               "question": "What is unique about STARK proofs compared to SNARKs?",
               "options": [
-                "STARKs require no trusted setup ceremony and are transparent and post-quantum secure.",
                 "STARKs require toxic waste ceremonies.",
+                "STARKs require no trusted setup ceremony and are transparent and post-quantum secure.",
                 "STARKs are slower to verify.",
                 "STARKs only work on Bitcoin."
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             },
             {
               "question": "What does Native Account Abstraction mean on Starknet?",
               "options": [
-                "All accounts are smart contracts with custom validation (`__validate__`) and execution (`__execute__`) logic \u2014 there are no EOAs.",
-                "Accounts are managed by centralized email servers.",
+                "Contracts cannot hold balances.",
                 "Users have no private keys.",
-                "Contracts cannot hold balances."
+                "All accounts are smart contracts with custom validation (`__validate__`) and execution (`__execute__`) logic \u2014 there are no EOAs.",
+                "Accounts are managed by centralized email servers."
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             },
             {
               "question": "What computational unit is natively used for arithmetic in the Cairo Virtual Machine (CairoVM)?",
               "options": [
-                "Prime Field elements (`felt252`).",
                 "Floating-point IEEE-754 numbers.",
+                "64-bit signed integers only.",
                 "ASCII strings.",
-                "64-bit signed integers only."
+                "Prime Field elements (`felt252`)."
               ],
-              "correct_idx": 0
+              "correct_idx": 3
             },
             {
               "question": "What role does the Starknet Sequencer play in the network topology?",
               "options": [
-                "It receives transactions, orders them, executes Cairo bytecode, and generates L2 blocks before sending state diffs to the Prover.",
                 "It mines Proof of Work hashes.",
-                "It verifies Ethereum L1 consensus.",
-                "It hosts user frontends."
+                "It receives transactions, orders them, executes Cairo bytecode, and generates L2 blocks before sending state diffs to the Prover.",
+                "It hosts user frontends.",
+                "It verifies Ethereum L1 consensus."
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             },
             {
               "question": "How does Cairo 2.0 guarantee that code execution can always be proven?",
               "options": [
-                "Using Sierra (Safe Intermediate Execution Representation) which ensures all branches and operations are provable without crashes.",
-                "By running Java bytecode in a sandbox.",
                 "By preventing loops and if statements.",
-                "By executing code on Ethereum L1 directly."
+                "By running Java bytecode in a sandbox.",
+                "By executing code on Ethereum L1 directly.",
+                "Using Sierra (Safe Intermediate Execution Representation) which ensures all branches and operations are provable without crashes."
               ],
-              "correct_idx": 0
+              "correct_idx": 3
             }
           ],
           "exercise": {
@@ -2271,8 +5058,8 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "question": "Which official build tool and package manager is used for Cairo and Starknet projects?",
               "options": [
                 "Scarb",
-                "npm",
                 "pip",
+                "npm",
                 "maven"
               ],
               "correct_idx": 0
@@ -2280,52 +5067,52 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "What command-line tool is used for declaring class hashes and deploying contract instances on Starknet?",
               "options": [
-                "starkli",
                 "hardhat",
+                "remix",
                 "truffle",
-                "remix"
+                "starkli"
               ],
-              "correct_idx": 0
+              "correct_idx": 3
             },
             {
               "question": "Why are Starknet deployments split into two distinct steps (`declare` and `deploy`)?",
               "options": [
-                "`declare` registers the immutable contract class code and computes the class hash once, while `deploy` instantiates individual contract instances.",
-                "Because the compiler cannot run in one step.",
                 "To charge double gas fees.",
-                "To verify user identity."
+                "To verify user identity.",
+                "Because the compiler cannot run in one step.",
+                "`declare` registers the immutable contract class code and computes the class hash once, while `deploy` instantiates individual contract instances."
               ],
-              "correct_idx": 0
+              "correct_idx": 3
             },
             {
               "question": "Which testing framework provides blazing-fast unit tests and cheatcodes for Cairo contracts?",
               "options": [
-                "snforge (Starknet Foundry)",
                 "Mocha/Chai",
                 "PyTest legacy",
+                "snforge (Starknet Foundry)",
                 "JUnit"
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             },
             {
               "question": "What configuration file defines dependencies and compiler targets for a Scarb project?",
               "options": [
                 "Scarb.toml",
+                "starknet.config.json",
                 "Cargo.lock",
-                "package.json",
-                "starknet.config.json"
+                "package.json"
               ],
               "correct_idx": 0
             },
             {
               "question": "Which testnet is the primary network for Starknet contract testing and grant verifications?",
               "options": [
-                "Starknet Sepolia",
                 "Goerli (deprecated)",
+                "Starknet Sepolia",
                 "Ropsten",
                 "Kovan"
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             }
           ],
           "exercise": {
@@ -2355,19 +5142,19 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "Which attribute macro marks a module as a deployable Starknet smart contract in Cairo 2.0?",
               "options": [
-                "#[starknet::contract]",
-                "#[contract]",
+                "#[program]",
                 "#[solidity::contract]",
-                "#[program]"
+                "#[starknet::contract]",
+                "#[contract]"
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             },
             {
               "question": "Where is contract persistent state declared in a Cairo smart contract?",
               "options": [
                 "Inside the `#[storage]` struct definition.",
-                "In global memory variables.",
                 "In the Scarb.toml file.",
+                "In global memory variables.",
                 "In frontend localStorage."
               ],
               "correct_idx": 0
@@ -2385,32 +5172,32 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "Which type is used to represent modern 256-bit integers in Cairo 2.0?",
               "options": [
+                "double",
                 "u256 (composed of two 128-bit limbs: low and high)",
-                "felt252 only",
                 "int64",
-                "double"
+                "felt252 only"
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             },
             {
               "question": "How are events declared and emitted in Cairo smart contracts?",
               "options": [
-                "Declared inside an `#[event]` enum and emitted via `self.emit(EventName { ... })`.",
-                "By printing to console with `println!()`.",
                 "By sending HTTP POST requests.",
+                "By printing to console with `println!()`.",
+                "Declared inside an `#[event]` enum and emitted via `self.emit(EventName { ... })`.",
                 "By writing to a text file."
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             },
             {
               "question": "What access control pattern is standard in Cairo OpenZeppelin contracts?",
               "options": [
-                "Ownable Component (`#[abi(embed_v0)] impl OwnableImpl`) and AccessControl Component.",
+                "Allowing any caller to call admin functions.",
                 "Hardcoding admin private key in storage.",
-                "Checking IP addresses.",
-                "Allowing any caller to call admin functions."
+                "Ownable Component (`#[abi(embed_v0)] impl OwnableImpl`) and AccessControl Component.",
+                "Checking IP addresses."
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             }
           ],
           "exercise": {
@@ -2441,62 +5228,62 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "Which JavaScript/TypeScript SDK is the industry standard for Starknet DApps?",
               "options": [
+                "viem EVM",
                 "starknet.js (v6)",
-                "web3.js",
                 "ethers.js v5",
-                "viem EVM"
+                "web3.js"
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             },
             {
               "question": "What major UX advantage does Starknet's Account Abstraction provide for transaction bundling?",
               "options": [
-                "Multicalls \u2014 users can approve tokens AND execute a swap in a single atomic transaction signature.",
+                "Wallets have no passcodes.",
                 "Transactions require no internet connection.",
                 "Gas is refunded in Bitcoin.",
-                "Wallets have no passcodes."
+                "Multicalls \u2014 users can approve tokens AND execute a swap in a single atomic transaction signature."
               ],
-              "correct_idx": 0
+              "correct_idx": 3
             },
             {
               "question": "Which popular Web3 smart contract wallets are native to Starknet?",
               "options": [
-                "Argent X and Braavos",
-                "MetaMask only",
                 "Phantom only",
+                "MetaMask only",
+                "Argent X and Braavos",
                 "Coinbase Wallet extension only"
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             },
             {
               "question": "What is a Paymaster on Starknet?",
               "options": [
-                "A smart contract that sponsors transaction gas fees or allows users to pay gas in alternative ERC-20 tokens (like USDC or STRK).",
                 "A payroll employee.",
                 "A hardware mining machine.",
-                "A block explorer advertisement."
+                "A block explorer advertisement.",
+                "A smart contract that sponsors transaction gas fees or allows users to pay gas in alternative ERC-20 tokens (like USDC or STRK)."
               ],
-              "correct_idx": 0
+              "correct_idx": 3
             },
             {
               "question": "How do developers query read-only contract state using Starknet.js?",
               "options": [
                 "Using `myContract.call('get_balance', [userAddress])` without submitting a transaction.",
-                "By broadcasting a signed transaction that pays gas.",
                 "By querying an SQL database.",
-                "By restarting the RPC node."
+                "By restarting the RPC node.",
+                "By broadcasting a signed transaction that pays gas."
               ],
               "correct_idx": 0
             },
             {
               "question": "What RPC method retrieves filtered contract events directly from Starknet RPC nodes?",
               "options": [
-                "starknet_getEvents",
                 "eth_getLogs",
-                "sol_getEvents",
-                "get_transactions"
+                "get_transactions",
+                "starknet_getEvents",
+                "sol_getEvents"
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             }
           ],
           "exercise": {
@@ -2526,60 +5313,60 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "Which command declares a compiled Cairo contract class hash to Starknet Sepolia?",
               "options": [
+                "npm run declare",
                 "starkli declare target/dev/my_contract.contract_class.json --network sepolia",
                 "starkli upload contract",
-                "scarb push mainnet",
-                "npm run declare"
+                "scarb push mainnet"
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             },
             {
               "question": "Which command instantiates and deploys a declared class hash with constructor arguments?",
               "options": [
-                "starkli deploy <CLASS_HASH> <CONSTRUCTOR_ARGS> --network sepolia",
-                "starkli create contract",
                 "forge create",
-                "cargo deploy"
+                "cargo deploy",
+                "starkli deploy <CLASS_HASH> <CONSTRUCTOR_ARGS> --network sepolia",
+                "starkli create contract"
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             },
             {
               "question": "Where can developers and grant evaluators verify deployed Cairo contracts on Starknet Sepolia?",
               "options": [
-                "Starkscan (sepolia.starkscan.co) or Voyager (sepolia.voyager.online).",
+                "Subscan.",
                 "Etherscan mainnet.",
-                "Solscan.",
-                "Subscan."
+                "Starkscan (sepolia.starkscan.co) or Voyager (sepolia.voyager.online).",
+                "Solscan."
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             },
             {
               "question": "What role does the Universal Deployer Contract (UDC) play on Starknet?",
               "options": [
-                "It standardizes deterministic contract address deployment using salt and caller addresses across the network.",
-                "It burns unused STRK tokens.",
                 "It manages user seed phrases.",
-                "It routes DNS traffic."
+                "It burns unused STRK tokens.",
+                "It routes DNS traffic.",
+                "It standardizes deterministic contract address deployment using salt and caller addresses across the network."
               ],
-              "correct_idx": 0
+              "correct_idx": 3
             },
             {
               "question": "What verification artifact confirms successful completion of the Starknet Deployment Challenge?",
               "options": [
-                "A confirmed transaction hash on Starknet Sepolia with verified contract class and initial storage state.",
-                "A local terminal log screenshot.",
                 "A paper certificate.",
-                "A GitHub commit with no deployment."
+                "A confirmed transaction hash on Starknet Sepolia with verified contract class and initial storage state.",
+                "A GitHub commit with no deployment.",
+                "A local terminal log screenshot."
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             },
             {
               "question": "Why is completing this deployment challenge critical for Starknet Foundation grant reviewers?",
               "options": [
                 "It provides immutable on-chain proof of working Cairo smart contract deployments and real Layer-2 builder impact.",
                 "It guarantees immediate grant funding without review.",
-                "It eliminates the need for code review.",
-                "It waives all future gas fees."
+                "It waives all future gas fees.",
+                "It eliminates the need for code review."
               ],
               "correct_idx": 0
             }
@@ -2616,61 +5403,61 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "question": "What is Proof of History (PoH) in Solana architecture?",
               "options": [
                 "A verifiable cryptographic delay function (VDF) that creates a decentralized clock before consensus, enabling parallel processing.",
+                "A KYC identity verification standard.",
                 "A Proof of Work mining algorithm.",
-                "A database backup system.",
-                "A KYC identity verification standard."
+                "A database backup system."
               ],
               "correct_idx": 0
             },
             {
               "question": "How does the Sealevel parallel smart contract runtime achieve massive throughput?",
               "options": [
-                "By reading and writing to non-overlapping accounts concurrently across multiple CPU threads and GPU cores.",
                 "By executing all transactions on a single thread.",
                 "By delaying block production.",
+                "By reading and writing to non-overlapping accounts concurrently across multiple CPU threads and GPU cores.",
                 "By deleting historical blocks."
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             },
             {
               "question": "In Solana's account model, what is the key distinction between programs and data accounts?",
               "options": [
-                "Programs (code) are marked as executable and are stateless; all state is stored separately in data accounts.",
                 "Programs store all variables inside their own code.",
-                "Data accounts can execute instructions directly.",
-                "There is no distinction between code and data."
+                "There is no distinction between code and data.",
+                "Programs (code) are marked as executable and are stateless; all state is stored separately in data accounts.",
+                "Data accounts can execute instructions directly."
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             },
             {
               "question": "What is Rent in the Solana account model?",
               "options": [
                 "A storage fee deducted from accounts unless they maintain a minimum SOL balance to be 'Rent Exempt'.",
+                "Gas cost for compilation.",
                 "A monthly fee paid to cloud servers.",
-                "Transaction fee paid to validators.",
-                "Gas cost for compilation."
+                "Transaction fee paid to validators."
               ],
               "correct_idx": 0
             },
             {
               "question": "What is Gulf Stream in Solana network engineering?",
               "options": [
-                "A mempool-less transaction forwarding protocol that pushes transactions to upcoming leaders before block generation.",
                 "A cross-chain bridge to Ethereum.",
+                "A cold storage hardware wallet.",
                 "An ocean current monitoring system.",
-                "A cold storage hardware wallet."
+                "A mempool-less transaction forwarding protocol that pushes transactions to upcoming leaders before block generation."
               ],
-              "correct_idx": 0
+              "correct_idx": 3
             },
             {
               "question": "What prevents state corruption during concurrent parallel execution on Solana?",
               "options": [
+                "Transactions run only at midnight.",
                 "Transactions must explicitly declare all accounts they intend to read and write in advance.",
                 "Transactions are paused when two users click send.",
-                "Global locks on the entire blockchain state.",
-                "Transactions run only at midnight."
+                "Global locks on the entire blockchain state."
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             }
           ],
           "exercise": {
@@ -2700,62 +5487,62 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "Which framework is the industry standard for writing secure, idiomatic Solana smart contracts in Rust?",
               "options": [
-                "Anchor Framework",
                 "Hardhat",
+                "Anchor Framework",
                 "Foundry",
                 "Truffle"
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             },
             {
               "question": "Which command compiles an Anchor project and generates the Interface Definition Language (IDL)?",
               "options": [
-                "anchor build",
-                "cargo run",
+                "npm run compile",
                 "solana build",
-                "npm run compile"
+                "anchor build",
+                "cargo run"
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             },
             {
               "question": "What is the purpose of the Anchor IDL (Interface Definition Language) JSON file?",
               "options": [
-                "It describes all instructions, accounts, types, and errors, allowing client SDKs to generate typed bindings automatically.",
                 "It stores private keys.",
-                "It formats CSS stylesheets.",
-                "It calculates validator rewards."
+                "It describes all instructions, accounts, types, and errors, allowing client SDKs to generate typed bindings automatically.",
+                "It calculates validator rewards.",
+                "It formats CSS stylesheets."
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             },
             {
               "question": "Which command starts a fast local Solana test validator on your development machine?",
               "options": [
-                "solana-test-validator",
                 "solana start",
                 "anchor localnode",
-                "docker solana up"
+                "docker solana up",
+                "solana-test-validator"
               ],
-              "correct_idx": 0
+              "correct_idx": 3
             },
             {
               "question": "How do you request 2 free SOL on Solana Devnet for contract deployment testing?",
               "options": [
-                "solana airdrop 2 --url devnet",
                 "solana buy 2 devnet",
                 "solana mine devnet",
-                "solana faucet get 2"
+                "solana faucet get 2",
+                "solana airdrop 2 --url devnet"
               ],
-              "correct_idx": 0
+              "correct_idx": 3
             },
             {
               "question": "What file in an Anchor project configures cluster URLs, program IDs, and test scripts?",
               "options": [
-                "Anchor.toml",
-                "package.json",
                 "Cargo.toml",
+                "package.json",
+                "Anchor.toml",
                 "solana.json"
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             }
           ],
           "exercise": {
@@ -2787,8 +5574,8 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "options": [
                 "An account address deterministically derived from program ID and seed bytes that has no private key, controlled solely by the program.",
                 "A standard user wallet address.",
-                "A random number generated by miners.",
-                "A temporary session token."
+                "A temporary session token.",
+                "A random number generated by miners."
               ],
               "correct_idx": 0
             },
@@ -2797,8 +5584,8 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "options": [
                 "#[derive(Accounts)]",
                 "#[storage]",
-                "#[payable]",
-                "#[contract]"
+                "#[contract]",
+                "#[payable]"
               ],
               "correct_idx": 0
             },
@@ -2806,9 +5593,9 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "question": "Why must accounts initialized with `#[account(init, payer = signer, space = 8 + ...)]` allocate space?",
               "options": [
                 "To allocate memory on-chain, including the 8-byte Anchor discriminator and serialized data field sizes.",
-                "To reserve bandwidth on RPC nodes.",
                 "To pay validator tips.",
-                "To speed up compiler execution."
+                "To speed up compiler execution.",
+                "To reserve bandwidth on RPC nodes."
               ],
               "correct_idx": 0
             },
@@ -2825,22 +5612,22 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "How does Anchor protect against account substitution and missing signer vulnerabilities?",
               "options": [
-                "Through declarative account constraints like `#[account(signer)]` and `#[account(mut, has_one = authority)]`.",
-                "By disabling multi-user transactions.",
                 "By encrypting all account data with passwords.",
+                "By disabling multi-user transactions.",
+                "Through declarative account constraints like `#[account(signer)]` and `#[account(mut, has_one = authority)]`.",
                 "By running contracts in read-only mode."
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             },
             {
               "question": "What standard token library is used for fungible and non-fungible tokens on Solana?",
               "options": [
-                "SPL Token (Solana Program Library) and Token-2022 Extensions.",
                 "ERC-20 standard.",
                 "Move Coin module.",
+                "SPL Token (Solana Program Library) and Token-2022 Extensions.",
                 "Cairo token component."
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             }
           ],
           "exercise": {
@@ -2870,19 +5657,19 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "Which JavaScript libraries are used to build interactive full-stack Solana web applications?",
               "options": [
-                "@solana/web3.js, @coral-xyz/anchor, and @solana/wallet-adapter-react",
                 "web3.py",
+                "starknet.js",
                 "ethers v5",
-                "starknet.js"
+                "@solana/web3.js, @coral-xyz/anchor, and @solana/wallet-adapter-react"
               ],
-              "correct_idx": 0
+              "correct_idx": 3
             },
             {
               "question": "What are Versioned Transactions (v0) and Address Lookup Tables (ALTs) on Solana?",
               "options": [
                 "They compress large transaction payloads by referencing 256 accounts in an on-chain table, bypassing the 1232-byte limit.",
-                "They increase transaction fees.",
                 "They disable transaction signatures.",
+                "They increase transaction fees.",
                 "They convert SOL to ETH."
               ],
               "correct_idx": 0
@@ -2900,32 +5687,32 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "What method listens to real-time account state updates via Solana WebSocket RPC connections?",
               "options": [
-                "connection.onAccountChange(publicKey, callback)",
-                "connection.poll()",
+                "document.onchange()",
                 "window.addEventListener('block')",
-                "document.onchange()"
+                "connection.poll()",
+                "connection.onAccountChange(publicKey, callback)"
               ],
-              "correct_idx": 0
+              "correct_idx": 3
             },
             {
               "question": "Which popular browser extension wallets are standard across the Solana ecosystem?",
               "options": [
-                "Phantom and Solflare",
                 "ArgentX only",
                 "SubWallet only",
-                "MetaMask only"
+                "MetaMask only",
+                "Phantom and Solflare"
               ],
-              "correct_idx": 0
+              "correct_idx": 3
             },
             {
               "question": "How does a frontend handle RPC rate limits when querying Solana cluster state?",
               "options": [
-                "Using dedicated RPC providers (Helius, Triton, QuickNode) and implementing retry backoffs.",
-                "By closing the user's browser.",
+                "By deploying private testnets.",
                 "By removing wallet connections.",
-                "By deploying private testnets."
+                "By closing the user's browser.",
+                "Using dedicated RPC providers (Helius, Triton, QuickNode) and implementing retry backoffs."
               ],
-              "correct_idx": 0
+              "correct_idx": 3
             }
           ],
           "exercise": {
@@ -2955,62 +5742,62 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "Which command deploys a compiled Solana program binary to Devnet?",
               "options": [
+                "npm run deploy:devnet",
                 "solana program deploy target/deploy/my_program.so --url devnet",
-                "solana upload contract",
                 "anchor publish",
-                "npm run deploy:devnet"
+                "solana upload contract"
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             },
             {
               "question": "How do developers publish their Anchor IDL directly on-chain for public explorer verification?",
               "options": [
+                "npm publish idl",
                 "anchor idl init --filepath target/idl/my_program.json <PROGRAM_ID> --provider.cluster devnet",
                 "solana idl push",
-                "git commit idl.json",
-                "npm publish idl"
+                "git commit idl.json"
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             },
             {
               "question": "Where can developers, users, and grant committees inspect verified Solana Devnet programs?",
               "options": [
+                "Starkscan.",
                 "Solscan Devnet (solscan.io/?cluster=devnet) or Solana Explorer (explorer.solana.com/?cluster=devnet).",
                 "Etherscan.",
-                "Starkscan.",
                 "Subscan."
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             },
             {
               "question": "What keypair authority is required to execute future program upgrades on Solana?",
               "options": [
-                "The Upgrade Authority keypair configured during initial program deployment.",
-                "Any random user wallet.",
                 "The validator leader.",
-                "A cloud API token."
+                "The Upgrade Authority keypair configured during initial program deployment.",
+                "A cloud API token.",
+                "Any random user wallet."
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             },
             {
               "question": "What on-chain artifacts prove successful completion of the Solana Deployment Challenge?",
               "options": [
-                "A live Program ID on Solana Devnet, initialized PDA data accounts, and confirmed transaction signatures.",
-                "A screenshot of VS Code.",
                 "A text file on your desktop.",
-                "A GitHub pull request with no deployment."
+                "A GitHub pull request with no deployment.",
+                "A screenshot of VS Code.",
+                "A live Program ID on Solana Devnet, initialized PDA data accounts, and confirmed transaction signatures."
               ],
-              "correct_idx": 0
+              "correct_idx": 3
             },
             {
               "question": "Why do Solana Foundation and Superteam grant reviewers evaluate live Devnet deployments?",
               "options": [
+                "It automatically guarantees venture capital funding.",
                 "It demonstrates working technical mastery of Anchor, account space allocation, PDA security, and true builder readiness.",
                 "It replaces pitch decks completely.",
-                "It automatically guarantees venture capital funding.",
                 "It gives unlimited free SOL."
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             }
           ],
           "exercise": {
@@ -3044,62 +5831,62 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "What is the primary role of the Polkadot Relay Chain in the multi-chain ecosystem?",
               "options": [
-                "It coordinates shared security, consensus, and trust-free cross-chain messaging (XCM) across all connected parachains.",
                 "It executes individual smart contracts directly on the relay chain.",
+                "It mines Bitcoin blocks.",
                 "It hosts user frontends on decentralized servers.",
-                "It mines Bitcoin blocks."
+                "It coordinates shared security, consensus, and trust-free cross-chain messaging (XCM) across all connected parachains."
               ],
-              "correct_idx": 0
+              "correct_idx": 3
             },
             {
               "question": "What is the consensus mechanism utilized by Polkadot for network security and block finality?",
               "options": [
+                "Proof of Elapsed Time.",
                 "Nominated Proof-of-Stake (NPoS) paired with BABE block authoring and GRANDPA deterministic finality gadget.",
                 "Proof of Work SHA-256 mining.",
-                "Proof of Elapsed Time.",
                 "Single-node centralized validation."
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             },
             {
               "question": "What is XCM (Cross-Consensus Messaging) in Polkadot?",
               "options": [
+                "A WebSocket protocol for browser notifications.",
                 "A standardized, language-agnostic message format for trust-free interoperability between parachains, smart contracts, and relay chains.",
                 "An email newsletter for token holders.",
-                "A WebSocket protocol for browser notifications.",
                 "A compiler optimizer for C++."
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             },
             {
               "question": "What is the core advantage of Shared Security for parachain developers?",
               "options": [
-                "New parachains inherit the economic security of the entire Polkadot validator pool from day one without bootstrapping their own validators.",
-                "Parachains never pay transaction fees.",
+                "Parachains run without internet connections.",
                 "Parachains do not require code auditing.",
-                "Parachains run without internet connections."
+                "New parachains inherit the economic security of the entire Polkadot validator pool from day one without bootstrapping their own validators.",
+                "Parachains never pay transaction fees."
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             },
             {
               "question": "What is Agile Coretime in the Polkadot 2.0 architecture?",
               "options": [
-                "A dynamic, flexible market for purchasing computing power and blockspace on-demand (bulk or instant) instead of multi-year slot auctions.",
                 "A system clock for CPU cooling.",
-                "A manual miner scheduling tool.",
-                "A monthly token subscription."
+                "A dynamic, flexible market for purchasing computing power and blockspace on-demand (bulk or instant) instead of multi-year slot auctions.",
+                "A monthly token subscription.",
+                "A manual miner scheduling tool."
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             },
             {
               "question": "What is the Substrate framework in Polkadot ecosystem development?",
               "options": [
-                "A modular, extensible Rust framework for building custom, sovereign blockchains and execution runtimes (FRAME pallets).",
+                "A database query language.",
                 "A React CSS framework.",
                 "A hardware wallet manufacturing kit.",
-                "A database query language."
+                "A modular, extensible Rust framework for building custom, sovereign blockchains and execution runtimes (FRAME pallets)."
               ],
-              "correct_idx": 0
+              "correct_idx": 3
             }
           ],
           "exercise": {
@@ -3129,62 +5916,62 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "Which CLI tool is the official compiler and packaging suite for ink! WebAssembly smart contracts?",
               "options": [
-                "cargo-contract",
                 "anchor-cli",
                 "scarb",
+                "cargo-contract",
                 "truffle"
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             },
             {
               "question": "What file bundle is generated by `cargo contract build --release` for deployment?",
               "options": [
-                "A `.contract` bundle containing compiled WebAssembly bytecode and metadata.json ABI.",
-                "A `.sol` text file.",
                 "A `.wasm` file only without metadata.",
-                "A `.zip` image archive."
+                "A `.sol` text file.",
+                "A `.zip` image archive.",
+                "A `.contract` bundle containing compiled WebAssembly bytecode and metadata.json ABI."
               ],
-              "correct_idx": 0
+              "correct_idx": 3
             },
             {
               "question": "Which local node environment is specifically designed for testing ink! contracts locally?",
               "options": [
-                "Substrate Contracts Node (`substrate-contracts-node`)",
+                "Geth node",
                 "Hardhat Network",
-                "Anvil",
-                "Geth node"
+                "Substrate Contracts Node (`substrate-contracts-node`)",
+                "Anvil"
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             },
             {
               "question": "What is Swanky Suite in the Polkadot developer ecosystem?",
               "options": [
-                "An integrated CLI and developer toolkit for creating, compiling, deploying, and testing ink! Wasm smart contracts.",
                 "A DEX trading bot.",
-                "A wallet extension for Chrome.",
-                "A Discord community bot."
+                "An integrated CLI and developer toolkit for creating, compiling, deploying, and testing ink! Wasm smart contracts.",
+                "A Discord community bot.",
+                "A wallet extension for Chrome."
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             },
             {
               "question": "Which web interface allows developers to inspect extrinsics, upload code, and interact with parachain nodes?",
               "options": [
-                "Polkadot.js Apps (polkadot.js.org/apps)",
                 "Remix IDE",
-                "Solscan",
-                "Etherscan"
+                "Polkadot.js Apps (polkadot.js.org/apps)",
+                "Etherscan",
+                "Solscan"
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             },
             {
               "question": "Which testnets are standard for deploying and testing Substrate and ink! contracts before mainnet?",
               "options": [
-                "Westend (Relay Chain testnet), Rococo (Parachain testnet), and Paseo testnet.",
-                "Sepolia EVM testnet.",
                 "Solana Devnet.",
-                "Bitcoin Regtest."
+                "Bitcoin Regtest.",
+                "Sepolia EVM testnet.",
+                "Westend (Relay Chain testnet), Rococo (Parachain testnet), and Paseo testnet."
               ],
-              "correct_idx": 0
+              "correct_idx": 3
             }
           ],
           "exercise": {
@@ -3214,62 +6001,62 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "What is ink! in the Polkadot / Substrate ecosystem?",
               "options": [
+                "A graphic design tool.",
                 "An embedded domain-specific language (eDSL) based on Rust that compiles smart contracts to WebAssembly for `pallet-contracts`.",
-                "A visual drag-and-drop programming language.",
                 "A private sidechain.",
-                "A graphic design tool."
+                "A visual drag-and-drop programming language."
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             },
             {
               "question": "Which attribute macro marks the root persistent storage struct in an ink! contract?",
               "options": [
-                "#[ink(storage)]",
-                "#[storage]",
                 "#[state]",
-                "#[derive(Accounts)]"
+                "#[derive(Accounts)]",
+                "#[storage]",
+                "#[ink(storage)]"
               ],
-              "correct_idx": 0
+              "correct_idx": 3
             },
             {
               "question": "Which storage data structure provides gas-efficient key-value mappings in ink! 4/5?",
               "options": [
-                "ink::storage::Mapping<K, V>",
                 "std::collections::HashMap<K, V>",
-                "Vec<K, V>",
-                "Array<K, V>"
+                "Array<K, V>",
+                "ink::storage::Mapping<K, V>",
+                "Vec<K, V>"
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             },
             {
               "question": "What is the difference between `#[ink(constructor)]` and `#[ink(message)]` in ink!?",
               "options": [
+                "Both macros are identical.",
                 "`constructor` initializes contract state at instantiation, while `message` defines callable external methods.",
-                "`constructor` executes on every transaction.",
                 "`message` only runs during compilation.",
-                "Both macros are identical."
+                "`constructor` executes on every transaction."
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             },
             {
               "question": "How are value-receiving functions marked in ink! smart contracts?",
               "options": [
-                "#[ink(message, payable)]",
                 "#[payable]",
-                "#[receive_tokens]",
-                "#[msg_value]"
+                "#[ink(message, payable)]",
+                "#[msg_value]",
+                "#[receive_tokens]"
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             },
             {
               "question": "What return type is recommended for fallible ink! messages to return clean error diagnostics to callers?",
               "options": [
+                "Null pointers.",
                 "Result<T, Error> with custom enum error variants.",
                 "Boolean true/false only.",
-                "Null pointers.",
                 "Void with panic!()."
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             }
           ],
           "exercise": {
@@ -3299,52 +6086,52 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "Which JavaScript/TypeScript API libraries connect frontends to Polkadot parachains and ink! contracts?",
               "options": [
-                "@polkadot/api and @polkadot/api-contract",
-                "ethers.js v6",
+                "starknet.js",
                 "web3.py",
-                "starknet.js"
+                "@polkadot/api and @polkadot/api-contract",
+                "ethers.js v6"
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             },
             {
               "question": "What are the two components of Weight V2 in Substrate gas metering?",
               "options": [
-                "`ref_time` (CPU execution time in picoseconds) and `proof_size` (storage proof size in bytes).",
                 "Gas price and gas limit.",
                 "Memory and disk space only.",
+                "`ref_time` (CPU execution time in picoseconds) and `proof_size` (storage proof size in bytes).",
                 "Network latency and ping."
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             },
             {
               "question": "Which multi-chain browser wallets provide native support for Polkadot, Kusama, and ink! parachains?",
               "options": [
-                "SubWallet, Talisman, and Polkadot.js extension",
-                "MetaMask only",
                 "Phantom only",
-                "Coinbase Wallet only"
+                "SubWallet, Talisman, and Polkadot.js extension",
+                "Coinbase Wallet only",
+                "MetaMask only"
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             },
             {
               "question": "How do developers instantiate a typed contract instance using @polkadot/api-contract?",
               "options": [
-                "const contract = new ContractPromise(api, metadataAbi, contractAddress);",
-                "const contract = new Web3Contract(abi);",
                 "const contract = loadContract();",
-                "const contract = api.get();"
+                "const contract = new ContractPromise(api, metadataAbi, contractAddress);",
+                "const contract = api.get();",
+                "const contract = new Web3Contract(abi);"
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             },
             {
               "question": "What event callback confirms that a Substrate transaction has achieved deterministic finality?",
               "options": [
-                "`status.isFinalized` in the extrinsic subscription stream.",
                 "`status.isInBlock` only.",
-                "`status.isBroadcast` only.",
-                "`window.onload`."
+                "`window.onload`.",
+                "`status.isFinalized` in the extrinsic subscription stream.",
+                "`status.isBroadcast` only."
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             },
             {
               "question": "How does a frontend DApp estimate gas/weight before executing an ink! state-modifying message?",
@@ -3384,50 +6171,50 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
             {
               "question": "Which command compiles an ink! contract into optimized release WebAssembly bytecode?",
               "options": [
-                "cargo contract build --release",
-                "cargo build",
                 "npm run build",
-                "solc --release"
+                "cargo build",
+                "solc --release",
+                "cargo contract build --release"
               ],
-              "correct_idx": 0
+              "correct_idx": 3
             },
             {
               "question": "What is the difference between code upload (`upload_code`) and contract instantiation (`instantiate_with_code`) in `pallet-contracts`?",
               "options": [
-                "`upload_code` stores the Wasm bytecode once and returns a CodeHash, allowing multiple contract instances to share the same code cheaply.",
-                "`upload_code` executes all functions immediately.",
                 "`instantiate` deletes the bytecode after deployment.",
-                "There is no difference."
+                "`upload_code` stores the Wasm bytecode once and returns a CodeHash, allowing multiple contract instances to share the same code cheaply.",
+                "There is no difference.",
+                "`upload_code` executes all functions immediately."
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             },
             {
               "question": "What is the purpose of the `salt` parameter during ink! contract instantiation?",
               "options": [
-                "It ensures unique, deterministic contract address generation even when instantiating the same CodeHash multiple times.",
                 "It encrypts the contract bytecode.",
+                "It ensures unique, deterministic contract address generation even when instantiating the same CodeHash multiple times.",
                 "It sets the admin password.",
                 "It calculates validator tips."
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             },
             {
               "question": "Where can developers and Web3 Foundation grant evaluators inspect verified Polkadot/Kusama contract deployments?",
               "options": [
-                "Subscan (subscan.io) or Polkadot.js Apps Contract tab.",
                 "Etherscan.",
                 "Solscan.",
+                "Subscan (subscan.io) or Polkadot.js Apps Contract tab.",
                 "Basescan."
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             },
             {
               "question": "What verified artifact proves successful completion of the Polkadot / Substrate Deployment Challenge?",
               "options": [
                 "A confirmed Extrinsic Block Hash, deployed Contract Account Address, and verified Wasm metadata on-chain.",
-                "A text file on your computer.",
                 "A printed PDF with no blockchain hash.",
-                "A screenshot of a local folder."
+                "A screenshot of a local folder.",
+                "A text file on your computer."
               ],
               "correct_idx": 0
             },
@@ -3435,9 +6222,9 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
               "question": "Why do Web3 Foundation and Decentralized Futures grant committees prioritize live testnet deployments?",
               "options": [
                 "It provides immutable on-chain proof of working Rust Wasm smart contracts, technical proficiency, and ecosystem impact.",
+                "It waives all future blockchain transactions.",
                 "It automatically guarantees token allocations.",
-                "It eliminates the need for software engineering.",
-                "It waives all future blockchain transactions."
+                "It eliminates the need for software engineering."
               ],
               "correct_idx": 0
             }
@@ -3456,87 +6243,87 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
       ]
     }
   ],
-  "substrate": [
+  "arbitrum": [
     {
       "level_id": 1,
-      "title": "Level 1: Polkadot Architecture, Shared Security & XCM Cross-Chain Protocol",
+      "title": "Level 1: Arbitrum Nitro Architecture, One/Nova Topologies & Rollup Messaging",
       "total_lessons": 1,
       "lessons": [
         {
-          "id": "polkadot-1",
+          "id": "arbitrum-1",
           "level_id": 1,
-          "title": "Module 1: Polkadot Architecture, Shared Security & XCM Cross-Chain Protocol",
+          "title": "Module 1: Arbitrum Nitro Architecture, One/Nova Topologies & Rollup Messaging",
           "duration": "15 mins",
           "xp": 150,
-          "content": "# Module 1: Polkadot Architecture, Shared Security & XCM Cross-Chain Protocol\n### Polkadot Ecosystem Track | Developer Academy\n\nUnderstand Polkadot Relay Chain & Parachains, Nominated Proof of Stake (NPoS), Shared Security, and Cross-Consensus Messaging (XCM).\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polkadot.\n2. **Toolchain Proficiency**: Master cargo-contract, Substrate & Swanky for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Rust & ink! code on Wasm & pallet-contracts adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Westend / Rococo / Substrate Node** and verify artifacts on **Subscan / Polkadot.js Apps**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/paritytech/polkadot-sdk](https://github.com/paritytech/polkadot-sdk)\n- **Ecosystem Starter Templates**: [https://github.com/use-ink/ink](https://github.com/use-ink/ink)\n- **Block Explorer & State Verifier**: **Subscan / Polkadot.js Apps**\n- **Native Testnet Environment**: **Westend / Rococo / Substrate Node**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "content": "# Module 1: Arbitrum Nitro Architecture, One/Nova Topologies & Rollup Messaging\n### Arbitrum Ecosystem Track | Developer Academy\n\nMaster Arbitrum Nitro architecture: WASM-based State Transition Function (Wasm STF), ArbOS execution, Sequencer batching, and L1-L2 cross-chain inbox messaging.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Arbitrum.\n2. **Toolchain Proficiency**: Master Stylus SDK & Hardhat/Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity / Rust code on EVM (Nitro) + WASM (Stylus) adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Arbitrum Sepolia** and verify artifacts on **Arbiscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/OffchainLabs/nitro](https://github.com/OffchainLabs/nitro)\n- **Ecosystem Starter Templates**: [https://github.com/OffchainLabs/stylus-sdk-rs](https://github.com/OffchainLabs/stylus-sdk-rs)\n- **Block Explorer & State Verifier**: **Arbiscan**\n- **Native Testnet Environment**: **Arbitrum Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
           "quiz": [
             {
-              "question": "What is the primary role of the Polkadot Relay Chain in the multi-chain ecosystem?",
+              "question": "What is the execution engine behind Arbitrum Nitro that replaces the classic AVM?",
               "options": [
-                "It coordinates shared security, consensus, and trust-free cross-chain messaging (XCM) across all connected parachains.",
-                "It executes individual smart contracts directly on the relay chain.",
-                "It hosts user frontends on decentralized servers.",
-                "It mines Bitcoin blocks."
+                "A centralized SQL transaction processor.",
+                "A WASM-based emulator running standard geth core inside WebAssembly.",
+                "A customized JavaScript V8 runtime.",
+                "A single-threaded Python interpreter."
+              ],
+              "correct_idx": 1
+            },
+            {
+              "question": "What is the primary architectural difference between Arbitrum One and Arbitrum Nova?",
+              "options": [
+                "Arbitrum One posts full transaction data to Ethereum L1 with fraud proofs, whereas Nova uses a Data Availability Committee for ultra-low fees in gaming.",
+                "Arbitrum One only supports Bitcoin transactions.",
+                "Both networks share the exact same Data Availability model.",
+                "Arbitrum Nova disables smart contracts completely."
               ],
               "correct_idx": 0
             },
             {
-              "question": "What is the consensus mechanism utilized by Polkadot for network security and block finality?",
+              "question": "How does L1-to-L2 message passing work on Arbitrum?",
               "options": [
-                "Nominated Proof-of-Stake (NPoS) paired with BABE block authoring and GRANDPA deterministic finality gadget.",
-                "Proof of Work SHA-256 mining.",
-                "Proof of Elapsed Time.",
-                "Single-node centralized validation."
+                "By creating a temporary DNS record.",
+                "By sending an unencrypted WebSocket packet to node miners.",
+                "By depositing into the Inbox contract on Ethereum L1, which creates a retryable ticket executed by ArbOS on L2.",
+                "By executing a hard-fork on Ethereum L1."
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             },
             {
-              "question": "What is XCM (Cross-Consensus Messaging) in Polkadot?",
+              "question": "What are 'Retryable Tickets' in Arbitrum cross-chain messaging?",
               "options": [
-                "A standardized, language-agnostic message format for trust-free interoperability between parachains, smart contracts, and relay chains.",
-                "An email newsletter for token holders.",
-                "A WebSocket protocol for browser notifications.",
-                "A compiler optimizer for C++."
+                "Discount vouchers for future gas purchases.",
+                "Refund receipts printed for cancelled transactions.",
+                "Temporary testnet tokens.",
+                "L2 transaction execution requests created on L1 that can be redeemed within a timeout period if gas execution initially fails."
               ],
-              "correct_idx": 0
+              "correct_idx": 3
             },
             {
-              "question": "What is the core advantage of Shared Security for parachain developers?",
+              "question": "What is the role of the Arbitrum Sequencer?",
               "options": [
-                "New parachains inherit the economic security of the entire Polkadot validator pool from day one without bootstrapping their own validators.",
-                "Parachains never pay transaction fees.",
-                "Parachains do not require code auditing.",
-                "Parachains run without internet connections."
+                "Generating cryptographic artwork for NFT marketplaces.",
+                "Validating email credentials of users.",
+                "Receiving user transactions, establishing deterministic instant execution ordering, and publishing compressed transaction batches to Ethereum.",
+                "Mining proof-of-work blocks on Bitcoin."
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             },
             {
-              "question": "What is Agile Coretime in the Polkadot 2.0 architecture?",
+              "question": "How does fraud proof verification work during the challenge period on Arbitrum One?",
               "options": [
-                "A dynamic, flexible market for purchasing computing power and blockspace on-demand (bulk or instant) instead of multi-year slot auctions.",
-                "A system clock for CPU cooling.",
-                "A manual miner scheduling tool.",
-                "A monthly token subscription."
+                "Random lottery selection of valid blocks.",
+                "Instant unilateral rollback by a single central administrator.",
+                "Interactive multi-round bisection search narrowing disputes down to a single one-step WASM instruction executed on L1.",
+                "Voting via Discord community polls."
               ],
-              "correct_idx": 0
-            },
-            {
-              "question": "What is the Substrate framework in Polkadot ecosystem development?",
-              "options": [
-                "A modular, extensible Rust framework for building custom, sovereign blockchains and execution runtimes (FRAME pallets).",
-                "A React CSS framework.",
-                "A hardware wallet manufacturing kit.",
-                "A database query language."
-              ],
-              "correct_idx": 0
+              "correct_idx": 2
             }
           ],
           "exercise": {
-            "instruction": "Write a Rust & ink! code snippet for Module 1. The code must contain the keywords 'Substrate' and 'Polkadot'.",
-            "template": "// Polkadot Module 1: Polkadot Architecture, Shared Security & XCM Cross-Chain Protocol\n// Language: Rust & ink!\n// Write implementation below:\n",
+            "instruction": "Write a Solidity / Rust code snippet for Module 1. The code must contain the keywords 'ArbitrumNitro' and 'ArbOS'.",
+            "template": "// Arbitrum Module 1: Arbitrum Nitro Architecture, One/Nova Topologies & Rollup Messaging\n// Language: Solidity / Rust\n// Write implementation below:\n",
             "required_keywords": [
-              "Substrate",
-              "Polkadot"
+              "ArbitrumNitro",
+              "ArbOS"
             ]
           }
         }
@@ -3544,84 +6331,84 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
     },
     {
       "level_id": 2,
-      "title": "Level 2: Substrate & ink! Toolchain: cargo-contract & Swanky Suite",
+      "title": "Level 2: Arbitrum Stylus SDK & Rust Smart Contract WASM Setup",
       "total_lessons": 1,
       "lessons": [
         {
-          "id": "polkadot-2",
+          "id": "arbitrum-2",
           "level_id": 2,
-          "title": "Module 2: Substrate & ink! Toolchain: cargo-contract & Swanky Suite",
+          "title": "Module 2: Arbitrum Stylus SDK & Rust Smart Contract WASM Setup",
           "duration": "18 mins",
           "xp": 200,
-          "content": "# Module 2: Substrate & ink! Toolchain: cargo-contract & Swanky Suite\n### Polkadot Ecosystem Track | Developer Academy\n\nSet up cargo-contract, WebAssembly (Wasm) target toolchains, Substrate Contracts Node, and Polkadot.js Apps developer interface.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polkadot.\n2. **Toolchain Proficiency**: Master cargo-contract, Substrate & Swanky for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Rust & ink! code on Wasm & pallet-contracts adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Westend / Rococo / Substrate Node** and verify artifacts on **Subscan / Polkadot.js Apps**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/paritytech/polkadot-sdk](https://github.com/paritytech/polkadot-sdk)\n- **Ecosystem Starter Templates**: [https://github.com/use-ink/ink](https://github.com/use-ink/ink)\n- **Block Explorer & State Verifier**: **Subscan / Polkadot.js Apps**\n- **Native Testnet Environment**: **Westend / Rococo / Substrate Node**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "content": "# Module 2: Arbitrum Stylus SDK & Rust Smart Contract WASM Setup\n### Arbitrum Ecosystem Track | Developer Academy\n\nSet up the official Stylus Rust toolchain (cargo stylus), compile Rust smart contracts to WebAssembly, configure activation transactions, and benchmark gas execution.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Arbitrum.\n2. **Toolchain Proficiency**: Master Stylus SDK & Hardhat/Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity / Rust code on EVM (Nitro) + WASM (Stylus) adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Arbitrum Sepolia** and verify artifacts on **Arbiscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/OffchainLabs/nitro](https://github.com/OffchainLabs/nitro)\n- **Ecosystem Starter Templates**: [https://github.com/OffchainLabs/stylus-sdk-rs](https://github.com/OffchainLabs/stylus-sdk-rs)\n- **Block Explorer & State Verifier**: **Arbiscan**\n- **Native Testnet Environment**: **Arbitrum Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
           "quiz": [
             {
-              "question": "Which CLI tool is the official compiler and packaging suite for ink! WebAssembly smart contracts?",
+              "question": "What is Arbitrum Stylus?",
               "options": [
-                "cargo-contract",
-                "anchor-cli",
-                "scarb",
-                "truffle"
+                "A visual drawing tool for smart contract diagrams.",
+                "A token bridge for moving Solana tokens to Arbitrum.",
+                "A feature allowing developers to write smart contracts in Rust, C, and C++ compiled to WebAssembly that run alongside EVM contracts at near-native speeds.",
+                "A centralized code formatting extension."
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             },
             {
-              "question": "What file bundle is generated by `cargo contract build --release` for deployment?",
+              "question": "Which CLI tool is used to compile, check, and deploy Rust smart contracts to Arbitrum Stylus?",
               "options": [
-                "A `.contract` bundle containing compiled WebAssembly bytecode and metadata.json ABI.",
-                "A `.sol` text file.",
-                "A `.wasm` file only without metadata.",
-                "A `.zip` image archive."
+                "anchor build",
+                "npm stylus-cli",
+                "truffle compile",
+                "cargo-stylus"
               ],
-              "correct_idx": 0
+              "correct_idx": 3
             },
             {
-              "question": "Which local node environment is specifically designed for testing ink! contracts locally?",
+              "question": "What does `cargo stylus check` do before deploying a Rust contract?",
               "options": [
-                "Substrate Contracts Node (`substrate-contracts-node`)",
-                "Hardhat Network",
-                "Anvil",
-                "Geth node"
+                "It publishes code directly to mainnet without authorization.",
+                "It performs static analysis and checks WASM exports, memory bounds, and Stylus SDK compatibility.",
+                "It deletes all Rust compiler warnings.",
+                "It mines 100 testnet blocks."
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             },
             {
-              "question": "What is Swanky Suite in the Polkadot developer ecosystem?",
+              "question": "What is the gas cost benefit of executing compute-heavy algorithms in Stylus Rust compared to EVM bytecode?",
               "options": [
-                "An integrated CLI and developer toolkit for creating, compiling, deploying, and testing ink! Wasm smart contracts.",
-                "A DEX trading bot.",
-                "A wallet extension for Chrome.",
-                "A Discord community bot."
+                "Stylus has identical gas costs to Solidity EVM bytecode.",
+                "Stylus reduces compute costs by 10x\u2013100x and memory costs by up to 500x.",
+                "Stylus charges zero gas fees forever.",
+                "Stylus makes transactions 50% more expensive."
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             },
             {
-              "question": "Which web interface allows developers to inspect extrinsics, upload code, and interact with parachain nodes?",
+              "question": "How do Stylus WASM contracts interoperate with standard EVM Solidity contracts?",
               "options": [
-                "Polkadot.js Apps (polkadot.js.org/apps)",
-                "Remix IDE",
-                "Solscan",
-                "Etherscan"
+                "They require centralized cross-chain bridges.",
+                "They cannot communicate and operate on completely isolated blockchains.",
+                "They require converting Solidity code to JavaScript.",
+                "They share the exact same global state, contract storage layout, and can seamlessly call each other using standard ABI interfaces."
               ],
-              "correct_idx": 0
+              "correct_idx": 3
             },
             {
-              "question": "Which testnets are standard for deploying and testing Substrate and ink! contracts before mainnet?",
+              "question": "What macro in the Stylus SDK declares the public smart contract entrypoint?",
               "options": [
-                "Westend (Relay Chain testnet), Rococo (Parachain testnet), and Paseo testnet.",
-                "Sepolia EVM testnet.",
-                "Solana Devnet.",
-                "Bitcoin Regtest."
+                "#[main_function]",
+                "#[public_contract]",
+                "#[solidity_export]",
+                "#[entrypoint]"
               ],
-              "correct_idx": 0
+              "correct_idx": 3
             }
           ],
           "exercise": {
-            "instruction": "Write a Rust & ink! code snippet for Module 2. The code must contain the keywords 'cargoContract' and 'ink'.",
-            "template": "// Polkadot Module 2: Substrate & ink! Toolchain: cargo-contract & Swanky Suite\n// Language: Rust & ink!\n// Write implementation below:\n",
+            "instruction": "Write a Solidity / Rust code snippet for Module 2. The code must contain the keywords 'StylusSDK' and 'cargo-stylus'.",
+            "template": "// Arbitrum Module 2: Arbitrum Stylus SDK & Rust Smart Contract WASM Setup\n// Language: Solidity / Rust\n// Write implementation below:\n",
             "required_keywords": [
-              "cargoContract",
-              "ink"
+              "StylusSDK",
+              "cargo-stylus"
             ]
           }
         }
@@ -3629,84 +6416,84 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
     },
     {
       "level_id": 3,
-      "title": "Level 3: ink! Smart Contracts: Messages, Storage & Events",
+      "title": "Level 3: Stylus Rust Smart Contracts: Memory, Storage & Host I/O",
       "total_lessons": 1,
       "lessons": [
         {
-          "id": "polkadot-3",
+          "id": "arbitrum-3",
           "level_id": 3,
-          "title": "Module 3: ink! Smart Contracts: Messages, Storage & Events",
+          "title": "Module 3: Stylus Rust Smart Contracts: Memory, Storage & Host I/O",
           "duration": "21 mins",
           "xp": 250,
-          "content": "# Module 3: ink! Smart Contracts: Messages, Storage & Events\n### Polkadot Ecosystem Track | Developer Academy\n\nWrite idiomatic Rust ink! contracts: #[ink(storage)], ink::storage::Mapping, payable messages, and custom error types.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polkadot.\n2. **Toolchain Proficiency**: Master cargo-contract, Substrate & Swanky for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Rust & ink! code on Wasm & pallet-contracts adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Westend / Rococo / Substrate Node** and verify artifacts on **Subscan / Polkadot.js Apps**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/paritytech/polkadot-sdk](https://github.com/paritytech/polkadot-sdk)\n- **Ecosystem Starter Templates**: [https://github.com/use-ink/ink](https://github.com/use-ink/ink)\n- **Block Explorer & State Verifier**: **Subscan / Polkadot.js Apps**\n- **Native Testnet Environment**: **Westend / Rococo / Substrate Node**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "content": "# Module 3: Stylus Rust Smart Contracts: Memory, Storage & Host I/O\n### Arbitrum Ecosystem Track | Developer Academy\n\nImplement production Stylus Rust contracts: managing StorageType, StorageU256, StorageVec, reentrancy guards, event emission with evm::log, and custom Solidity ABI export.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Arbitrum.\n2. **Toolchain Proficiency**: Master Stylus SDK & Hardhat/Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity / Rust code on EVM (Nitro) + WASM (Stylus) adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Arbitrum Sepolia** and verify artifacts on **Arbiscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/OffchainLabs/nitro](https://github.com/OffchainLabs/nitro)\n- **Ecosystem Starter Templates**: [https://github.com/OffchainLabs/stylus-sdk-rs](https://github.com/OffchainLabs/stylus-sdk-rs)\n- **Block Explorer & State Verifier**: **Arbiscan**\n- **Native Testnet Environment**: **Arbitrum Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
           "quiz": [
             {
-              "question": "What is ink! in the Polkadot / Substrate ecosystem?",
+              "question": "How does the Stylus Rust SDK handle contract storage without garbage collection?",
               "options": [
-                "An embedded domain-specific language (eDSL) based on Rust that compiles smart contracts to WebAssembly for `pallet-contracts`.",
-                "A visual drag-and-drop programming language.",
-                "A private sidechain.",
-                "A graphic design tool."
+                "By writing to a centralized MongoDB database.",
+                "Using typed storage wrappers like StorageU256 and StorageMap that read and write directly to EVM 32-byte storage slots.",
+                "By storing all data in browser cookies.",
+                "By storing everything in temporary memory RAM."
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             },
             {
-              "question": "Which attribute macro marks the root persistent storage struct in an ink! contract?",
+              "question": "How do you emit EVM-compatible events from a Stylus Rust smart contract?",
               "options": [
-                "#[ink(storage)]",
-                "#[storage]",
-                "#[state]",
-                "#[derive(Accounts)]"
+                "By calling `console.log()` in Rust.",
+                "By sending HTTP POST requests to an external server.",
+                "By writing to standard Linux stdout files.",
+                "Using `stylus_sdk::evm::log` or the `#[stylus::event]` macro."
               ],
-              "correct_idx": 0
+              "correct_idx": 3
             },
             {
-              "question": "Which storage data structure provides gas-efficient key-value mappings in ink! 4/5?",
+              "question": "What is the purpose of `cargo stylus export-abi`?",
               "options": [
-                "ink::storage::Mapping<K, V>",
-                "std::collections::HashMap<K, V>",
-                "Vec<K, V>",
-                "Array<K, V>"
+                "It translates Rust code into Python.",
+                "It automatically generates a Solidity ABI and interface definitions from your Rust contract functions.",
+                "It compiles the contract into an APK file.",
+                "It exports private keys to a text file."
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             },
             {
-              "question": "What is the difference between `#[ink(constructor)]` and `#[ink(message)]` in ink!?",
+              "question": "Why does Stylus use `#[cfg_attr(not(feature = \"export-abi\"), no_main)]` in Rust contract crates?",
               "options": [
-                "`constructor` initializes contract state at instantiation, while `message` defines callable external methods.",
-                "`constructor` executes on every transaction.",
-                "`message` only runs during compilation.",
-                "Both macros are identical."
+                "To disable compilation errors.",
+                "To export ABI metadata during interface extraction while targeting bare WASM compilation for deployment.",
+                "To permit unrestricted recursion.",
+                "To encrypt the source code."
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             },
             {
-              "question": "How are value-receiving functions marked in ink! smart contracts?",
+              "question": "How does Stylus prevent out-of-bounds memory allocation attacks in WASM?",
               "options": [
-                "#[ink(message, payable)]",
-                "#[payable]",
-                "#[receive_tokens]",
-                "#[msg_value]"
+                "By disabling dynamic memory allocations entirely.",
+                "By running contracts in an unmetered sandbox.",
+                "By enforcing strict WebAssembly page limits and charging gas for WASM memory expansion.",
+                "By checking user IP addresses."
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             },
             {
-              "question": "What return type is recommended for fallible ink! messages to return clean error diagnostics to callers?",
+              "question": "How is msg.sender and msg.value accessed inside a Stylus Rust method?",
               "options": [
-                "Result<T, Error> with custom enum error variants.",
-                "Boolean true/false only.",
-                "Null pointers.",
-                "Void with panic!()."
+                "By querying the local operating system user.",
+                "By reading environment variables from `.env`.",
+                "By passing parameters manually in function arguments.",
+                "Using `stylus_sdk::msg::sender()` and `stylus_sdk::msg::value()`."
               ],
-              "correct_idx": 0
+              "correct_idx": 3
             }
           ],
           "exercise": {
-            "instruction": "Write a Rust & ink! code snippet for Module 3. The code must contain the keywords 'inkContract' and 'storage'.",
-            "template": "// Polkadot Module 3: ink! Smart Contracts: Messages, Storage & Events\n// Language: Rust & ink!\n// Write implementation below:\n",
+            "instruction": "Write a Solidity / Rust code snippet for Module 3. The code must contain the keywords 'StorageU256' and 'StylusHost'.",
+            "template": "// Arbitrum Module 3: Stylus Rust Smart Contracts: Memory, Storage & Host I/O\n// Language: Solidity / Rust\n// Write implementation below:\n",
             "required_keywords": [
-              "inkContract",
-              "storage"
+              "StorageU256",
+              "StylusHost"
             ]
           }
         }
@@ -3714,84 +6501,84 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
     },
     {
       "level_id": 4,
-      "title": "Level 4: Full-Stack Polkadot DApps & Polkadot.js API Integration",
+      "title": "Level 4: Full-Stack Arbitrum DApps & Arbiscan Contract Verification",
       "total_lessons": 1,
       "lessons": [
         {
-          "id": "polkadot-4",
+          "id": "arbitrum-4",
           "level_id": 4,
-          "title": "Module 4: Full-Stack Polkadot DApps & Polkadot.js API Integration",
+          "title": "Module 4: Full-Stack Arbitrum DApps & Arbiscan Contract Verification",
           "duration": "24 mins",
           "xp": 300,
-          "content": "# Module 4: Full-Stack Polkadot DApps & Polkadot.js API Integration\n### Polkadot Ecosystem Track | Developer Academy\n\nBuild responsive Web3 frontends with @polkadot/api, @polkadot/api-contract, SubWallet/Talisman, and Weight V2 gas estimation.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polkadot.\n2. **Toolchain Proficiency**: Master cargo-contract, Substrate & Swanky for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Rust & ink! code on Wasm & pallet-contracts adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Westend / Rococo / Substrate Node** and verify artifacts on **Subscan / Polkadot.js Apps**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/paritytech/polkadot-sdk](https://github.com/paritytech/polkadot-sdk)\n- **Ecosystem Starter Templates**: [https://github.com/use-ink/ink](https://github.com/use-ink/ink)\n- **Block Explorer & State Verifier**: **Subscan / Polkadot.js Apps**\n- **Native Testnet Environment**: **Westend / Rococo / Substrate Node**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "content": "# Module 4: Full-Stack Arbitrum DApps & Arbiscan Contract Verification\n### Arbitrum Ecosystem Track | Developer Academy\n\nBuild reactive frontends connecting to Arbitrum Sepolia (Chain ID 421614), integrate Viem/Wagmi with Arbitrum RPC nodes, and verify multi-contract deployments on Arbiscan.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Arbitrum.\n2. **Toolchain Proficiency**: Master Stylus SDK & Hardhat/Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity / Rust code on EVM (Nitro) + WASM (Stylus) adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Arbitrum Sepolia** and verify artifacts on **Arbiscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/OffchainLabs/nitro](https://github.com/OffchainLabs/nitro)\n- **Ecosystem Starter Templates**: [https://github.com/OffchainLabs/stylus-sdk-rs](https://github.com/OffchainLabs/stylus-sdk-rs)\n- **Block Explorer & State Verifier**: **Arbiscan**\n- **Native Testnet Environment**: **Arbitrum Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
           "quiz": [
             {
-              "question": "Which JavaScript/TypeScript API libraries connect frontends to Polkadot parachains and ink! contracts?",
+              "question": "What is the Chain ID for the Arbitrum Sepolia testnet?",
               "options": [
-                "@polkadot/api and @polkadot/api-contract",
-                "ethers.js v6",
-                "web3.py",
-                "starknet.js"
+                "11155111",
+                "1",
+                "421614",
+                "8453"
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             },
             {
-              "question": "What are the two components of Weight V2 in Substrate gas metering?",
+              "question": "Which block explorer is the primary explorer for Arbitrum One and Arbitrum Sepolia?",
               "options": [
-                "`ref_time` (CPU execution time in picoseconds) and `proof_size` (storage proof size in bytes).",
-                "Gas price and gas limit.",
-                "Memory and disk space only.",
-                "Network latency and ping."
+                "Voyager",
+                "AptosScan",
+                "Solscan",
+                "Arbiscan"
               ],
-              "correct_idx": 0
+              "correct_idx": 3
             },
             {
-              "question": "Which multi-chain browser wallets provide native support for Polkadot, Kusama, and ink! parachains?",
+              "question": "How does a frontend connect to Arbitrum Sepolia using Wagmi/Viem?",
               "options": [
-                "SubWallet, Talisman, and Polkadot.js extension",
-                "MetaMask only",
-                "Phantom only",
-                "Coinbase Wallet only"
+                "By writing raw TCP socket handlers in WebSockets.",
+                "By manually rewriting browser network headers.",
+                "By configuring `arbitrumSepolia` from `viem/chains` in the Wagmi client configuration.",
+                "By connecting directly via SSH."
               ],
-              "correct_idx": 0
+              "correct_idx": 2
             },
             {
-              "question": "How do developers instantiate a typed contract instance using @polkadot/api-contract?",
+              "question": "What step is required to activate a Stylus Rust contract on-chain after deploying the WASM code?",
               "options": [
-                "const contract = new ContractPromise(api, metadataAbi, contractAddress);",
-                "const contract = new Web3Contract(abi);",
-                "const contract = loadContract();",
-                "const contract = api.get();"
+                "Restarting the Arbitrum validator network.",
+                "Submitting a contract activation transaction that compiles the WASM bytecode to native machine code in ArbOS.",
+                "Signing an agreement with the Arbitrum Foundation.",
+                "Paying an annual license subscription in Bitcoin."
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             },
             {
-              "question": "What event callback confirms that a Substrate transaction has achieved deterministic finality?",
+              "question": "How do you query L1-to-L2 gas fees and base fees on Arbitrum?",
               "options": [
-                "`status.isFinalized` in the extrinsic subscription stream.",
-                "`status.isInBlock` only.",
-                "`status.isBroadcast` only.",
-                "`window.onload`."
+                "By checking centralized exchange spot prices.",
+                "By calling Google Maps API.",
+                "By estimating randomly in the frontend.",
+                "By calling the ArbSys precompile at address `0x0000000000000000000000000000000000000064`."
               ],
-              "correct_idx": 0
+              "correct_idx": 3
             },
             {
-              "question": "How does a frontend DApp estimate gas/weight before executing an ink! state-modifying message?",
+              "question": "What API enables programmatic source code verification on Arbiscan?",
               "options": [
-                "By performing a dry-run via `contract.query.<method>()` to obtain the predicted gasRequired and storageDeposit.",
-                "By asking the user to type a random number.",
-                "By guessing 100,000 gas.",
-                "By submitting an unmetered transaction."
+                "The GitHub OAuth API.",
+                "The Arbiscan API using Foundry `forge verify-contract` or Hardhat verify plugin.",
+                "A manual paper form submitted via postal mail.",
+                "The Twitter verification badge API."
               ],
-              "correct_idx": 0
+              "correct_idx": 1
             }
           ],
           "exercise": {
-            "instruction": "Write a Rust & ink! code snippet for Module 4. The code must contain the keywords 'PolkadotAPI' and 'SubWallet'.",
-            "template": "// Polkadot Module 4: Full-Stack Polkadot DApps & Polkadot.js API Integration\n// Language: Rust & ink!\n// Write implementation below:\n",
+            "instruction": "Write a Solidity / Rust code snippet for Module 4. The code must contain the keywords 'Arbiscan' and 'ArbitrumSepolia'.",
+            "template": "// Arbitrum Module 4: Full-Stack Arbitrum DApps & Arbiscan Contract Verification\n// Language: Solidity / Rust\n// Write implementation below:\n",
             "required_keywords": [
-              "PolkadotAPI",
-              "SubWallet"
+              "Arbiscan",
+              "ArbitrumSepolia"
             ]
           }
         }
@@ -3799,83 +6586,1799 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
     },
     {
       "level_id": 5,
-      "title": "Level 5: Polkadot / Substrate Deployment Challenge & Verification",
+      "title": "Level 5: Arbitrum Sepolia Deployment Challenge & Stylus WASM Verification",
       "total_lessons": 1,
       "lessons": [
         {
-          "id": "polkadot-5",
+          "id": "arbitrum-5",
           "level_id": 5,
-          "title": "Module 5: Polkadot / Substrate Deployment Challenge & Verification",
+          "title": "Module 5: Arbitrum Sepolia Deployment Challenge & Stylus WASM Verification",
           "duration": "27 mins",
           "xp": 350,
-          "content": "# Module 5: Polkadot / Substrate Deployment Challenge & Verification\n### Polkadot Ecosystem Track | Developer Academy\n\nHands-on Deployment Challenge: Compile your ink! contract to Wasm, instantiate on Polkadot testnet / Substrate Contracts Node, and verify on Subscan.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polkadot.\n2. **Toolchain Proficiency**: Master cargo-contract, Substrate & Swanky for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Rust & ink! code on Wasm & pallet-contracts adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Westend / Rococo / Substrate Node** and verify artifacts on **Subscan / Polkadot.js Apps**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/paritytech/polkadot-sdk](https://github.com/paritytech/polkadot-sdk)\n- **Ecosystem Starter Templates**: [https://github.com/use-ink/ink](https://github.com/use-ink/ink)\n- **Block Explorer & State Verifier**: **Subscan / Polkadot.js Apps**\n- **Native Testnet Environment**: **Westend / Rococo / Substrate Node**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "content": "# Module 5: Arbitrum Sepolia Deployment Challenge & Stylus WASM Verification\n### Arbitrum Ecosystem Track | Developer Academy\n\nHands-on Deployment Challenge: Compile your Arbitrum smart contracts (Solidity or Stylus Rust), deploy to Arbitrum Sepolia testnet, verify on Arbiscan, and complete institutional certification.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Arbitrum.\n2. **Toolchain Proficiency**: Master Stylus SDK & Hardhat/Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity / Rust code on EVM (Nitro) + WASM (Stylus) adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Arbitrum Sepolia** and verify artifacts on **Arbiscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/OffchainLabs/nitro](https://github.com/OffchainLabs/nitro)\n- **Ecosystem Starter Templates**: [https://github.com/OffchainLabs/stylus-sdk-rs](https://github.com/OffchainLabs/stylus-sdk-rs)\n- **Block Explorer & State Verifier**: **Arbiscan**\n- **Native Testnet Environment**: **Arbitrum Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
           "quiz": [
             {
-              "question": "Which command compiles an ink! contract into optimized release WebAssembly bytecode?",
+              "question": "Which command deploys and activates a Stylus Rust smart contract to Arbitrum Sepolia?",
               "options": [
-                "cargo contract build --release",
+                "cargo stylus deploy --private-key=<KEY> --endpoint=<RPC_URL>",
+                "docker run arbitrum-node",
+                "npm publish --arbitrum",
+                "git push testnet main"
+              ],
+              "correct_idx": 0
+            },
+            {
+              "question": "Where can grant reviewers and employers inspect your verified Arbitrum Sepolia smart contract deployment?",
+              "options": [
+                "On the Arbiscan Sepolia block explorer at `https://sepolia.arbiscan.io/address/<CONTRACT_ADDRESS>`.",
+                "In a local text file.",
+                "On GitHub issues only.",
+                "In private browser cookies."
+              ],
+              "correct_idx": 0
+            },
+            {
+              "question": "What verified proof is generated upon completing the Arbitrum Developer Academy challenge?",
+              "options": [
+                "An empty git repository.",
+                "A printed certificate sent in the mail.",
+                "A local terminal screenshot.",
+                "An on-chain transaction hash and certified digital credential verified by academy telemetry."
+              ],
+              "correct_idx": 3
+            },
+            {
+              "question": "Why do ecosystem foundations like the Arbitrum Foundation value verified testnet contract deployments?",
+              "options": [
+                "They replace developer technical interviews.",
+                "They prove practical engineering competence in building scalable Layer-2 and Stylus WASM decentralized applications.",
+                "They guarantee instant mainnet token distributions.",
+                "They eliminate the need for open-source code licenses."
+              ],
+              "correct_idx": 1
+            },
+            {
+              "question": "What gas optimization best practice applies when deploying to Arbitrum Nitro?",
+              "options": [
+                "Adding random comments in contract headers.",
+                "Writing code without any functions.",
+                "Setting transaction gas limit to the maximum integer value.",
+                "Using standard Solidity 0.8.20+ with Shanghai/Cancun EVM targets and optimizing storage slot packing."
+              ],
+              "correct_idx": 3
+            },
+            {
+              "question": "How does completing the Arbitrum curriculum prepare developers for Arbitrum Foundation grant funding?",
+              "options": [
+                "It provides automated bank loans.",
+                "It guarantees full-time governance seats.",
+                "It deletes all smart contract audits.",
+                "It satisfies the required technical milestones, Blueprint compliance, and on-chain telemetry criteria."
+              ],
+              "correct_idx": 3
+            }
+          ],
+          "exercise": {
+            "instruction": "Complete the Arbitrum Testnet Deployment Challenge! Write a deployment configuration and verification snippet containing 'arbitrum', 'deploy', 'testnet', and 'verify'.",
+            "template": "// \u2500\u2500\u2500 Arbitrum Testnet Deployment & Verification \u2500\u2500\u2500\n// Target: Arbitrum Sepolia\n// Network Explorer: Arbiscan\n\n// Complete deployment declaration below:\n",
+            "required_keywords": [
+              "arbitrum",
+              "deploy",
+              "testnet",
+              "verify"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "base": [
+    {
+      "level_id": 1,
+      "title": "Level 1: Base Architecture, OP Stack Integration & Coinbase Ecosystem",
+      "total_lessons": 1,
+      "lessons": [
+        {
+          "id": "base-1",
+          "level_id": 1,
+          "title": "Module 1: Base Architecture, OP Stack Integration & Coinbase Ecosystem",
+          "duration": "15 mins",
+          "xp": 150,
+          "content": "# Module 1: Base Architecture, OP Stack Integration & Coinbase Ecosystem\n### Base Ecosystem Track | Developer Academy\n\nExplore Base Layer-2 architecture: OP Stack rollup mechanics, Superchain interoperability, sequencer revenue sharing, and Coinbase developer ecosystem integration.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Base.\n2. **Toolchain Proficiency**: Master Coinbase Smart Wallet & Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on OP Stack EVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Base Sepolia** and verify artifacts on **BaseScan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/base-org](https://github.com/base-org)\n- **Ecosystem Starter Templates**: [https://github.com/coinbase/smart-wallet](https://github.com/coinbase/smart-wallet)\n- **Block Explorer & State Verifier**: **BaseScan**\n- **Native Testnet Environment**: **Base Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "quiz": [
+            {
+              "question": "What framework powers the Base Layer-2 blockchain architecture?",
+              "options": [
+                "Solana Sealevel BPF runtime.",
+                "Bitcoin Lightning Network.",
+                "A proprietary closed-source database engine.",
+                "The open-source MIT-licensed OP Stack (Optimism Collective Superchain)."
+              ],
+              "correct_idx": 3
+            },
+            {
+              "question": "What is the primary mission of the Base network in the Web3 ecosystem?",
+              "options": [
+                "To restrict developer smart contract creation.",
+                "To bring the next billion users on-chain with sub-cent gas fees, developer-friendly UX, and deep Coinbase product integration.",
+                "To disable fiat onramps and offramps.",
+                "To replace all Layer-1 blockchains with a centralized company server."
+              ],
+              "correct_idx": 1
+            },
+            {
+              "question": "How does Base achieve low transaction fees while maintaining Ethereum L1 security?",
+              "options": [
+                "By operating without cryptographic signatures.",
+                "By batching transactions off-chain, compressing state updates, and posting EIP-4844 blobs to Ethereum Layer-1.",
+                "By deleting transaction history every week.",
+                "By running validators on residential laptops only."
+              ],
+              "correct_idx": 1
+            },
+            {
+              "question": "What is the Superchain vision shared by Base and Optimism?",
+              "options": [
+                "A unified network of interconnected OP Stack chains sharing security, communication (interoperability), and an open-source development stack.",
+                "A single giant monopolistic server.",
+                "A private corporate intranet.",
+                "A bridge that only transfers fiat currencies."
+              ],
+              "correct_idx": 0
+            },
+            {
+              "question": "What role does EIP-4844 (Proto-Danksharding) play in Base's transaction cost reduction?",
+              "options": [
+                "It increases block confirmation times.",
+                "It prevents smart contracts from using storage.",
+                "It introduces ephemeral 'data blobs' on Ethereum L1 that drastically lower L2 rollup data posting costs by over 90%.",
+                "It removes miner tips completely."
+              ],
+              "correct_idx": 2
+            },
+            {
+              "question": "How does Base support developer grants and builder retro-funding?",
+              "options": [
+                "By issuing corporate stock options.",
+                "By charging upfront developer registration fees.",
+                "Through Base Builder Grants, Optimism RetroPGF allocations, and hackathon bounties tracking verified contract activity.",
+                "By selling user data to advertisers."
+              ],
+              "correct_idx": 2
+            }
+          ],
+          "exercise": {
+            "instruction": "Write a Solidity code snippet for Module 1. The code must contain the keywords 'BaseOPStack' and 'Superchain'.",
+            "template": "// Base Module 1: Base Architecture, OP Stack Integration & Coinbase Ecosystem\n// Language: Solidity\n// Write implementation below:\n",
+            "required_keywords": [
+              "BaseOPStack",
+              "Superchain"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "level_id": 2,
+      "title": "Level 2: Base Toolchain, Base Sepolia Setup & Foundry Development",
+      "total_lessons": 1,
+      "lessons": [
+        {
+          "id": "base-2",
+          "level_id": 2,
+          "title": "Module 2: Base Toolchain, Base Sepolia Setup & Foundry Development",
+          "duration": "18 mins",
+          "xp": 200,
+          "content": "# Module 2: Base Toolchain, Base Sepolia Setup & Foundry Development\n### Base Ecosystem Track | Developer Academy\n\nConfigure Foundry and Hardhat for Base Sepolia (Chain ID 84532), manage RPC connections, testnet faucets, and build optimized Solidity contracts.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Base.\n2. **Toolchain Proficiency**: Master Coinbase Smart Wallet & Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on OP Stack EVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Base Sepolia** and verify artifacts on **BaseScan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/base-org](https://github.com/base-org)\n- **Ecosystem Starter Templates**: [https://github.com/coinbase/smart-wallet](https://github.com/coinbase/smart-wallet)\n- **Block Explorer & State Verifier**: **BaseScan**\n- **Native Testnet Environment**: **Base Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "quiz": [
+            {
+              "question": "What is the Chain ID for the Base Sepolia testnet?",
+              "options": [
+                "84532",
+                "421614",
+                "1",
+                "8453"
+              ],
+              "correct_idx": 0
+            },
+            {
+              "question": "Which command compiles and runs Solidity test suites using Foundry for Base?",
+              "options": [
+                "npm start",
+                "forge test -vvv",
                 "cargo build",
-                "npm run build",
-                "solc --release"
+                "python test.py"
+              ],
+              "correct_idx": 1
+            },
+            {
+              "question": "How do developers acquire Base Sepolia testnet ETH for gas?",
+              "options": [
+                "By emailing Coinbase support.",
+                "Using the official Coinbase Developer Platform Faucet or Superchain Faucet.",
+                "By purchasing tokens on centralized exchanges.",
+                "By mining proof-of-work blocks on Base."
+              ],
+              "correct_idx": 1
+            },
+            {
+              "question": "What RPC URL is the standard public endpoint for Base Sepolia?",
+              "options": [
+                "https://sepolia.base.org",
+                "https://eth.llamarpc.com",
+                "http://localhost:8545",
+                "https://mainnet.base.org"
               ],
               "correct_idx": 0
             },
             {
-              "question": "What is the difference between code upload (`upload_code`) and contract instantiation (`instantiate_with_code`) in `pallet-contracts`?",
+              "question": "Why is Foundry preferred by high-velocity Base smart contract developers?",
               "options": [
-                "`upload_code` stores the Wasm bytecode once and returns a CodeHash, allowing multiple contract instances to share the same code cheaply.",
-                "`upload_code` executes all functions immediately.",
-                "`instantiate` deletes the bytecode after deployment.",
-                "There is no difference."
+                "Because it does not support EVM bytecode.",
+                "Because tests and scripts are written directly in pure Solidity with blazing fast native Rust execution and fuzzing.",
+                "Because it only runs on mobile devices.",
+                "Because it requires no knowledge of blockchain."
+              ],
+              "correct_idx": 1
+            },
+            {
+              "question": "What environment variable configuration is required in `foundry.toml` to verify contracts on BaseScan?",
+              "options": [
+                "`network = 'testnet'` only",
+                "`[etherscan] base_sepolia = { key = \"${BASESCAN_API_KEY}\", url = \"https://api-sepolia.basescan.org/api\" }`",
+                "`apiKey = 12345` without quotes",
+                "`disable_verification = true`"
+              ],
+              "correct_idx": 1
+            }
+          ],
+          "exercise": {
+            "instruction": "Write a Solidity code snippet for Module 2. The code must contain the keywords 'BaseSepolia' and 'Foundry'.",
+            "template": "// Base Module 2: Base Toolchain, Base Sepolia Setup & Foundry Development\n// Language: Solidity\n// Write implementation below:\n",
+            "required_keywords": [
+              "BaseSepolia",
+              "Foundry"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "level_id": 3,
+      "title": "Level 3: Smart Contracts on Base: Gas Optimization & Account Abstraction",
+      "total_lessons": 1,
+      "lessons": [
+        {
+          "id": "base-3",
+          "level_id": 3,
+          "title": "Module 3: Smart Contracts on Base: Gas Optimization & Account Abstraction",
+          "duration": "21 mins",
+          "xp": 250,
+          "content": "# Module 3: Smart Contracts on Base: Gas Optimization & Account Abstraction\n### Base Ecosystem Track | Developer Academy\n\nWrite gas-optimized Solidity smart contracts for Base, leverage ERC-4337 Account Abstraction, passkey signers, and Coinbase Smart Wallet integration.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Base.\n2. **Toolchain Proficiency**: Master Coinbase Smart Wallet & Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on OP Stack EVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Base Sepolia** and verify artifacts on **BaseScan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/base-org](https://github.com/base-org)\n- **Ecosystem Starter Templates**: [https://github.com/coinbase/smart-wallet](https://github.com/coinbase/smart-wallet)\n- **Block Explorer & State Verifier**: **BaseScan**\n- **Native Testnet Environment**: **Base Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "quiz": [
+            {
+              "question": "What major UX breakthrough does the Coinbase Smart Wallet bring to Base applications?",
+              "options": [
+                "Passkey-based onboarding allowing users to create on-chain smart wallets in seconds using FaceID/TouchID with zero seed phrases or browser extensions.",
+                "It forces all users to submit government IDs before sending transactions.",
+                "It replaces blockchain transactions with SMS text messages.",
+                "It requires users to write down 24 recovery words on paper."
               ],
               "correct_idx": 0
             },
             {
-              "question": "What is the purpose of the `salt` parameter during ink! contract instantiation?",
+              "question": "How does ERC-4337 Paymaster integration benefit Base users?",
               "options": [
-                "It ensures unique, deterministic contract address generation even when instantiating the same CodeHash multiple times.",
-                "It encrypts the contract bytecode.",
-                "It sets the admin password.",
-                "It calculates validator tips."
+                "It disables token transfers.",
+                "It prevents contracts from emitting events.",
+                "It increases gas costs by 200%.",
+                "Applications can sponsor all transaction gas fees (gasless UX) or let users pay gas in USDC instead of ETH."
+              ],
+              "correct_idx": 3
+            },
+            {
+              "question": "What is OnchainKit provided by the Base ecosystem?",
+              "options": [
+                "A ready-to-use collection of React components and TypeScript utilities for seamless wallet connection, identity, and checkout flows on Base.",
+                "A closed-source proprietary database.",
+                "A physical hardware wallet device.",
+                "A compiler plugin for C++."
               ],
               "correct_idx": 0
             },
             {
-              "question": "Where can developers and Web3 Foundation grant evaluators inspect verified Polkadot/Kusama contract deployments?",
+              "question": "How do developers verify EIP-712 typed data signatures in Base smart contracts?",
               "options": [
-                "Subscan (subscan.io) or Polkadot.js Apps Contract tab.",
-                "Etherscan.",
+                "Using `ECDSA.recover()` with the domain separator and typed hash struct according to EIP-712 standards.",
+                "By checking user IP addresses.",
+                "By comparing string lengths.",
+                "By querying an off-chain REST API."
+              ],
+              "correct_idx": 0
+            },
+            {
+              "question": "What storage layout optimization saves the most gas in Solidity contracts deployed to Base?",
+              "options": [
+                "Packing multiple variables (`uint128`, `uint64`, `address`, `bool`) into single 32-byte storage slots (`SSTORE` efficiency).",
+                "Creating a separate storage slot for every single variable.",
+                "Declaring all variables as strings.",
+                "Avoiding storage entirely."
+              ],
+              "correct_idx": 0
+            },
+            {
+              "question": "Why are UserOperations bundled rather than sent directly as standard EOA transactions in ERC-4337?",
+              "options": [
+                "To bypass blockchain consensus.",
+                "To allow bundlers to batch multiple operations and execute them via the canonical EntryPoint contract in a single atomic transaction.",
+                "To encrypt transactions so validators cannot see them.",
+                "To slow down transaction processing."
+              ],
+              "correct_idx": 1
+            }
+          ],
+          "exercise": {
+            "instruction": "Write a Solidity code snippet for Module 3. The code must contain the keywords 'CoinbaseSmartWallet' and 'AccountAbstraction'.",
+            "template": "// Base Module 3: Smart Contracts on Base: Gas Optimization & Account Abstraction\n// Language: Solidity\n// Write implementation below:\n",
+            "required_keywords": [
+              "CoinbaseSmartWallet",
+              "AccountAbstraction"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "level_id": 4,
+      "title": "Level 4: Full-Stack Base DApps, OnchainKit & Smart Wallet Integration",
+      "total_lessons": 1,
+      "lessons": [
+        {
+          "id": "base-4",
+          "level_id": 4,
+          "title": "Module 4: Full-Stack Base DApps, OnchainKit & Smart Wallet Integration",
+          "duration": "24 mins",
+          "xp": 300,
+          "content": "# Module 4: Full-Stack Base DApps, OnchainKit & Smart Wallet Integration\n### Base Ecosystem Track | Developer Academy\n\nConstruct production React/Next.js applications on Base Sepolia using Wagmi, Viem, OnchainKit components, and BaseScan contract verification.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Base.\n2. **Toolchain Proficiency**: Master Coinbase Smart Wallet & Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on OP Stack EVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Base Sepolia** and verify artifacts on **BaseScan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/base-org](https://github.com/base-org)\n- **Ecosystem Starter Templates**: [https://github.com/coinbase/smart-wallet](https://github.com/coinbase/smart-wallet)\n- **Block Explorer & State Verifier**: **BaseScan**\n- **Native Testnet Environment**: **Base Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "quiz": [
+            {
+              "question": "Which Wagmi chain definition represents Base Sepolia in frontend code?",
+              "options": [
+                "`baseSepolia` from `wagmi/chains` or `viem/chains`.",
+                "`polygon`",
+                "`solanaDevnet`",
+                "`mainnet`"
+              ],
+              "correct_idx": 0
+            },
+            {
+              "question": "What component from OnchainKit provides instant 1-click Passkey login for Base users?",
+              "options": [
+                "`<MetamaskButton>` only.",
+                "`<Wallet>` and `<ConnectWallet>` wrappers from `@coinbase/onchainkit/wallet`.",
+                "`<LoginForm>` from standard HTML.",
+                "`<OAuthButton>` only."
+              ],
+              "correct_idx": 1
+            },
+            {
+              "question": "Which block explorer is dedicated to tracking Base transactions and smart contract bytecode?",
+              "options": [
+                "Subscan.",
                 "Solscan.",
-                "Basescan."
+                "BaseScan (basescan.org / sepolia.basescan.org).",
+                "Voyager."
+              ],
+              "correct_idx": 2
+            },
+            {
+              "question": "How do you verify a Solidity contract on BaseScan using Foundry CLI?",
+              "options": [
+                "`npm verify`",
+                "`forge upload-source --base`",
+                "`forge verify-contract <ADDRESS> <CONTRACT_PATH>:<NAME> --chain-id 84532 --verifier-url https://api-sepolia.basescan.org/api --etherscan-api-key <KEY>`",
+                "`git commit -m 'verified'`"
+              ],
+              "correct_idx": 2
+            },
+            {
+              "question": "What telemetry metric proves active student engagement on Base for grant applications?",
+              "options": [
+                "The color theme of the website.",
+                "The number of lines of README text.",
+                "Verified testnet and mainnet contract deployments, transaction interaction count, and unique active user addresses.",
+                "The number of local git branches."
+              ],
+              "correct_idx": 2
+            },
+            {
+              "question": "What is the average transaction confirmation latency on Base Layer-2?",
+              "options": [
+                "2 hours.",
+                "Under 2 seconds with instant soft-finality from the OP Stack Sequencer.",
+                "15 minutes.",
+                "3 business days."
+              ],
+              "correct_idx": 1
+            }
+          ],
+          "exercise": {
+            "instruction": "Write a Solidity code snippet for Module 4. The code must contain the keywords 'OnchainKit' and 'BaseScan'.",
+            "template": "// Base Module 4: Full-Stack Base DApps, OnchainKit & Smart Wallet Integration\n// Language: Solidity\n// Write implementation below:\n",
+            "required_keywords": [
+              "OnchainKit",
+              "BaseScan"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "level_id": 5,
+      "title": "Level 5: Base Sepolia Deployment Challenge & BaseScan Verification",
+      "total_lessons": 1,
+      "lessons": [
+        {
+          "id": "base-5",
+          "level_id": 5,
+          "title": "Module 5: Base Sepolia Deployment Challenge & BaseScan Verification",
+          "duration": "27 mins",
+          "xp": 350,
+          "content": "# Module 5: Base Sepolia Deployment Challenge & BaseScan Verification\n### Base Ecosystem Track | Developer Academy\n\nHands-on Deployment Challenge: Compile your smart contracts, deploy to Base Sepolia testnet, verify source code on BaseScan, and achieve verified Base Builder status.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Base.\n2. **Toolchain Proficiency**: Master Coinbase Smart Wallet & Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on OP Stack EVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Base Sepolia** and verify artifacts on **BaseScan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/base-org](https://github.com/base-org)\n- **Ecosystem Starter Templates**: [https://github.com/coinbase/smart-wallet](https://github.com/coinbase/smart-wallet)\n- **Block Explorer & State Verifier**: **BaseScan**\n- **Native Testnet Environment**: **Base Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "quiz": [
+            {
+              "question": "What is required to pass the Base Sepolia Testnet Deployment Challenge?",
+              "options": [
+                "A draft text file on your desktop.",
+                "A Figma design prototype only.",
+                "A live deployed smart contract on Base Sepolia with verified source code on BaseScan and emitted contract events.",
+                "An unresolved compiler error."
+              ],
+              "correct_idx": 2
+            },
+            {
+              "question": "Where can grant reviewers view your verified contract on Base Sepolia?",
+              "options": [
+                "On a local offline computer.",
+                "In browser local storage.",
+                "At `https://sepolia.basescan.org/address/<YOUR_CONTRACT_ADDRESS>`.",
+                "In a private Discord message only."
+              ],
+              "correct_idx": 2
+            },
+            {
+              "question": "What digital credential is minted upon completing the Base Track challenge?",
+              "options": [
+                "A physical plastic badge.",
+                "A temporary coupon.",
+                "An email receipt.",
+                "A cryptographically verifiable Developer Academy Certificate recognizing Base and OP Stack competence."
+              ],
+              "correct_idx": 3
+            },
+            {
+              "question": "How does verified contract deployment on Base enhance developer career opportunities?",
+              "options": [
+                "It demonstrates verifiable, on-chain proof of execution capability to Web3 companies and grant foundations.",
+                "It eliminates the need for software licenses.",
+                "It replaces all future code testing requirements.",
+                "It guarantees an immediate executive salary."
               ],
               "correct_idx": 0
             },
             {
-              "question": "What verified artifact proves successful completion of the Polkadot / Substrate Deployment Challenge?",
+              "question": "What security check should always be completed before deploying smart contracts to Base?",
               "options": [
-                "A confirmed Extrinsic Block Hash, deployed Contract Account Address, and verified Wasm metadata on-chain.",
-                "A text file on your computer.",
-                "A printed PDF with no blockchain hash.",
-                "A screenshot of a local folder."
+                "Auditing access controls (Ownable/Roles), checking reentrancy guards, and verifying input validation math.",
+                "Disabling all unit tests.",
+                "Deleting error revert messages.",
+                "Hardcoding private keys into the frontend code."
               ],
               "correct_idx": 0
             },
             {
-              "question": "Why do Web3 Foundation and Decentralized Futures grant committees prioritize live testnet deployments?",
+              "question": "How can developers apply for Base Ecosystem funding following track graduation?",
               "options": [
-                "It provides immutable on-chain proof of working Rust Wasm smart contracts, technical proficiency, and ecosystem impact.",
-                "It automatically guarantees token allocations.",
-                "It eliminates the need for software engineering.",
-                "It waives all future blockchain transactions."
+                "By mailing paper invoices.",
+                "By calling telephone customer support.",
+                "By purchasing third-party marketing ads.",
+                "By submitting their verified contract address and GitHub repository to the Base Grants portal and Optimism RetroPGF."
+              ],
+              "correct_idx": 3
+            }
+          ],
+          "exercise": {
+            "instruction": "Complete the Base Testnet Deployment Challenge! Write a deployment configuration and verification snippet containing 'base', 'deploy', 'testnet', and 'verify'.",
+            "template": "// \u2500\u2500\u2500 Base Testnet Deployment & Verification \u2500\u2500\u2500\n// Target: Base Sepolia\n// Network Explorer: BaseScan\n\n// Complete deployment declaration below:\n",
+            "required_keywords": [
+              "base",
+              "deploy",
+              "testnet",
+              "verify"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "optimism": [
+    {
+      "level_id": 1,
+      "title": "Level 1: Optimism Architecture, Fault Proofs & Superchain Interoperability",
+      "total_lessons": 1,
+      "lessons": [
+        {
+          "id": "optimism-1",
+          "level_id": 1,
+          "title": "Module 1: Optimism Architecture, Fault Proofs & Superchain Interoperability",
+          "duration": "15 mins",
+          "xp": 150,
+          "content": "# Module 1: Optimism Architecture, Fault Proofs & Superchain Interoperability\n### Optimism Ecosystem Track | Developer Academy\n\nMaster Optimism rollup architecture: Cannon fault-proof VM, OP Stack execution clients (op-geth/op-node), and Superchain cross-chain communication.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Optimism.\n2. **Toolchain Proficiency**: Master Foundry & Hardhat for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on OP Stack Superchain EVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **OP Sepolia** and verify artifacts on **OP Etherscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/ethereum-optimism/optimism](https://github.com/ethereum-optimism/optimism)\n- **Ecosystem Starter Templates**: [https://github.com/ethereum-optimism/superchain-registry](https://github.com/ethereum-optimism/superchain-registry)\n- **Block Explorer & State Verifier**: **OP Etherscan**\n- **Native Testnet Environment**: **OP Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "quiz": [
+            {
+              "question": "What is Cannon in the Optimism fault proof architecture?",
+              "options": [
+                "An on-chain MIPS emulator that executes compiled EVM byte-steps on Ethereum L1 to mathematically resolve dispute challenges.",
+                "A physical artillery weapon.",
+                "A database clustering plugin.",
+                "A video compression codec."
+              ],
+              "correct_idx": 0
+            },
+            {
+              "question": "What are the two core software components of an OP Stack rollup node?",
+              "options": [
+                "mysql and postgres.",
+                "nginx and apache.",
+                "react and vite.",
+                "op-node (consensus/derivation client) and op-geth (execution engine client)."
+              ],
+              "correct_idx": 3
+            },
+            {
+              "question": "What is the Optimism Superchain?",
+              "options": [
+                "A horizontally scalable network of OP Stack chains that share security, communication layers, and governance standards.",
+                "A cryptocurrency exchange platform.",
+                "A private consortium for credit card companies.",
+                "A single monolithic blockchain running on 10,000 servers."
+              ],
+              "correct_idx": 0
+            },
+            {
+              "question": "How do OP Stack rollups handle Layer-1 data availability?",
+              "options": [
+                "By deriving state transitions from transaction data batches posted to Ethereum L1 via EIP-4844 data blobs.",
+                "By broadcasting data over FM radio frequencies.",
+                "By storing everything in IPFS exclusively.",
+                "By running daily SQL database backups."
+              ],
+              "correct_idx": 0
+            },
+            {
+              "question": "What is the role of the Optimism Collective governance model?",
+              "options": [
+                "A single centralized board of directors with unilateral control.",
+                "A bicameral governance system (Token House & Citizens' House) driving protocol upgrades and RetroPGF public goods funding.",
+                "A legal court in Switzerland.",
+                "An automated AI bot that controls all funds."
+              ],
+              "correct_idx": 1
+            },
+            {
+              "question": "What is Retroactive Public Goods Funding (RetroPGF)?",
+              "options": [
+                "Giving upfront venture capital loans with high interest.",
+                "Collecting taxes from developers.",
+                "Charging subscription fees to access documentation.",
+                "Rewarding projects and developers after they have delivered verified positive impact to the Optimism and Web3 ecosystem."
+              ],
+              "correct_idx": 3
+            }
+          ],
+          "exercise": {
+            "instruction": "Write a Solidity code snippet for Module 1. The code must contain the keywords 'OptimismOPStack' and 'FaultProofs'.",
+            "template": "// Optimism Module 1: Optimism Architecture, Fault Proofs & Superchain Interoperability\n// Language: Solidity\n// Write implementation below:\n",
+            "required_keywords": [
+              "OptimismOPStack",
+              "FaultProofs"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "level_id": 2,
+      "title": "Level 2: OP Stack Toolchain, Local Devnet & Hardhat/Foundry Environment",
+      "total_lessons": 1,
+      "lessons": [
+        {
+          "id": "optimism-2",
+          "level_id": 2,
+          "title": "Module 2: OP Stack Toolchain, Local Devnet & Hardhat/Foundry Environment",
+          "duration": "18 mins",
+          "xp": 200,
+          "content": "# Module 2: OP Stack Toolchain, Local Devnet & Hardhat/Foundry Environment\n### Optimism Ecosystem Track | Developer Academy\n\nSet up the OP Stack development environment: running local devnets with `op-node`, configuring OP Sepolia (Chain ID 11155420), and building Solidity smart contracts.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Optimism.\n2. **Toolchain Proficiency**: Master Foundry & Hardhat for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on OP Stack Superchain EVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **OP Sepolia** and verify artifacts on **OP Etherscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/ethereum-optimism/optimism](https://github.com/ethereum-optimism/optimism)\n- **Ecosystem Starter Templates**: [https://github.com/ethereum-optimism/superchain-registry](https://github.com/ethereum-optimism/superchain-registry)\n- **Block Explorer & State Verifier**: **OP Etherscan**\n- **Native Testnet Environment**: **OP Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "quiz": [
+            {
+              "question": "What is the Chain ID for the Optimism Sepolia testnet?",
+              "options": [
+                "11155420",
+                "1",
+                "10",
+                "420"
+              ],
+              "correct_idx": 0
+            },
+            {
+              "question": "Which block explorer is the standard verification tool for OP Sepolia?",
+              "options": [
+                "Voyager.",
+                "Arbiscan.",
+                "OP Etherscan (sepolia-optimism.etherscan.io).",
+                "Solscan."
+              ],
+              "correct_idx": 2
+            },
+            {
+              "question": "How do you configure an OP Sepolia network connection in `foundry.toml`?",
+              "options": [
+                "By disabling RPC endpoints.",
+                "By defining `op_sepolia = { url = \"https://sepolia.optimism.io\", chain_id = 11155420 }` under `[rpc_endpoints]`.",
+                "By hardcoding IP addresses in Solidity code.",
+                "By setting `network = 'internet'`."
+              ],
+              "correct_idx": 1
+            },
+            {
+              "question": "What is the L1Block precompile contract on Optimism (address `0x4200000000000000000000000000000000000015`)?",
+              "options": [
+                "A user wallet contract.",
+                "A special system contract that exposes current Ethereum Layer-1 block attributes (number, timestamp, basefee, blobBaseFee) to L2 contracts.",
+                "A DEX liquidity pool.",
+                "A compiler configuration file."
+              ],
+              "correct_idx": 1
+            },
+            {
+              "question": "How do developers acquire OP Sepolia testnet ETH for contract deployment?",
+              "options": [
+                "By transferring from mainnet.",
+                "Via the Superchain Faucet (faucet.circle.com or superchain-faucet.optimism.io) or bridging from Ethereum Sepolia.",
+                "By mining proof-of-work on GPU rigs.",
+                "By paying credit card fees."
+              ],
+              "correct_idx": 1
+            },
+            {
+              "question": "What is the gas fee formula on Optimism Layer-2?",
+              "options": [
+                "Total Fee = Random percentage of transaction value.",
+                "Transactions on Optimism are completely free.",
+                "Total Fee = (Execution Gas * L2 Base Fee) + (L1 Data Fee calculated from compressed transaction size and L1 blob base fee).",
+                "Total Fee = Flat 1 USD per transaction."
+              ],
+              "correct_idx": 2
+            }
+          ],
+          "exercise": {
+            "instruction": "Write a Solidity code snippet for Module 2. The code must contain the keywords 'OPSepolia' and 'SuperchainDev'.",
+            "template": "// Optimism Module 2: OP Stack Toolchain, Local Devnet & Hardhat/Foundry Environment\n// Language: Solidity\n// Write implementation below:\n",
+            "required_keywords": [
+              "OPSepolia",
+              "SuperchainDev"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "level_id": 3,
+      "title": "Level 3: Superchain Smart Contracts: Standard Bridge & Cross-Domain Messaging",
+      "total_lessons": 1,
+      "lessons": [
+        {
+          "id": "optimism-3",
+          "level_id": 3,
+          "title": "Module 3: Superchain Smart Contracts: Standard Bridge & Cross-Domain Messaging",
+          "duration": "21 mins",
+          "xp": 250,
+          "content": "# Module 3: Superchain Smart Contracts: Standard Bridge & Cross-Domain Messaging\n### Optimism Ecosystem Track | Developer Academy\n\nBuild cross-chain decentralized applications using the OP Stack Standard Bridge, CrossDomainMessenger, and multi-chain messaging interfaces.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Optimism.\n2. **Toolchain Proficiency**: Master Foundry & Hardhat for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on OP Stack Superchain EVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **OP Sepolia** and verify artifacts on **OP Etherscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/ethereum-optimism/optimism](https://github.com/ethereum-optimism/optimism)\n- **Ecosystem Starter Templates**: [https://github.com/ethereum-optimism/superchain-registry](https://github.com/ethereum-optimism/superchain-registry)\n- **Block Explorer & State Verifier**: **OP Etherscan**\n- **Native Testnet Environment**: **OP Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "quiz": [
+            {
+              "question": "What contract enables secure cross-domain messaging between Ethereum L1 and Optimism L2?",
+              "options": [
+                "A centralized backend web server.",
+                "A standard WebSocket connection.",
+                "The `L1CrossDomainMessenger` and `L2CrossDomainMessenger` contracts.",
+                "An HTTP REST endpoint."
+              ],
+              "correct_idx": 2
+            },
+            {
+              "question": "What is the `L1StandardBridge` contract on Optimism?",
+              "options": [
+                "A decentralized exchange router.",
+                "A physical suspension bridge in California.",
+                "A frontend React UI library.",
+                "A canonical bridge contract that locks ERC-20 tokens on L1 and mints corresponding `OptimismMintableERC20` representations on L2."
+              ],
+              "correct_idx": 3
+            },
+            {
+              "question": "How do developers verify that an incoming call to an L2 contract was initiated by a specific address on L1?",
+              "options": [
+                "By checking `ICrossDomainMessenger(msg.sender).xDomainMessageSender()` inside the target contract method.",
+                "By querying a centralized Oracle.",
+                "By reading `tx.origin` only.",
+                "By comparing string names."
+              ],
+              "correct_idx": 0
+            },
+            {
+              "question": "What is an `OptimismMintableERC20` token standard?",
+              "options": [
+                "An ERC-20 standard interface allowing the canonical bridge to mint and burn token supplies in sync with L1 collateral deposits and withdrawals.",
+                "An unbacked algorithmic stablecoin.",
+                "A non-transferable soulbound token.",
+                "An NFT metadata standard."
+              ],
+              "correct_idx": 0
+            },
+            {
+              "question": "What is the standard withdrawal challenge period when moving assets from Optimism back to Ethereum L1 via fault proofs?",
+              "options": [
+                "1 year.",
+                "10 seconds.",
+                "7 days (the dispute challenge window).",
+                "Instant with zero challenge window."
+              ],
+              "correct_idx": 2
+            },
+            {
+              "question": "How can fast third-party liquidity bridges provide instant L2-to-L1 withdrawals without waiting 7 days?",
+              "options": [
+                "By bribing miners.",
+                "By deleting the transaction history.",
+                "By providing fronted liquidity on L1 in exchange for a small fee, taking on the 7-day settlement risk themselves.",
+                "By bypassing Ethereum protocol security."
+              ],
+              "correct_idx": 2
+            }
+          ],
+          "exercise": {
+            "instruction": "Write a Solidity code snippet for Module 3. The code must contain the keywords 'StandardBridge' and 'CrossDomainMessenger'.",
+            "template": "// Optimism Module 3: Superchain Smart Contracts: Standard Bridge & Cross-Domain Messaging\n// Language: Solidity\n// Write implementation below:\n",
+            "required_keywords": [
+              "StandardBridge",
+              "CrossDomainMessenger"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "level_id": 4,
+      "title": "Level 4: Full-Stack Optimism DApps & OP Etherscan Verification",
+      "total_lessons": 1,
+      "lessons": [
+        {
+          "id": "optimism-4",
+          "level_id": 4,
+          "title": "Module 4: Full-Stack Optimism DApps & OP Etherscan Verification",
+          "duration": "24 mins",
+          "xp": 300,
+          "content": "# Module 4: Full-Stack Optimism DApps & OP Etherscan Verification\n### Optimism Ecosystem Track | Developer Academy\n\nDevelop responsive full-stack applications with Wagmi, Viem, Next.js, and verify deployed smart contracts on OP Etherscan.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Optimism.\n2. **Toolchain Proficiency**: Master Foundry & Hardhat for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on OP Stack Superchain EVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **OP Sepolia** and verify artifacts on **OP Etherscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/ethereum-optimism/optimism](https://github.com/ethereum-optimism/optimism)\n- **Ecosystem Starter Templates**: [https://github.com/ethereum-optimism/superchain-registry](https://github.com/ethereum-optimism/superchain-registry)\n- **Block Explorer & State Verifier**: **OP Etherscan**\n- **Native Testnet Environment**: **OP Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "quiz": [
+            {
+              "question": "Which Viem chain definition represents Optimism Sepolia in TypeScript frontends?",
+              "options": [
+                "`optimismSepolia` from `viem/chains`.",
+                "`arbitrumOne`",
+                "`solana`",
+                "`mainnet`"
+              ],
+              "correct_idx": 0
+            },
+            {
+              "question": "How do you verify a deployed Solidity contract on OP Etherscan using Foundry CLI?",
+              "options": [
+                "`forge publish --superchain`",
+                "`git push verify main`",
+                "`forge verify-contract <ADDRESS> <PATH>:<NAME> --chain-id 11155420 --verifier-url https://api-sepolia-optimistic.etherscan.io/api --etherscan-api-key <KEY>`",
+                "`npm run verify-optimism`"
+              ],
+              "correct_idx": 2
+            },
+            {
+              "question": "What is the primary benefit of deploying on the Optimism Superchain for multi-chain DApps?",
+              "options": [
+                "Consistent tooling, shared developer standards, zero code refactoring across OP Stack chains (Base, OP, Zora, Mode, Frax).",
+                "Restricted smart contract execution.",
+                "Higher gas costs.",
+                "Incompatibility with standard EVM wallets."
+              ],
+              "correct_idx": 0
+            },
+            {
+              "question": "What precompile contract is used to estimate L1 data fees before broadcasting an Optimism transaction?",
+              "options": [
+                "A local JSON file.",
+                "The `GasPriceOracle` contract at address `0x420000000000000000000000000000000000000F`.",
+                "The Uniswap router.",
+                "The Chainlink price feed."
+              ],
+              "correct_idx": 1
+            },
+            {
+              "question": "How does the OP Stack support future interop and shared sequencing across the Superchain?",
+              "options": [
+                "Through Superchain Interop protocols enabling atomic cross-chain transactions without trust assumptions between OP chains.",
+                "By running all chains on a single central server.",
+                "By disabling independent chain governance.",
+                "By merging all chains into a single giant database."
+              ],
+              "correct_idx": 0
+            },
+            {
+              "question": "Where can developers monitor ecosystem grants, RetroPGF rounds, and Superchain analytics?",
+              "options": [
+                "On the official Optimism Governance Portal (gov.optimism.io) and RetroPGF directories.",
+                "On private Reddit forums.",
+                "On physical bulletin boards.",
+                "In closed Discord groups only."
               ],
               "correct_idx": 0
             }
           ],
           "exercise": {
-            "instruction": "Complete the Polkadot Testnet Deployment Challenge! Write a deployment configuration and verification snippet containing 'polkadot', 'deploy', 'testnet', and 'verify'.",
-            "template": "// \u2500\u2500\u2500 Polkadot Testnet Deployment & Verification \u2500\u2500\u2500\n// Target: Westend / Rococo / Substrate Node\n// Network Explorer: Subscan / Polkadot.js Apps\n\n// Complete deployment declaration below:\n",
+            "instruction": "Write a Solidity code snippet for Module 4. The code must contain the keywords 'OPEtherscan' and 'SuperchainUI'.",
+            "template": "// Optimism Module 4: Full-Stack Optimism DApps & OP Etherscan Verification\n// Language: Solidity\n// Write implementation below:\n",
             "required_keywords": [
-              "polkadot",
+              "OPEtherscan",
+              "SuperchainUI"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "level_id": 5,
+      "title": "Level 5: OP Sepolia Deployment Challenge & Superchain Verification",
+      "total_lessons": 1,
+      "lessons": [
+        {
+          "id": "optimism-5",
+          "level_id": 5,
+          "title": "Module 5: OP Sepolia Deployment Challenge & Superchain Verification",
+          "duration": "27 mins",
+          "xp": 350,
+          "content": "# Module 5: OP Sepolia Deployment Challenge & Superchain Verification\n### Optimism Ecosystem Track | Developer Academy\n\nHands-on Deployment Challenge: Compile your smart contracts, deploy to OP Sepolia testnet, verify on OP Etherscan, and complete Superchain certification.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Optimism.\n2. **Toolchain Proficiency**: Master Foundry & Hardhat for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on OP Stack Superchain EVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **OP Sepolia** and verify artifacts on **OP Etherscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/ethereum-optimism/optimism](https://github.com/ethereum-optimism/optimism)\n- **Ecosystem Starter Templates**: [https://github.com/ethereum-optimism/superchain-registry](https://github.com/ethereum-optimism/superchain-registry)\n- **Block Explorer & State Verifier**: **OP Etherscan**\n- **Native Testnet Environment**: **OP Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "quiz": [
+            {
+              "question": "What is required to complete the Optimism Sepolia Deployment Challenge?",
+              "options": [
+                "An unverified bytecode string on a local machine.",
+                "A testnet faucet transaction only.",
+                "A PowerPoint presentation only.",
+                "A live deployed smart contract on OP Sepolia with verified source code on OP Etherscan and active transaction telemetry."
+              ],
+              "correct_idx": 3
+            },
+            {
+              "question": "Where can grant evaluators and hiring partners inspect your verified OP Sepolia deployment?",
+              "options": [
+                "On a private USB thumb drive.",
+                "On the OP Etherscan Sepolia explorer at `https://sepolia-optimism.etherscan.io/address/<CONTRACT_ADDRESS>`.",
+                "On an unhosted local web server.",
+                "In browser session storage."
+              ],
+              "correct_idx": 1
+            },
+            {
+              "question": "What on-chain milestone does the Developer Academy issue upon completing the Optimism track?",
+              "options": [
+                "A temporary coupon code.",
+                "A text message confirmation.",
+                "A paper receipt in the mail.",
+                "A verifiable cryptographic certificate registered on-chain validating Superchain & OP Stack technical mastery."
+              ],
+              "correct_idx": 3
+            },
+            {
+              "question": "Why do ecosystem grant programs value interactive testnet deployments over theoretical coursework?",
+              "options": [
+                "Because they replace open-source licenses.",
+                "Because they eliminate all future software maintenance.",
+                "Because live deployments prove real-world engineering execution, smart contract safety, and end-to-end tooling competence.",
+                "Because testnet deployments generate mining revenue for funders."
+              ],
+              "correct_idx": 2
+            },
+            {
+              "question": "What security pattern should always be implemented in smart contracts handling user funds on Layer-2?",
+              "options": [
+                "Allowing anyone to call withdrawal functions.",
+                "Storing private keys in smart contract state.",
+                "Checks-Effects-Interactions, reentrancy guards, strict access control, and safe token transfer wrappers (`SafeERC20`).",
+                "Disabling all error messages."
+              ],
+              "correct_idx": 2
+            },
+            {
+              "question": "How can graduating developers leverage their Optimism track completion for RetroPGF and Superchain Grants?",
+              "options": [
+                "By purchasing social media followers.",
+                "By linking their verified academy credential, GitHub repository, and deployed contract in their official grant application.",
+                "By sending automated spam emails.",
+                "By creating multiple fake GitHub accounts."
+              ],
+              "correct_idx": 1
+            }
+          ],
+          "exercise": {
+            "instruction": "Complete the Optimism Testnet Deployment Challenge! Write a deployment configuration and verification snippet containing 'optimism', 'deploy', 'testnet', and 'verify'.",
+            "template": "// \u2500\u2500\u2500 Optimism Testnet Deployment & Verification \u2500\u2500\u2500\n// Target: OP Sepolia\n// Network Explorer: OP Etherscan\n\n// Complete deployment declaration below:\n",
+            "required_keywords": [
+              "optimism",
+              "deploy",
+              "testnet",
+              "verify"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "polygon": [
+    {
+      "level_id": 1,
+      "title": "Level 1: Polygon Architecture: PoS Heimdall/Bor & zkEVM Validium Topologies",
+      "total_lessons": 1,
+      "lessons": [
+        {
+          "id": "polygon-1",
+          "level_id": 1,
+          "title": "Module 1: Polygon Architecture: PoS Heimdall/Bor & zkEVM Validium Topologies",
+          "duration": "15 mins",
+          "xp": 150,
+          "content": "# Module 1: Polygon Architecture: PoS Heimdall/Bor & zkEVM Validium Topologies\n### Polygon Ecosystem Track | Developer Academy\n\nExplore Polygon's dual architecture: the Heimdall (Tendermint validator) / Bor (EVM block producer) PoS network and Polygon zkEVM ZK-Rollup scaling technology.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polygon.\n2. **Toolchain Proficiency**: Master Foundry & Hardhat for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on Polygon PoS & zkEVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Polygon Amoy Testnet** and verify artifacts on **PolygonScan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/maticnetwork](https://github.com/maticnetwork)\n- **Ecosystem Starter Templates**: [https://github.com/0xPolygon/polygon-docs](https://github.com/0xPolygon/polygon-docs)\n- **Block Explorer & State Verifier**: **PolygonScan**\n- **Native Testnet Environment**: **Polygon Amoy Testnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "quiz": [
+            {
+              "question": "What are the two core layers of the Polygon PoS network architecture?",
+              "options": [
+                "Master node and Slave node.",
+                "Frontend React and Backend Python.",
+                "MySQL and Redis.",
+                "Heimdall (Proof-of-Stake validator layer based on Tendermint) and Bor (EVM-compatible block production layer based on Geth)."
+              ],
+              "correct_idx": 3
+            },
+            {
+              "question": "What is Polygon zkEVM?",
+              "options": [
+                "A centralized database running in AWS.",
+                "A browser extension for Chrome.",
+                "A proof-of-work mining algorithm for GPUs.",
+                "A Type-2 ZK-Rollup that executes standard Ethereum bytecode with zero changes and generates zero-knowledge validity proofs for L1 verification."
+              ],
+              "correct_idx": 3
+            },
+            {
+              "question": "What native token powers gas fees and staking on Polygon (formerly MATIC)?",
+              "options": [
+                "SOL",
+                "POL (Polygon Ecosystem Token).",
+                "DOGE",
+                "BTC"
+              ],
+              "correct_idx": 1
+            },
+            {
+              "question": "How does Polygon PoS maintain checkpoint security with Ethereum Layer-1?",
+              "options": [
+                "Heimdall validators periodically aggregate blocks and post signed Merkle root checkpoints to Ethereum L1 smart contracts.",
+                "By using paper receipts.",
+                "By running daily database dumps to Amazon S3.",
+                "By emailing block summaries to Ethereum miners."
+              ],
+              "correct_idx": 0
+            },
+            {
+              "question": "What is the AggLayer (Aggregation Layer) in the Polygon 2.0 vision?",
+              "options": [
+                "A CSS style preprocessor.",
+                "A cross-chain settlement protocol connecting multiple ZK-powered chains for near-instant cross-chain transactions and shared liquidity.",
+                "A database aggregation pipeline in MongoDB.",
+                "A centralized token exchange."
+              ],
+              "correct_idx": 1
+            },
+            {
+              "question": "Why do enterprise and gaming applications frequently choose Polygon for deployment?",
+              "options": [
+                "Because of sub-cent transaction fees, high throughput (thousands of TPS), and instant finality combined with full EVM compatibility.",
+                "Because Polygon only works on Android.",
+                "Because Polygon charges monthly user fees.",
+                "Because Polygon does not support smart contracts."
+              ],
+              "correct_idx": 0
+            }
+          ],
+          "exercise": {
+            "instruction": "Write a Solidity code snippet for Module 1. The code must contain the keywords 'PolygonPoS' and 'zkEVM'.",
+            "template": "// Polygon Module 1: Polygon Architecture: PoS Heimdall/Bor & zkEVM Validium Topologies\n// Language: Solidity\n// Write implementation below:\n",
+            "required_keywords": [
+              "PolygonPoS",
+              "zkEVM"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "level_id": 2,
+      "title": "Level 2: Polygon Toolchain, Amoy Testnet Faucets & Foundry Setup",
+      "total_lessons": 1,
+      "lessons": [
+        {
+          "id": "polygon-2",
+          "level_id": 2,
+          "title": "Module 2: Polygon Toolchain, Amoy Testnet Faucets & Foundry Setup",
+          "duration": "18 mins",
+          "xp": 200,
+          "content": "# Module 2: Polygon Toolchain, Amoy Testnet Faucets & Foundry Setup\n### Polygon Ecosystem Track | Developer Academy\n\nConfigure developer environments for Polygon Amoy Testnet (Chain ID 80002), manage POL faucets, RPC endpoints, and deploy Solidity smart contracts.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polygon.\n2. **Toolchain Proficiency**: Master Foundry & Hardhat for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on Polygon PoS & zkEVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Polygon Amoy Testnet** and verify artifacts on **PolygonScan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/maticnetwork](https://github.com/maticnetwork)\n- **Ecosystem Starter Templates**: [https://github.com/0xPolygon/polygon-docs](https://github.com/0xPolygon/polygon-docs)\n- **Block Explorer & State Verifier**: **PolygonScan**\n- **Native Testnet Environment**: **Polygon Amoy Testnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "quiz": [
+            {
+              "question": "What is the Chain ID for the Polygon Amoy testnet (Sepolia-anchored testnet)?",
+              "options": [
+                "80002",
+                "1",
+                "137",
+                "1101"
+              ],
+              "correct_idx": 0
+            },
+            {
+              "question": "Which block explorer is the standard tool for inspecting Polygon Amoy transactions and contracts?",
+              "options": [
+                "Etherscan mainnet.",
+                "Solscan.",
+                "Voyager.",
+                "PolygonScan (amoy.polygonscan.com)."
+              ],
+              "correct_idx": 3
+            },
+            {
+              "question": "How do developers obtain testnet POL tokens for Polygon Amoy gas fees?",
+              "options": [
+                "By purchasing tokens on Binance.",
+                "From the official Polygon Faucet (faucet.polygon.technology) or Alchemy/Infura Amoy faucets.",
+                "By calling telephone support.",
+                "By mining proof-of-work blocks on GPU."
+              ],
+              "correct_idx": 1
+            },
+            {
+              "question": "What RPC URL is commonly used to connect to Polygon Amoy testnet?",
+              "options": [
+                "https://eth.llamarpc.com",
+                "https://polygon-rpc.com",
+                "http://localhost:8545",
+                "https://rpc-amoy.polygon.technology"
+              ],
+              "correct_idx": 3
+            },
+            {
+              "question": "How do you configure Polygon Amoy verification in `foundry.toml`?",
+              "options": [
+                "`[etherscan] polygon_amoy = { key = \"${POLYGONSCAN_API_KEY}\", url = \"https://api-amoy.polygonscan.com/api\" }`",
+                "`skip_verification = true`",
+                "`verifier = 'auto'` without API keys",
+                "`network = 'polygon'` only"
+              ],
+              "correct_idx": 0
+            },
+            {
+              "question": "What is the primary advantage of testing on Amoy over legacy Mumbai testnet?",
+              "options": [
+                "Amoy is anchored to Ethereum Sepolia L1, providing long-term stability and modern EVM feature compatibility.",
+                "Amoy disables all gas fees forever.",
+                "Amoy uses Python instead of Solidity.",
+                "Amoy does not require a wallet."
+              ],
+              "correct_idx": 0
+            }
+          ],
+          "exercise": {
+            "instruction": "Write a Solidity code snippet for Module 2. The code must contain the keywords 'PolygonAmoy' and 'POL'.",
+            "template": "// Polygon Module 2: Polygon Toolchain, Amoy Testnet Faucets & Foundry Setup\n// Language: Solidity\n// Write implementation below:\n",
+            "required_keywords": [
+              "PolygonAmoy",
+              "POL"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "level_id": 3,
+      "title": "Level 3: Polygon Smart Contracts: State Sync, FxPortal & Plasma Bridges",
+      "total_lessons": 1,
+      "lessons": [
+        {
+          "id": "polygon-3",
+          "level_id": 3,
+          "title": "Module 3: Polygon Smart Contracts: State Sync, FxPortal & Plasma Bridges",
+          "duration": "21 mins",
+          "xp": 250,
+          "content": "# Module 3: Polygon Smart Contracts: State Sync, FxPortal & Plasma Bridges\n### Polygon Ecosystem Track | Developer Academy\n\nImplement cross-chain interoperability: state receiver contracts, FxPortal bridge mechanics, and custom token mapping between Ethereum and Polygon.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polygon.\n2. **Toolchain Proficiency**: Master Foundry & Hardhat for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on Polygon PoS & zkEVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Polygon Amoy Testnet** and verify artifacts on **PolygonScan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/maticnetwork](https://github.com/maticnetwork)\n- **Ecosystem Starter Templates**: [https://github.com/0xPolygon/polygon-docs](https://github.com/0xPolygon/polygon-docs)\n- **Block Explorer & State Verifier**: **PolygonScan**\n- **Native Testnet Environment**: **Polygon Amoy Testnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "quiz": [
+            {
+              "question": "What is the State Sync mechanism on Polygon PoS?",
+              "options": [
+                "An FTP file transfer tool.",
+                "A WebSocket synchronization library for React.",
+                "A native protocol mechanism that automatically forwards events emitted by L1 StateSender contracts to L2 StateReceiver contracts.",
+                "A database replication service in AWS."
+              ],
+              "correct_idx": 2
+            },
+            {
+              "question": "What is the FxPortal bridge on Polygon?",
+              "options": [
+                "A physical gate at an office.",
+                "A permissionless, tokenless state transfer bridge that allows contracts on Ethereum and Polygon to pass arbitrary data without token mapping approvals.",
+                "A decentralized lending protocol.",
+                "A frontend styling template."
+              ],
+              "correct_idx": 1
+            },
+            {
+              "question": "Which interface must a Polygon contract implement to receive state sync data from Ethereum L1?",
+              "options": [
+                "`IFxMessageProcessor` or `IStateReceiver` (`onStateReceive`).",
+                "`IERC20` only.",
+                "`IOwnable` only.",
+                "`IDisposable` only."
+              ],
+              "correct_idx": 0
+            },
+            {
+              "question": "What is the difference between the Polygon PoS Bridge and Polygon zkEVM Bridge?",
+              "options": [
+                "The PoS bridge relies on validator multisig checkpoints, whereas the zkEVM bridge uses cryptographic ZK validity proofs for trustless security.",
+                "The zkEVM bridge requires 30 days to withdraw.",
+                "Both bridges are centralized web servers.",
+                "The PoS bridge only transfers Bitcoin."
+              ],
+              "correct_idx": 0
+            },
+            {
+              "question": "What is `FxERC20RootTunnel` and `FxERC20ChildTunnel` in the FxPortal architecture?",
+              "options": [
+                "Private VPN tunnels.",
+                "CSS animation classes.",
+                "The L1 and L2 bridge tunnel contracts that lock ERC-20 tokens on Ethereum and mint/burn corresponding child tokens on Polygon.",
+                "Network routing cables."
+              ],
+              "correct_idx": 2
+            },
+            {
+              "question": "Why should developers sanitize data payloads received via `onStateReceive`?",
+              "options": [
+                "To encrypt the data on disk.",
+                "To verify that `msg.sender` matches the canonical StateReceiver address and validate the origin sender address from L1.",
+                "To format strings into uppercase.",
+                "To compress the payload size."
+              ],
+              "correct_idx": 1
+            }
+          ],
+          "exercise": {
+            "instruction": "Write a Solidity code snippet for Module 3. The code must contain the keywords 'StateSync' and 'FxPortal'.",
+            "template": "// Polygon Module 3: Polygon Smart Contracts: State Sync, FxPortal & Plasma Bridges\n// Language: Solidity\n// Write implementation below:\n",
+            "required_keywords": [
+              "StateSync",
+              "FxPortal"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "level_id": 4,
+      "title": "Level 4: Full-Stack Polygon DApps & PolygonScan Verification",
+      "total_lessons": 1,
+      "lessons": [
+        {
+          "id": "polygon-4",
+          "level_id": 4,
+          "title": "Module 4: Full-Stack Polygon DApps & PolygonScan Verification",
+          "duration": "24 mins",
+          "xp": 300,
+          "content": "# Module 4: Full-Stack Polygon DApps & PolygonScan Verification\n### Polygon Ecosystem Track | Developer Academy\n\nBuild scalable decentralized applications on Polygon using Wagmi/Viem, integrate fast RPC providers, and verify smart contract deployments on PolygonScan.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polygon.\n2. **Toolchain Proficiency**: Master Foundry & Hardhat for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on Polygon PoS & zkEVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Polygon Amoy Testnet** and verify artifacts on **PolygonScan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/maticnetwork](https://github.com/maticnetwork)\n- **Ecosystem Starter Templates**: [https://github.com/0xPolygon/polygon-docs](https://github.com/0xPolygon/polygon-docs)\n- **Block Explorer & State Verifier**: **PolygonScan**\n- **Native Testnet Environment**: **Polygon Amoy Testnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "quiz": [
+            {
+              "question": "Which Viem chain definition corresponds to Polygon Amoy Testnet?",
+              "options": [
+                "`mainnet`",
+                "`bsc`",
+                "`polygonAmoy` from `viem/chains`.",
+                "`polygon` (mainnet)"
+              ],
+              "correct_idx": 2
+            },
+            {
+              "question": "How do you verify a smart contract on PolygonScan using Foundry CLI?",
+              "options": [
+                "`forge verify-contract <ADDRESS> <PATH>:<NAME> --chain-id 80002 --verifier-url https://api-amoy.polygonscan.com/api --etherscan-api-key <KEY>`",
+                "`git push polygon main`",
+                "`npm run verify`",
+                "`forge verify --polygon`"
+              ],
+              "correct_idx": 0
+            },
+            {
+              "question": "What is Polygon ID / Privado ID?",
+              "options": [
+                "An email username.",
+                "A decentralized identity and zero-knowledge verifiable credentials framework built on Polygon for private identity proof without revealing data.",
+                "A social security database.",
+                "A government issued passport."
+              ],
+              "correct_idx": 1
+            },
+            {
+              "question": "What RPC optimization ensures high-throughput reliability when interacting with Polygon nodes?",
+              "options": [
+                "Disabling JSON-RPC responses.",
+                "Querying only public free endpoints with high rate limits.",
+                "Using dedicated provider RPC endpoints (Alchemy, Infura, QuickNode) with automated retry and fallback configurations.",
+                "Sending all requests over plain HTTP without TLS."
+              ],
+              "correct_idx": 2
+            },
+            {
+              "question": "How does sub-second block time on Polygon affect frontend transaction tracking UX?",
+              "options": [
+                "It prevents frontends from querying transaction receipts.",
+                "It forces full page reloads.",
+                "It requires users to wait 30 minutes for confirmation.",
+                "Transactions confirm in 2\u20133 seconds, allowing frontends to provide near-instant feedback and fluid UI updates."
+              ],
+              "correct_idx": 3
+            },
+            {
+              "question": "Where can developers submit their Polygon projects for Polygon Village ecosystem grants and accelerators?",
+              "options": [
+                "On the official Polygon Village developer portal (polygon.technology/village).",
+                "By sending paper letters to India.",
+                "In closed Telegram channels only.",
+                "On Craigslist."
+              ],
+              "correct_idx": 0
+            }
+          ],
+          "exercise": {
+            "instruction": "Write a Solidity code snippet for Module 4. The code must contain the keywords 'PolygonScan' and 'WagmiPolygon'.",
+            "template": "// Polygon Module 4: Full-Stack Polygon DApps & PolygonScan Verification\n// Language: Solidity\n// Write implementation below:\n",
+            "required_keywords": [
+              "PolygonScan",
+              "WagmiPolygon"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "level_id": 5,
+      "title": "Level 5: Polygon Amoy Deployment Challenge & zkEVM Verification",
+      "total_lessons": 1,
+      "lessons": [
+        {
+          "id": "polygon-5",
+          "level_id": 5,
+          "title": "Module 5: Polygon Amoy Deployment Challenge & zkEVM Verification",
+          "duration": "27 mins",
+          "xp": 350,
+          "content": "# Module 5: Polygon Amoy Deployment Challenge & zkEVM Verification\n### Polygon Ecosystem Track | Developer Academy\n\nHands-on Deployment Challenge: Compile your smart contracts, deploy to Polygon Amoy testnet, verify on PolygonScan, and complete your Polygon Developer certification.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Polygon.\n2. **Toolchain Proficiency**: Master Foundry & Hardhat for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on Polygon PoS & zkEVM adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Polygon Amoy Testnet** and verify artifacts on **PolygonScan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/maticnetwork](https://github.com/maticnetwork)\n- **Ecosystem Starter Templates**: [https://github.com/0xPolygon/polygon-docs](https://github.com/0xPolygon/polygon-docs)\n- **Block Explorer & State Verifier**: **PolygonScan**\n- **Native Testnet Environment**: **Polygon Amoy Testnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "quiz": [
+            {
+              "question": "What is required to complete the Polygon Amoy Deployment Challenge?",
+              "options": [
+                "A live deployed contract on Polygon Amoy with verified source code on PolygonScan and successful state execution.",
+                "A testnet faucet request only.",
+                "A screenshot of a code editor with no broadcasted transaction.",
+                "A text document on your desktop."
+              ],
+              "correct_idx": 0
+            },
+            {
+              "question": "Where can grant reviewers inspect your verified Polygon Amoy smart contract?",
+              "options": [
+                "At `https://amoy.polygonscan.com/address/<YOUR_CONTRACT_ADDRESS>`.",
+                "On an unhosted local server.",
+                "In browser local storage.",
+                "In a private email only."
+              ],
+              "correct_idx": 0
+            },
+            {
+              "question": "What credential is issued upon completing the Polygon track?",
+              "options": [
+                "A temporary gift card.",
+                "An SMS message.",
+                "A cryptographically verifiable digital certificate demonstrating mastery of Polygon PoS, zkEVM, and Solidity smart contracts.",
+                "A physical paper diploma."
+              ],
+              "correct_idx": 2
+            },
+            {
+              "question": "Why do enterprise Web3 hiring managers value verified testnet smart contract deployments on Polygon?",
+              "options": [
+                "Because they prove end-to-end technical capability, gas-efficient design, and practical deployment experience on high-throughput networks.",
+                "Because testnets provide legal immunity.",
+                "Because testnets eliminate software licensing.",
+                "Because testnets replace the need for real user testing."
+              ],
+              "correct_idx": 0
+            },
+            {
+              "question": "What gas optimization technique is especially important for high-frequency Polygon applications?",
+              "options": [
+                "Setting the gas limit to infinite.",
+                "Using immutable variables, batching state updates in arrays, and caching storage variables in memory inside loops.",
+                "Using strings for all numerical values.",
+                "Writing code without any loops or functions."
+              ],
+              "correct_idx": 1
+            },
+            {
+              "question": "How can developers use their Polygon Developer Academy credentials to apply for Polygon Village funding?",
+              "options": [
+                "By emailing personal bank statements.",
+                "By purchasing advertising space.",
+                "By running automated bots.",
+                "By including their verifiable certificate link, GitHub repo, and verified contract address in the Polygon Village grant application form."
+              ],
+              "correct_idx": 3
+            }
+          ],
+          "exercise": {
+            "instruction": "Complete the Polygon Testnet Deployment Challenge! Write a deployment configuration and verification snippet containing 'polygon', 'deploy', 'testnet', and 'verify'.",
+            "template": "// \u2500\u2500\u2500 Polygon Testnet Deployment & Verification \u2500\u2500\u2500\n// Target: Polygon Amoy Testnet\n// Network Explorer: PolygonScan\n\n// Complete deployment declaration below:\n",
+            "required_keywords": [
+              "polygon",
+              "deploy",
+              "testnet",
+              "verify"
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "avalanche": [
+    {
+      "level_id": 1,
+      "title": "Level 1: Avalanche Architecture: Primary Network (X/P/C Chains) & Snow Consensus",
+      "total_lessons": 1,
+      "lessons": [
+        {
+          "id": "avalanche-1",
+          "level_id": 1,
+          "title": "Module 1: Avalanche Architecture: Primary Network (X/P/C Chains) & Snow Consensus",
+          "duration": "15 mins",
+          "xp": 150,
+          "content": "# Module 1: Avalanche Architecture: Primary Network (X/P/C Chains) & Snow Consensus\n### Avalanche Ecosystem Track | Developer Academy\n\nMaster the Avalanche multi-chain architecture: the Primary Network consisting of the Exchange Chain (X-Chain), Platform Chain (P-Chain), Contract Chain (C-Chain), and the Snow consensus family.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Avalanche.\n2. **Toolchain Proficiency**: Master Avalanche CLI & Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on Avalanche C-Chain EVM & Subnets adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Avalanche Fuji Testnet** and verify artifacts on **Snowtrace**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/ava-labs/avalanchego](https://github.com/ava-labs/avalanchego)\n- **Ecosystem Starter Templates**: [https://github.com/ava-labs/avalanche-starter-kit](https://github.com/ava-labs/avalanche-starter-kit)\n- **Block Explorer & State Verifier**: **Snowtrace**\n- **Native Testnet Environment**: **Avalanche Fuji Testnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "quiz": [
+            {
+              "question": "What are the three built-in blockchains that compose the Avalanche Primary Network?",
+              "options": [
+                "Frontend, Backend, and Database chains.",
+                "Bitcoin, Ethereum, and Solana chains.",
+                "Alpha, Beta, and Gamma chains.",
+                "X-Chain (Exchange Chain for assets), P-Chain (Platform Chain for staking and Subnets), and C-Chain (Contract Chain for EVM smart contracts)."
+              ],
+              "correct_idx": 3
+            },
+            {
+              "question": "Which Avalanche chain executes standard Solidity EVM smart contracts?",
+              "options": [
+                "The C-Chain (Contract Chain / Coreth).",
+                "The P-Chain.",
+                "The Bitcoin network.",
+                "The X-Chain."
+              ],
+              "correct_idx": 0
+            },
+            {
+              "question": "What is unique about Avalanche's Snow consensus family (Avalanche/Snowman)?",
+              "options": [
+                "It uses repeated sub-sampling voting among validators to achieve sub-second, irreversible finality with high decentralization and no leader bottlenecks.",
+                "It uses round-robin voting.",
+                "It relies on a single master node.",
+                "It uses classical Proof of Work mining with energy-intensive hashes."
+              ],
+              "correct_idx": 0
+            },
+            {
+              "question": "What is an Avalanche Subnet (Custom L1)?",
+              "options": [
+                "A sub-folder on GitHub.",
+                "A dynamic, sovereign group of validators working together to achieve consensus on custom blockchains with dedicated state, execution rules, and custom gas tokens.",
+                "A private chat room.",
+                "A temporary WiFi network."
+              ],
+              "correct_idx": 1
+            },
+            {
+              "question": "What is Avalanche Warp Messaging (AWM) and Teleporter?",
+              "options": [
+                "A native cross-chain communication protocol enabling trustless, sub-second message and asset transfer between Avalanche Subnets and the C-Chain without bridges.",
+                "An email newsletter service.",
+                "A video conference app.",
+                "An SMS messaging gateway."
+              ],
+              "correct_idx": 0
+            },
+            {
+              "question": "What native token is used to pay gas fees on the Avalanche C-Chain?",
+              "options": [
+                "SOL",
+                "AVAX (Avalanche Native Token).",
+                "USDC only",
+                "ETH"
+              ],
+              "correct_idx": 1
+            }
+          ],
+          "exercise": {
+            "instruction": "Write a Solidity code snippet for Module 1. The code must contain the keywords 'AvalancheSnow' and 'CChain'.",
+            "template": "// Avalanche Module 1: Avalanche Architecture: Primary Network (X/P/C Chains) & Snow Consensus\n// Language: Solidity\n// Write implementation below:\n",
+            "required_keywords": [
+              "AvalancheSnow",
+              "CChain"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "level_id": 2,
+      "title": "Level 2: Avalanche Toolchain, Avalanche CLI & Fuji Testnet Setup",
+      "total_lessons": 1,
+      "lessons": [
+        {
+          "id": "avalanche-2",
+          "level_id": 2,
+          "title": "Module 2: Avalanche Toolchain, Avalanche CLI & Fuji Testnet Setup",
+          "duration": "18 mins",
+          "xp": 200,
+          "content": "# Module 2: Avalanche Toolchain, Avalanche CLI & Fuji Testnet Setup\n### Avalanche Ecosystem Track | Developer Academy\n\nConfigure the official Avalanche CLI toolchain, manage Avalanche Fuji Testnet (Chain ID 43113), fund testnet AVAX faucets, and build Solidity contracts.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Avalanche.\n2. **Toolchain Proficiency**: Master Avalanche CLI & Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on Avalanche C-Chain EVM & Subnets adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Avalanche Fuji Testnet** and verify artifacts on **Snowtrace**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/ava-labs/avalanchego](https://github.com/ava-labs/avalanchego)\n- **Ecosystem Starter Templates**: [https://github.com/ava-labs/avalanche-starter-kit](https://github.com/ava-labs/avalanche-starter-kit)\n- **Block Explorer & State Verifier**: **Snowtrace**\n- **Native Testnet Environment**: **Avalanche Fuji Testnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "quiz": [
+            {
+              "question": "What is the Chain ID for the Avalanche Fuji C-Chain testnet?",
+              "options": [
+                "43113",
+                "1",
+                "43114",
+                "8453"
+              ],
+              "correct_idx": 0
+            },
+            {
+              "question": "Which block explorer is the primary tool for verifying Avalanche C-Chain smart contracts?",
+              "options": [
+                "Arbiscan.",
+                "Snowtrace / Routescan (testnet.snowtrace.io / routescan.io).",
+                "Etherscan mainnet.",
+                "Solscan."
+              ],
+              "correct_idx": 1
+            },
+            {
+              "question": "How do developers obtain testnet AVAX for Fuji deployment gas fees?",
+              "options": [
+                "By mining proof-of-work blocks on GPU.",
+                "By purchasing tokens on Coinbase.",
+                "By sending letters to Ava Labs.",
+                "From the official Core Faucet (core.app/tools/testnet-faucet) or Avalanche Fuji Faucets."
+              ],
+              "correct_idx": 3
+            },
+            {
+              "question": "What CLI tool is officially used to create, test, and deploy custom Avalanche Subnets and local networks?",
+              "options": [
+                "`anchor init`",
+                "`cargo check`",
+                "`avalanche-cli` (`avalanche network start`, `avalanche subnet deploy`).",
+                "`npm start`"
+              ],
+              "correct_idx": 2
+            },
+            {
+              "question": "What RPC URL is the standard public endpoint for the Avalanche Fuji C-Chain?",
+              "options": [
+                "`https://api.avax.network/ext/bc/C/rpc`",
+                "`https://api.avax-test.network/ext/bc/C/rpc`",
+                "`https://eth.llamarpc.com`",
+                "`http://localhost:8545`"
+              ],
+              "correct_idx": 1
+            },
+            {
+              "question": "How do you configure Avalanche Fuji verification in `foundry.toml`?",
+              "options": [
+                "`verify = true` without URLs",
+                "`disable_explorer = true`",
+                "`[etherscan] avalanche_fuji = { key = \"${SNOWTRACE_API_KEY}\", url = \"https://api.routescan.io/v2/network/testnet/evm/43113/etherscan\" }`",
+                "`network = 'fuji'` only"
+              ],
+              "correct_idx": 2
+            }
+          ],
+          "exercise": {
+            "instruction": "Write a Solidity code snippet for Module 2. The code must contain the keywords 'AvalancheFuji' and 'AvalancheCLI'.",
+            "template": "// Avalanche Module 2: Avalanche Toolchain, Avalanche CLI & Fuji Testnet Setup\n// Language: Solidity\n// Write implementation below:\n",
+            "required_keywords": [
+              "AvalancheFuji",
+              "AvalancheCLI"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "level_id": 3,
+      "title": "Level 3: Custom Avalanche Subnets & Custom Virtual Machine Architecture",
+      "total_lessons": 1,
+      "lessons": [
+        {
+          "id": "avalanche-3",
+          "level_id": 3,
+          "title": "Module 3: Custom Avalanche Subnets & Custom Virtual Machine Architecture",
+          "duration": "21 mins",
+          "xp": 250,
+          "content": "# Module 3: Custom Avalanche Subnets & Custom Virtual Machine Architecture\n### Avalanche Ecosystem Track | Developer Academy\n\nArchitect custom App-Chains on Avalanche: configuring custom EVM parameters (Subnet-EVM), custom gas tokens, fee manager precompiles, and validator staking rules.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Avalanche.\n2. **Toolchain Proficiency**: Master Avalanche CLI & Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on Avalanche C-Chain EVM & Subnets adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Avalanche Fuji Testnet** and verify artifacts on **Snowtrace**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/ava-labs/avalanchego](https://github.com/ava-labs/avalanchego)\n- **Ecosystem Starter Templates**: [https://github.com/ava-labs/avalanche-starter-kit](https://github.com/ava-labs/avalanche-starter-kit)\n- **Block Explorer & State Verifier**: **Snowtrace**\n- **Native Testnet Environment**: **Avalanche Fuji Testnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "quiz": [
+            {
+              "question": "What is Subnet-EVM on Avalanche?",
+              "options": [
+                "A frontend JavaScript library.",
+                "A customizable fork of Coreth (Go-Ethereum) tailored for Avalanche Subnets with configurable gas limits, block times, and custom stateful precompiles.",
+                "An SQL database server.",
+                "A hardware crypto wallet."
+              ],
+              "correct_idx": 1
+            },
+            {
+              "question": "How do stateful precompiles in Subnet-EVM empower customized blockchain governance?",
+              "options": [
+                "They force contracts to run in browser JavaScript.",
+                "They replace private keys with usernames.",
+                "They allow developers to implement custom native features (e.g., fee configuration, native token minting, allowlisting transactions) directly at the protocol level in Go.",
+                "They delete all smart contracts upon execution."
+              ],
+              "correct_idx": 2
+            },
+            {
+              "question": "Can an Avalanche Subnet use its own custom ERC-20-like token as its native gas token instead of AVAX?",
+              "options": [
+                "No, gas tokens cannot be customized in Web3.",
+                "No, Subnets can only use Bitcoin.",
+                "Yes, but only if approved by US banks.",
+                "Yes, Subnet-EVM allows defining any custom native gas token with custom supply and distribution mechanics during Subnet genesis."
+              ],
+              "correct_idx": 3
+            },
+            {
+              "question": "What is Teleporter on Avalanche?",
+              "options": [
+                "A video conferencing protocol.",
+                "A centralized bridge website.",
+                "A physical teleportation machine.",
+                "An EVM-compatible wrapper around Avalanche Warp Messaging (AWM) that provides a standard cross-subnet smart contract messaging interface."
+              ],
+              "correct_idx": 3
+            },
+            {
+              "question": "What validator staking requirement exists for validating an Avalanche Subnet?",
+              "options": [
+                "Validators must pay monthly cash subscriptions.",
+                "Subnet validators must validate the Avalanche Primary Network and be registered on the P-Chain via `P-Chain.addSubnetValidator`.",
+                "Validators require no staking collateral.",
+                "Validators must operate on AWS exclusively."
+              ],
+              "correct_idx": 1
+            },
+            {
+              "question": "What is the benefit of building an App-Chain as an Avalanche Subnet compared to deploying on a shared public L1?",
+              "options": [
+                "Dedicated isolated throughput, custom compliance rules (KYC/geo-fencing if needed), custom gas mechanics, and zero fee volatility from other DApps.",
+                "Centralized server hosting requirements.",
+                "Inability to interoperate with other blockchains.",
+                "Higher transaction fees for users."
+              ],
+              "correct_idx": 0
+            }
+          ],
+          "exercise": {
+            "instruction": "Write a Solidity code snippet for Module 3. The code must contain the keywords 'SubnetEVM' and 'Precompiles'.",
+            "template": "// Avalanche Module 3: Custom Avalanche Subnets & Custom Virtual Machine Architecture\n// Language: Solidity\n// Write implementation below:\n",
+            "required_keywords": [
+              "SubnetEVM",
+              "Precompiles"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "level_id": 4,
+      "title": "Level 4: Full-Stack Avalanche DApps, Core Wallet & Snowtrace Verification",
+      "total_lessons": 1,
+      "lessons": [
+        {
+          "id": "avalanche-4",
+          "level_id": 4,
+          "title": "Module 4: Full-Stack Avalanche DApps, Core Wallet & Snowtrace Verification",
+          "duration": "24 mins",
+          "xp": 300,
+          "content": "# Module 4: Full-Stack Avalanche DApps, Core Wallet & Snowtrace Verification\n### Avalanche Ecosystem Track | Developer Academy\n\nDevelop responsive DApps on Avalanche Fuji using Wagmi, Viem, Core Wallet extension, and verify deployed Solidity smart contracts on Snowtrace.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Avalanche.\n2. **Toolchain Proficiency**: Master Avalanche CLI & Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on Avalanche C-Chain EVM & Subnets adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Avalanche Fuji Testnet** and verify artifacts on **Snowtrace**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/ava-labs/avalanchego](https://github.com/ava-labs/avalanchego)\n- **Ecosystem Starter Templates**: [https://github.com/ava-labs/avalanche-starter-kit](https://github.com/ava-labs/avalanche-starter-kit)\n- **Block Explorer & State Verifier**: **Snowtrace**\n- **Native Testnet Environment**: **Avalanche Fuji Testnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "quiz": [
+            {
+              "question": "Which Viem chain definition represents Avalanche Fuji in frontend React code?",
+              "options": [
+                "`mainnet`",
+                "`avalancheFuji` from `viem/chains`.",
+                "`polygon`",
+                "`avalanche` (mainnet)"
+              ],
+              "correct_idx": 1
+            },
+            {
+              "question": "What is the Core Wallet built by Ava Labs?",
+              "options": [
+                "A non-custodial multi-chain wallet built specifically for seamless interaction with Avalanche C-Chain, Subnets, Bitcoin, and Ethereum.",
+                "A desktop operating system.",
+                "An email client.",
+                "A centralized trading desk."
+              ],
+              "correct_idx": 0
+            },
+            {
+              "question": "How do you verify a smart contract on Snowtrace / Routescan using Foundry CLI?",
+              "options": [
+                "`forge publish --avalanche`",
+                "`git commit -m 'verified'`",
+                "`forge verify-contract <ADDRESS> <PATH>:<NAME> --chain-id 43113 --verifier-url https://api.routescan.io/v2/network/testnet/evm/43113/etherscan --etherscan-api-key <KEY>`",
+                "`npm run verify`"
+              ],
+              "correct_idx": 2
+            },
+            {
+              "question": "What latency advantage do users experience on the Avalanche C-Chain?",
+              "options": [
+                "Overnight batch processing.",
+                "1-hour fraud proof windows.",
+                "Sub-second transaction finality (typically ~700ms) with irreversible state confirmation.",
+                "15-minute confirmation delays."
+              ],
+              "correct_idx": 2
+            },
+            {
+              "question": "What API service enables fast historical indexing of Avalanche subnets and C-Chain events?",
+              "options": [
+                "SOAP XML endpoints.",
+                "FTP file transfers.",
+                "CSV spreadsheet downloads.",
+                "The Avalanche Glacier API and Subgraphs via The Graph."
+              ],
+              "correct_idx": 3
+            },
+            {
+              "question": "Where can builders apply for ecosystem grants and accelerator support within Avalanche?",
+              "options": [
+                "Through Blizzard the Avalanche Ecosystem Fund, Multiverse incentive programs, and Codebase accelerator.",
+                "On Craigslist.",
+                "Via postal letters.",
+                "In closed Telegram groups only."
+              ],
+              "correct_idx": 0
+            }
+          ],
+          "exercise": {
+            "instruction": "Write a Solidity code snippet for Module 4. The code must contain the keywords 'Snowtrace' and 'CoreWallet'.",
+            "template": "// Avalanche Module 4: Full-Stack Avalanche DApps, Core Wallet & Snowtrace Verification\n// Language: Solidity\n// Write implementation below:\n",
+            "required_keywords": [
+              "Snowtrace",
+              "CoreWallet"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "level_id": 5,
+      "title": "Level 5: Avalanche Fuji Deployment Challenge & Subnet Verification",
+      "total_lessons": 1,
+      "lessons": [
+        {
+          "id": "avalanche-5",
+          "level_id": 5,
+          "title": "Module 5: Avalanche Fuji Deployment Challenge & Subnet Verification",
+          "duration": "27 mins",
+          "xp": 350,
+          "content": "# Module 5: Avalanche Fuji Deployment Challenge & Subnet Verification\n### Avalanche Ecosystem Track | Developer Academy\n\nHands-on Deployment Challenge: Compile your smart contracts, deploy to Avalanche Fuji C-Chain testnet, verify on Snowtrace, and complete your Avalanche Developer certification.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Avalanche.\n2. **Toolchain Proficiency**: Master Avalanche CLI & Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic Solidity code on Avalanche C-Chain EVM & Subnets adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Avalanche Fuji Testnet** and verify artifacts on **Snowtrace**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/ava-labs/avalanchego](https://github.com/ava-labs/avalanchego)\n- **Ecosystem Starter Templates**: [https://github.com/ava-labs/avalanche-starter-kit](https://github.com/ava-labs/avalanche-starter-kit)\n- **Block Explorer & State Verifier**: **Snowtrace**\n- **Native Testnet Environment**: **Avalanche Fuji Testnet**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
+          "quiz": [
+            {
+              "question": "What is required to complete the Avalanche Fuji Deployment Challenge?",
+              "options": [
+                "A PowerPoint design mockup only.",
+                "A live deployed contract on Avalanche Fuji C-Chain with verified source code on Snowtrace/Routescan and emitted event telemetry.",
+                "A testnet faucet request without contract deployment.",
+                "A local text file on your computer."
+              ],
+              "correct_idx": 1
+            },
+            {
+              "question": "Where can grant evaluators and recruiters inspect your verified Avalanche deployment?",
+              "options": [
+                "In browser local storage.",
+                "In a private offline text file.",
+                "At `https://testnet.snowtrace.io/address/<YOUR_CONTRACT_ADDRESS>` or Routescan.",
+                "On an unhosted local server."
+              ],
+              "correct_idx": 2
+            },
+            {
+              "question": "What digital credential is generated upon passing the Avalanche track challenge?",
+              "options": [
+                "A verifiable cryptographic certificate validating Avalanche C-Chain, Subnet architecture, and Solidity competence.",
+                "A temporary discount coupon.",
+                "An email receipt.",
+                "A paper certificate mailed to your house."
+              ],
+              "correct_idx": 0
+            },
+            {
+              "question": "Why do Avalanche Foundation and Blizzard evaluators prioritize verified on-chain deployments in grant reviews?",
+              "options": [
+                "Because live deployments demonstrate proven technical competency, practical execution ability, and production readiness.",
+                "Because they guarantee financial loans.",
+                "Because testnet deployments generate token revenue for evaluators.",
+                "Because they remove all need for software licenses."
+              ],
+              "correct_idx": 0
+            },
+            {
+              "question": "What security check should always be completed before publishing smart contracts to Avalanche C-Chain?",
+              "options": [
+                "Disabling all unit tests.",
+                "Ensuring arithmetic safety, implementing reentrancy guards, verifying access controls, and testing with fuzzing suites.",
+                "Hardcoding private keys into frontend code.",
+                "Deleting error revert strings."
+              ],
+              "correct_idx": 1
+            },
+            {
+              "question": "How can graduating developers use their Avalanche Developer Academy credential in ecosystem grant proposals?",
+              "options": [
+                "By creating multiple anonymous aliases.",
+                "By purchasing advertising space.",
+                "By sending automated cold emails.",
+                "By linking their verifiable credential, GitHub repository, and verified testnet contract address in their official Blizzard/Multiverse grant application."
+              ],
+              "correct_idx": 3
+            }
+          ],
+          "exercise": {
+            "instruction": "Complete the Avalanche Testnet Deployment Challenge! Write a deployment configuration and verification snippet containing 'avalanche', 'deploy', 'testnet', and 'verify'.",
+            "template": "// \u2500\u2500\u2500 Avalanche Testnet Deployment & Verification \u2500\u2500\u2500\n// Target: Avalanche Fuji Testnet\n// Network Explorer: Snowtrace\n\n// Complete deployment declaration below:\n",
+            "required_keywords": [
+              "avalanche",
               "deploy",
               "testnet",
               "verify"
@@ -3897,33 +8400,66 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
           "title": "Module 1: Full-Stack Web3 Architecture & RPC Provider Topologies",
           "duration": "15 mins",
           "xp": 150,
-          "content": "# Module 1: Full-Stack Web3 Architecture & RPC Provider Topologies\n### Full Stack Blockchain Developer Track | Developer Academy\n\nMaster end-to-end decentralized application architecture: client-side wallet connections (EIP-1193), JSON-RPC node infrastructure (Alchemy/Infura/QuickNode), multi-chain fallback providers, and CORS/WebSocket rate limiting.\n",
+          "content": "# Module 1: Full-Stack Web3 Architecture & RPC Provider Topologies\n### Full Stack Blockchain Developer Ecosystem Track | Developer Academy\n\nMaster end-to-end decentralized application architecture: client-side wallet connections (EIP-1193), JSON-RPC node infrastructure (Alchemy/Infura/QuickNode), multi-chain fallback providers, and CORS/WebSocket rate limiting.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Full Stack Blockchain Developer.\n2. **Toolchain Proficiency**: Master Next.js 14, Viem, Wagmi v2, Ethers.js & Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic TypeScript & Solidity code on EVM & Node/Browser Web3 Engine adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Arbitrum Sepolia, Base Sepolia & OP Sepolia** and verify artifacts on **Arbiscan / BaseScan / Etherscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/scaffold-eth/scaffold-eth-2](https://github.com/scaffold-eth/scaffold-eth-2)\n- **Ecosystem Starter Templates**: [https://github.com/wevm/wagmi](https://github.com/wevm/wagmi)\n- **Block Explorer & State Verifier**: **Arbiscan / BaseScan / Etherscan**\n- **Native Testnet Environment**: **Arbitrum Sepolia, Base Sepolia & OP Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
           "quiz": [
             {
               "question": "What is the primary role of an RPC provider (like Infura or Alchemy) in full-stack Web3 architecture?",
               "options": [
-                "To serve as a JSON-RPC gateway allowing web frontends to read blockchain state and broadcast signed transactions without running local archive nodes.",
-                "To custody user private keys on centralized servers.",
                 "To compile TypeScript code into WebAssembly.",
-                "To replace decentralized consensus with SQL queries."
+                "To custody user private keys on centralized servers.",
+                "To replace decentralized consensus with SQL queries.",
+                "To serve as a JSON-RPC gateway allowing web frontends to read blockchain state and broadcast signed transactions without running local archive nodes."
+              ],
+              "correct_idx": 3
+            },
+            {
+              "question": "What standard interface defines how browser wallet extensions (like MetaMask) communicate with Web3 frontends?",
+              "options": [
+                "EIP-1193 JavaScript Ethereum Provider API (`window.ethereum`).",
+                "OAuth 2.0 PKCE protocol.",
+                "FTP byte-stream protocol.",
+                "GraphQL Schema Definition."
               ],
               "correct_idx": 0
             },
             {
-              "question": "What standard interface defines how browser wallet extensions communicate with Web3 frontends?",
+              "question": "Why should full-stack DApps configure fallback RPC transports instead of relying on a single endpoint?",
               "options": [
-                "EIP-1193 JavaScript Ethereum Provider API (window.ethereum).",
-                "OAuth 2.0 PKCE protocol.",
-                "GraphQL Schema Definition.",
-                "FTP byte-stream protocol."
+                "To prevent single points of failure, mitigate rate limits (HTTP 429), and automatically failover during network congestion.",
+                "To disable smart contract security checks.",
+                "To bypass blockchain gas fees entirely.",
+                "To make transactions irreversible without confirmations."
+              ],
+              "correct_idx": 0
+            },
+            {
+              "question": "What security measure prevents malicious websites from spoofing transactions through wallet providers?",
+              "options": [
+                "HTML input sanitization.",
+                "Cryptographic transaction signing where private keys never leave the secure enclave or extension sandbox.",
+                "Plaintext passwords stored in browser cookies.",
+                "IP address whitelisting on smart contracts."
+              ],
+              "correct_idx": 1
+            },
+            {
+              "question": "How do Web3 frontends handle real-time smart contract events (e.g. Transfers, Mints)?",
+              "options": [
+                "Via WebSocket (WSS) JSON-RPC subscriptions or HTTP polling mechanisms listening to contract logs.",
+                "By reading browser LocalStorage directly.",
+                "By sending emails to node operators.",
+                "By continuously refreshing the entire webpage every second."
               ],
               "correct_idx": 0
             }
           ],
           "exercise": {
-            "instruction": "Configure a Web3 provider setup script containing the keywords 'provider' and 'rpc'.",
-            "template": "// Full-Stack Web3 Module 1: Provider Setup\n",
-            "required_keywords": ["provider", "rpc"]
+            "instruction": "Write a TypeScript & Solidity code snippet for Module 1. The code must contain the keywords 'provider' and 'rpc'.",
+            "template": "// Full Stack Blockchain Developer Module 1: Full-Stack Web3 Architecture & RPC Provider Topologies\n// Language: TypeScript & Solidity\n// Write implementation below:\n",
+            "required_keywords": [
+              "provider",
+              "rpc"
+            ]
           }
         }
       ]
@@ -3939,23 +8475,66 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
           "title": "Module 2: Smart Contract Interaction Hooks with Viem, Wagmi v2 & React Query",
           "duration": "18 mins",
           "xp": 200,
-          "content": "# Module 2: Smart Contract Interaction Hooks with Viem, Wagmi v2 & React Query\n### Full Stack Blockchain Developer Track | Developer Academy\n\nBuild reactive Web3 interfaces with Wagmi v2 and Viem: type-safe contract reads, write simulation (simulateContract), TanStack React Query cache invalidation, and custom hooks.\n",
+          "content": "# Module 2: Smart Contract Interaction Hooks with Viem, Wagmi v2 & React Query\n### Full Stack Blockchain Developer Ecosystem Track | Developer Academy\n\nBuild reactive Web3 interfaces with Wagmi v2 and Viem: type-safe contract reads, write simulation (`simulateContract`), TanStack React Query cache invalidation, and custom hooks.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Full Stack Blockchain Developer.\n2. **Toolchain Proficiency**: Master Next.js 14, Viem, Wagmi v2, Ethers.js & Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic TypeScript & Solidity code on EVM & Node/Browser Web3 Engine adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Arbitrum Sepolia, Base Sepolia & OP Sepolia** and verify artifacts on **Arbiscan / BaseScan / Etherscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/scaffold-eth/scaffold-eth-2](https://github.com/scaffold-eth/scaffold-eth-2)\n- **Ecosystem Starter Templates**: [https://github.com/wevm/wagmi](https://github.com/wevm/wagmi)\n- **Block Explorer & State Verifier**: **Arbiscan / BaseScan / Etherscan**\n- **Native Testnet Environment**: **Arbitrum Sepolia, Base Sepolia & OP Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
           "quiz": [
             {
               "question": "What makes Viem more performant and developer-friendly than legacy Web3 libraries?",
               "options": [
-                "It is modular, lightweight, tree-shakeable, and provides end-to-end TypeScript type inference directly from Contract ABIs.",
-                "It eliminates the need for Solidity compilation.",
                 "It runs contracts entirely inside SQLite.",
+                "It eliminates the need for Solidity compilation.",
+                "It is modular, lightweight, tree-shakeable, and provides end-to-end TypeScript type inference directly from Contract ABIs.",
                 "It does not require network connections."
               ],
-              "correct_idx": 0
+              "correct_idx": 2
+            },
+            {
+              "question": "Why is `simulateContract` (dry-running) recommended before broadcasting a write transaction in Wagmi/Viem?",
+              "options": [
+                "It permanently records the state change without a transaction.",
+                "It executes the call locally on the node to catch reverts and calculate accurate gas estimates before the user pays gas fees.",
+                "It deletes all contract warnings.",
+                "It deposits free tokens into the caller's wallet."
+              ],
+              "correct_idx": 1
+            },
+            {
+              "question": "How does Wagmi v2 integrate with TanStack React Query?",
+              "options": [
+                "It requires global Redux stores.",
+                "It forces all state to be stored in URL parameters.",
+                "It leverages Query and Mutation hooks (`useReadContract`, `useWriteContract`) for automatic caching, refetching, and window focus synchronization.",
+                "It replaces React component lifecycle with WebSockets."
+              ],
+              "correct_idx": 2
+            },
+            {
+              "question": "What is an ABI (Application Binary Interface) in frontend contract integration?",
+              "options": [
+                "A binary executable that runs the EVM.",
+                "A node server configuration file.",
+                "A CSS stylesheet defining button layouts.",
+                "A JSON schema specifying functions, inputs, outputs, and event signatures necessary for encoding calls and decoding receipts."
+              ],
+              "correct_idx": 3
+            },
+            {
+              "question": "How do you handle pending transaction states and receipt confirmations in a React DApp?",
+              "options": [
+                "By checking backend database rows.",
+                "By disabling user clicks for a hardcoded 5 minutes.",
+                "Using `useWaitForTransactionReceipt` with the transaction hash to track confirmation status and show loaders.",
+                "By assuming the transaction succeeds immediately when the wallet popup appears."
+              ],
+              "correct_idx": 2
             }
           ],
           "exercise": {
-            "instruction": "Implement a contract read/write hook using Wagmi and Viem. Must include 'wagmi' and 'viem'.",
-            "template": "// Full-Stack Web3 Module 2: Wagmi & Viem Hooks\n",
-            "required_keywords": ["wagmi", "viem"]
+            "instruction": "Write a TypeScript & Solidity code snippet for Module 2. The code must contain the keywords 'wagmi' and 'viem'.",
+            "template": "// Full Stack Blockchain Developer Module 2: Smart Contract Interaction Hooks with Viem, Wagmi v2 & React Query\n// Language: TypeScript & Solidity\n// Write implementation below:\n",
+            "required_keywords": [
+              "wagmi",
+              "viem"
+            ]
           }
         }
       ]
@@ -3971,7 +8550,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
           "title": "Module 3: Decentralized Indexing & Storage: The Graph, Subgraphs & IPFS",
           "duration": "21 mins",
           "xp": 250,
-          "content": "# Module 3: Decentralized Indexing & Storage: The Graph, Subgraphs & IPFS\n### Full Stack Blockchain Developer Track | Developer Academy\n\nArchitect scalable decentralized backends: writing AssemblyScript mappings for The Graph subgraphs, querying indexed blockchain entities via GraphQL, and pinning decentralized metadata with IPFS / Filecoin.\n",
+          "content": "# Module 3: Decentralized Indexing & Storage: The Graph, Subgraphs & IPFS\n### Full Stack Blockchain Developer Ecosystem Track | Developer Academy\n\nArchitect scalable decentralized backends: writing AssemblyScript mappings for The Graph subgraphs, querying indexed blockchain entities via GraphQL, and pinning decentralized metadata with IPFS / Filecoin.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Full Stack Blockchain Developer.\n2. **Toolchain Proficiency**: Master Next.js 14, Viem, Wagmi v2, Ethers.js & Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic TypeScript & Solidity code on EVM & Node/Browser Web3 Engine adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Arbitrum Sepolia, Base Sepolia & OP Sepolia** and verify artifacts on **Arbiscan / BaseScan / Etherscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/scaffold-eth/scaffold-eth-2](https://github.com/scaffold-eth/scaffold-eth-2)\n- **Ecosystem Starter Templates**: [https://github.com/wevm/wagmi](https://github.com/wevm/wagmi)\n- **Block Explorer & State Verifier**: **Arbiscan / BaseScan / Etherscan**\n- **Native Testnet Environment**: **Arbitrum Sepolia, Base Sepolia & OP Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
           "quiz": [
             {
               "question": "Why are indexing protocols like The Graph necessary for production full-stack Web3 applications?",
@@ -3982,12 +8561,55 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
                 "To encrypt all user wallet balances."
               ],
               "correct_idx": 0
+            },
+            {
+              "question": "What language is used to write event handlers and mappings inside a Subgraph manifest?",
+              "options": [
+                "C# .NET.",
+                "PHP 8.2.",
+                "AssemblyScript (a TypeScript-like language compiled to WebAssembly).",
+                "Python Django."
+              ],
+              "correct_idx": 2
+            },
+            {
+              "question": "What is the primary characteristic of IPFS (InterPlanetary File System) storage?",
+              "options": [
+                "A centralized Amazon S3 bucket managed by node validators.",
+                "A temporary caching proxy.",
+                "Content-addressable storage where data is referenced by its cryptographic hash (CID) rather than a location URL.",
+                "A relational PostgreSQL table stored in browser memory."
+              ],
+              "correct_idx": 2
+            },
+            {
+              "question": "What is 'IPFS Pinning' and why is it essential for production DApp assets?",
+              "options": [
+                "Compressing images into zip archives.",
+                "Encrypting HTML tags with SHA-256.",
+                "Locking files with a four-digit PIN code.",
+                "Ensuring that specific IPFS nodes persistently store and serve content so it does not get garbage-collected from the P2P network."
+              ],
+              "correct_idx": 3
+            },
+            {
+              "question": "How does a frontend DApp efficiently query an indexed Subgraph?",
+              "options": [
+                "By connecting directly via SSH to Ethereum miners.",
+                "By downloading the entire Ethereum blockchain locally.",
+                "By sending standard GraphQL queries via Apollo Client or Urql to The Graph decentralized network or hosted service.",
+                "By scraping block explorer HTML pages."
+              ],
+              "correct_idx": 2
             }
           ],
           "exercise": {
-            "instruction": "Declare a Subgraph indexing entity schema with IPFS metadata resolution. Must include 'subgraph' and 'ipfs'.",
-            "template": "// Full-Stack Web3 Module 3: Subgraph & IPFS\n",
-            "required_keywords": ["subgraph", "ipfs"]
+            "instruction": "Write a TypeScript & Solidity code snippet for Module 3. The code must contain the keywords 'subgraph' and 'ipfs'.",
+            "template": "// Full Stack Blockchain Developer Module 3: Decentralized Indexing & Storage: The Graph, Subgraphs & IPFS\n// Language: TypeScript & Solidity\n// Write implementation below:\n",
+            "required_keywords": [
+              "subgraph",
+              "ipfs"
+            ]
           }
         }
       ]
@@ -4003,7 +8625,7 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
           "title": "Module 4: Modern Account Abstraction: ERC-4337, Paymasters & Smart Sessions",
           "duration": "24 mins",
           "xp": 300,
-          "content": "# Module 4: Modern Account Abstraction: ERC-4337, Paymasters & Smart Sessions\n### Full Stack Blockchain Developer Track | Developer Academy\n\nImplement next-generation Web3 UX: UserOperations, Bundlers, EntryPoint contract architecture, Gasless Paymasters (sponsoring transactions), and passkey/session-key authentication with Coinbase Smart Wallet / Biconomy.\n",
+          "content": "# Module 4: Modern Account Abstraction: ERC-4337, Paymasters & Smart Sessions\n### Full Stack Blockchain Developer Ecosystem Track | Developer Academy\n\nImplement next-generation Web3 UX: UserOperations, Bundlers, EntryPoint contract architecture, Gasless Paymasters (sponsoring transactions), and passkey/session-key authentication with Coinbase Smart Wallet / Biconomy.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Full Stack Blockchain Developer.\n2. **Toolchain Proficiency**: Master Next.js 14, Viem, Wagmi v2, Ethers.js & Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic TypeScript & Solidity code on EVM & Node/Browser Web3 Engine adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Arbitrum Sepolia, Base Sepolia & OP Sepolia** and verify artifacts on **Arbiscan / BaseScan / Etherscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/scaffold-eth/scaffold-eth-2](https://github.com/scaffold-eth/scaffold-eth-2)\n- **Ecosystem Starter Templates**: [https://github.com/wevm/wagmi](https://github.com/wevm/wagmi)\n- **Block Explorer & State Verifier**: **Arbiscan / BaseScan / Etherscan**\n- **Native Testnet Environment**: **Arbitrum Sepolia, Base Sepolia & OP Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
           "quiz": [
             {
               "question": "What is the primary breakthrough of ERC-4337 Account Abstraction?",
@@ -4014,12 +8636,55 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
                 "It turns all smart contracts into ERC-20 tokens."
               ],
               "correct_idx": 0
+            },
+            {
+              "question": "What is a 'UserOperation' in the ERC-4337 architecture?",
+              "options": [
+                "A standard browser mouse click event.",
+                "A compiler optimization warning.",
+                "A pseudo-transaction object describing an execution request sent to an alternative mempool, later bundled into an on-chain transaction by a Bundler.",
+                "A user password change request."
+              ],
+              "correct_idx": 2
+            },
+            {
+              "question": "What role does a Paymaster contract fulfill in Account Abstraction?",
+              "options": [
+                "It stores smart contract compiler binaries.",
+                "It inspects UserOperations and sponsors gas fees (gasless transactions) or allows users to pay gas in ERC-20 tokens like USDC.",
+                "It acts as a decentralized bank granting loans.",
+                "It prints NFT artwork."
+              ],
+              "correct_idx": 1
+            },
+            {
+              "question": "How do Session Keys improve Web3 gaming and DeFi user experience?",
+              "options": [
+                "They delete all user session cookies when the tab closes.",
+                "They grant permanent administrator ownership to dapps.",
+                "They allow pre-approved smart contract interactions within specific parameters and time windows without prompt popups for every action.",
+                "They store private keys in plaintext in local storage."
+              ],
+              "correct_idx": 2
+            },
+            {
+              "question": "What contract acts as the universal singleton orchestrator for all ERC-4337 UserOperations?",
+              "options": [
+                "The UniswapV2Factory contract.",
+                "The ERC-20 token wrapper.",
+                "The Hardhat local node.",
+                "The EntryPoint contract (e.g. 0x0000000071727De22E5E9d8BAf0edAc6f37da032)."
+              ],
+              "correct_idx": 3
             }
           ],
           "exercise": {
-            "instruction": "Write an ERC-4337 Paymaster validation snippet. Must contain 'ERC4337' and 'paymaster'.",
-            "template": "// Full-Stack Web3 Module 4: ERC-4337 Paymaster\n",
-            "required_keywords": ["ERC4337", "paymaster"]
+            "instruction": "Write a TypeScript & Solidity code snippet for Module 4. The code must contain the keywords 'ERC4337' and 'paymaster'.",
+            "template": "// Full Stack Blockchain Developer Module 4: Modern Account Abstraction: ERC-4337, Paymasters & Smart Sessions\n// Language: TypeScript & Solidity\n// Write implementation below:\n",
+            "required_keywords": [
+              "ERC4337",
+              "paymaster"
+            ]
           }
         }
       ]
@@ -4035,29 +8700,607 @@ const FRONTEND_TRACK_COURSES: Record<string, Course[]> = {
           "title": "Module 5: Full-Stack DApp Production Deployment & Multi-Chain Verification Challenge",
           "duration": "27 mins",
           "xp": 350,
-          "content": "# Module 5: Full-Stack DApp Production Deployment & Multi-Chain Verification Challenge\n### Full Stack Blockchain Developer Track | Developer Academy\n\nHands-on Deployment Challenge: Compile your full-stack DApp smart contracts, deploy to Arbitrum/Base/OP Sepolia testnets, integrate frontend ABI & Wagmi provider configuration, and verify on-chain artifacts.\n",
+          "content": "# Module 5: Full-Stack DApp Production Deployment & Multi-Chain Verification Challenge\n### Full Stack Blockchain Developer Ecosystem Track | Developer Academy\n\nHands-on Deployment Challenge: Compile your full-stack DApp smart contracts, deploy to Arbitrum/Base/OP Sepolia testnets, integrate frontend ABI & Wagmi provider configuration, and verify on-chain artifacts.\n\n---\n\n### Core Learning Objectives:\n1. **Architectural Deep-Dive**: Understand the execution engine, consensus constraints, and security assumptions of Full Stack Blockchain Developer.\n2. **Toolchain Proficiency**: Master Next.js 14, Viem, Wagmi v2, Ethers.js & Foundry for compiling, building, testing, and debugging.\n3. **Smart Contract / Program Mastery**: Write idiomatic TypeScript & Solidity code on EVM & Node/Browser Web3 Engine adhering to security best practices.\n4. **On-Chain Deployment**: Broadcast real transactions to **Arbitrum Sepolia, Base Sepolia & OP Sepolia** and verify artifacts on **Arbiscan / BaseScan / Etherscan**.\n\n---\n\n### Key Developer Resources:\n- **Primary GitHub Repository**: [https://github.com/scaffold-eth/scaffold-eth-2](https://github.com/scaffold-eth/scaffold-eth-2)\n- **Ecosystem Starter Templates**: [https://github.com/wevm/wagmi](https://github.com/wevm/wagmi)\n- **Block Explorer & State Verifier**: **Arbiscan / BaseScan / Etherscan**\n- **Native Testnet Environment**: **Arbitrum Sepolia, Base Sepolia & OP Sepolia**\n\n---\n\n### AI Mentor Workspace:\nStuck on syntax, compiler errors, or testnet deployment? Switch to **OpenClaw** (Education Mentor) or **Hermes** (Engineering Compiler & Code Reviewer) in the AI panel above for instant assistance!\n",
           "quiz": [
             {
               "question": "What critical files must be synchronized between the smart contract repository and the frontend DApp during deployment?",
               "options": [
                 "The deployed contract addresses for each target network and the compiled ABI JSON artifacts.",
-                "The .env file containing deployer private keys.",
-                "The compiler source code of solc.",
-                "The local Hardhat cache directory."
+                "The `.env` file containing deployer private keys.",
+                "The local Hardhat cache directory.",
+                "The compiler source code of solc."
               ],
               "correct_idx": 0
+            },
+            {
+              "question": "What environment variable configuration is required for multi-chain testnet deployment scripts?",
+              "options": [
+                "Default localhost ports.",
+                "Testnet RPC URLs, deployer private key (via secure secrets/keystore), and block explorer API verification keys.",
+                "Hardcoded plaintext passwords committed to git.",
+                "Root administrative system passwords."
+              ],
+              "correct_idx": 1
+            },
+            {
+              "question": "Why should frontend DApps deploy smart contracts to Layer-2 testnets (Arbitrum/Base/OP) in addition to Ethereum Sepolia?",
+              "options": [
+                "Because Layer-2 networks do not support Solidity.",
+                "Because Ethereum testnets do not allow token transfers.",
+                "To avoid having to write frontend tests.",
+                "To deliver sub-second transaction latency, reduce user gas costs by 95%+, and provide scalable Superchain/Rollup interoperability."
+              ],
+              "correct_idx": 3
+            },
+            {
+              "question": "What verified artifact proves successful completion of the Full Stack Deployment Challenge?",
+              "options": [
+                "A mockup image in Figma.",
+                "An empty GitHub repository.",
+                "A live deployed contract address on an EVM testnet with verified source code and an interactive frontend interface.",
+                "A screenshot of a local terminal with no testnet broadcast."
+              ],
+              "correct_idx": 2
+            },
+            {
+              "question": "Why do Web3 institutional grant reviewers value live full-stack testnet deployments over pure theory?",
+              "options": [
+                "It guarantees immediate mainnet token listings.",
+                "It prevents future code modifications.",
+                "It replaces the need for open-source code licenses.",
+                "It demonstrates proven execution capability, end-to-end technical competency, verified user UX, and real multi-chain ecosystem impact."
+              ],
+              "correct_idx": 3
             }
           ],
           "exercise": {
-            "instruction": "Complete the Full Stack Testnet Deployment Challenge! Write a deployment configuration and verification snippet containing 'fullstack', 'deploy', 'testnet', and 'verify'.",
-            "template": "// ─── Full-Stack Multi-Chain Testnet Deployment & Verification ───\n// Targets: Arbitrum Sepolia / Base Sepolia / OP Sepolia\n\n// Complete deployment declaration below:\n",
-            "required_keywords": ["fullstack", "deploy", "testnet", "verify"]
+            "instruction": "Complete the Full Stack Blockchain Developer Testnet Deployment Challenge! Write a deployment configuration and verification snippet containing 'fullstack', 'deploy', 'testnet', and 'verify'.",
+            "template": "// \u2500\u2500\u2500 Full Stack Blockchain Developer Testnet Deployment & Verification \u2500\u2500\u2500\n// Target: Arbitrum Sepolia, Base Sepolia & OP Sepolia\n// Network Explorer: Arbiscan / BaseScan / Etherscan\n\n// Complete deployment declaration below:\n",
+            "required_keywords": [
+              "fullstack",
+              "deploy",
+              "testnet",
+              "verify"
+            ]
           }
         }
       ]
     }
   ]
 };
+
+export const CORE_EVM_COURSES: Course[] = [
+  {
+    "level_id": 1,
+    "title": "Blockchain Fundamentals & Web3 Core",
+    "total_lessons": 2,
+    "lessons": [
+      {
+        "id": "1-1",
+        "level_id": 1,
+        "title": "Introduction to Peer-to-Peer Networks",
+        "duration": "8 mins",
+        "xp": 100,
+        "content": "# Introduction to Peer-to-Peer Networks\n\nA peer-to-peer (P2P) network is a decentralized communications model in which each party (peer) has equivalent capabilities and can initiate communications. This is in contrast to the traditional client-server model, where some computers are dedicated to serving others.\n\n### Key Concepts:\n1. **Decentralization**: No central server acts as a single point of failure.\n2. **Distributed Ledger**: Every node keeps a copy of the database.\n3. **Consensus**: Nodes must agree on the state of the network.\n\nWeb3 relies heavily on P2P networks (like Ethereum DevP2P or LibP2P) to broadcast transactions and blocks to all participants without relying on a centralized intermediary.\n",
+        "quiz": [
+          {
+            "question": "What is the primary difference between a client-server network and a peer-to-peer network?",
+            "options": [
+              "Client-server networks have no central authority.",
+              "Peer-to-peer networks distribute data and control equally among participating nodes.",
+              "Peer-to-peer networks are slower and less secure.",
+              "Client-server networks only run on Unix machines."
+            ],
+            "correct_idx": 1
+          },
+          {
+            "question": "Which protocol is commonly used in modern blockchains like Ethereum for peer communication?",
+            "options": [
+              "FTP",
+              "HTTP",
+              "DevP2P / LibP2P",
+              "SMTP"
+            ],
+            "correct_idx": 2
+          },
+          {
+            "question": "What role does a distributed ledger play in a decentralized network?",
+            "options": [
+              "It hosts centralized frontend web servers.",
+              "It stores temporary browser session cookies.",
+              "It encrypts hard drives locally.",
+              "Every validator maintains an immutable synchronized copy of state transitions."
+            ],
+            "correct_idx": 3
+          },
+          {
+            "question": "What prevents bad actors from rewriting history on a consensus-driven P2P blockchain?",
+            "options": [
+              "Legal copyright agreements.",
+              "Cloud firewall rules.",
+              "Cryptographic hashing combined with majority Byzantine Fault Tolerant consensus.",
+              "Manual administrator passwords."
+            ],
+            "correct_idx": 2
+          },
+          {
+            "question": "In blockchain P2P gossip networks, what is transaction propagation?",
+            "options": [
+              "Streaming video files over torrents.",
+              "Deleting invalid blocks from disk.",
+              "Sending private emails between wallet owners.",
+              "Nodes broadcasting verified unconfirmed transactions to neighboring peers until the whole network is informed."
+            ],
+            "correct_idx": 3
+          }
+        ],
+        "exercise": {
+          "instruction": "Write a basic comment explaining the concept of a decentralized node in your own words. The code should contain the word '// decentralization'.",
+          "template": "// Starter template\n// Write your comment here:\n",
+          "required_keywords": [
+            "decentralization"
+          ]
+        }
+      },
+      {
+        "id": "1-2",
+        "level_id": 1,
+        "title": "Cryptography: Hash Functions & Keys",
+        "duration": "10 mins",
+        "xp": 100,
+        "content": "# Cryptography: Hash Functions & Keys\n\nCryptography is the foundation of blockchain security. It enables trustless verification and secures assets using mathematical concepts.\n\n### Hash Functions\nA cryptographic hash function takes an input (message) and returns a fixed-size string of bytes (digest).\n- **Deterministic**: The same input always produces the same output.\n- **One-way**: You cannot reverse-engineer the input from the hash.\n- **Collision Resistant**: It is extremely hard to find two different inputs that produce the same output.\n- **Example**: Keccak-256 (used in Ethereum) and SHA-256 (used in Bitcoin).\n\n### Public and Private Keys\nBlockchains use asymmetric cryptography:\n- **Private Key**: A secret number that allows you to sign transactions and spend funds. Keep it secret!\n- **Public Key**: Derived mathematically from the private key; acts as your identity on the network.\n- **Address**: A shortened hash of your public key (e.g., `0x71C...`).\n",
+        "quiz": [
+          {
+            "question": "Which hash function is primarily used inside the Ethereum Virtual Machine (EVM)?",
+            "options": [
+              "SHA-256",
+              "MD5",
+              "Keccak-256",
+              "bcrypt"
+            ],
+            "correct_idx": 2
+          },
+          {
+            "question": "What is the purpose of a Private Key?",
+            "options": [
+              "To cryptographically sign transactions and approve transfers without revealing secrets.",
+              "To share publicly as your account number.",
+              "To encrypt files on your local hard drive.",
+              "To generate random blocks in mining."
+            ],
+            "correct_idx": 0
+          },
+          {
+            "question": "What does collision resistance in cryptographic hash functions guarantee?",
+            "options": [
+              "Hashes can never be decrypted.",
+              "Hashes always contain 128 characters.",
+              "It is computationally infeasible to find two distinct inputs x and y such that hash(x) == hash(y).",
+              "Hashes run in constant zero milliseconds."
+            ],
+            "correct_idx": 2
+          },
+          {
+            "question": "How is a public blockchain wallet address typically derived?",
+            "options": [
+              "By asking an ISP for a static IP address.",
+              "By hashing the public key derived from the ECDSA/Ed25519 private key curve.",
+              "By generating a random 6-digit PIN code.",
+              "By registering a username on a DNS server."
+            ],
+            "correct_idx": 1
+          },
+          {
+            "question": "Why is elliptic curve digital signature algorithm (ECDSA/Ed25519) crucial in Web3?",
+            "options": [
+              "It allows anyone with the public key to mathematically verify transaction authenticity without knowing the private key.",
+              "It converts Solidity code into HTML.",
+              "It compresses smart contract bytecode.",
+              "It prevents high gas prices automatically."
+            ],
+            "correct_idx": 0
+          }
+        ],
+        "exercise": {
+          "instruction": "Create a smart contract comment defining a mock private key variable. The code must contain the word 'privateKey' and 'Keccak256'.",
+          "template": "// Define variables below:\n",
+          "required_keywords": [
+            "privateKey",
+            "Keccak256"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "level_id": 2,
+    "title": "Smart Contract Architecture",
+    "total_lessons": 1,
+    "lessons": [
+      {
+        "id": "2-1",
+        "level_id": 2,
+        "title": "Solidity Fundamentals & State Variables",
+        "duration": "15 mins",
+        "xp": 150,
+        "content": "# Solidity Fundamentals & State Variables\n\nSmart contracts are immutable programs deployed on-chain that execute deterministic logic.\n\n### Contract Anatomy\n1. **SPDX License Identifier**: Tells users and compilers how the code is licensed.\n2. **Pragma Directive**: Specifies the compiler version (e.g., `pragma solidity ^0.8.20;`).\n3. **State Variables**: Permanently stored in contract storage on the blockchain.\n4. **Functions**: Read or modify state variables.\n",
+        "quiz": [
+          {
+            "question": "Where are state variables stored in a smart contract?",
+            "options": [
+              "In temporary memory",
+              "In the call stack",
+              "On the blockchain's persistent storage",
+              "On the local hard drive"
+            ],
+            "correct_idx": 2
+          },
+          {
+            "question": "What is the purpose of the `pragma solidity` directive?",
+            "options": [
+              "It specifies the compiler version the contract is written for.",
+              "It imports external npm packages.",
+              "It sets the gas limit for execution.",
+              "It connects to MetaMask."
+            ],
+            "correct_idx": 0
+          },
+          {
+            "question": "What is the gas difference between `view` functions and state-modifying functions when called externally?",
+            "options": [
+              "`view` functions cost double the gas.",
+              "`view` functions executed off-chain via RPC are free of gas, while state-modifying transactions consume gas.",
+              "Both cost exactly 21,000 gas.",
+              "State-modifying functions are free."
+            ],
+            "correct_idx": 1
+          },
+          {
+            "question": "Which keyword in Solidity restricts state variable access to within the contract and derived contracts?",
+            "options": [
+              "external",
+              "public",
+              "private",
+              "internal"
+            ],
+            "correct_idx": 3
+          },
+          {
+            "question": "What occurs when an integer arithmetic overflow happens in Solidity ^0.8.0?",
+            "options": [
+              "The miner receives extra gas.",
+              "The number wraps around silently like in Solidity 0.4.",
+              "The compiler crashes.",
+              "The transaction automatically reverts due to built-in overflow checks."
+            ],
+            "correct_idx": 3
+          }
+        ],
+        "exercise": {
+          "instruction": "Write a minimal Solidity contract named `StorageExample` that declares a `uint256 public count;` state variable.",
+          "template": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.20;\n\ncontract StorageExample {\n    // Declare count variable here\n}\n",
+          "required_keywords": [
+            "contract",
+            "uint256",
+            "public",
+            "count"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "level_id": 3,
+    "title": "Token Standards & ERCs",
+    "total_lessons": 1,
+    "lessons": [
+      {
+        "id": "3-1",
+        "level_id": 3,
+        "title": "ERC-20 Fungible Token Standard",
+        "duration": "18 mins",
+        "xp": 200,
+        "content": "# ERC-20 Fungible Token Standard\n\nThe ERC-20 standard defines a common interface for fungible tokens on EVM networks. Every token unit is identical in type and value.\n\n### Key ERC-20 Functions:\n- `totalSupply()`: Returns total circulating supply.\n- `balanceOf(account)`: Returns token balance of an address.\n- `transfer(to, amount)`: Transfers tokens from caller to recipient.\n- `approve(spender, amount)` & `transferFrom(from, to, amount)`: Allows third-party contracts (DEXs/lending) to spend tokens on behalf of a user.\n",
+        "quiz": [
+          {
+            "question": "What is the primary characteristic of an ERC-20 token?",
+            "options": [
+              "All tokens are identical and interchangeable (fungible).",
+              "It can only be held by validators.",
+              "It does not require gas to transfer.",
+              "Each token has a unique ID and metadata (non-fungible)."
+            ],
+            "correct_idx": 0
+          },
+          {
+            "question": "Which function pair allows a decentralized exchange (DEX) to swap tokens on your behalf?",
+            "options": [
+              "`deposit` and `withdraw`",
+              "`approve` and `transferFrom`",
+              "`burn` and `mint`",
+              "`lock` and `unlock`"
+            ],
+            "correct_idx": 1
+          },
+          {
+            "question": "What security vulnerability can occur if an ERC-20 `transferFrom` lacks reentrancy guards or safe checks?",
+            "options": [
+              "Memory leak on node servers.",
+              "DNS spoofing.",
+              "Reentrancy or allowance underflow exploits.",
+              "CSS stylesheet injection."
+            ],
+            "correct_idx": 2
+          },
+          {
+            "question": "What standard decimal precision is used by the vast majority of ERC-20 tokens?",
+            "options": [
+              "0 decimals",
+              "6 decimals",
+              "8 decimals",
+              "18 decimals"
+            ],
+            "correct_idx": 3
+          },
+          {
+            "question": "Why is emitting a `Transfer` event required by the ERC-20 specification?",
+            "options": [
+              "It increases contract bytecode size.",
+              "It resets contract allowances.",
+              "It allows block explorers, indexers, and wallets to detect state changes and update balances off-chain.",
+              "It burns unused gas."
+            ],
+            "correct_idx": 2
+          }
+        ],
+        "exercise": {
+          "instruction": "Implement an ERC-20 interface snippet containing `function transfer(address to, uint256 amount) external returns (bool);`.",
+          "template": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.20;\n\ninterface IERC20 {\n    // Add transfer signature here\n}\n",
+          "required_keywords": [
+            "function",
+            "transfer",
+            "address",
+            "uint256",
+            "returns",
+            "bool"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "level_id": 4,
+    "title": "Protocol Security & Auditing",
+    "total_lessons": 1,
+    "lessons": [
+      {
+        "id": "4-1",
+        "level_id": 4,
+        "title": "Reentrancy Attacks & Checks-Effects-Interactions Pattern",
+        "duration": "20 mins",
+        "xp": 250,
+        "content": "# Reentrancy Attacks & Security Best Practices\n\nReentrancy is one of the most famous vulnerabilities in smart contract history, responsible for the 2016 DAO hack.\n\n### How Reentrancy Occurs:\n1. Contract A calls an external contract B or sends ETH (`call{value: x}(\"\")`).\n2. Execution control transfers to Contract B before Contract A updates its internal balance.\n3. Contract B calls back into Contract A's withdrawal function, draining funds repeatedly!\n\n### Defense Mechanisms:\n- **Checks-Effects-Interactions Pattern**: Always update internal state (Effects) before making external calls (Interactions).\n- **ReentrancyGuard**: Use OpenZeppelin's `nonReentrant` modifier.\n",
+        "quiz": [
+          {
+            "question": "What is the Checks-Effects-Interactions pattern?",
+            "options": [
+              "A design pattern where internal state is updated BEFORE external contract calls or transfers are executed.",
+              "A frontend React hook.",
+              "A pattern where external calls are made first to check liquidity.",
+              "A compiler setting in Hardhat."
+            ],
+            "correct_idx": 0
+          },
+          {
+            "question": "Which OpenZeppelin modifier prevents recursive reentry into smart contract functions?",
+            "options": [
+              "initializer",
+              "onlyOwner",
+              "nonReentrant",
+              "whenNotPaused"
+            ],
+            "correct_idx": 2
+          },
+          {
+            "question": "Why is `transfer()` no longer unconditionally recommended for sending ETH in modern contracts?",
+            "options": [
+              "It always fails on testnets.",
+              "It imposes a strict 2,300 gas limit which breaks contracts using account abstraction or multisigs.",
+              "It uses too much memory.",
+              "It was removed in Solidity 0.8."
+            ],
+            "correct_idx": 1
+          },
+          {
+            "question": "What security risk is posed by `tx.origin` authentication?",
+            "options": [
+              "Phishing attacks where a malicious intermediary contract tricks a victim into calling a privileged function.",
+              "Flash loan liquidation.",
+              "Gas starvation.",
+              "Integer overflow."
+            ],
+            "correct_idx": 0
+          },
+          {
+            "question": "What is the purpose of static analysis tools like Slither and Mythril in smart contract auditing?",
+            "options": [
+              "To automatically inspect ASTs and CFGs to flag vulnerabilities like uninitialized storage and reentrancy before deployment.",
+              "To manage seed phrases.",
+              "To generate CSS animations.",
+              "To compress video files for IPFS."
+            ],
+            "correct_idx": 0
+          }
+        ],
+        "exercise": {
+          "instruction": "Implement a secure withdrawal pattern using the `nonReentrant` modifier keyword.",
+          "template": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.20;\n\ncontract SecureVault {\n    mapping(address => uint256) public balances;\n\n    // Implement secure withdraw function\n}\n",
+          "required_keywords": [
+            "withdraw",
+            "nonReentrant",
+            "balances",
+            "msg.sender"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "level_id": 5,
+    "title": "EVM Testnet Deployment Challenge",
+    "total_lessons": 1,
+    "lessons": [
+      {
+        "id": "5-1",
+        "level_id": 5,
+        "title": "Ethereum / EVM Testnet Deployment Challenge",
+        "duration": "25 mins",
+        "xp": 300,
+        "content": "# EVM Testnet Deployment Challenge\n\nDeploy your verified smart contract to Ethereum Sepolia or Base Sepolia testnets.\n\n### Deployment Verification Steps:\n1. Compile your contract with Hardhat / Foundry (`forge build`).\n2. Set your testnet RPC URL and deployer private key.\n3. Broadcast the deployment transaction to Sepolia testnet (`forge create`).\n4. Verify contract source code on Etherscan or Basescan block explorer.\n",
+        "quiz": [
+          {
+            "question": "What artifact is generated by Solidity compilers for frontend interfaces to interact with deployed contracts?",
+            "options": [
+              "Application Binary Interface (ABI) JSON specification.",
+              "PNG favicon image.",
+              "Node.js package.json.",
+              "CSS stylesheet."
+            ],
+            "correct_idx": 0
+          },
+          {
+            "question": "What is the purpose of verifying contract source code on block explorers?",
+            "options": [
+              "It proves the compiled bytecode matches the published human-readable source code for transparency.",
+              "It refunds deployment gas.",
+              "It hides transaction history.",
+              "It prevents anyone from calling contract functions."
+            ],
+            "correct_idx": 0
+          },
+          {
+            "question": "Which testnet is the primary recommended testnet for Ethereum protocol upgrades and testing?",
+            "options": [
+              "Bitcoin Testnet",
+              "Ropsten (deprecated)",
+              "Sepolia",
+              "Mainnet"
+            ],
+            "correct_idx": 2
+          },
+          {
+            "question": "What toolchain command in Foundry compiles and builds smart contract bytecode?",
+            "options": [
+              "git push",
+              "forge build",
+              "npm start",
+              "solc --clean"
+            ],
+            "correct_idx": 1
+          },
+          {
+            "question": "Why should private keys NEVER be hardcoded into source code repositories?",
+            "options": [
+              "It changes the contract address.",
+              "It makes the contract name too long.",
+              "Automated bots continuously scrape public repos to immediately drain funds from exposed keys.",
+              "It slows down compiler performance."
+            ],
+            "correct_idx": 2
+          }
+        ],
+        "exercise": {
+          "instruction": "Write a deployment script comment declaring the Sepolia testnet target and contract verification. Must contain 'Sepolia', 'deploy', and 'verify'.",
+          "template": "// Deployment Script\n",
+          "required_keywords": [
+            "Sepolia",
+            "deploy",
+            "verify"
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "level_id": 6,
+    "title": "MOR Finance Protocols & AI Agents",
+    "total_lessons": 1,
+    "lessons": [
+      {
+        "id": "6-1",
+        "level_id": 6,
+        "title": "MOR Finance Protocols & AI Smart Agents",
+        "duration": "25 mins",
+        "xp": 300,
+        "content": "# MOR Finance Protocols & AI Smart Agents\n\nMOR Finance pioneers the convergence of decentralized AI, on-chain capital allocation, and automated smart agent economies.\n\n### Core Ecosystem Pillars:\n1. **Morpheus Smart Agents**: Decentralized AI agents executing smart contract transactions on behalf of users.\n2. **Compute & Capital Provision**: Directing computational power and capital rewards to open-source developers.\n3. **Decentralized Governance**: Token-weighted protocol steering and community-directed grants.\n",
+        "quiz": [
+          {
+            "question": "What is a Morpheus AI Smart Agent in the MOR Finance ecosystem?",
+            "options": [
+              "A centralized cloud chatbot running on a private database.",
+              "An autonomous decentralized software agent combining LLM reasoning with direct smart contract interaction capabilities.",
+              "A static HTML web page.",
+              "A graphic design tool."
+            ],
+            "correct_idx": 1
+          },
+          {
+            "question": "How does MOR Finance incentivize open-source AI and Web3 developer contributions?",
+            "options": [
+              "Through proof-of-contribution emission rewards, ecosystem grants, and compute rewards.",
+              "By charging developers high subscription fees.",
+              "Through manual fiat wire transfers.",
+              "By restricting code access."
+            ],
+            "correct_idx": 0
+          },
+          {
+            "question": "What role does the Developer Academy play in the MOR Finance ecosystem?",
+            "options": [
+              "Hosting video streaming servers.",
+              "Onboarding, training, certifying, and connecting developers to grant applications, ecosystem bounties, and Web3 careers.",
+              "Selling proprietary hardware.",
+              "Managing fiat banking licenses."
+            ],
+            "correct_idx": 1
+          },
+          {
+            "question": "Which cryptographic standard ensures AI agents only execute approved on-chain transactions?",
+            "options": [
+              "Session keys with granular permission scopes and spend limits.",
+              "Unrestricted master private keys.",
+              "PlainText passwords.",
+              "Cookie tokens."
+            ],
+            "correct_idx": 0
+          },
+          {
+            "question": "How do decentralized AI agents interact with liquidity and DeFi protocols on-chain?",
+            "options": [
+              "By making phone calls to market makers.",
+              "Through web scraping only.",
+              "By sending physical checks.",
+              "By querying on-chain oracle feeds, calculating optimal paths, and submitting signed transactions via RPC nodes."
+            ],
+            "correct_idx": 3
+          }
+        ],
+        "exercise": {
+          "instruction": "Write a contract comment declaring an AI Agent interaction module. Must contain 'SmartAgent', 'Morpheus', and 'Governance'.",
+          "template": "// MOR Finance AI Protocol\n",
+          "required_keywords": [
+            "SmartAgent",
+            "Morpheus",
+            "Governance"
+          ]
+        }
+      }
+    ]
+  }
+];
+
+FRONTEND_TRACK_COURSES["ethereum"] = CORE_EVM_COURSES;
+FRONTEND_TRACK_COURSES["fundamentals"] = CORE_EVM_COURSES;
 
 // ─── Courses & Lessons ────────────────────────────────────────────────────────
 export async function fetchCourses(track = 'ethereum'): Promise<Course[]> {
@@ -4071,7 +9314,7 @@ export async function fetchCourses(track = 'ethereum'): Promise<Course[]> {
   if (FRONTEND_TRACK_COURSES[trackKey]) {
     return FRONTEND_TRACK_COURSES[trackKey];
   }
-  throw new Error(`Failed to fetch courses for track: ${track}`);
+  return CORE_EVM_COURSES;
 }
 
 export async function fetchLesson(lessonId: string, track = 'ethereum'): Promise<Lesson> {
