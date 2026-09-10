@@ -7,7 +7,7 @@
 [![Security Audit](https://img.shields.io/badge/Security%20Audit-100%25%20Passed-emerald)](./SECURITY_CHECKLIST.md)
 [![Arbitrum Blueprint](https://img.shields.io/badge/Arbitrum%20Blueprint-v2.0%20Compliant-blue)](./contracts/arbitrum/)
 [![Supported Chains](https://img.shields.io/badge/Chains-Arbitrum%20%7C%20Base%20%7C%20OP%20%7C%20Solana%20%7C%20Aptos%20%7C%20Starknet%20%7C%20Polkadot-indigo)](#-supported-chains--runtime-matrix)
-[![Tests Passing](https://img.shields.io/badge/Tests-16%2F16%20Passed-success)](#-testing-instructions)
+[![Tests Passing](https://img.shields.io/badge/Tests-21%2F21%20Passed-success)](#-testing-instructions)
 [![Live Portal](https://img.shields.io/badge/Live%20Portal-morfinance.ai-brightgreen)](https://morfinance.ai)
 
 ---
@@ -43,38 +43,34 @@ Unlike passive video tutorial sites, the platform provides:
 
 ## 🏛️ Architecture Diagram
 
-### System Architecture Flow
+### High-Level System Architecture
 
 ```mermaid
 flowchart TD
-    subgraph Client["Frontend Client (React 18 + Vite + Monaco)"]
-        UI[Interactive UI / Academy Portal]
-        Editor[Monaco Code Editor & Sandbox]
-        SSO[Fast-Track GitHub OAuth SSO]
-        AIMentorUI[AI Mentor Interactive Stream]
+    subgraph Client["Frontend Client (React 18 + Vite + Monaco IDE)"]
+        UI[Interactive Academy Portal & Curriculum]
+        Editor[Monaco Code Sandbox]
+        SSO[GitHub Developer SSO]
+        AIMentorUI[Interactive AI Mentorship Stream]
     end
 
-    subgraph Gateway["Backend Gateway & API (FastAPI + Uvicorn)"]
-        AuthService[Auth & Cohort Router]
+    subgraph Gateway["Backend API Gateway (FastAPI)"]
+        GatewayAPI[Core API Service]
         CompilerEngine[Multi-Chain Compiler Adapter Engine]
-        TelemetryEngine[Grant Telemetry & Analytics Pipeline]
-        MentorService[AI Mentorship Agent Adapter]
+        TelemetryEngine[Deployment & Analytics Verification]
+        MentorService[AI Mentorship Service]
     end
 
-    subgraph Compilers["Compiler & Heuristic Evaluators"]
-        Solc[solc v0.8.20 EVM Compiler]
-        Stylus[Arbitrum Stylus SDK / Cargo WASM]
-        Anchor[Solana Anchor v0.30 CLI]
-        MoveVM[Aptos Move v2.4 Bytecode Compiler]
-        CairoVM[Starknet Scarb / Cairo 2.0]
-        Ink[Polkadot cargo-contract / ink! 5.0]
+    subgraph Compilers["Multi-Chain Compiler Adapters"]
+        Solc[Solidity EVM Compiler]
+        Stylus[Arbitrum Stylus Rust / WASM]
+        Anchor[Solana Anchor Framework]
+        MoveVM[Aptos Move Bytecode Adapter]
+        CairoVM[Starknet Cairo / Scarb Adapter]
+        Ink[Polkadot ink! WASM Adapter]
     end
 
-    subgraph Data["Database & Persistence Tier"]
-        Mongo[(MongoDB Atlas Cluster)]
-    end
-
-    subgraph Chains["On-Chain Networks & Explorers"]
+    subgraph Chains["Target Networks & Explorers"]
         Arb[Arbitrum Sepolia / Arbiscan]
         Base[Base Sepolia / BaseScan]
         OP[OP Sepolia / OP Etherscan]
@@ -82,15 +78,13 @@ flowchart TD
         Aptos[Aptos Testnet / AptosScan]
         Stark[Starknet Sepolia / Voyager]
         Dot[Polkadot Asset Hub / Subscan]
+        Eth[Ethereum Sepolia / Etherscan]
     end
 
-    UI --> SSO
+    UI --> GatewayAPI
     Editor --> CompilerEngine
-    SSO --> AuthService
+    SSO --> GatewayAPI
     AIMentorUI --> MentorService
-
-    AuthService --> Mongo
-    TelemetryEngine --> Mongo
 
     CompilerEngine --> Solc
     CompilerEngine --> Stylus
@@ -106,16 +100,17 @@ flowchart TD
     TelemetryEngine --> Aptos
     TelemetryEngine --> Stark
     TelemetryEngine --> Dot
+    TelemetryEngine --> Eth
 ```
 
-### Text / ASCII Fallback Architecture
+### High-Level System Flow
 ```
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
 │                              FRONTEND WORKSPACE (REACT 18)                             │
 │  ┌───────────────────────────────┐  ┌────────────────────────────┐  ┌────────────────┐ │
-│  │   Monaco Multi-Chain Editor   │  │ Frictionless GitHub SSO    │  │ AI Mentor Stream││
-│  │   • In-Browser AST Checking   │  │ • Mobile & Desktop Modals  │  │ • OpenClaw     │ │
-│  │   • Multi-Language Syntax     │  │ • University Cohort Routing│  │ • Hermes 3 SSE │ │
+│  │   Monaco Multi-Chain Editor   │  │ Frictionless Developer SSO │  │ AI Mentor Stream││
+│  │   • In-Browser AST Checking   │  │ • 1-Click Fast-Track Auth  │  │ • Code Feedback│ │
+│  │   • Multi-Language Syntax     │  │ • Student Cohort Tracking  │  │ • Guided Tasks │ │
 │  └───────────────────────────────┘  └────────────────────────────┘  └────────────────┘ │
 └───────────────────────────────────────────┬────────────────────────────────────────────┘
                                             │ REST / SSE API Calls
@@ -123,12 +118,12 @@ flowchart TD
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
 │                              BACKEND GATEWAY (FASTAPI)                                 │
 │  ┌───────────────────────────────┐  ┌────────────────────────────┐  ┌────────────────┐ │
-│  │ Multi-Chain Compiler Engine   │  │ Programmatic Cohort Ingest │  │ Grant Telemetry│ │
-│  │ • Solidity / Stylus / Anchor  │  │ • POST /api/v1/auth/github │  │ • SMV, GEI, CCV│ │
-│  │ • Move / Cairo / ink! Wasm    │  │ • Instant Profile Creation │  │ • Explorer Sync│ │
+│  │ Multi-Chain Compiler Engine   │  │ Developer Authentication   │  │ Verification   │ │
+│  │ • Solidity / Stylus / Anchor  │  │ • OAuth Code Exchange      │  │ • Telemetry    │ │
+│  │ • Move / Cairo / ink! Wasm    │  │ • Session Token Issuance   │  │ • Explorer Sync│ │
 │  └───────────────────────────────┘  └────────────────────────────┘  └────────────────┘ │
 └───────────────────────────────────────────┬────────────────────────────────────────────┘
-                                            │ RPC On-Chain Verification
+                                            │ RPC Testnet Verification
                                             ▼
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
 │                        ON-CHAIN TESTNET VERIFICATION & EXPLORERS                       │
@@ -201,26 +196,22 @@ All endpoints are hosted with interactive Swagger/OpenAPI documentation at `http
     }
     ```
 
-### 2. Frictionless University Onboarding & SSO
+### 2. Developer Onboarding & Authentication
 * **`POST /api/v1/auth/github/callback`**
-  * Handles OAuth code exchange, associates incoming students with institutional cohorts (e.g. `KU_COHORT_2026_01`), and issues verified JWT session tokens.
+  * Handles OAuth code exchange and issues verified JWT session tokens for developer sandboxes.
   * **Payload**:
     ```json
     {
-      "oauth_code": "84b720491823ab",
-      "university_affiliate": "Kenyatta University",
-      "cohort_id": "KU_COHORT_2026_01",
+      "oauth_code": "<OAUTH_CODE>",
       "redirect_uri": "https://morfinance.ai"
     }
     ```
 
-### 3. Grant Telemetry & Verification
+### 3. Smart Contract Verification & Telemetry
 * **`POST /api/v1/analytics/deployment`**
-  * Logs verified student contract deployments on-chain with tx hash, network identifier, and gas telemetry.
+  * Verifies and records student contract deployments on-chain with transaction receipts and gas metrics.
 * **`GET /api/v1/analytics/telemetry`**
-  * Returns aggregate institutional telemetry metrics for grant milestone validation.
-* **`POST /api/arbitrum/telemetry/submit`**
-  * Ingests Arbitrum Stylus and Nitro developer execution data.
+  * Returns aggregate ecosystem telemetry metrics for grant milestone validation.
 
 ### 4. AI Mentorship & Curriculum
 * **`POST /api/mentor/ask`** (REST) & **`POST /api/mentor/chat`** (SSE Streaming)
@@ -303,26 +294,31 @@ pytest tests/ -v
 **Expected Output:**
 ```text
 ============================= test session starts =============================
-collected 16 items
+collected 21 items
 
-tests/test_api.py::test_health_check PASSED                              [  6%]
-tests/test_api.py::test_multi_chain_compile_solidity PASSED              [ 12%]
-tests/test_api.py::test_multi_chain_compile_base PASSED                  [ 18%]
-tests/test_api.py::test_multi_chain_compile_optimism PASSED              [ 25%]
-tests/test_api.py::test_multi_chain_compile_stylus PASSED                [ 31%]
-tests/test_compilers.py::test_validate_brackets_balanced PASSED          [ 37%]
-tests/test_compilers.py::test_validate_brackets_unbalanced PASSED        [ 43%]
-tests/test_compilers.py::test_solidity_compiler_valid PASSED             [ 50%]
-tests/test_compilers.py::test_solidity_compiler_syntax_error PASSED      [ 56%]
-tests/test_compilers.py::test_base_compiler_valid PASSED                 [ 64%]
-tests/test_compilers.py::test_optimism_compiler_valid PASSED             [ 70%]
-tests/test_compilers.py::test_arbitrum_stylus_compiler_valid PASSED      [ 75%]
-tests/test_compilers.py::test_solana_anchor_compiler_valid PASSED        [ 81%]
-tests/test_compilers.py::test_aptos_move_compiler_valid PASSED           [ 87%]
-tests/test_compilers.py::test_starknet_cairo_compiler_valid PASSED       [ 93%]
+tests/test_api.py::test_health_check PASSED                              [  4%]
+tests/test_api.py::test_multi_chain_compile_solidity PASSED              [  9%]
+tests/test_api.py::test_multi_chain_compile_base PASSED                  [ 14%]
+tests/test_api.py::test_multi_chain_compile_optimism PASSED              [ 19%]
+tests/test_api.py::test_multi_chain_compile_stylus PASSED                [ 23%]
+tests/test_api.py::test_fullstack_track_courses PASSED                   [ 28%]
+tests/test_api.py::test_evm_testnet_deployment_logging PASSED            [ 33%]
+tests/test_api.py::test_jobs_api_endpoint PASSED                         [ 38%]
+tests/test_api.py::test_jobs_filter_tag_and_internships PASSED           [ 42%]
+tests/test_api.py::test_certificate_only_issued_on_full_track_completion PASSED [ 47%]
+tests/test_compilers.py::test_validate_brackets_balanced PASSED          [ 52%]
+tests/test_compilers.py::test_validate_brackets_unbalanced PASSED        [ 57%]
+tests/test_compilers.py::test_solidity_compiler_valid PASSED             [ 61%]
+tests/test_compilers.py::test_solidity_compiler_syntax_error PASSED      [ 66%]
+tests/test_compilers.py::test_base_compiler_valid PASSED                 [ 71%]
+tests/test_compilers.py::test_optimism_compiler_valid PASSED             [ 76%]
+tests/test_compilers.py::test_arbitrum_stylus_compiler_valid PASSED      [ 80%]
+tests/test_compilers.py::test_solana_anchor_compiler_valid PASSED        [ 85%]
+tests/test_compilers.py::test_aptos_move_compiler_valid PASSED           [ 90%]
+tests/test_compilers.py::test_starknet_cairo_compiler_valid PASSED       [ 95%]
 tests/test_compilers.py::test_polkadot_ink_compiler_valid PASSED         [100%]
 
-============================= 16 passed in 1.05s ==============================
+============================= 21 passed in 1.45s ==============================
 ```
 
 ---
@@ -358,8 +354,6 @@ VITE_API_URL=https://mor-finance-developer-academy-backend.onrender.com
 VITE_GITHUB_CLIENT_ID=your_github_client_id_here
 VITE_GITHUB_REDIRECT_URI=https://morfinance.ai
 VITE_APP_URL=https://morfinance.ai
-VITE_COHORT_ID=KU_COHORT_2026_01
-VITE_UNIVERSITY_NAME=Kenyatta University
 ```
 
 #### Backend Environment Variables (`backend/.env`):
@@ -369,7 +363,7 @@ CORS_ORIGINS=["https://morfinance.ai","http://localhost:5173"]
 GITHUB_CLIENT_ID=your_github_client_id_here
 GITHUB_CLIENT_SECRET=your_github_client_secret_here
 GITHUB_REDIRECT_URI=https://morfinance.ai
-MONGODB_URI=mongodb+srv://<USER>:<PASSWORD>@cluster.mongodb.net/devjobs
+MONGODB_URI=your_mongodb_connection_string
 SECRET_KEY=your_secure_random_jwt_secret_key_here
 ```
 
@@ -378,7 +372,7 @@ SECRET_KEY=your_secure_random_jwt_secret_key_here
 ## 🖥️ Platform Feature Tour
 
 1. **Multi-Chain Monaco IDE**: Live Monaco workspace featuring syntax highlighting, tabbed contract files, ABI generation, bytecode extraction, and compiler terminal diagnostics.
-2. **Fast-Track Frictionless Enrollment Modal**: Mobile-first onboarding dialog allowing students to authorize via GitHub with 1-click, routing them automatically into university cohort tracking with 0 manual forms.
+2. **Fast-Track Frictionless Enrollment Modal**: Mobile-first onboarding dialog allowing students to authorize via GitHub with 1-click, routing them automatically into developer learning tracks.
 3. **AI Code Mentorship**: Real-time streaming assistant assessing student code against compiler specifications and providing instant debugging suggestions.
 4. **Community Knowledge Forum**: Sanitized institutional collaboration hub featuring official academy threads, discussions, and verified role badges.
 5. **Verifiable Certificates**: Digital developer credentials verifying smart contract deployments across testnets.
@@ -401,10 +395,10 @@ SECRET_KEY=your_secure_random_jwt_secret_key_here
 
 ---
 
-## 👥 Contributors & Institutional Partners
+## 👥 Contributors & Ecosystem Partners
 
 * **Lead Architecture & Engineering**: [MorFinance.ai](https://morfinance.ai)
-* **Institutional Academic Pilot**: Kenyatta University School of Computing & Engineering (`KU_COHORT_2026_01`)
+* **Academic & Developer Pilots**: University engineering cohorts and global Web3 developer community programs
 * **Target Ecosystem Programs**: Arbitrum Foundation Grants, Optimism Collective, Base Grants, Solana Foundation, and Web3 Foundation.
 
 ---
