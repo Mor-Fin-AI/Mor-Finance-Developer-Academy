@@ -93,6 +93,31 @@ def test_evm_testnet_deployment_logging():
         assert data["success"] is True
         assert "basescan.org" in data["explorer_url"]
 
+def test_jobs_api_endpoint():
+    with TestClient(app) as client:
+        response = client.get("/api/jobs")
+        assert response.status_code == 200
+        data = response.json()
+        assert data["total_jobs"] > 0
+        assert len(data["jobs"]) > 0
+        assert "title" in data["jobs"][0]
+        assert "company" in data["jobs"][0]
+
+def test_jobs_filter_tag_and_internships():
+    with TestClient(app) as client:
+        # Test rust tag filter
+        res_rust = client.get("/api/jobs?tag=rust")
+        assert res_rust.status_code == 200
+        data_rust = res_rust.json()
+        assert data_rust["total_jobs"] > 0
+        assert any("rust" in str(s).lower() for j in data_rust["jobs"] for s in j.get("skills", []))
+
+        # Test internships filter
+        res_intern = client.get("/api/jobs?type=internships")
+        assert res_intern.status_code == 200
+        data_intern = res_intern.json()
+        assert data_intern["total_jobs"] > 0
+
 @pytest.mark.anyio
 async def test_certificate_only_issued_on_full_track_completion():
     from src.services.db import complete_lesson_for_user, get_or_create_user, get_collection

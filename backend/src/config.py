@@ -5,15 +5,15 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
-    app_env: str 
-    cors_origins: List[str] = ["http://localhost:5173", "https://mor-finance-developer-academy.onrender.com" , "https://morfinance.ai"]
-    mongodb_uri: str
-    secret_key: str
-    jwt_algorithm: str
+    app_env: str = "development"
+    cors_origins: List[str] = ["http://localhost:5173", "https://mor-finance-developer-academy.onrender.com", "https://morfinance.ai"]
+    mongodb_uri: str = "mongodb://localhost:27017/devjobs"
+    secret_key: str = "dev_secret_jwt_key_fallback_12345"
+    jwt_algorithm: str = "HS256"
 
-    github_client_id: str 
-    github_client_secret: str 
-    github_redirect_uri: str 
+    github_client_id: str = ""
+    github_client_secret: str = ""
+    github_redirect_uri: str = "http://localhost:5173"
 
     default_llm: str = "openclaw" 
     claude_api_key: str = ""

@@ -73,7 +73,7 @@ def get_hackathons_collection():
 
 async def connect_to_mongo():
     """Initialize the MongoDB client connection."""
-    print("🔌 Connecting to MongoDB...")
+    print("[DB] Connecting to MongoDB...")
     db_instance.client = AsyncIOMotorClient(settings.mongodb_uri)
     # Parse DB name from URI (falls back to 'devjobs' or 'developer_academy')
     db_name = "devjobs"
@@ -84,7 +84,7 @@ async def connect_to_mongo():
         elif path:
             db_name = path
     db_instance.db = db_instance.client[db_name]
-    print(f"✅ Connected to MongoDB. Database: '{db_name}'")
+    print(f"[DB] Connected to MongoDB. Database: '{db_name}'")
     # await seed_forum_threads()
     # await seed_hackathons()
 
@@ -95,7 +95,7 @@ async def close_mongo_connection():
         db_instance.client.close()
         db_instance.client = None
         db_instance.db = None
-        print("🛑 Closed MongoDB connection.")
+        print("[DB] Closed MongoDB connection.")
 
 def build_user_levels(active_track: str, completed_ids: List[str]):
     t_id = (active_track or "fundamentals").lower().strip()

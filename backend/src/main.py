@@ -15,11 +15,11 @@ from src.services.db import connect_to_mongo, close_mongo_connection
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Startup / shutdown lifecycle."""
-    print(f"🚀  Developer Academy API starting — env={settings.app_env}")
+    print(f"[MOR_BACKEND] Developer Academy API starting - env={settings.app_env}")
     await connect_to_mongo()
     yield
     await close_mongo_connection()
-    print("🛑  Developer Academy API shutting down")
+    print("[MOR_BACKEND] Developer Academy API shutting down")
 
 
 app = FastAPI(
