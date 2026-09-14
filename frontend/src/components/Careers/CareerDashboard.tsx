@@ -626,7 +626,9 @@ export const CareerDashboard: React.FC<{ isLoggedIn?: boolean }> = () => {
 
                     <div className="job-card__footer">
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-                        <span className="job-date">{job.date || 'Recently Posted'}</span>
+                        <span className="job-date">
+                          {job.date ? new Date(job.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Recently Posted'}
+                        </span>
                         <span style={{ fontSize: '0.72rem', color: '#10b981', display: 'flex', alignItems: 'center', gap: '3px' }}>
                           ⚡ Verified Active Link
                         </span>
