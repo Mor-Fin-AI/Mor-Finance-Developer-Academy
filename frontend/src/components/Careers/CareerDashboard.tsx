@@ -291,7 +291,6 @@ export const CareerDashboard: React.FC<{ isLoggedIn?: boolean }> = () => {
 
   // Job query states
   const [jobs, setJobs] = useState<JobListing[]>([]);
-  const [jobsSource, setJobsSource] = useState<string>('Web3.Career & Protocol Ecosystem Feed');
   const [loading, setLoading] = useState<boolean>(true);
   const [apiError, setApiError] = useState<string | null>(null);
 
@@ -332,7 +331,6 @@ export const CareerDashboard: React.FC<{ isLoggedIn?: boolean }> = () => {
         setCurrentPage(res.page || 1);
         setTotalPages(res.total_pages || 1);
         setTotalJobs(res.total_jobs || 0);
-        if (res.source) setJobsSource(res.source);
       })
       .catch((err) => {
         console.error("Error loading live Web3 jobs:", err);
@@ -552,7 +550,6 @@ export const CareerDashboard: React.FC<{ isLoggedIn?: boolean }> = () => {
             <span>
               Showing page <strong>{currentPage}</strong> of <strong>{totalPages}</strong> ({totalJobs} total matching opportunities)
             </span>
-            <span className="source-badge">⚡ {jobsSource}</span>
           </div>
 
           {/* Cards Grid */}
