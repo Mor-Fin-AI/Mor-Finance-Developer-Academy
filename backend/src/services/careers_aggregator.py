@@ -30,6 +30,23 @@ def get_validated_careers_store() -> List[Dict[str, Any]]:
     return _VALIDATED_CAREERS_STORE
 
 
+def _clean_text(text: Any) -> str:
+    """Fixes garbled text (mojibake) often returned by upstream APIs."""
+    if not text:
+        return ""
+    text_str = str(text).strip()
+    # Detect common mojibake sequences (e.g. Arabic or special chars double encoded)
+    if '\u00d8' in text_str or '\u00c3' in text_str or '\u00e2' in text_str:
+        try:
+            return text_str.encode('cp1252').decode('utf-8')
+        except Exception:
+            try:
+                return text_str.encode('latin1').decode('utf-8')
+            except Exception:
+                pass
+    return text_str
+
+
 def _standardize_skills(raw_skills: Any, title: str = "", description: str = "") -> List[str]:
     """Extracts and normalizes skills into standard #Tags."""
     clean_tags = []
@@ -116,8 +133,8 @@ async def fetch_remoteok_live_feed(client: httpx.AsyncClient) -> List[Dict[str, 
                 for item in data:
                     if not isinstance(item, dict) or not item.get("position"):
                         continue
-                    title = str(item.get("position")).strip()
-                    company = str(item.get("company", "Web3 Protocol")).strip()
+                    title = _clean_text(item.get("position"))
+                    company = _clean_text(item.get("company", "Web3 Protocol"))
                     url = item.get("url") or item.get("apply_url")
                     if not url:
                         continue
@@ -143,7 +160,7 @@ async def fetch_remoteok_live_feed(client: httpx.AsyncClient) -> List[Dict[str, 
                         "id": f"rok-{raw_id}",
                         "title": title,
                         "company": company,
-                        "location": (item.get("location") or "Remote (Worldwide)").strip(),
+                        "location": _clean_text(item.get("location") or "Remote (Worldwide)"),
                         "remote": True,
                         "country": "Global",
                         "city": "Remote",
@@ -176,8 +193,8 @@ async def fetch_jobicy_live_feed(client: httpx.AsyncClient) -> List[Dict[str, An
                 for item in data.get("jobs", []):
                     if not isinstance(item, dict) or not item.get("jobTitle"):
                         continue
-                    title = str(item.get("jobTitle")).strip()
-                    company = str(item.get("companyName", "Decentralized Protocol")).strip()
+                    title = _clean_text(item.get("jobTitle"))
+                    company = _clean_text(item.get("companyName", "Decentralized Protocol"))
                     url = item.get("url")
                     if not url:
                         continue
@@ -202,7 +219,7 @@ async def fetch_jobicy_live_feed(client: httpx.AsyncClient) -> List[Dict[str, An
                         "id": f"jobicy-{item.get('id', abs(hash(title + company)))}",
                         "title": title,
                         "company": company,
-                        "location": (item.get("jobGeo") or "Remote (Global)").strip(),
+                        "location": _clean_text(item.get("jobGeo") or "Remote (Global)"),
                         "remote": True,
                         "country": "Global",
                         "city": "Remote",
@@ -233,8 +250,8 @@ async def fetch_himalayas_live_feed(client: httpx.AsyncClient) -> List[Dict[str,
             for item in data.get("jobs", []):
                 if not isinstance(item, dict) or not item.get("title"):
                     continue
-                title = str(item.get("title")).strip()
-                company = str(item.get("companyName", "Technology Team")).strip()
+                title = _clean_text(item.get("title"))
+                company = _clean_text(item.get("companyName", "Technology Team"))
                 url = item.get("applicationLink") or f"https://himalayas.app/companies/{item.get('companySlug')}/jobs/{item.get('guid')}"
                 if not url:
                     continue
@@ -304,8 +321,8 @@ async def fetch_upstream_web3_career_jobs(client: httpx.AsyncClient, limit: int 
         for idx, j in enumerate(raw_jobs):
             if not isinstance(j, dict):
                 continue
-            title = (j.get("title") or "Web3 Developer").strip()
-            company = (j.get("company") or "Decentralized Team").strip()
+            title = _clean_text(j.get("title") or "Web3 Developer")
+            company = _clean_text(j.get("company") or "Decentralized Team")
             apply_url = j.get("apply_url") or j.get("url") or "https://web3.career"
             raw_skills = j.get("tags") or j.get("skills") or ["Web3"]
             skills = _standardize_skills(raw_skills, title=title)
@@ -318,7 +335,7 @@ async def fetch_upstream_web3_career_jobs(client: httpx.AsyncClient, limit: int 
                 "id": f"w3c-{idx}-{abs(hash(title + company))}",
                 "title": title,
                 "company": company,
-                "location": (j.get("location") or "Remote").strip(),
+                "location": _clean_text(j.get("location") or "Remote"),
                 "remote": bool(j.get("is_remote") is True or "remote" in str(j.get("location", "")).lower()),
                 "country": j.get("country", ""),
                 "city": j.get("city", ""),
