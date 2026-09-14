@@ -12,11 +12,20 @@ from src.services.ai_mentor import router as mentor_router
 from src.services.db import connect_to_mongo, close_mongo_connection
 
 
+from src.services.careers_aggregator import sync_and_validate_all_careers
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Startup / shutdown lifecycle."""
     print(f"[MOR_BACKEND] Developer Academy API starting - env={settings.app_env}")
     await connect_to_mongo()
+    # Asynchronously initialize and warm up zero-broken-links careers cache
+    try:
+        import asyncio
+        asyncio.create_task(sync_and_validate_all_careers())
+    except Exception as e:
+        print(f"[MOR_BACKEND] Initial careers warm-up error: {e}")
     yield
     await close_mongo_connection()
     print("[MOR_BACKEND] Developer Academy API shutting down")
@@ -54,6 +63,8 @@ app.include_router(templates.router, prefix="/api/templates", tags=["Templates"]
 app.include_router(mentor_router, prefix="/api/mentor", tags=["AI Mentor"])
 app.include_router(forum.router, prefix="/api/forum", tags=["Forum"])
 app.include_router(hackathons.router, prefix="/api/hackathons", tags=["Hackathons"])
+app.include_router(jobs.router, prefix="/api/v1/careers", tags=["Careers V1"])
+app.include_router(jobs.router, prefix="/api/careers", tags=["Careers"])
 app.include_router(jobs.router, prefix="/api/jobs", tags=["Jobs & Careers"])
 app.include_router(arbitrum.router, prefix="/api", tags=["Arbitrum Analytics & Cohorts"])
 app.include_router(arbitrum.router, tags=["Arbitrum Analytics & Cohorts Root"])

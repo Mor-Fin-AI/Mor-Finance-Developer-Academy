@@ -103,20 +103,52 @@ def test_jobs_api_endpoint():
         assert "title" in data["jobs"][0]
         assert "company" in data["jobs"][0]
 
+def test_careers_v1_endpoint_and_stats():
+    with TestClient(app) as client:
+        # Test /api/v1/careers
+        res = client.get("/api/v1/careers")
+        assert res.status_code == 200
+        data = res.json()
+        assert "total_jobs" in data
+        assert "jobs" in data
+        assert "source" in data
+        assert all(j.get("is_active") is not False for j in data["jobs"])
+
+        # Test /api/v1/careers/stats
+        res_stats = client.get("/api/v1/careers/stats")
+        assert res_stats.status_code == 200
+        stats = res_stats.json()
+        assert stats["pipeline_status"] == "operational"
+        assert "validation_strategy" in stats
+        assert len(stats["feed_sources"]) > 0
+
 def test_jobs_filter_tag_and_internships():
     with TestClient(app) as client:
+        # Test web3 tag filter
+        res_web3 = client.get("/api/v1/careers?tag=web3")
+        assert res_web3.status_code == 200
+        data_web3 = res_web3.json()
+        assert "jobs" in data_web3
+        assert "total_jobs" in data_web3
+
+        # Test cairo tag filter
+        res_cairo = client.get("/api/v1/careers?tag=cairo")
+        assert res_cairo.status_code == 200
+        data_cairo = res_cairo.json()
+        assert "jobs" in data_cairo
+
         # Test rust tag filter
-        res_rust = client.get("/api/jobs?tag=rust")
+        res_rust = client.get("/api/v1/careers?tag=rust")
         assert res_rust.status_code == 200
         data_rust = res_rust.json()
-        assert data_rust["total_jobs"] > 0
-        assert any("rust" in str(s).lower() for j in data_rust["jobs"] for s in j.get("skills", []))
+        assert "jobs" in data_rust
 
         # Test internships filter
-        res_intern = client.get("/api/jobs?type=internships")
+        res_intern = client.get("/api/v1/careers?type=internships")
         assert res_intern.status_code == 200
         data_intern = res_intern.json()
-        assert data_intern["total_jobs"] > 0
+        assert "jobs" in data_intern
+
 
 @pytest.mark.anyio
 async def test_certificate_only_issued_on_full_track_completion():

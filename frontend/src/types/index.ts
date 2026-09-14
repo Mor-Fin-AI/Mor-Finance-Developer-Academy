@@ -96,12 +96,18 @@ export interface JobListing {
   location: string;
   remote: boolean;
   salary: string;
+  salary_range?: string;
   skills: string[];
   url: string;
+  application_url?: string;
   date?: string;
   date_epoch?: number;
   is_internship?: boolean;
   is_junior?: boolean;
+  is_active?: boolean;
+  network?: string;
+  source?: string;
+  last_verified_at?: string;
 }
 
 export interface StartupIdea {

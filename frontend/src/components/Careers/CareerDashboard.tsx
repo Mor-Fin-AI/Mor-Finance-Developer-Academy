@@ -304,6 +304,7 @@ export const CareerDashboard: React.FC<{ isLoggedIn?: boolean }> = () => {
   // Search & Filter parameters
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedTag, setSelectedTag] = useState<string>('all');
+  const [selectedNetwork, setSelectedNetwork] = useState<string>('all');
   const [remoteOnly, setRemoteOnly] = useState<boolean>(false);
 
   // Startup ideas category filter
@@ -319,6 +320,7 @@ export const CareerDashboard: React.FC<{ isLoggedIn?: boolean }> = () => {
     const isInternship = viewFilter === 'internships';
     fetchJobs({
       tag: selectedTag !== 'all' ? selectedTag : undefined,
+      network: selectedNetwork !== 'all' ? selectedNetwork : undefined,
       remote: remoteOnly ? true : undefined,
       search: searchQuery.trim() || undefined,
       page: pageToLoad,
@@ -346,7 +348,7 @@ export const CareerDashboard: React.FC<{ isLoggedIn?: boolean }> = () => {
       setCurrentPage(1);
       loadJobs(1);
     }
-  }, [viewFilter, selectedTag, remoteOnly, searchQuery]);
+  }, [viewFilter, selectedTag, selectedNetwork, remoteOnly, searchQuery]);
 
   const handlePageChange = (newPage: number) => {
     if (newPage < 1 || newPage > totalPages || newPage === currentPage) return;
@@ -474,28 +476,54 @@ export const CareerDashboard: React.FC<{ isLoggedIn?: boolean }> = () => {
 
         {/* Secondary Category Filters */}
         {(viewFilter === 'jobs' || viewFilter === 'internships') && (
-          <div className="category-tags-row">
-            <span className="filter-label">Quick Tags:</span>
-            {[
-              { id: 'all', label: 'All' },
-              { id: 'solidity', label: 'Solidity' },
-              { id: 'rust', label: 'Rust' },
-              { id: 'go', label: 'Go / Golang' },
-              { id: 'ai', label: 'AI & Agents' },
-              { id: 'ethereum', label: 'Ethereum' },
-              { id: 'solana', label: 'Solana' },
-              { id: 'polkadot', label: 'Polkadot' },
-              { id: 'defi', label: 'DeFi' }
-            ].map((cat) => (
-              <button
-                key={cat.id}
-                className={`tag-pill ${selectedTag === cat.id ? 'tag-pill--active' : ''}`}
-                onClick={() => setSelectedTag(cat.id)}
-              >
-                {cat.label}
-              </button>
-            ))}
-          </div>
+          <>
+            <div className="category-tags-row">
+              <span className="filter-label">Language / Focus:</span>
+              {[
+                { id: 'all', label: 'All Tech' },
+                { id: 'cairo', label: '#Cairo' },
+                { id: 'rust', label: '#Rust' },
+                { id: 'soroban', label: '#Soroban' },
+                { id: 'solidity', label: '#Solidity' },
+                { id: 'move', label: '#Move' },
+                { id: 'go', label: '#Go / Golang' },
+                { id: 'ai', label: '#AI & Agents' },
+                { id: 'defi', label: '#DeFi' }
+              ].map((cat) => (
+                <button
+                  key={cat.id}
+                  className={`tag-pill ${selectedTag === cat.id ? 'tag-pill--active' : ''}`}
+                  onClick={() => setSelectedTag(cat.id)}
+                >
+                  {cat.label}
+                </button>
+              ))}
+            </div>
+
+            <div className="category-tags-row" style={{ marginTop: '0.5rem' }}>
+              <span className="filter-label">Ecosystem / Network:</span>
+              {[
+                { id: 'all', label: 'All Ecosystems' },
+                { id: 'starknet', label: '✨ Starknet' },
+                { id: 'arbitrum', label: '🔵 Arbitrum' },
+                { id: 'base', label: '🔷 Base' },
+                { id: 'optimism', label: '🔴 Optimism' },
+                { id: 'solana', label: '☀️ Solana' },
+                { id: 'stellar', label: '🚀 Stellar / Soroban' },
+                { id: 'aptos', label: '⚡ Aptos' },
+                { id: 'polkadot', label: '🟣 Polkadot' },
+                { id: 'ethereum', label: '🟢 Ethereum' }
+              ].map((net) => (
+                <button
+                  key={net.id}
+                  className={`tag-pill ${selectedNetwork === net.id ? 'tag-pill--active' : ''}`}
+                  onClick={() => setSelectedNetwork(net.id)}
+                >
+                  {net.label}
+                </button>
+              ))}
+            </div>
+          </>
         )}
 
         {viewFilter === 'ideas' && (
@@ -597,11 +625,16 @@ export const CareerDashboard: React.FC<{ isLoggedIn?: boolean }> = () => {
                     )}
 
                     <div className="job-card__footer">
-                      <span className="job-date">{job.date || 'Recently Posted'}</span>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                        <span className="job-date">{job.date || 'Recently Posted'}</span>
+                        <span style={{ fontSize: '0.72rem', color: '#10b981', display: 'flex', alignItems: 'center', gap: '3px' }}>
+                          ⚡ Verified Active Link
+                        </span>
+                      </div>
                       <a
-                        href={job.url}
+                        href={job.application_url || job.url}
                         target="_blank"
-                        rel="follow"
+                        rel="noopener noreferrer"
                         className="job-apply-btn"
                       >
                         Apply Now ↗
