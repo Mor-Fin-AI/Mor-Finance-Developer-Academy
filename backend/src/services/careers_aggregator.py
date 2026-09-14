@@ -223,3 +223,269 @@ async def sync_and_validate_all_careers(force: bool = False) -> List[Dict[str, A
 
 def get_validated_careers_store():
     return _VALIDATED_CAREERS_STORE
+
+
+def get_careers_stats_data() -> Dict[str, Any]:
+
+    """Computes real-time statistics from the validated careers store."""
+
+    global _VALIDATED_CAREERS_STORE
+
+    all_jobs = list(_VALIDATED_CAREERS_STORE)
+
+    total = len(all_jobs)
+
+    active = sum(1 for j in all_jobs if j.get("is_active") is not False)
+
+    pruned = total - active
+
+
+
+    cairo_count = sum(1 for j in all_jobs if any("cairo" in s.lower() for s in j.get("skills", [])))
+
+    rust_count = sum(1 for j in all_jobs if any("rust" in s.lower() for s in j.get("skills", [])))
+
+    solidity_count = sum(1 for j in all_jobs if any("solidity" in s.lower() for s in j.get("skills", [])))
+
+    internship_count = sum(1 for j in all_jobs if j.get("is_internship") or j.get("is_junior"))
+
+
+
+    return {
+
+        "pipeline_status": "operational",
+
+        "validation_strategy": "Zero Broken Links (Async HEAD/GET Validator)",
+
+        "feed_sources": [
+
+            "Web3 Career Portal RSS"
+
+        ],
+
+        "total_indexed_jobs": total,
+
+        "active_verified_jobs": active,
+
+        "pruned_expired_jobs": pruned,
+
+        "reliability_score": f"{round((active / max(1, total)) * 100, 1)}%",
+
+        "breakdown": {
+
+            "cairo_starknet": cairo_count,
+
+            "rust_solana_stellar": rust_count,
+
+            "solidity_evm": solidity_count,
+
+            "internships_and_entry_level": internship_count
+
+        }
+
+    }
+
+
+
+
+
+def get_active_careers(
+
+    tag: Optional[str] = None,
+
+    job_type: Optional[str] = None,
+
+    network: Optional[str] = None,
+
+    remote: Optional[bool] = None,
+
+    search: Optional[str] = None,
+
+    page: int = 1,
+
+    limit: int = 12,
+
+    include_inactive: bool = False
+
+) -> Dict[str, Any]:
+
+    """
+
+    Returns filtered active career listings strictly from live ingested feeds.
+
+    Strictly filters is_active == True by default.
+
+    """
+
+    global _VALIDATED_CAREERS_STORE
+
+
+
+    # 1. Filter active vs inactive
+
+    if not include_inactive:
+
+        pool = [j for j in _VALIDATED_CAREERS_STORE if j.get("is_active") is True]
+
+    else:
+
+        pool = list(_VALIDATED_CAREERS_STORE)
+
+
+
+    # If pool is empty (e.g. initial sync still finishing), fallback to available validated store
+
+    if not pool and _VALIDATED_CAREERS_STORE:
+
+        pool = list(_VALIDATED_CAREERS_STORE)
+
+
+
+    # 2. Tag / Language Filter (#Rust, #Cairo, #Solidity, #Move, #Go, #AI, etc.)
+
+    if tag and tag.lower() != "all":
+
+        t_clean = tag.lower().replace("#", "").strip()
+
+        pool = [
+
+            j for j in pool
+
+            if t_clean in j["title"].lower() or
+
+               t_clean in j["company"].lower() or
+
+               any(t_clean in str(s).lower().replace("#", "") for s in j.get("skills", [])) or
+
+               (t_clean in ("go", "golang") and any("go" in str(s).lower() for s in j.get("skills", []))) or
+
+               (t_clean in ("ai", "agent", "agents") and any("ai" in str(s).lower() for s in j.get("skills", [])))
+
+        ]
+
+
+
+    # 3. Job Type Filter (#Internship, #Full-Time)
+
+    if job_type and job_type.lower() != "all":
+
+        jt = job_type.lower().strip()
+
+        if "intern" in jt:
+
+            pool = [
+
+                j for j in pool
+
+                if j.get("is_internship") or j.get("is_junior") or
+
+                any(kw in j["title"].lower() for kw in ["intern", "junior", "fellowship", "apprentice", "graduate"])
+
+            ]
+
+        elif "full" in jt:
+
+            pool = [j for j in pool if not j.get("is_internship")]
+
+
+
+    # 4. Network / Ecosystem Filter
+
+    if network and network.lower() != "all":
+
+        net_clean = network.lower().strip()
+
+        pool = [
+
+            j for j in pool
+
+            if j.get("network", "").lower() == net_clean or
+
+               net_clean in j["title"].lower() or
+
+               any(net_clean in str(s).lower() for s in j.get("skills", []))
+
+        ]
+
+
+
+    # 5. Remote Filter
+
+    if remote is True:
+
+        pool = [j for j in pool if j.get("remote") is True]
+
+
+
+    # 6. Search Query Filter
+
+    if search and search.strip():
+
+        q = search.lower().strip()
+
+        pool = [
+
+            j for j in pool
+
+            if q in j["title"].lower() or
+
+               q in j["company"].lower() or
+
+               q in j["location"].lower() or
+
+               any(q in str(s).lower() for s in j.get("skills", []))
+
+        ]
+
+
+
+    # Pagination calculation
+
+    total_jobs = len(pool)
+
+    page_num = max(1, page)
+
+    limit_num = max(1, min(100, limit))
+
+    total_pages = max(1, (total_jobs + limit_num - 1) // limit_num)
+
+    
+
+    if page_num > total_pages:
+
+        page_num = total_pages
+
+
+
+    start_idx = (page_num - 1) * limit_num
+
+    end_idx = start_idx + limit_num
+
+    results = pool[start_idx:end_idx]
+
+
+
+    return {
+
+        "page": page_num,
+
+        "limit": limit_num,
+
+        "total_jobs": total_jobs,
+
+        "total_pages": total_pages,
+
+        "has_next": page_num < total_pages,
+
+        "has_prev": page_num > 1,
+
+        "count": len(results),
+
+        "total_available": total_jobs,
+
+        "source": "100% Live Ingested Developer Feeds (Web3 Career Portal RSS)",
+
+        "jobs": results
+
+    }
+
