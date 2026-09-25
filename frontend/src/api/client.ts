@@ -9975,6 +9975,70 @@ export async function fetchJobs(params?: {
   };
 }
 
+// ─── Testnet Leaderboard API ──────────────────────────────────────────────────
+export interface LeaderboardEntry {
+  rank: number;
+  telegram: string;
+  txCount: number;
+  chainCount: number;
+}
+
+export interface LeaderboardChains {
+  chains: string[];
+  verifyOnchain: boolean;
+}
+
+export interface LeaderboardSubmitResult {
+  telegram: string;
+  rank: number | null;
+  txCount: number | null;
+}
+
+/** Error from the leaderboard/payment APIs: `fields` holds per-field validation messages when present. */
+export class ApiError extends Error {
+  status: number;
+  code: string;
+  fields: Record<string, string>;
+  constructor(status: number, code: string, message: string, fields: Record<string, string> = {}) {
+    super(message);
+    this.status = status;
+    this.code = code;
+    this.fields = fields;
+  }
+}
+
+async function apiErrorFrom(res: Response): Promise<ApiError> {
+  const body = await res.json().catch(() => ({}));
+  const detail = body?.detail ?? {};
+  const fields: Record<string, string> = detail.details ?? {};
+  const message = detail.detail
+    || Object.entries(fields).map(([k, v]) => `${k}: ${v}`).join('; ')
+    || `Request failed (${res.status})`;
+  return new ApiError(res.status, detail.error ?? 'request_failed', message, fields);
+}
+
+export async function fetchLeaderboard(): Promise<LeaderboardEntry[]> {
+  const res = await fetch(`${BASE}/leaderboard`);
+  if (!res.ok) throw await apiErrorFrom(res);
+  return res.json();
+}
+
+export async function fetchLeaderboardChains(): Promise<LeaderboardChains> {
+  const res = await fetch(`${BASE}/leaderboard/chains`);
+  if (!res.ok) throw await apiErrorFrom(res);
+  return res.json();
+}
+
+export async function submitLeaderboardTx(entry: { telegram: string; chain: string; txHash: string }): Promise<LeaderboardSubmitResult> {
+  const res = await fetch(`${BASE}/leaderboard`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(entry),
+  });
+  if (!res.ok) throw await apiErrorFrom(res);
+  return res.json();
+}
+
 // ─── Arbitrum Foundation Telemetry & Cohort API ──────────────────────────────
 export interface ArbitrumTelemetryData {
   kpis: {

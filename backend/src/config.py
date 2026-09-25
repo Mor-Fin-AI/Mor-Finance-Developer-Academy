@@ -24,5 +24,13 @@ class Settings(BaseSettings):
     web3_career_api_key: str = ""
     web3_career_token: str = ""
 
+    # ─── Leaderboard (testnet activity submissions) ───────────────────────────
+    chains: List[str] = ["sepolia", "base-sepolia", "arbitrum-sepolia", "optimism-sepolia"]
+    verify_onchain: bool = False
+    rpc_url_sepolia: str = ""
+    rpc_url_base_sepolia: str = ""
+    rpc_url_arbitrum_sepolia: str = ""
+    rpc_url_optimism_sepolia: str = ""
+
 
 settings = Settings()

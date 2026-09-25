@@ -30,6 +30,7 @@ const PAGE_META: Record<NavPage, { title: string; subtitle: string }> = {
   forum:        { title: 'Community Forum',         subtitle: 'Ask questions, share smart contracts, and collaborate with Web3 builders' },
   hackathons:   { title: 'Web3 Hackathons & Grants', subtitle: 'Build decentralized applications, innovate, and win ecosystem bounties' },
   careers:      { title: 'Web3 Career Portal',      subtitle: 'Smart contract engineering roles, internships & foundation grants' },
+  leaderboard:  { title: 'Testnet Leaderboard',     subtitle: 'Ship testnet transactions and climb the builder rankings' },
   mentor:       { title: 'AI Mentor Workspace',     subtitle: 'Get real-time smart contract code reviews and security feedback' },
   certificates: { title: 'Web3 Credentials',        subtitle: 'View and export your verified blockchain credentials' },
   subscriptions: { title: 'Subscription Plans',     subtitle: 'Choose a plan to unlock premium mentorship and credentials' },

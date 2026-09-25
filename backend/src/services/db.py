@@ -71,6 +71,11 @@ def get_hackathons_collection():
     _ensure_connected()
     return db_instance.db["developer_academy_hackathons"]
 
+def get_leaderboard_collection():
+    """Retrieve the testnet leaderboard submissions collection."""
+    _ensure_connected()
+    return db_instance.db["developer_academy_leaderboard"]
+
 async def connect_to_mongo():
     """Initialize the MongoDB client connection."""
     print("[DB] Connecting to MongoDB...")

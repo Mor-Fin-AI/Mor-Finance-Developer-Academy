@@ -16,6 +16,7 @@ import { LandingPage } from './components/Auth/LandingPage';
 import { AboutPage } from './components/About/AboutPage';
 import { SubscriptionPlans } from './components/Subscriptions/SubscriptionPlans';
 import { CareerDashboard } from './components/Careers/CareerDashboard';
+import { LeaderboardView } from './components/Leaderboard/LeaderboardView';
 import { PlaygroundView } from './components/Sandbox/PlaygroundView';
 import { FastTrackEnrollmentModal } from './components/Auth/FastTrackEnrollmentModal';
 import './index.css';
@@ -33,6 +34,7 @@ export default function App() {
     if (path.startsWith('/forum')) return 'forum';
     if (path.startsWith('/hackathons')) return 'hackathons';
     if (path.startsWith('/careers')) return 'careers';
+    if (path.startsWith('/leaderboard')) return 'leaderboard';
     if (path.startsWith('/mentor')) return 'mentor';
     if (path.startsWith('/certificates')) return 'certificates';
     if (path.startsWith('/subscriptions')) return 'subscriptions';
@@ -690,6 +692,7 @@ export default function App() {
           } />
           <Route path="/careers" element={<CareerDashboard isLoggedIn={isLoggedIn} />} />
           <Route path="/career" element={<CareerDashboard isLoggedIn={isLoggedIn} />} />
+          <Route path="/leaderboard" element={<LeaderboardView />} />
           <Route path="/mentor" element={
             isLoggedIn ? (
               <MentorPage currentLevel={progress?.current_level ?? 1} userId={userId} />

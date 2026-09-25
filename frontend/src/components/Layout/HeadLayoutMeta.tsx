@@ -16,6 +16,7 @@ const PAGE_TITLES: Record<NavPage, string> = {
   forum: 'Developer Forum',
   hackathons: 'Web3 Hackathons & Grants',
   careers: 'Web3 Career Portal',
+  leaderboard: 'Testnet Leaderboard',
   mentor: 'AI Mentor Workspace',
   certificates: 'Web3 Developer Credentials',
   subscriptions: 'Subscription Plans',

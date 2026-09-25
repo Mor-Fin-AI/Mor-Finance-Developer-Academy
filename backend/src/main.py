@@ -8,6 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from src.config import settings
 from src.api import progress, templates, auth, courses, quiz, exercise, dashboard, certificates, github, forum, hackathons, jobs, arbitrum
+from src.api import leaderboard
 from src.services.ai_mentor import router as mentor_router
 from src.services.db import connect_to_mongo, close_mongo_connection
 
@@ -68,6 +69,7 @@ app.include_router(jobs.router, prefix="/api/careers", tags=["Careers"])
 app.include_router(jobs.router, prefix="/api/jobs", tags=["Jobs & Careers"])
 app.include_router(arbitrum.router, prefix="/api", tags=["Arbitrum Analytics & Cohorts"])
 app.include_router(arbitrum.router, tags=["Arbitrum Analytics & Cohorts Root"])
+app.include_router(leaderboard.router, prefix="/api/leaderboard", tags=["Leaderboard"])
 
 
 @app.get("/health", tags=["Health"])

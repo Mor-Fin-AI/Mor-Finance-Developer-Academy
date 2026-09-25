@@ -33,6 +33,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     { id: 'forum' as NavPage, label: 'Community Forum', icon: '💬', description: 'Connect & discuss' },
     { id: 'hackathons' as NavPage, label: 'Hackathons & Grants', icon: '⚔️', description: 'Build & win bounties' },
     { id: 'careers' as NavPage, label: 'Web3 Career Portal', icon: '💼', description: 'Jobs, Bounties & Grants' },
+    { id: 'leaderboard' as NavPage, label: 'Testnet Leaderboard', icon: '🥇', description: 'Rank by on-chain activity' },
     { id: 'certificates' as NavPage, label: 'Web3 Credentials', icon: '🏆', description: 'Grant benchmark standards' },
     { id: 'subscriptions' as NavPage, label: 'Subscription Plans', icon: '💎', description: 'Unlock premium features' },
   ];
