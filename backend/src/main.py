@@ -9,6 +9,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from src.config import settings
 from src.api import progress, templates, auth, courses, quiz, exercise, dashboard, certificates, github, forum, hackathons, jobs, arbitrum
 from src.services.ai_mentor import router as mentor_router
+from src.api import payment
 from src.services.db import connect_to_mongo, close_mongo_connection
 
 
@@ -63,6 +64,7 @@ app.include_router(templates.router, prefix="/api/templates", tags=["Templates"]
 app.include_router(mentor_router, prefix="/api/mentor", tags=["AI Mentor"])
 app.include_router(forum.router, prefix="/api/forum", tags=["Forum"])
 app.include_router(hackathons.router, prefix="/api/hackathons", tags=["Hackathons"])
+app.include_router(payment.router, prefix="/api/payment-callback", tags=["Payments (sandbox)"])
 app.include_router(jobs.router, prefix="/api/v1/careers", tags=["Careers V1"])
 app.include_router(jobs.router, prefix="/api/careers", tags=["Careers"])
 app.include_router(jobs.router, prefix="/api/jobs", tags=["Jobs & Careers"])

@@ -66,6 +66,11 @@ def get_forum_collection():
     _ensure_connected()
     return db_instance.db["developer_academy_forum"]
 
+def get_subscriptions_collection():
+    """Retrieve the subscription profiles collection (sandbox payment callback)."""
+    _ensure_connected()
+    return db_instance.db["developer_academy_subscriptions"]
+
 def get_hackathons_collection():
     """Retrieve the hackathons collection."""
     _ensure_connected()

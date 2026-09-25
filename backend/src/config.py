@@ -11,6 +11,10 @@ class Settings(BaseSettings):
     secret_key: str = "dev_secret_jwt_key_fallback_12345"
     jwt_algorithm: str = "HS256"
 
+    # ─── Payment callback (sandbox/test-mode only, off unless explicitly enabled) ─
+    payment_countries: List[str] = ["NG", "KE", "TZ", "BW", "ZA", "GH", "RW"]
+    allow_mock_payment_callback: bool = False
+
     github_client_id: str = ""
     github_client_secret: str = ""
     github_redirect_uri: str = "http://localhost:5173"

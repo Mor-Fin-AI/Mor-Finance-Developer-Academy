@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { CheckoutModal, type CheckoutPlan } from './CheckoutModal';
 import './SubscriptionPlans.css';
 
 export const SubscriptionPlans: React.FC<{ isLoggedIn?: boolean }> = ({ isLoggedIn: _isLoggedIn = false }) => {
   const [activePlan, setActivePlan] = useState<string>('Free');
+  const [checkoutPlan, setCheckoutPlan] = useState<CheckoutPlan | null>(null);
   const plans = [
     {
       name: 'Free',
@@ -197,7 +199,11 @@ export const SubscriptionPlans: React.FC<{ isLoggedIn?: boolean }> = ({ isLogged
 
             <button 
               className={`btn plan-card__cta-btn ${activePlan === plan.name ? 'btn--secondary' : plan.highlighted ? 'btn--primary' : 'btn--secondary'}`}
-              onClick={() => setActivePlan(plan.name)}
+              onClick={() => {
+                if (activePlan === plan.name) return;
+                if (plan.price > 0) setCheckoutPlan({ name: plan.name, price: plan.price, icon: plan.icon });
+                else setActivePlan(plan.name);
+              }}
             >
               {activePlan === plan.name ? '✓ Current Plan' : plan.ctaText}
             </button>
@@ -234,6 +240,14 @@ export const SubscriptionPlans: React.FC<{ isLoggedIn?: boolean }> = ({ isLogged
           </div>
         </div>
       </div>
+
+      {checkoutPlan && (
+        <CheckoutModal
+          plan={checkoutPlan}
+          onClose={() => setCheckoutPlan(null)}
+          onSubscribed={setActivePlan}
+        />
+      )}
     </div>
   );
 };

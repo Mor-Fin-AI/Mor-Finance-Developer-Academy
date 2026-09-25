@@ -38,6 +38,41 @@ export async function fetchTemplate(id: string): Promise<CodeTemplate> {
   return res.json();
 }
 
+// ─── Subscription payment callback (sandbox) ─────────────────────────────────
+export interface PaymentCallbackPayload {
+  telegramHandle: string;
+  chosenCountryNode: string;
+  paymentAmount: number;
+  transactionReference: string;
+  plan?: string;
+}
+
+export interface PaymentCallbackResult {
+  ok: boolean;
+  status: number;
+  code?: string;
+  message?: string;
+  profile?: { telegramHandle: string; status: string; plan?: string | null };
+}
+
+/** Reports a checkout the provider marked successful. Never throws: callers show the outcome to the user. */
+export async function postPaymentCallback(payload: PaymentCallbackPayload): Promise<PaymentCallbackResult> {
+  try {
+    const res = await fetch(`${BASE}/payment-callback`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    const body = await res.json().catch(() => ({}));
+    if (res.ok) return { ok: true, status: res.status, profile: body.profile };
+    const detail = body?.detail ?? {};
+    const fields = detail.details ? Object.entries(detail.details).map(([k, v]) => `${k}: ${v}`).join('; ') : '';
+    return { ok: false, status: res.status, code: detail.error ?? 'request_failed', message: detail.detail || fields || `Request failed (${res.status})` };
+  } catch {
+    return { ok: false, status: 0, code: 'network_error', message: 'Could not reach the server.' };
+  }
+}
+
 // ─── AI Mentor (streaming) ────────────────────────────────────────────────────
 export async function* streamMentorChat(
   prompt: string,
