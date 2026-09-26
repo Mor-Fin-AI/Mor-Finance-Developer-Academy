@@ -163,6 +163,20 @@ def test_post_with_verification_on_rejects_unknown_tx_and_stores_nothing(client,
     assert ours(client.get("/api/leaderboard").json()) == []
 
 
+def test_duplicate_is_rejected_before_rpc_is_called(client, monkeypatch):
+    body = {"telegram": f"{PREFIX}early", "chain": "sepolia", "txHash": tx(0xE4217)}
+    assert client.post("/api/leaderboard", json=body).status_code == 200
+
+    # Verification on, and the RPC node now claims the tx doesn't exist (e.g. a lagging node).
+    calls = []
+    monkeypatch.setattr(settings, "verify_onchain", True)
+    _mock_rpc(monkeypatch, lambda request: calls.append(1) or httpx.Response(200, json={"jsonrpc": "2.0", "id": 1, "result": None}))
+    res = client.post("/api/leaderboard", json=body)
+    assert res.status_code == 409
+    assert res.json()["detail"]["error"] == "duplicate_tx"
+    assert calls == []
+
+
 def test_chains_endpoint(client):
     res = client.get("/api/leaderboard/chains")
     assert res.status_code == 200

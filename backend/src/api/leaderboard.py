@@ -145,11 +145,15 @@ async def leaderboard_post(
     """Submit a testnet transaction; a tx hash counts once, whoever submits it first."""
     value = validate_entry(submission)
 
+    coll = await _collection()
+    # Duplicates first: a cheap, consistent answer that doesn't depend on an RPC node being in sync.
+    if await coll.find_one({"txHash": value["txHash"]}, {"_id": 1}):
+        raise HTTPException(status_code=409, detail={"error": "duplicate_tx", "detail": "this transaction was already submitted"})
+
     if settings.verify_onchain:
         await verify_onchain(value["chain"], value["txHash"])
 
-    coll = await _collection()
-    try:
+    try:  # the unique index still guards against two concurrent submissions of the same hash
         await coll.insert_one({**value, "verified": settings.verify_onchain, "submittedAt": datetime.now(timezone.utc)})
     except DuplicateKeyError:
         raise HTTPException(status_code=409, detail={"error": "duplicate_tx", "detail": "this transaction was already submitted"})
